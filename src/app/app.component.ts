@@ -1,10 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'my-app',
+  template: '<mrc></mrc>'
 })
 export class AppComponent {
-  title = 'app works!';
+  constructor(@Inject(DOCUMENT) document: Document) {
+		this.applyMainStyle(document);
+  }
+  
+  private async applyMainStyle(document: Document): Promise<void> {		
+		var link = document.createElement("link");
+		link.href = "assets/sass/layout/main.css";
+		link.type = "text/css";
+		link.rel = "stylesheet";
+		document.getElementsByTagName("head")[0].appendChild(link);
+  }
 }

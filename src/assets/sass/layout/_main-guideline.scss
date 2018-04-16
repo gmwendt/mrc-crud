@@ -1,0 +1,21 @@
+input, textarea, select {
+    padding: 0px 4px;     
+    box-sizing: border-box;
+    height: 20px;
+    font-family: 'Arial', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 9pt;
+    border: solid 1px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  h1 {
+      color: #252525;
+    font-size: 12pt;
+  }
+  
+  .mrc-text-1 {
+      color: #252525;
+      font-size: 9pt;
+  }

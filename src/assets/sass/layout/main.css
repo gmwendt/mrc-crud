@@ -1,0 +1,42 @@
+input, textarea, select {
+  padding: 0px 4px;
+  box-sizing: border-box;
+  height: 20px;
+  font-family: 'Arial', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 9pt;
+  border: solid 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+h1 {
+  color: #252525;
+  font-size: 12pt;
+}
+
+.mrc-text-1 {
+  color: #252525;
+  font-size: 9pt;
+}
+
+.mrc-global .mat-menu-content {
+  padding: 0;
+}
+
+.mrc-global .mat-menu-content .mat-menu-item {
+  font-size: 9pt;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 8px;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Arial', Tahoma, Geneva, Verdana, sans-serif;
+}
