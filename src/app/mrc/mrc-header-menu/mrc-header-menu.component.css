@@ -1,0 +1,29 @@
+mrc-header-menu {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+mrc-header-menu .header-menu-group {
+  display: flex;
+  height: 30px;
+  background-color: #298dca;
+}
+
+mrc-header-menu .header-menu-item {
+  display: flex;
+  font-size: 9pt;
+  margin-left: 24px;
+  cursor: pointer;
+  padding: 8px;
+  color: #fff;
+}
+
+mrc-header-menu .header-menu-item:hover {
+  background-color: #2070a1;
+}
+
+mrc-header-menu .selected, mrc-header-menu .selected:hover {
+  color: #298dca;
+  background-color: #f2f2f2;
+}

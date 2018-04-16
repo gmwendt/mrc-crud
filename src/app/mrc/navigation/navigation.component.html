@@ -1,0 +1,37 @@
+<mat-accordion displayMode="flat">
+	
+	<mat-expansion-panel [hideToggle]="true" (click)="!exp1.expanded ? exp1.expanded = true : ''" #exp1>
+		<mat-expansion-panel-header expandedHeight="32px" collapsedHeight="32px">
+			<mat-panel-title>
+				CADASTRO
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+		<ul>			
+		  <li (click)="listItemClicked('produtos')"><a>Produtos</a></li>
+		  <li (click)="listItemClicked('estoque')"><a>Estoque</a></li>
+		  <li (click)="listItemClicked('fornecedores')"><a>Fornecedores</a></li>
+		  <li (click)="listItemClicked('clientes')"><a>Clientes</a></li>
+		</ul>
+	</mat-expansion-panel>
+	
+	<mat-expansion-panel [hideToggle]="true" (click)="!exp2.expanded ? exp2.expanded = true : ''" #exp2>
+		<mat-expansion-panel-header expandedHeight="32px" collapsedHeight="32px">
+			<mat-panel-title>
+				MODEL
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+
+		<input placeholder="First name" />
+	</mat-expansion-panel>
+	
+	<mat-expansion-panel [hideToggle]="true" (click)="!exp3.expanded ? exp3.expanded = true : ''" #exp3>
+		<mat-expansion-panel-header expandedHeight="32px" collapsedHeight="32px">
+			<mat-panel-title>
+				MODEL
+			</mat-panel-title>
+		</mat-expansion-panel-header>
+
+		<input placeholder="First name" />
+	</mat-expansion-panel>
+
+</mat-accordion>

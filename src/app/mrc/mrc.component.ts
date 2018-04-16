@@ -3,9 +3,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
 	selector: 'mrc',
-	// templateUrl: './mrc.component.html',
-    // styleUrls: ['./mrc.component.css'],
-    template: '<h1>teste</h1>',
+	templateUrl: './mrc.component.html',
+    styleUrls: ['./mrc.component.css'],
 	encapsulation: ViewEncapsulation.None
 })
 export class MrcComponent { 

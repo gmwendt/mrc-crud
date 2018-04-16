@@ -1,0 +1,43 @@
+navigation ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: transparent;
+}
+
+navigation li {
+  font-size: 10pt;
+  height: 25px;
+  line-height: 25px;
+  cursor: pointer;
+}
+
+navigation li a {
+  display: block;
+  color: #000;
+  padding: 0 8px;
+}
+
+navigation li a:hover {
+  background-color: whitesmoke;
+}
+
+mrc .mat-button {
+  width: 100%;
+  text-align: left;
+  font-size: 10pt;
+  height: 30px;
+  line-height: 30px;
+}
+
+mrc .mat-expansion-panel-header {
+  font-size: 10pt;
+}
+
+.mat-menu-content .mat-menu-item {
+  font-size: 9pt;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 8px;
+}
