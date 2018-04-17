@@ -2,8 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
+
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './login/register.component';
 
 //Mrc Components
 import { MrcComponent }     from './mrc/mrc.component';
@@ -21,12 +25,26 @@ import { MrcContentService } from './mrc/mrc-content/mrc-content.service';
 import { MaterialModule } from './material.module';
 import { PagesModule } from './mrc/pages/pages.module';
 
+const appRoutes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent},
+  { path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
+  },
+]
+
 @NgModule({
   declarations: [
-    AppComponent, MrcComponent, MrcContentComponent, MrcHeaderComponent, MrcHeaderConfigComponent, MrcHeaderMenuComponent, NavigationComponent,
+    AppComponent, LoginComponent, MrcComponent, MrcContentComponent, MrcHeaderComponent, 
+    MrcHeaderConfigComponent, MrcHeaderMenuComponent, NavigationComponent, RegisterComponent,
     RibbonCadastroComponent
   ],
   imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only
+    ),
     BrowserModule,
     FormsModule,
     HttpModule,

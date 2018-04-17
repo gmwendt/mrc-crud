@@ -10,6 +10,7 @@ mongoose.connect('mongodb://localhost/mean-app')
   .catch((err) => console.error(err));
 
 var book = require('./routes/book');
+var user = require('./routes/user');
 var app = express();
 
 app.use(logger('dev'));
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/book', book);
+app.use('/user', user);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

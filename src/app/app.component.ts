@@ -3,7 +3,8 @@ import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'my-app',
-  template: '<mrc></mrc>'
+  template: '<login></login>'
+  // template: '<mrc></mrc>'
 })
 export class AppComponent {
   constructor(@Inject(DOCUMENT) document: Document) {
