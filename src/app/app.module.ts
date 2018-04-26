@@ -6,8 +6,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './login/register.component';
+import { LoginModule } from './login/login.module';
+import { RegisterModule } from './register/register.module';
 
 //Mrc Components
 import { MrcComponent }     from './mrc/mrc.component';
@@ -19,6 +19,8 @@ import { NavigationComponent }     from './mrc/navigation/navigation.component';
 import { RibbonCadastroComponent } from './mrc/ribbons/ribbon-cadastro/ribbon-cadastro.component';
 
 //Services
+import { AuthGuardService } from './login/auth-guard.service';
+import { UserService } from './login/user.service';
 import { MrcContentService } from './mrc/mrc-content/mrc-content.service';
 
 //Modules
@@ -26,18 +28,30 @@ import { MaterialModule } from './material.module';
 import { PagesModule } from './mrc/pages/pages.module';
 
 const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent},
-  { path: '',
-    redirectTo: '/login',
-    pathMatch: 'full'
+  {
+    path: 'login',
+    loadChildren: 'app/login/login.module#LoginModule'
   },
+  {
+    path: 'register',
+    loadChildren: 'app/register/register.module#RegisterModule'
+  },
+  {
+    path: 'home',
+    canActivate: [AuthGuardService],
+    component: MrcComponent
+  },
+  {
+    path: '',
+    redirectTo: '',
+    pathMatch: 'full'
+  }
 ]
 
 @NgModule({
   declarations: [
-    AppComponent, LoginComponent, MrcComponent, MrcContentComponent, MrcHeaderComponent, 
-    MrcHeaderConfigComponent, MrcHeaderMenuComponent, NavigationComponent, RegisterComponent,
+    AppComponent, MrcComponent, MrcContentComponent, MrcHeaderComponent, 
+    MrcHeaderConfigComponent, MrcHeaderMenuComponent, NavigationComponent,
     RibbonCadastroComponent
   ],
   imports: [
@@ -48,11 +62,13 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     HttpModule,
+    LoginModule,
     MaterialModule,
-    PagesModule
+    PagesModule,
+    RegisterModule
   ],
-  providers: [MrcContentService],
-  exports: [MaterialModule, PagesModule],
+  providers: [AuthGuardService, MrcContentService, UserService],
+  exports: [LoginModule, MaterialModule, PagesModule, RegisterModule],
   bootstrap: [AppComponent],
   entryComponents: [RibbonCadastroComponent]
 })

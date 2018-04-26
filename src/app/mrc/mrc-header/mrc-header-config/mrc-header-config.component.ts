@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 //import { HttpService, MrcDataBaseHeaders } from './../../common/http.service';
 
-//import * as xml2json from 'jquery-xml2json';
+import * as xml2json from 'jquery-xml2json';
 
 @Component({
   selector: 'mrc-header-config',
@@ -23,7 +23,7 @@ export class MrcHeaderConfigComponent {
       var file = files[i];
 			this.readFileAsync(file).then(result => {
 				//TODO: mensagem adicionado com sucesso
-				//var json = xml2json(result);				
+				var json = xml2json(result);				
 				//this._http.addInstance(json, MrcDataBaseHeaders.NFsentrada).subscribe(result => console.log(result));
 			});
 		}

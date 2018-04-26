@@ -1,0 +1,25 @@
+<div>
+  <div>Nome</div>
+  <input (change)="user.name = boxName.value" #boxName/>
+</div>
+<div>
+  <div>E-mail</div>
+  <input (change)="user.email = boxEmail.value" #boxEmail />
+</div>
+<div>
+  <div>CNPJ</div>
+  <input />
+</div>
+<div>
+  <div>Razão social</div>
+  <input (change)="user.company = boxComp.value" #boxComp />
+</div>
+<div>
+  <div>Senha</div>
+  <input (change)="user.password = hashedPassword(boxPwd.value)" #boxPwd/>
+</div>
+<div>
+  <div>Confirmar Senha</div>
+  <input />
+</div>
+<button (click)="create_user()">OK</button>

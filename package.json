@@ -26,6 +26,7 @@
     "body-parser": "^1.18.2",
     "core-js": "^2.4.1",
     "express": "^4.16.3",
+    "jquery-xml2json": "0.0.8",
     "mongoose": "^5.0.14",
     "morgan": "^1.9.0",
     "rxjs": "^5.5.10",

@@ -3,7 +3,7 @@ import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'my-app',
-  template: '<login></login>'
+  template: '<router-outlet></router-outlet>'
   // template: '<mrc></mrc>'
 })
 export class AppComponent {

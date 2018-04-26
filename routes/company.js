@@ -1,51 +1,52 @@
+
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var User = require('../models/User.js');
+var Company = require('../models/Company.js');
 
-/* GET ALL USERS */
+/* GET ALL COMPANIES */
 router.get('/', function(req, res, next) {
-  User.find(function (err, products) {
+  Company.find(function (err, products) {
     if (err) return next(err);
     res.json(products);
   });
 });
 
-/* GET SINGLE USER BY ID */
+/* GET SINGLE COMPANY BY ID */
 router.get('/:id', function(req, res, next) {
-  User.findById(req.params.id, function (err, post) {
+  Company.findById(req.params.id, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
 });
 
-/* GET SINGLE USER BY EMAIL */
-router.get('/email/:email', function(req, res, next) {
-  var email = req.param("email");
-  User.find({"email": email},function(e,docs){
+/* GET SINGLE COMPANY BY CNPJ */
+router.get('/cnpj/:cnpj', function(req, res, next) {
+  var cnpj = req.param("cnpj");
+  Company.find({"cnpj": cnpj},function(e,docs){
     res.json(docs);
 });
 });
 
-/* SAVE USER */
+/* SAVE COMPANY */
 router.post('/', function(req, res, next) {
-  User.create(req.body, function (err, post) {
+  Company.create(req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
 });
 
-/* UPDATE USER */
+/* UPDATE COMPANY */
 router.put('/:id', function(req, res, next) {
-  User.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
+  Company.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
 });
 
-/* DELETE USER */
+/* DELETE COMPANY */
 router.delete('/:id', function(req, res, next) {
-  User.findByIdAndRemove(req.params.id, req.body, function (err, post) {
+  Company.findByIdAndRemove(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });

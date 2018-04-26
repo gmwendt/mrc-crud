@@ -1,11 +1,10 @@
 var mongoose = require('mongoose');
 
 var UserSchema = new mongoose.Schema({
-  email: String,
+  cnpj: number,
   name: String,
-  password: String,
-  company: String,
+  nfes: any[],
   expireDate: Date,
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Company', UserSchema);
