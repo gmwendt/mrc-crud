@@ -21,13 +21,14 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     //DEV
     var user: User = { 
-      companyCnpj:123456789,
+      companyCnpj: 36712522000163,
       email:"admin@mrc.com",
       id:1,
       name:"admin"
     };
 
     this._userService.currentUser = user;
+
     this._router.navigate(['home']);  
   }
 

@@ -1,7 +1,5 @@
 <div [matMenuTriggerFor]="appMenu">M</div>
 <mat-menu #appMenu="matMenu" yposition="below">
-  <button mat-menu-item (click)="input.click()">Importar XML</button>
+  <button mat-menu-item>Importar XML</button>
   <button mat-menu-item>Configurações</button>
 </mat-menu>
-<input type="file" multiple [accept]="_filesExtensions" style="display:none"
-       onclick="this.value = null" (change)="files_imported(input.files)" #input> 
