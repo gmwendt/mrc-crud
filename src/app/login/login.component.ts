@@ -6,7 +6,7 @@ import { UserService} from './user.service';
 import { LocalStorageConstants } from '../mrc/common/constants';
 import { User } from '../mrc/common/types';
 
-var sha512 = require('js-sha512');
+ var sha512 = require('js-sha512');
 
 @Component({
   selector: 'login',
