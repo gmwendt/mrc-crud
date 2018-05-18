@@ -9,6 +9,7 @@ import { User } from '../mrc/common/types';
 export class UserService {
 
   public currentUser: User;
+  public typedPassword: string;
   
   constructor(private _http: Http) { }
   
@@ -24,7 +25,7 @@ export class UserService {
     });
   }
 
-  getAllUsers() {
+  getAllUsers(): Promise<User[]> {
     return new Promise((resolve, reject) => {
       this._http.get('/user')
         .map(res => res.json())
@@ -36,7 +37,7 @@ export class UserService {
     });
   }
 
-  getUserByEmail(email: string) {
+  getUserByEmail(email: string): Promise<User[]> {
     return new Promise((resolve, reject) => {
       this._http.get('/user/email/' + email)
         .map(res => res.json())

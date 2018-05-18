@@ -4,6 +4,8 @@ import { Router, CanActivate } from '@angular/router';
 
 import { UserService } from './user.service';
 
+var sha512 = require('js-sha512');
+
 @Injectable()
 export class AuthGuardService implements CanActivate {
 
@@ -19,7 +21,14 @@ export class AuthGuardService implements CanActivate {
   }
 
   public isAuthenticated(): boolean {
-    if (this._userService.currentUser)
+    if (!this._userService.currentUser)
+      return false;
+
+    if (this._userService.currentUser.password == this.hashedPassword(this._userService.typedPassword))
       return true;
+  }
+
+  private hashedPassword(pwd: string): string {
+    return sha512.hex(pwd);
   }
 }
