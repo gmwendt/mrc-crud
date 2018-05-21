@@ -8,12 +8,24 @@ export enum ProfessionalType {
   Secretary
 }
 
+export class Account {
+  _id: string;
+  expireDate: Date;
+  id: number;
+  users: string;
+}
+
 export class User {
   public email: string;
-  public clinicId: string;
   public id: number;
   public name: string;
   public password: string;
-  public privilegies: UserPrivileges;
-  public professionalType: ProfessionalType;
+  public privilegies?: UserPrivileges;
+  public professionalType?: ProfessionalType;
+  public userName: string;
+}
+
+export class SystemInfo {
+  public _id?: string;
+  public nextAccountSequence: number;
 }

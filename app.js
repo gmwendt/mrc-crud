@@ -10,6 +10,9 @@ mongoose.connect('mongodb://localhost/mean-app')
   .catch((err) => console.error(err));
 
 var user = require('./routes/user');
+var account = require('./routes/account');
+var sysInfo = require('./routes/systemInfo');
+
 var app = express();
 
 app.use(logger('dev'));
@@ -18,6 +21,8 @@ app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/user', user);
+app.use('/account', account);
+app.use('/sysInfo', sysInfo);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

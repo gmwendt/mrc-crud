@@ -7,8 +7,8 @@
   <input (change)="user.email = boxEmail.value" #boxEmail />
 </div>
 <div>
-  <div>CPF/CNPJ</div>
-  <input />
+  <div>Usuário</div>
+  <input (change)="user.userName = boxUser.value" #boxUser />
 </div>
 <div>
   <div>Senha</div>
@@ -16,6 +16,6 @@
 </div>
 <div>
   <div>Confirmar Senha</div>
-  <input />
+  <input (change)="_confirmPass = boxConfirm.value" #boxConfirm />
 </div>
 <button (click)="create_user()">OK</button>

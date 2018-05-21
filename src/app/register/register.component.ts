@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { UserService} from '../login/user.service';
+
+import { RegisterService } from './register.service';
+
+import { UserService}  from '../login/user.service';
+import { User } from '../mrc/common/types';
+import { SystemInfoService } from '../shared/system-info.service';
 
 var sha512 = require('js-sha512');
 
@@ -8,16 +13,27 @@ var sha512 = require('js-sha512');
   templateUrl: './register.component.html'
 })
 export class RegisterComponent {
-  private user = {};
 
-  constructor(private _userService: UserService) { }
+  private _confirmPass: string;
+
+  private user: User;
+
+  constructor(private _register: RegisterService, private _systemInfo: SystemInfoService, private _userService: UserService) { }
 
   private create_user() {
-    this._userService.addUser(this.user).then((result) => {
-      console.log(result);
-    }, (err) => {
-      console.log(err);
-    });
+
+    if (this.user.password != this._confirmPass) {
+      //TODO: error message
+      return;
+    }
+
+    var nextId = this._systemInfo.systemInfo.nextAccountSequence;
+
+    // this._userService.addUser(this.user).then((result) => {
+    //   console.log(result);
+    // }, (err) => {
+    //   console.log(err);
+    // });
   }
 
   private hashedPassword(pwd: string): string {
