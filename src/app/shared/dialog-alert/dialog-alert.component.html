@@ -1,0 +1,25 @@
+<span mat-dialog-title>{{ caption }}</span>
+{{ text }}
+<mat-dialog-actions align="end">
+  <ng-container [ngSwitch]="button">
+    <ng-container *ngSwitchCase="alertButton.OK">
+      <button mat-button (click)="on_close(alertResult.OK)">OK</button>
+    </ng-container>
+    <ng-container *ngSwitchCase="alertButton.OKCancel">
+      <button mat-button (click)="on_close(alertResult.OK)">OK</button>
+      <button mat-button (click)="on_close(alertResult.Cancel)">Cancel</button>
+    </ng-container>
+    <ng-container *ngSwitchCase="alertButton.YesNo">
+      <button mat-button (click)="on_close(alertResult.Yes)">Yes</button>
+      <button mat-button (click)="on_close(alertResult.No)">No</button>
+    </ng-container>
+    <ng-container *ngSwitchCase="alertButton.YesNoCancel">
+      <button mat-button (click)="on_close(alertResult.Yes)">Yes</button>
+      <button mat-button (click)="on_close(alertResult.No)">No</button>
+      <button mat-button (click)="on_close(alertResult.Cancel)">Cancel</button>
+    </ng-container>
+    <ng-container *ngSwitchCaseDefault>
+      <button mat-button (click)="on_close(alertResult.OK)">OK</button>
+    </ng-container>
+  </ng-container>
+</mat-dialog-actions>

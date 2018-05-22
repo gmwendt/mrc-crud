@@ -22,14 +22,21 @@ import { RibbonCadastroComponent } from './mrc/ribbons/ribbon-cadastro/ribbon-ca
 import { AuthGuardService } from './login/auth-guard.service';
 import { UserService } from './login/user.service';
 import { MrcContentService } from './mrc/mrc-content/mrc-content.service';
+import { AccountService } from './shared/account.service';
+import { DialogService } from './shared/dialog.service';
+import { SystemInfoService } from './shared/system-info.service';
+
+//Shared
+import { DialogAlertComponent } from './shared/dialog-alert/dialog-alert.component';
 
 //Modules
 import { MaterialModule } from './material.module';
 import { PagesModule } from './mrc/pages/pages.module';
 
+
 const appRoutes: Routes = [
   {
-    path: 'login',
+    path: 'mrc-login',
     loadChildren: 'app/login/login.module#LoginModule'
   },
   {
@@ -50,7 +57,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent, MrcComponent, MrcContentComponent, MrcHeaderComponent, 
+    AppComponent, DialogAlertComponent, MrcComponent, MrcContentComponent, MrcHeaderComponent, 
     MrcHeaderConfigComponent, MrcHeaderMenuComponent, NavigationComponent,
     RibbonCadastroComponent
   ],
@@ -67,9 +74,10 @@ const appRoutes: Routes = [
     PagesModule,
     RegisterModule
   ],
-  providers: [AuthGuardService, MrcContentService, UserService],
+  providers: [AccountService, AuthGuardService, DialogService, MrcContentService, SystemInfoService, 
+    UserService],
   exports: [LoginModule, MaterialModule, PagesModule, RegisterModule],
   bootstrap: [AppComponent],
-  entryComponents: [RibbonCadastroComponent]
+  entryComponents: [DialogAlertComponent, RibbonCadastroComponent]
 })
 export class AppModule { }

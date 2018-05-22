@@ -1,7 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import * as xml2json from 'jquery-xml2json';
-
 @Component({
   selector: 'mrc-header-config',
 	templateUrl: './mrc-header-config.component.html',

@@ -3,19 +3,16 @@ import { Http, Headers } from '@angular/http';
 
 import 'rxjs/add/operator/map';
 
-import { User } from '../mrc/common/types';
+import { Account } from '../mrc/common/types';
 
 @Injectable()
-export class UserService {
+export class AccountService {
 
-  public currentUser: User;
-  public typedPassword: string;
-  
   constructor(private _http: Http) { }
-  
-  addUser(data) {
+
+  addAccount(data: Account) {
     return new Promise((resolve, reject) => {
-        this._http.post('/user', data)
+        this._http.post('/account', data)
           .map(res => res.json())
           .subscribe(res => {
             resolve(res);
@@ -24,10 +21,10 @@ export class UserService {
           });
     });
   }
-
-  getAllUsers(): Promise<User[]> {
+  
+  getAllAccounts(): Promise<Account[]> {
     return new Promise((resolve, reject) => {
-      this._http.get('/user')
+      this._http.get('/account')
         .map(res => res.json())
         .subscribe(res => {
           resolve(res);
@@ -37,9 +34,9 @@ export class UserService {
     });
   }
 
-  getUserByEmail(email: string): Promise<User[]> {
+  getAccountById(id: string): Promise<Account> {
     return new Promise((resolve, reject) => {
-      this._http.get('/user/email/' + email)
+      this._http.get('/account/id/' + id)
         .map(res => res.json())
         .subscribe(res => {
           resolve(res);

@@ -7,19 +7,15 @@
   <input (change)="user.email = boxEmail.value" #boxEmail />
 </div>
 <div>
-  <div>CNPJ</div>
-  <input />
-</div>
-<div>
-  <div>Razão social</div>
-  <input (change)="user.company = boxComp.value" #boxComp />
+  <div>Usuário</div>
+  <input (change)="user.userName = boxUser.value" #boxUser />
 </div>
 <div>
   <div>Senha</div>
-  <input (change)="user.password = hashedPassword(boxPwd.value)" #boxPwd/>
+  <input (change)="user.password = boxPwd.value" #boxPwd/>
 </div>
 <div>
   <div>Confirmar Senha</div>
-  <input />
+  <input (change)="_confirmPass = boxConfirm.value" #boxConfirm />
 </div>
 <button (click)="create_user()">OK</button>

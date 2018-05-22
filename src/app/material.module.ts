@@ -4,7 +4,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {
   MatExpansionModule, 
-  MatButtonModule,
+	MatButtonModule,
+	MatDialogModule,
 	MatInputModule, 
 	MatMenuModule,
 	MatTabsModule
@@ -14,6 +15,7 @@ import {
   imports: [
 		BrowserAnimationsModule,
 		MatButtonModule,
+		MatDialogModule,
     MatExpansionModule, 
 		MatInputModule, 
 		MatMenuModule,
@@ -22,6 +24,7 @@ import {
   exports: [
 		BrowserAnimationsModule,
 		MatButtonModule,
+		MatDialogModule,
 		MatExpansionModule, 
 		MatInputModule, 
 		MatMenuModule,
