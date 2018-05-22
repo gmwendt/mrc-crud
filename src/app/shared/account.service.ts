@@ -8,6 +8,8 @@ import { Account } from '../mrc/common/types';
 @Injectable()
 export class AccountService {
 
+  public current: Account;
+
   constructor(private _http: Http) { }
 
   addAccount(data: Account) {
