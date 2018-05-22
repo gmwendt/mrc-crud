@@ -19,7 +19,8 @@ export class RegisterComponent {
     email: '', name: '', password: '', userName: ''
   };
 
-  constructor(private _accountService: AccountService, private _systemInfo: SystemInfoService, private _userService: UserService) { }
+  constructor(private _accountService: AccountService, private _systemInfo: SystemInfoService, private _userService: UserService) { 
+  }
 
   private create_user() {
 
@@ -35,8 +36,8 @@ export class RegisterComponent {
 
     var nextId = this._systemInfo.systemInfo.nextAccountSequence;
     var account: Account = {
+      accountId: nextId,
       expireDate: new Date(),
-      id: nextId,
       users: JSON.stringify(userList) 
     }
 

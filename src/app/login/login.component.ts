@@ -20,13 +20,13 @@ import { DialogService } from '../shared/dialog.service';
 export class LoginComponent implements OnInit {
   private _accountId: string;
   private _pwd: string;
-  private _email: string;
+  private _userName: string;
 
   constructor(private _account: AccountService, private _userService: UserService, private _router: Router, 
     private _dialog: DialogService) { }
 
   ngOnInit() {
-    //DEV ONLY
+    //DEV MOCK
   /*var user: User = { 
       email: "admin@mrc.com",
       id: 1,
@@ -43,33 +43,25 @@ export class LoginComponent implements OnInit {
 
 
   private login(): void {
-    // this._userService.getUserByEmail(this._email).then((result: any[]) => {
-    //   if (result.length == 0) {
-    //     this.show_error_dialog('E-mail incorreto.');
-    //     return;
-    //   }
-      
-    //   var user: User = result[0];
-    //   if (user.password != this.hashedPassword) {
-    //     this.show_error_dialog('Senha incorreta.');
-    //     return;
-    //   }
-
-    //   this._userService.currentUser = user;
-    //   this._userService.typedPassword = this._pwd;
-
-    //   this._router.navigate(['home']);    
-    // }, (err) => {
-    //   console.log(err);
-    // });
-    this._account.getAccountById(this._accountId).then((acc: Account) => {
-      if (!acc) {
+    this._account.getAccountByAccountId(this._accountId).then((acc: Account[]) => {
+      if (acc.length == 0) {
         this.show_error_dialog('Conta inválida.');
         return;
       }
 
-      var users: User[] = JSON.parse(acc.users);
-      
+      var userList: User[] = JSON.parse(acc[0].users);
+      var user: User = userList.find(u => u.userName == this._userName);
+
+      if (user.password != this.hashedPassword) {
+        this.show_error_dialog('Senha incorreta.');
+        return;
+      }
+
+      this._userService.currentUser = user;
+      this._userService.typedPassword = this._pwd;
+
+      this._router.navigate(['home']); 
+
     }, (err) => {
       console.log(err);
     })

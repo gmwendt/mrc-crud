@@ -34,15 +34,26 @@ export class AccountService {
     });
   }
 
-  getAccountById(id: string): Promise<Account> {
+  getAccountByAccountId(accountId: string): Promise<Account[]> {
     return new Promise((resolve, reject) => {
-      this._http.get('/account/id/' + id)
+      this._http.get('/account/accountId/' + accountId)
         .map(res => res.json())
         .subscribe(res => {
           resolve(res);
         }, (err) => {
           reject(err);
         });
+    });
+  }
+
+  deleteAccount(id: string) {
+    return new Promise((resolve, reject) => {
+        this._http.delete('/account/' + id)
+          .subscribe(res => {
+            resolve(res);
+          }, (err) => {
+            reject(err);
+          });
     });
   }
 }

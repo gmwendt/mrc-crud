@@ -10,8 +10,8 @@ export enum ProfessionalType {
 
 export class Account {
   _id?: string;
+  accountId: number;
   expireDate: Date;
-  id: number;
   users: string;
 }
 

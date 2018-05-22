@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var User = require('./User');
 
 var AccountSchema = new mongoose.Schema({
-  id: Number,
+  accountId: Number,
   expireDate: Date,
   users: String
 });
