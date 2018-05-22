@@ -22,7 +22,10 @@ import { RibbonCadastroComponent } from './mrc/ribbons/ribbon-cadastro/ribbon-ca
 import { AuthGuardService } from './login/auth-guard.service';
 import { UserService } from './login/user.service';
 import { MrcContentService } from './mrc/mrc-content/mrc-content.service';
+<<<<<<< HEAD
 import { AccountService } from './shared/account.service';
+=======
+>>>>>>> 13facdf680e445a82f8ba349b8a5aca7073bacdb
 import { DialogService } from './shared/dialog.service';
 import { SystemInfoService } from './shared/system-info.service';
 
@@ -74,8 +77,12 @@ const appRoutes: Routes = [
     PagesModule,
     RegisterModule
   ],
+<<<<<<< HEAD
   providers: [AccountService, AuthGuardService, DialogService, MrcContentService, SystemInfoService, 
     UserService],
+=======
+  providers: [AuthGuardService, DialogService, MrcContentService, SystemInfoService, UserService],
+>>>>>>> 13facdf680e445a82f8ba349b8a5aca7073bacdb
   exports: [LoginModule, MaterialModule, PagesModule, RegisterModule],
   bootstrap: [AppComponent],
   entryComponents: [DialogAlertComponent, RibbonCadastroComponent]
