@@ -18,11 +18,7 @@ export class AppComponent implements OnInit {
     this._systemInfo.getSystemInfo().then((infos: SystemInfo[]) => {
       if (infos.length > 0)
         this._systemInfo.systemInfo = infos[0];
-<<<<<<< HEAD
       else //TODO: percorrer lista de accounts, encontrar a maior, incrementar
-=======
-      else 
->>>>>>> 13facdf680e445a82f8ba349b8a5aca7073bacdb
         this._systemInfo.addSystemInfo({
           nextAccountSequence: 1000
         });
