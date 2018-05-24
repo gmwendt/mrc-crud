@@ -5,7 +5,8 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/mean-app')
+//mongoose.connect('mongodb://localhost/mean-app')
+mongoose.connect('mongodb+srv://sa:Abcd1234@cluster0-rewhk.mongodb.net/mean-app?retryWrites=true')
   .then(() =>  console.log('connection successful'))
   .catch((err) => console.error(err));
 
