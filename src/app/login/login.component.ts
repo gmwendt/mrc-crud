@@ -27,19 +27,21 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     //DEV MOCK
-    // this._account.getAccountByAccountId('1000').then((result => {
-    //   if (result.length == 0)
-    //     return;
+     this._account.getAccountByAccountId('1003').then((acc => {
+       if (acc.length == 0)
+         return;
+      
+      this._userService.getUserByUsername(acc[0].accountId, 'admin').then((user => {
+        if(user.length == 0)
+          return;
 
-    //   this._account.current = result[0];
-    //   var users: User[] = JSON.parse(this._account.current.users);
-    //   this._userService.currentUser = users[0];
-    //   this._userService.typedPassword = '123456';
-
-    //   this._router.navigate(['home']);
-    // }))
+          this._account.current = acc[0];
+          this._userService.currentUser = user[0];
+          this._userService.typedPassword = '123456';
+          this._router.navigate(['home']);
+      }));
+     }));
   }
-
 
   private login(): void {
     this._account.getAccountByAccountId(this._accountId).then((acc: Account[]) => {
