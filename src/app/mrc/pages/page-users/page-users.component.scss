@@ -1,0 +1,30 @@
+page-users {
+	margin: 16px;
+	display: block;
+
+	.page-users-title {
+		font-size: 12pt;
+	}
+
+	.page-users-item {
+		margin: 8px;
+		flex-direction: row;
+		display: flex;
+
+		.mrc-text-1 {
+			padding: 3px;
+			width: 200px;
+		}
+
+		> input {
+			width: 250px;
+		}
+	}
+
+	//material overriden
+	.mat-tab-label {
+		height: 30px;
+		margin-top: 8px;
+		min-width: 80px;
+	}
+}

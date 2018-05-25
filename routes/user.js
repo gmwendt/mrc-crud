@@ -19,10 +19,14 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
-/* GET SINGLE USER BY EMAIL */
-router.get('/email/:email', function(req, res, next) {
-  var email = req.param("email");
-  User.find({"email": email},function(e,docs){
+/* GET SINGLE USERS BY ACCOUNT ID */
+router.get('/accountRefId/:accountId/userName/:userName', function(req, res, next) {
+  var accountId = req.param("accountId");
+  var userName = req.param("userName");
+  User.find({$and: [
+    {"accountRefId": accountId}, 
+    {"userName": userName}
+  ]}, function(e,docs){
     res.json(docs);
 });
 });

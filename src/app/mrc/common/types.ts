@@ -1,27 +1,18 @@
-export enum UserPrivileges {
-  Administrator,
-  Default
-}
-
-export enum ProfessionalType {
-  Doctor,
-  Secretary
-}
-
 export class Account {
   _id?: string;
   accountId: number;
   expireDate: Date;
-  users: string;
+  userList: string;
 }
 
 export class User {
   public _id?: string;
+  public accountRefId: number;
   public email: string;
   public name: string;
-  public password: string;
-  public privilegies?: UserPrivileges;
-  public professionalType?: ProfessionalType;
+  public passwordHash: string;
+  public passwordSalt: string;
+  public administrator: boolean;
   public userName: string;
 }
 

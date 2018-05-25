@@ -24,7 +24,7 @@ export class AuthGuardService implements CanActivate {
     if (!this._userService.currentUser)
       return false;
 
-    if (this._userService.currentUser.password == this.hashedPassword(this._userService.typedPassword))
+    if (this._userService.currentUser.passwordHash == this.hashedPassword(this._userService.typedPassword + this._userService.currentUser.passwordSalt))
       return true;
   }
 

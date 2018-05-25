@@ -16,7 +16,6 @@ import { MrcHeaderComponent }     from './mrc/mrc-header/mrc-header.component';
 import { MrcHeaderConfigComponent } from './mrc/mrc-header/mrc-header-config/mrc-header-config.component';
 import { MrcHeaderMenuComponent } from './mrc/mrc-header-menu/mrc-header-menu.component';
 import { NavigationComponent }     from './mrc/navigation/navigation.component';
-import { RibbonCadastroComponent } from './mrc/ribbons/ribbon-cadastro/ribbon-cadastro.component';
 
 //Services
 import { AuthGuardService } from './login/auth-guard.service';
@@ -32,6 +31,7 @@ import { DialogAlertComponent } from './shared/dialog-alert/dialog-alert.compone
 //Modules
 import { MaterialModule } from './material.module';
 import { PagesModule } from './mrc/pages/pages.module';
+import { RibbonsModule } from './mrc/ribbons/ribbons.module';
 
 
 const appRoutes: Routes = [
@@ -59,7 +59,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent, DialogAlertComponent, MrcComponent, MrcContentComponent, MrcHeaderComponent, 
     MrcHeaderConfigComponent, MrcHeaderMenuComponent, NavigationComponent,
-    RibbonCadastroComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -72,12 +71,13 @@ const appRoutes: Routes = [
     LoginModule,
     MaterialModule,
     PagesModule,
-    RegisterModule
+    RegisterModule,
+    RibbonsModule
   ],
   providers: [AccountService, AuthGuardService, DialogService, MrcContentService, SystemInfoService, 
     UserService],
-  exports: [LoginModule, MaterialModule, PagesModule, RegisterModule],
+  exports: [LoginModule, MaterialModule, PagesModule, RegisterModule, RibbonsModule],
   bootstrap: [AppComponent],
-  entryComponents: [DialogAlertComponent, RibbonCadastroComponent]
+  entryComponents: [DialogAlertComponent]
 })
 export class AppModule { }

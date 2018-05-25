@@ -1,0 +1,59 @@
+.mrc-ribbon-config {
+  width: 100%;
+  height: 70px;
+  background-color: #f2f2f2;
+  display: flex;
+}
+
+.mrc-ribbon-config .mrc-ribbon-config-group {
+  height: 100%;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mrc-ribbon-config .mrc-ribbon-config-group-content {
+  height: 100%;
+  display: flex;
+}
+
+.mrc-ribbon-config .mrc-ribbon-config-group-item {
+  height: 100%;
+  margin-left: 16px;
+  padding: 0 4px;
+  cursor: pointer;
+  color: #4f4f4f;
+}
+
+.mrc-ribbon-config .mrc-ribbon-config-group-item .icon {
+  font-size: 24pt;
+  text-align: center;
+}
+
+.mrc-ribbon-config .mrc-ribbon-config-group-item > span {
+  font-size: 9pt;
+}
+
+.mrc-ribbon-config .mrc-ribbon-config-group-item:hover {
+  background-color: #d2d2d2;
+}
+
+.mrc-ribbon-config .mrc-ribbon-config-group-item:active {
+  background-color: #a8a8a8;
+}
+
+.mrc-ribbon-config .mrc-ribbon-config-group-footer {
+  width: 100%;
+  text-align: center;
+  font-size: 8pt;
+  color: #bdbdbd;
+}
+
+.mrc-ribbon-config .mrc-ribbon-config-divider {
+  height: 56px;
+  background-color: #bdbdbd;
+  margin-left: 16px;
+  margin-top: 8px;
+  width: 1px;
+}

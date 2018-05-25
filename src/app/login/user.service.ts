@@ -13,7 +13,7 @@ export class UserService {
   
   constructor(private _http: Http) { }
   
-  addUser(data) {
+  addUser(data: User): Promise<User[]> {
     return new Promise((resolve, reject) => {
         this._http.post('/user', data)
           .map(res => res.json())
@@ -37,9 +37,9 @@ export class UserService {
     });
   }
 
-  getUserByEmail(email: string): Promise<User[]> {
+  getUserByUsername(accountId: number, username: string): Promise<User[]> {
     return new Promise((resolve, reject) => {
-      this._http.get('/user/email/' + email)
+      this._http.get('/user/accountRefId/' + accountId + '/userName/' + username)
         .map(res => res.json())
         .subscribe(res => {
           resolve(res);
@@ -47,5 +47,16 @@ export class UserService {
           reject(err);
         });
     });
+  }
+
+  deleteUser(id: string) {
+    return new Promise((resolve, reject) => {
+      this._http.delete('/user/' + id)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+  });
   }
 }

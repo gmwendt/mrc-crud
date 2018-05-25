@@ -8,6 +8,7 @@ import {
 	MatDialogModule,
 	MatInputModule, 
 	MatMenuModule,
+	MatTableModule,
 	MatTabsModule
 } from '@angular/material';
 
@@ -19,6 +20,7 @@ import {
     MatExpansionModule, 
 		MatInputModule, 
 		MatMenuModule,
+		MatTableModule,
 		MatTabsModule
   ],
   exports: [
@@ -28,6 +30,7 @@ import {
 		MatExpansionModule, 
 		MatInputModule, 
 		MatMenuModule,
+		MatTableModule,
 		MatTabsModule
   ]
 })
