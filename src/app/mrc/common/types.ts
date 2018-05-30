@@ -8,11 +8,11 @@ export class Account {
 export class User {
   public _id?: string;
   public accountRefId: number;
+  public administrator: boolean;
   public email: string;
   public name: string;
   public passwordHash: string;
   public passwordSalt: string;
-  public administrator: boolean;
   public userName: string;
 }
 

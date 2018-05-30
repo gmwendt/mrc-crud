@@ -1,29 +1,25 @@
 page-users {
-  margin: 16px;
   display: block;
+  margin: 16px;
+  width: 100%;
 }
 
 page-users .page-users-title {
   font-size: 12pt;
+  margin: 8px 8px 8px 22px;
 }
 
-page-users .page-users-item {
-  margin: 8px;
-  flex-direction: row;
-  display: flex;
+page-users .mat-column-current {
+  flex: none;
+  width: 80px;
 }
 
-page-users .page-users-item .mrc-text-1 {
-  padding: 3px;
-  width: 200px;
+page-users .mat-column-administrator {
+  flex: none;
+  text-align: center;
+  width: 150px;
 }
 
-page-users .page-users-item > input {
-  width: 250px;
-}
-
-page-users .mat-tab-label {
-  height: 30px;
-  margin-top: 8px;
-  min-width: 80px;
+page-users .mrc-button {
+  margin: 8px 8px 8px 22px;
 }

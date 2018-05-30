@@ -28,7 +28,15 @@ router.get('/accountRefId/:accountId/userName/:userName', function(req, res, nex
     {"userName": userName}
   ]}, function(e,docs){
     res.json(docs);
+  });
 });
+
+/*GEL USERS LIST BY ACCOUNT ID*/
+router.get('/accountRefId/:accountId', function(req, res, next) {
+  var accountId = req.param("accountId");
+  User.find({"accountRefId": accountId}, function(e,docs) {
+    res.json(docs);
+  });
 });
 
 /* SAVE USER */

@@ -26,6 +26,7 @@ import { DialogService } from './shared/dialog.service';
 import { SystemInfoService } from './shared/system-info.service';
 
 //Shared
+import { DialogAddUserComponent } from './shared/dialog-add-user/dialog-add-user.component';
 import { DialogAlertComponent } from './shared/dialog-alert/dialog-alert.component';
 
 //Modules
@@ -57,7 +58,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent, DialogAlertComponent, MrcComponent, MrcContentComponent, MrcHeaderComponent, 
+    AppComponent, DialogAddUserComponent, DialogAlertComponent, MrcComponent, MrcContentComponent, MrcHeaderComponent, 
     MrcHeaderConfigComponent, MrcHeaderMenuComponent, NavigationComponent,
   ],
   imports: [
@@ -78,6 +79,6 @@ const appRoutes: Routes = [
     UserService],
   exports: [LoginModule, MaterialModule, PagesModule, RegisterModule, RibbonsModule],
   bootstrap: [AppComponent],
-  entryComponents: [DialogAlertComponent]
+  entryComponents: [DialogAddUserComponent, DialogAlertComponent]
 })
 export class AppModule { }

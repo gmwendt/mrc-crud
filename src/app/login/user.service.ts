@@ -49,6 +49,30 @@ export class UserService {
     });
   }
 
+  listAccountUsers(accountId: number): Promise<User[]> {
+    return new Promise((resolve, reject) => {
+      this._http.get('/user/accountRefId/' + accountId)
+        .map(res => res.json())
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
+  updateUser(id: string, data: User): Promise<any> {
+    return new Promise((resolve, reject) => {
+        this._http.put('/user/' + id, data)
+          .map(res => res.json())
+          .subscribe(res => {
+            resolve(res);
+          }, (err) => {
+            reject(err);
+          });
+    });
+  }
+
   deleteUser(id: string) {
     return new Promise((resolve, reject) => {
       this._http.delete('/user/' + id)

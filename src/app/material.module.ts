@@ -12,9 +12,12 @@ import {
 	MatTabsModule
 } from '@angular/material';
 
+import { CdkTableModule } from '@angular/cdk/table';
+
 @NgModule({
   imports: [
 		BrowserAnimationsModule,
+		CdkTableModule,
 		MatButtonModule,
 		MatDialogModule,
     MatExpansionModule, 
@@ -25,6 +28,7 @@ import {
   ],
   exports: [
 		BrowserAnimationsModule,
+		CdkTableModule,
 		MatButtonModule,
 		MatDialogModule,
 		MatExpansionModule, 

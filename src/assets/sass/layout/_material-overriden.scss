@@ -9,4 +9,20 @@
       padding: 0 8px;
     }
   }
+
+  .mat-table {
+    box-shadow: none;
+    
+    .mat-cell,
+    .mat-header-cell {
+      font-family: Arial;
+      font-size: 9pt;
+    }
+
+    .mat-row, 
+    .mat-header-row {
+      height: 28px;
+      min-height: 28px;
+    }
+  }
 }

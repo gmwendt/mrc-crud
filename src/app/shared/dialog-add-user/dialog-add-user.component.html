@@ -1,0 +1,28 @@
+<!-- <span mat-dialog-title>{{ caption }}</span>
+{{ text }} -->
+<!-- <mat-dialog-actions align="end">
+</mat-dialog-actions> -->
+<div class="dialog-add-user-title">Novo usuário</div>
+<div class="dialog-add-user-separator"></div>
+<div class="dialog-add-user-item">
+  <div class="mrc-text-1">Nome:</div>
+  <input type="text"/>
+</div>
+<div class="dialog-add-user-item">
+  <div class="mrc-text-1">E-mail:</div>
+  <input type="text"/>
+</div>
+<div class="dialog-add-user-item">
+  <div class="mrc-text-1">Nome de usuário:</div>
+  <input type="text"/>
+</div>
+<div class="dialog-add-user-item">
+    <div class="mrc-text-1">Administrador:</div>
+    <input type="checkbox"/>
+  </div>
+<div class="dialog-add-user-separator"></div>
+<div>
+  <a class="mrc-button" (click)="create_clicked()">Criar usuário</a>
+  <a class="mrc-button" (click)="cancel_clicked()">Cancelar</a>
+</div>
+

@@ -1,4 +1,4 @@
-input, textarea, select {
+.mrc-global input, .mrc-global textarea, .mrc-global select {
   padding: 0px 4px;
   box-sizing: border-box;
   height: 20px;
@@ -8,16 +8,55 @@ input, textarea, select {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  border-color: #b0b0b0;
 }
 
-h1 {
+.mrc-global h1 {
   color: #252525;
   font-size: 12pt;
 }
 
-.mrc-text-1 {
+.mrc-global .mrc-text-1 {
   color: #252525;
   font-size: 9pt;
+}
+
+.mrc-global .mrc-button {
+  -moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
+  -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
+  box-shadow: inset 0px 1px 0px 0px #ffffff;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
+  background: -moz-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+  background: -webkit-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+  background: -o-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+  background: -ms-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+  background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0);
+  background-color: #ffffff;
+  border: 1px solid #dcdcdc;
+  display: inline-block;
+  cursor: pointer;
+  color: #666666;
+  font-family: Arial;
+  font-size: 13px;
+  padding: 6px 12px;
+  text-decoration: none;
+}
+
+.mrc-global .mrc-button:hover {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f6f6f6), color-stop(1, #ffffff));
+  background: -moz-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+  background: -webkit-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+  background: -o-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+  background: -ms-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+  background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#ffffff',GradientType=0);
+  background-color: #f6f6f6;
+}
+
+.mrc-global .mrc-button:active {
+  position: relative;
+  top: 1px;
 }
 
 .mrc-global .mat-menu-content {
@@ -29,6 +68,22 @@ h1 {
   height: 30px;
   line-height: 30px;
   padding: 0 8px;
+}
+
+.mrc-global .mat-table {
+  box-shadow: none;
+}
+
+.mrc-global .mat-table .mat-cell,
+.mrc-global .mat-table .mat-header-cell {
+  font-family: Arial;
+  font-size: 9pt;
+}
+
+.mrc-global .mat-table .mat-row,
+.mrc-global .mat-table .mat-header-row {
+  height: 28px;
+  min-height: 28px;
 }
 
 html {

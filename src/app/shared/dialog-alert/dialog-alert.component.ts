@@ -26,7 +26,7 @@ export interface DialogAlertData {
 @Component({
   selector: 'dialog-alert',
   templateUrl: './dialog-alert.component.html',
-  //styleUrls: ['./dialog-alert.component.css'],
+  styleUrls: ['./dialog-alert.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
 export class DialogAlertComponent {
