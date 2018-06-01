@@ -2,13 +2,16 @@ dialog-add-user {
   display: flex;
   flex-direction: column;
   height: 100%;
-  max-height: 200px;
-  max-width: 350px;
-  min-width: 200px;
 }
 
 dialog-add-user input {
+  margin-left: 4px;
   width: 100%;
+}
+
+dialog-add-user input[type="checkbox"] {
+  height: 14px;
+  width: 14px;
 }
 
 dialog-add-user .dialog-add-user-title {
@@ -23,14 +26,39 @@ dialog-add-user .dialog-add-user-separator {
   margin: 8px 0 8px 0;
 }
 
-dialog-add-user .dialog-add-user-item {
+dialog-add-user .dialog-add-user-content {
+  display: flex;
+}
+
+dialog-add-user .dialog-add-user-content-column-item {
   display: flex;
   margin: 4px;
 }
 
-dialog-add-user .dialog-add-user-item .mrc-text-1 {
-  width: 145px;
+dialog-add-user .dialog-add-user-content-column-item .mrc-text-1 {
   margin-top: 3px;
+}
+
+dialog-add-user .dialog-add-user-content-column-item .column-1 {
+  width: 146px;
+}
+
+dialog-add-user .dialog-add-user-content-column-item-checkbox {
+  display: flex;
+  margin-left: 2px;
+}
+
+dialog-add-user .dialog-add-user-content-column-item-checkbox-text {
+  font-size: 9pt;
+  padding-top: 3px;
+}
+
+dialog-add-user .dialog-user-error-msg {
+  color: red;
+  font-size: 9pt;
+  position: relative;
+  text-align: end;
+  top: 8px;
 }
 
 dialog-add-user .mrc-button {

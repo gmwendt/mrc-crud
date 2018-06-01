@@ -15,9 +15,10 @@ export enum DialogAddUserResult {
 })
 export class DialogAddUserComponent {
 
-  public alertResult = DialogAddUserResult;
+  public dialogResult = DialogAddUserResult;
 
-  public message: string;
+  private errorMsg: string;
+  private hasError: boolean;
 
   constructor(private _dialog: MatDialogRef<DialogAddUserComponent>) {
   }

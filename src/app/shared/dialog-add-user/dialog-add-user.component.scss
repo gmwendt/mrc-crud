@@ -2,12 +2,15 @@ dialog-add-user {
     display: flex;
     flex-direction: column;
     height: 100%;
-    max-height: 200px;
-    max-width: 350px;
-    min-width: 200px;
     
     input { 
+      margin-left: 4px;
       width: 100%;
+    }
+
+    input[type="checkbox"] {
+      height: 14px;
+      width: 14px;
     }
 
     .dialog-add-user-title {
@@ -22,14 +25,42 @@ dialog-add-user {
       margin: 8px 0 8px 0;
     }
 
-    .dialog-add-user-item {
+    .dialog-add-user-content {
       display: flex;
-      margin: 4px;
 
-      .mrc-text-1 {
-        width: 145px;
-        margin-top: 3px;
+      &-column {
+
+        &-item {
+          display: flex;
+          margin: 4px;
+    
+          .mrc-text-1 {
+            margin-top: 3px;
+          }
+          
+          .column-1 {
+            width: 146px;
+          }
+
+          &-checkbox {
+            display: flex;
+            margin-left: 2px;
+
+            &-text {
+              font-size: 9pt;
+              padding-top: 3px;
+            }
+          }
+        }
       }
+    }
+
+    .dialog-user-error-msg {
+      color: red;
+      font-size: 9pt;
+      position: relative;
+      text-align: end;
+      top: 8px;
     }
 
     .mrc-button {

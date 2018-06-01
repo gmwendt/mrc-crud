@@ -4,25 +4,41 @@
 </mat-dialog-actions> -->
 <div class="dialog-add-user-title">Novo usuário</div>
 <div class="dialog-add-user-separator"></div>
-<div class="dialog-add-user-item">
-  <div class="mrc-text-1">Nome:</div>
-  <input type="text"/>
-</div>
-<div class="dialog-add-user-item">
-  <div class="mrc-text-1">E-mail:</div>
-  <input type="text"/>
-</div>
-<div class="dialog-add-user-item">
-  <div class="mrc-text-1">Nome de usuário:</div>
-  <input type="text"/>
-</div>
-<div class="dialog-add-user-item">
-    <div class="mrc-text-1">Administrador:</div>
-    <input type="checkbox"/>
+<div class="dialog-add-user-content">
+  <div class="dialog-add-user-content-column">
+    <div class="dialog-add-user-content-column-item">
+      <div class="mrc-text-1 column-1">Nome:</div>
+      <input type="text"/>
+    </div>
+    <div class="dialog-add-user-content-column-item">
+      <div class="mrc-text-1 column-1">E-mail:</div>
+      <input type="text"/>
+    </div>
+    <div class="dialog-add-user-content-column-item">
+      <div class="mrc-text-1 column-1">Nome de usuário:</div>
+      <input type="text"/>
+    </div>
   </div>
+  <div class="dialog-add-user-content-column">
+    <div class="dialog-add-user-content-column-item">
+      <div class="mrc-text-1">Permissões:</div>
+      <div>
+        <div class="dialog-add-user-content-column-item-checkbox">
+          <input type="checkbox"/>
+          <div class="dialog-add-user-content-column-item-checkbox-text">Agenda</div>
+        </div>
+        <div class="dialog-add-user-content-column-item-checkbox">
+          <input type="checkbox"/>
+          <div class="dialog-add-user-content-column-item-checkbox-text">Finanças</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="dialog-add-user-separator"></div>
 <div>
-  <a class="mrc-button" (click)="create_clicked()">Criar usuário</a>
   <a class="mrc-button" (click)="cancel_clicked()">Cancelar</a>
+  <a class="mrc-button" (click)="create_clicked()">Criar usuário</a>
 </div>
+<div *ngIf="hasError" class="dialog-user-error-msg">{{ errorMsg }}</div>
 

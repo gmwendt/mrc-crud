@@ -42,7 +42,7 @@ export class PageUsersComponent implements OnInit {
 	}
 
 	private add_user_clicked(): void {
-		var dialogRef = this._dialog.open(DialogAddUserComponent, { width: '400px' });
+		var dialogRef = this._dialog.open(DialogAddUserComponent, { width: '500px' });
 		dialogRef.afterClosed().subscribe(result => {
 			//TODO
 		});
