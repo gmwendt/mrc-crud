@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { UserService}  from '../login/user.service';
-import { Account, User } from '../mrc/common/types';
+import { Account, Capabilities, User } from '../mrc/common/types';
 import { AccountService } from '../shared/account.service';
 import { SystemInfoService } from '../shared/system-info.service';
 
@@ -17,7 +17,8 @@ export class RegisterComponent {
   private _pass: string;
 
   private user: User = {
-    accountRefId: 0, administrator: true, email: '', name: '', passwordHash: '', passwordSalt: '', userName: ''
+    accountRefId: 0, capabilities: [], email: '', name: '', passwordHash: '', passwordExpired: false, 
+    passwordSalt: '', userName: ''
   };
 
   constructor(private _accountService: AccountService, private _systemInfo: SystemInfoService, private _userService: UserService) { 
@@ -29,12 +30,17 @@ export class RegisterComponent {
       //TODO: error message
       return;
     }
-
+    
     var nextId = this._systemInfo.systemInfo.nextAccountSequence;
 
     this.user.passwordSalt = this.randomString(8);
     this.user.passwordHash = this.hashPassword(this._pass, this.user.passwordSalt);
     this.user.accountRefId = nextId;
+
+    this.user.capabilities.push(Capabilities.AccessFinances);
+    this.user.capabilities.push(Capabilities.RegisterSystemStuffs);
+    this.user.capabilities.push(Capabilities.RegisterUsers);
+    this.user.capabilities.push(Capabilities.ScheduleAndRegisterPatient);
 
     var userList: string[] = [];
     userList.push(this.user.userName);

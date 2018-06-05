@@ -8,15 +8,15 @@
   <div class="dialog-add-user-content-column">
     <div class="dialog-add-user-content-column-item">
       <div class="mrc-text-1 column-1">Nome:</div>
-      <input type="text"/>
+      <input type="text" [ngClass]="{ 'error-input': nameError }" (change)="name = nameBox.value" #nameBox />
     </div>
     <div class="dialog-add-user-content-column-item">
       <div class="mrc-text-1 column-1">E-mail:</div>
-      <input type="text"/>
+      <input type="text" [ngClass]="{ 'error-input': emailError }" (change)="email = emailBox.value" #emailBox />
     </div>
     <div class="dialog-add-user-content-column-item">
       <div class="mrc-text-1 column-1">Nome de usuário:</div>
-      <input type="text"/>
+      <input type="text" [ngClass]="{ 'error-input': userNameError }" (change)="userName = usernameBox.value" #usernameBox/>
     </div>
   </div>
   <div class="dialog-add-user-content-column">
@@ -25,11 +25,19 @@
       <div>
         <div class="dialog-add-user-content-column-item-checkbox">
           <input type="checkbox"/>
-          <div class="dialog-add-user-content-column-item-checkbox-text">Agenda</div>
+          <div class="dialog-add-user-content-column-item-checkbox-text">Agendamento de consultas e cadastro de pacientes.</div>
         </div>
         <div class="dialog-add-user-content-column-item-checkbox">
           <input type="checkbox"/>
-          <div class="dialog-add-user-content-column-item-checkbox-text">Finanças</div>
+          <div class="dialog-add-user-content-column-item-checkbox-text">Cadastro de profissionais, serviços, convênios, pacientes e documentos.</div>
+        </div>
+        <div class="dialog-add-user-content-column-item-checkbox">
+          <input type="checkbox"/>
+          <div class="dialog-add-user-content-column-item-checkbox-text">Cadastro de usuários.</div>
+        </div>
+        <div class="dialog-add-user-content-column-item-checkbox">
+          <input type="checkbox"/>
+          <div class="dialog-add-user-content-column-item-checkbox-text">Acessar finanças.</div>
         </div>
       </div>
     </div>

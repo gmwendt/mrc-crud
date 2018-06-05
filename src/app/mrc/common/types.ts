@@ -1,3 +1,10 @@
+export enum Capabilities {
+  AccessFinances,
+  RegisterSystemStuffs,
+  RegisterUsers,
+  ScheduleAndRegisterPatient,
+}
+
 export class Account {
   _id?: string;
   accountId: number;
@@ -8,9 +15,10 @@ export class Account {
 export class User {
   public _id?: string;
   public accountRefId: number;
-  public administrator: boolean;
+  public capabilities: Capabilities[];
   public email: string;
   public name: string;
+  public passwordExpired: boolean;
   public passwordHash: string;
   public passwordSalt: string;
   public userName: string;
