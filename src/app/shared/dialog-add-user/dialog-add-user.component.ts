@@ -38,27 +38,38 @@ export class DialogAddUserComponent {
   private userName: string;
   private userNameError: boolean;
 
-  private canAccessFinances: boolean;
-  private canRegisterSystemStuffs: boolean;
-  private canRegisterUsers: boolean;
   private canScheduleAndRegisterPatient: boolean;
+  private canRegisterSystemData: boolean;
+  private canRegisterUsers: boolean;
+  private canAccessFinances: boolean;
 
   constructor(private _dialog: MatDialogRef<DialogAddUserComponent>) {
-  }
-
-  on_close(result: DialogAddUserResult): void {
-    this._dialog.close(result);
   }
 
   private create_clicked(): void {
     if (!this.check_errors())
       return;
 
-    this.newUserData.name = this.name;
-    this.newUserData.email = this.email;
-    this.newUserData.userName = this.userName;
+    this.newUserData = {
+      capabilities: [],
+      name: this.name,
+      email: this.email,
+      userName: this.userName
+    }    
 
-    console.log(this.canAccessFinances);
+    if (this.canScheduleAndRegisterPatient)
+      this.newUserData.capabilities.push(Capabilities.ScheduleAndRegisterPatient);
+
+    if (this.canRegisterSystemData)
+      this.newUserData.capabilities.push(Capabilities.RegisterSystemData);
+
+    if (this.canRegisterUsers)
+      this.newUserData.capabilities.push(Capabilities.RegisterUsers);
+
+    if (this.canAccessFinances)
+      this.newUserData.capabilities.push(Capabilities.AccessFinances);
+
+    this._dialog.close(DialogAddUserResult.OK);
   }
 
   private cancel_clicked(): void {
@@ -98,6 +109,8 @@ export class DialogAddUserComponent {
       this.errorMsg = 'Já existe um usuário com este Nome de usuário.'
       return false;
     }
+
+    //TODO: Check if email format is valid.
 
     return true;
   }

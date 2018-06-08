@@ -6,7 +6,7 @@ import { UserService} from './user.service';
 import { LocalStorageConstants } from '../mrc/common/constants';
 import { Account, User } from '../mrc/common/types';
 
-import { DialogAlertButton, DialogAlertResult } from '../shared/dialog-alert/dialog-alert.component';
+import { DialogAlertButton, DialogAlertResult, DialogAlertData } from '../shared/dialog-alert/dialog-alert.component';
 import { AccountService } from '../shared/account.service';
 import { DialogService } from '../shared/dialog.service';
 
@@ -74,7 +74,12 @@ export class LoginComponent implements OnInit {
   }
 
   private show_error_dialog(msg: string): void {
-    this._dialog.openAlert(msg, 'Erro', DialogAlertButton.OK).then(result => { });
+    var dialogData: DialogAlertData = {
+      text: msg,
+      caption: 'Erro',
+      button: DialogAlertButton.OK
+    };
+    this._dialog.openAlert(dialogData).then(result => { });
   }
 
   private hashPassword(pwd: string, salt: string): string {

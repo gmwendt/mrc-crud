@@ -59,6 +59,18 @@
   top: 1px;
 }
 
+.mrc-global .mrc-dialog-title {
+  font-size: 9pt;
+  margin-left: 4px;
+}
+
+.mrc-global .mrc-dialog-separator {
+  background-color: #b0b0b0;
+  height: 1px;
+  width: 100%;
+  margin: 8px 0 8px 0;
+}
+
 .mrc-global .mat-menu-content {
   padding: 0;
 }
@@ -84,6 +96,14 @@
 .mrc-global .mat-table .mat-header-row {
   height: 28px;
   min-height: 28px;
+}
+
+.mrc-global .mat-dialog-container {
+  padding: 12px;
+}
+
+.mrc-global .mat-dialog-container .mat-dialog-actions {
+  margin-bottom: -12px;
 }
 
 html {

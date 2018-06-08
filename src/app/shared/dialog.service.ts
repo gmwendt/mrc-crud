@@ -32,7 +32,7 @@ import {
   
   export interface IDialogService {
     open<T>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>, config?: MatDialogConfig): MatDialogRef<T>;
-    openAlert<T>(text: string, caption: string, button?: DialogAlertButton, config?: MatDialogConfig): Promise<DialogAlertResult>;
+    openAlert<T>(dialogData: DialogAlertData, config?: MatDialogConfig): Promise<DialogAlertResult>;
     //openMovable<T>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>, renderer: Renderer, config?: MatDialogConfig, settings?: HandlerSettings): MatDialogRef<T>
     getDialogById<T>(id: string): MatDialogRef<T>;
     close(): void;
@@ -56,19 +56,31 @@ import {
   
     open<T>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>, config?: MatDialogConfig): MatDialogRef<T> {
       config = config || new MatDialogConfig();
-      
+      config.disableClose = config.disableClose === undefined ? true : config.disableClose;
+
       return this.open_dialog(componentOrTemplateRef, config);
     }
   
-    openAlert<T>(text: string, caption: string, button?: DialogAlertButton, config?: MatDialogConfig): Promise<DialogAlertResult> {
+    openAlert<T>(dialogData: DialogAlertData, config?: MatDialogConfig): Promise<DialogAlertResult> {
+      //text: string, caption: string, button?: DialogAlertButton, textAlign?: string
       config = config || new MatDialogConfig();
+      config.disableClose = config.disableClose === undefined ? true : config.disableClose;
+
       config.data = <DialogAlertData> {
-        caption: caption,
-        text: text,
-        button: button,
+        button: dialogData.button,
+        caption: dialogData.caption,
+        text: dialogData.text,
+        textAlign: dialogData.textAlign
       };
   
       var dialogRef = this.open_dialog(DialogAlertComponent, config);
+
+      if (dialogData.timer) {
+        setTimeout(() => {
+          dialogRef.close();
+        }, dialogData.timer);
+      }
+
       return dialogRef.afterClosed().toPromise();
     }
   

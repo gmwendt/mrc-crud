@@ -4,11 +4,16 @@ dialog-alert {
     height: 100%;
     min-width: 200px;
     max-width: 350px;
-    max-height: 200px;
+    max-height: 220px;
     
     > span {
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    .dialog-alert-text {
+      font-size: 9pt;
+      margin-left: 4px;
     }
   }
   

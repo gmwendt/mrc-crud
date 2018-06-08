@@ -4,7 +4,9 @@
 
   <ng-container matColumnDef="current">
     <mat-header-cell *matHeaderCellDef></mat-header-cell>
-    <mat-cell *matCellDef="let element">(você)</mat-cell>
+    <mat-cell *matCellDef="let element">
+      <div *ngIf="currentUser.userName == element.userName">(você)</div>
+    </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="username">
@@ -17,8 +19,8 @@
     <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
   </ng-container>
   
-  <ng-container matColumnDef="administrator">
-    <mat-header-cell *matHeaderCellDef> ADMINISTRADOR </mat-header-cell>
+  <ng-container matColumnDef="commands">
+    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.administrator}} </mat-cell>
   </ng-container>
   

@@ -1,9 +1,5 @@
-<!-- <span mat-dialog-title>{{ caption }}</span>
-{{ text }} -->
-<!-- <mat-dialog-actions align="end">
-</mat-dialog-actions> -->
-<div class="dialog-add-user-title">Novo usuário</div>
-<div class="dialog-add-user-separator"></div>
+<div class="mrc-dialog-title">Novo usuário</div>
+<div class="mrc-dialog-separator"></div>
 <div class="dialog-add-user-content">
   <div class="dialog-add-user-content-column">
     <div class="dialog-add-user-content-column-item">
@@ -24,15 +20,15 @@
       <div class="mrc-text-1">Permissões:</div>
       <div>
         <div class="dialog-add-user-content-column-item-checkbox">
-          <input type="checkbox"/>
+          <input type="checkbox" [(ngModel)]="canScheduleAndRegisterPatient" />
           <div class="dialog-add-user-content-column-item-checkbox-text">Agendamento de consultas e cadastro de pacientes.</div>
         </div>
         <div class="dialog-add-user-content-column-item-checkbox">
-          <input type="checkbox"/>
+          <input type="checkbox" [(ngModel)]="canRegisterSystemData" />
           <div class="dialog-add-user-content-column-item-checkbox-text">Cadastro de profissionais, serviços, convênios, pacientes e documentos.</div>
         </div>
         <div class="dialog-add-user-content-column-item-checkbox">
-          <input type="checkbox"/>
+          <input type="checkbox" [(ngModel)]="canRegisterUsers" />
           <div class="dialog-add-user-content-column-item-checkbox-text">Cadastro de usuários.</div>
         </div>
         <div class="dialog-add-user-content-column-item-checkbox">

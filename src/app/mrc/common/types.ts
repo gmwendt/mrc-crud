@@ -1,6 +1,6 @@
 export enum Capabilities {
   AccessFinances,
-  RegisterSystemStuffs,
+  RegisterSystemData,
   RegisterUsers,
   ScheduleAndRegisterPatient,
 }

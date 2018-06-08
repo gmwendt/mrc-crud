@@ -13,7 +13,7 @@ export class UserService {
   
   constructor(private _http: Http) { }
   
-  addUser(data: User): Promise<User[]> {
+  addUser(data: User): Promise<User> {
     return new Promise((resolve, reject) => {
         this._http.post('/user', data)
           .map(res => res.json())

@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '../dialog.service';
 export enum DialogAlertButton {
   OK,
   OKCancel,
+  None,
   YesNo,
   YesNoCancel,
 }
@@ -21,6 +22,8 @@ export interface DialogAlertData {
   caption?: string;
   text?: string;
   button?: DialogAlertButton;
+  textAlign?: string;
+  timer?: number;
 }
 
 @Component({
@@ -36,22 +39,27 @@ export class DialogAlertComponent {
 
   public message: string;
 
-  constructor( @Inject(MAT_DIALOG_DATA) private m_data: DialogAlertData, private m_dialog: MatDialogRef<DialogAlertComponent>) {
+  constructor( @Inject(MAT_DIALOG_DATA) private _data: DialogAlertData, private _dialog: MatDialogRef<DialogAlertComponent>) {
   }
 
   get button(): DialogAlertButton {
-    return this.m_data.button;
+    return this._data.button;
   }
 
   get caption(): string {
-    return this.m_data.caption;
+    return this._data.caption;
   }
 
   get text(): string {
-    return this.m_data.text;
+    return this._data.text;
+  }
+
+  get textAlign(): string {
+    var align = this._data.textAlign ? this._data.textAlign : 'left';
+    return align;
   }
 
   on_close(result: DialogAlertResult): void {
-    this.m_dialog.close(result);
+    this._dialog.close(result);
   }
 }

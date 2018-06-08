@@ -38,7 +38,7 @@ export class RegisterComponent {
     this.user.accountRefId = nextId;
 
     this.user.capabilities.push(Capabilities.AccessFinances);
-    this.user.capabilities.push(Capabilities.RegisterSystemStuffs);
+    this.user.capabilities.push(Capabilities.RegisterSystemData);
     this.user.capabilities.push(Capabilities.RegisterUsers);
     this.user.capabilities.push(Capabilities.ScheduleAndRegisterPatient);
 

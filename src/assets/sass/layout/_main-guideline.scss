@@ -57,4 +57,16 @@ input, textarea, select {
 		position:relative;
 		top:1px;
 	}
+
+	.mrc-dialog-title {
+		font-size: 9pt;
+    margin-left: 4px;
+	}
+
+	.mrc-dialog-separator {
+		background-color: #b0b0b0;
+    height: 1px;
+    width: 100%;
+    margin: 8px 0 8px 0;
+	}
 }

@@ -14,18 +14,6 @@ dialog-add-user input[type="checkbox"] {
   width: 14px;
 }
 
-dialog-add-user .dialog-add-user-title {
-  font-size: 9pt;
-  margin-left: 4px;
-}
-
-dialog-add-user .dialog-add-user-separator {
-  background-color: #b0b0b0;
-  height: 1px;
-  width: 100%;
-  margin: 8px 0 8px 0;
-}
-
 dialog-add-user .dialog-add-user-content {
   display: flex;
 }
@@ -70,5 +58,5 @@ dialog-add-user .mrc-button {
 }
 
 dialog-add-user .error-input {
-  border: solid 2px #ff1919;
+  border: solid 1px #ff1919;
 }
