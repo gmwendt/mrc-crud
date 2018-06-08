@@ -1,12 +1,19 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '../dialog.service';
-import { User } from '../../mrc/common/types';
+import { Capabilities, User } from '../../mrc/common/types';
 
 export enum DialogAddUserResult {
   Cancel,
   OK
 }
+
+export class NewUserData {
+  public capabilities: Capabilities[];
+  public email: string;
+  public name: string;
+  public userName: string;
+} 
 
 @Component({
   selector: 'dialog-add-user',
@@ -16,7 +23,7 @@ export enum DialogAddUserResult {
 })
 export class DialogAddUserComponent {
 
-  public dialogResult = DialogAddUserResult;
+  public newUserData: NewUserData;
   public usersList: User[];
 
   private errorMsg: string;
@@ -31,6 +38,11 @@ export class DialogAddUserComponent {
   private userName: string;
   private userNameError: boolean;
 
+  private canAccessFinances: boolean;
+  private canRegisterSystemStuffs: boolean;
+  private canRegisterUsers: boolean;
+  private canScheduleAndRegisterPatient: boolean;
+
   constructor(private _dialog: MatDialogRef<DialogAddUserComponent>) {
   }
 
@@ -42,9 +54,11 @@ export class DialogAddUserComponent {
     if (!this.check_errors())
       return;
 
-      // var user: User = {
-      //   accountRefId: this
-      // }
+    this.newUserData.name = this.name;
+    this.newUserData.email = this.email;
+    this.newUserData.userName = this.userName;
+
+    console.log(this.canAccessFinances);
   }
 
   private cancel_clicked(): void {
