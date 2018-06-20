@@ -9,6 +9,7 @@ var UserSchema = new mongoose.Schema({
   passwordExpired: Boolean,
   passwordHash: String,
   passwordSalt: String,
+  resetPwdToken: String,
 });
 
 module.exports = mongoose.model('User', UserSchema);

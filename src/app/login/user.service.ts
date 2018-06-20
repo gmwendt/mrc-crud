@@ -83,4 +83,22 @@ export class UserService {
         });
   });
   }
+
+  generateSalt(): string {
+    return this.randomStringGenerator(8);
+  }
+
+  generateToken(): string {
+    return this.randomStringGenerator(24);
+  }
+
+  private randomStringGenerator(length: number): string {
+    var mask = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var result = '';
+    
+    for (var i = length; i > 0; --i) 
+      result += mask[Math.floor(Math.random() * mask.length)];
+
+    return result;
+  }
 }

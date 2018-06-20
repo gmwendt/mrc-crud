@@ -31,7 +31,8 @@ export class PageUsersComponent implements OnInit {
 	ngOnInit(): void {
 		this.currentUser = this._userService.currentUser;
 		this._accId = this._account.current.accountId;
-		this._userService.deleteUser('5b1ad4100e5d5319e42327a6');
+		//Mock to delete users
+		//this._userService.deleteUser('5b1ad4100e5d5319e42327a6');
 
 		this._account.getAccountByAccountId(this._accId.toString()).then(accs => {
 			if (accs.length == 0)
@@ -70,7 +71,8 @@ export class PageUsersComponent implements OnInit {
 				userName: userResult.userName,
 				passwordExpired: true,
 				passwordHash: '',
-				passwordSalt: ''
+				passwordSalt: '',
+				resetPwdToken: this._userService.generateToken()
 			};
 
 			this._userService.addUser(userData).then((user: User) => {

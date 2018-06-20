@@ -21,6 +21,7 @@ export class User {
   public passwordExpired: boolean;
   public passwordHash: string;
   public passwordSalt: string;
+  public resetPwdToken: string;
   public userName: string;
 }
 

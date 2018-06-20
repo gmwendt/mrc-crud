@@ -18,7 +18,7 @@ export class RegisterComponent {
 
   private user: User = {
     accountRefId: 0, capabilities: [], email: '', name: '', passwordHash: '', passwordExpired: false, 
-    passwordSalt: '', userName: ''
+    passwordSalt: '', resetPwdToken: '', userName: ''
   };
 
   constructor(private _accountService: AccountService, private _systemInfo: SystemInfoService, private _userService: UserService) { 
@@ -33,7 +33,7 @@ export class RegisterComponent {
     
     var nextId = this._systemInfo.systemInfo.nextAccountSequence;
 
-    this.user.passwordSalt = this.randomString(8);
+    this.user.passwordSalt = this._userService.generateSalt();
     this.user.passwordHash = this.hashPassword(this._pass, this.user.passwordSalt);
     this.user.accountRefId = nextId;
 
@@ -68,15 +68,5 @@ export class RegisterComponent {
 
   private hashPassword(pwd: string, salt: string): string {
     return sha512.hex(pwd + salt);
-  }
-
-  private randomString(length: number): string {
-    var mask = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    var result = '';
-    
-    for (var i = length; i > 0; --i) 
-      result += mask[Math.floor(Math.random() * mask.length)];
-
-    return result;
   }
 }
