@@ -24,13 +24,17 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/user', user);
 app.use('/account', account);
 app.use('/sysInfo', sysInfo);
+app.use('/', express.static('dist', { redirect: false }));
+app.get('*',  function(req, res, next) {
+  res.sendFile(path.resolve('dist/index.html')); 
+});
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+/*app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
-});
+});*/
 
 // error handler
 app.use(function(err, req, res, next) {

@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
+import { AuthGuardService } from '../login/auth-guard.service';
 import { UserService}  from '../login/user.service';
 import { Account, Capabilities, User } from '../mrc/common/types';
 import { AccountService } from '../shared/account.service';
@@ -11,7 +13,7 @@ var sha512 = require('js-sha512');
   selector: 'register',
   templateUrl: './register.component.html'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
   private _confirmPass: string;
   private _pass: string;
@@ -21,7 +23,15 @@ export class RegisterComponent {
     passwordSalt: '', resetPwdToken: '', userName: ''
   };
 
-  constructor(private _accountService: AccountService, private _systemInfo: SystemInfoService, private _userService: UserService) { 
+  constructor(private _accountService: AccountService, private _systemInfo: SystemInfoService, private _userService: UserService,
+    private _auth: AuthGuardService, private _router: Router) { 
+  }
+
+  ngOnInit() {
+    if (this._auth.isAuthenticated()) {
+      this._router.navigate(['home']);
+      //TODO
+    }
   }
 
   private create_user() {

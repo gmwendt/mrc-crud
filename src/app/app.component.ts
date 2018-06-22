@@ -6,8 +6,8 @@ import { SystemInfoService } from './shared/system-info.service';
 
 @Component({
   selector: 'my-app',
-  template: '<router-outlet></router-outlet>'
-  // template: '<mrc></mrc>'
+  //template: '<router-outlet></router-outlet>'
+  template: '<mrc></mrc>'
 })
 export class AppComponent implements OnInit {
   constructor(@Inject(DOCUMENT) document: Document, private _systemInfo: SystemInfoService) {
