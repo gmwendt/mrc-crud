@@ -61,9 +61,12 @@ export class UserService {
     });
   }
 
-  updateUser(id: string, data: User): Promise<any> {
+  updateUser(data: User): Promise<any> {
+    if (!data._id)
+      return;
+
     return new Promise((resolve, reject) => {
-        this._http.put('/user/' + id, data)
+        this._http.put('/user/' + data._id, data)
           .map(res => res.json())
           .subscribe(res => {
             resolve(res);
@@ -85,15 +88,16 @@ export class UserService {
   }
 
   generateSalt(): string {
-    return this.randomStringGenerator(8);
+    var mask = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&*()-+=';
+    return this.randomStringGenerator(mask, 8);
   }
 
   generateToken(): string {
-    return this.randomStringGenerator(24);
+    var mask = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    return this.randomStringGenerator(mask, 24);
   }
 
-  private randomStringGenerator(length: number): string {
-    var mask = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  private randomStringGenerator(mask: string, length: number): string {
     var result = '';
     
     for (var i = length; i > 0; --i) 

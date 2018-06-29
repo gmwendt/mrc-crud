@@ -6,7 +6,8 @@ import { User } from '../../common/types';
 import { UserService } from '../../../login/user.service';
 
 import { AccountService } from '../../../shared/account.service';
-import { DialogService } from '../../../shared/dialog.service';
+
+var sha512 = require('js-sha512');
 
 @Component({
 	selector: 'page-reset-password',
@@ -38,7 +39,10 @@ export class PageResetPasswordComponent implements OnDestroy, OnInit {
 
 			this._userService.getUserByUsername(this._accNum, this._username).then((users: User[]) => {
 				if (users.length == 0)
-					return;
+					return; //todo: redirect to invalid page
+
+				if (users[0].resetPwdToken != this._token)
+					return; //todo: redirect to invalid page
 					
 				this._user = users[0];	
 			});
@@ -48,6 +52,25 @@ export class PageResetPasswordComponent implements OnDestroy, OnInit {
 	// private retrieveUser(): Promise<User> {
 		
 	// }
+
+	private ok_clicked(): void {
+		if (this.password != this.passwordConfirm) {
+			return;
+		}
+
+		this._user.passwordSalt = this._userService.generateSalt();
+		this._user.passwordHash = this.hashPassword(this.password, this._user.passwordSalt);
+		this._user.resetPwdToken = '';
+		this._user.passwordExpired = false;
+
+		this._userService.updateUser(this._user).then(result => {
+			//todo: msg usuário atualizado; redirecionar
+		});
+	}
+
+	private hashPassword(pwd: string, salt: string): string {
+    return sha512.hex(pwd + salt);
+  }
 
 	ngOnDestroy() {
 		if (this._routeSubscription)
