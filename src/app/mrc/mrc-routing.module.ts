@@ -3,7 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuardService } from '../login/auth-guard.service';
 import { LoginComponent } from '../login/login.component';
-import { MrcComponent } from './mrc.component';
+import { MrcHomeComponent } from './mrc-home/mrc-home.component';
+import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
 import { RegisterComponent } from '../register/register.component';
 
 const mrcRoutes: Routes = [
@@ -20,7 +21,11 @@ const mrcRoutes: Routes = [
   {
     path: 'home',
     canActivate: [AuthGuardService],
-    component: MrcComponent
+    component: MrcHomeComponent
+  },
+  {
+    path: 'reset-pass/:accNum/:userName64/:token',
+    component: PageResetPasswordComponent
   },
   {
     path: '',

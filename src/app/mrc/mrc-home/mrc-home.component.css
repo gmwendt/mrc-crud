@@ -1,0 +1,4 @@
+mrc-home mrc-content {
+  display: flex;
+  overflow: auto;
+}
