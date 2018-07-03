@@ -54,7 +54,7 @@ export class PageResetPasswordComponent implements OnDestroy, OnInit {
 	// }
 
 	private ok_clicked(): void {
-		if (this.password != this.passwordConfirm) {
+		if (this.password != this.passwordConfirm || !this._user) {
 			return;
 		}
 
