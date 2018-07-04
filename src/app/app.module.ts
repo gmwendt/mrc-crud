@@ -14,19 +14,16 @@ import { AccountService } from './shared/account.service';
 import { DialogService } from './shared/dialog.service';
 import { SystemInfoService } from './shared/system-info.service';
 
-//Shared
-import { DialogAddUserComponent } from './shared/dialog-add-user/dialog-add-user.component';
-import { DialogAlertComponent } from './shared/dialog-alert/dialog-alert.component';
-
 //Modules
 import { MaterialModule } from './material.module';
 import { MrcModule } from './mrc/mrc.module';
 import { PagesModule } from './mrc/pages/pages.module';
 import { RibbonsModule } from './mrc/ribbons/ribbons.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
-    AppComponent, DialogAddUserComponent, DialogAlertComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -37,11 +34,12 @@ import { RibbonsModule } from './mrc/ribbons/ribbons.module';
     MrcModule,
     PagesModule,
     RegisterModule,
-    RibbonsModule
+    RibbonsModule,
+    SharedModule
   ],
   providers: [AccountService, DialogService, SystemInfoService, UserService],
   exports: [LoginModule, MaterialModule, MrcModule, PagesModule, RegisterModule, RibbonsModule],
   bootstrap: [AppComponent],
-  entryComponents: [DialogAddUserComponent, DialogAlertComponent]
+  
 })
 export class AppModule { }

@@ -1,0 +1,13 @@
+progress-spinner {
+  text-align: center;
+}
+
+progress-spinner .progress-spinner-container {
+  position: absolute;
+  left: calc(50% - 40px);
+  top: calc(50% - 40px);
+}
+
+progress-spinner .progress-spinner-container > div {
+  font-size: 9pt;
+}

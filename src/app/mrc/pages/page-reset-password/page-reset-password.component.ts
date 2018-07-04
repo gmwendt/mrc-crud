@@ -28,6 +28,7 @@ export class PageResetPasswordComponent implements OnDestroy, OnInit {
 	private password: string;
 	private passwordConfirm: string;
 	private errorMsg: string;
+	private loading: boolean = true;
 
 	constructor(private _account: AccountService, private _userService: UserService, 
 		private _actRoute: ActivatedRoute, private _router: Router) {
@@ -51,6 +52,7 @@ export class PageResetPasswordComponent implements OnDestroy, OnInit {
 				}
 					
 				this._user = users[0];	
+				this.loading = false;
 			});
 		});
 	}

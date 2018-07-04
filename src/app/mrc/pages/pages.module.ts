@@ -6,9 +6,10 @@ import { PageResetPasswordComponent } from './page-reset-password/page-reset-pas
 import { PageUsersComponent } from './page-users/page-users.component';
 
 import { MaterialModule } from '../../material.module';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
-	imports: [ MaterialModule ],
+	imports: [ MaterialModule, SharedModule ],
 	declarations: [ PageInvalidComponent, PageProductsComponent, PageResetPasswordComponent, PageUsersComponent ],
 	exports: [ PageInvalidComponent, PageProductsComponent, PageResetPasswordComponent, PageUsersComponent ],
 	entryComponents: [ PageProductsComponent, PageUsersComponent ]

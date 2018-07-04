@@ -1,0 +1,19 @@
+page-invalid {
+  height: 100%;
+}
+
+page-invalid .page-invalid-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 80px);
+}
+
+page-invalid .page-invalid-container .page-invalid-sorry {
+  font-size: 30pt;
+}
+
+page-invalid .page-invalid-container .page-invalid-text {
+  font-size: 11pt;
+}
