@@ -9,7 +9,7 @@ export enum DialogAddUserResult {
 }
 
 export class NewUserData {
-  public capabilities: Capabilities[];
+  public capabilities: Capabilities;
   public email: string;
   public name: string;
   public userName: string;
@@ -39,7 +39,7 @@ export class DialogAddUserComponent {
   private userNameError: boolean;
 
   private canScheduleAndRegisterPatient: boolean;
-  private canRegisterSystemData: boolean;
+  private canManageSystemData: boolean;
   private canRegisterUsers: boolean;
   private canAccessFinances: boolean;
 
@@ -51,23 +51,23 @@ export class DialogAddUserComponent {
       return;
 
     this.newUserData = {
-      capabilities: [],
+      capabilities: new Capabilities(),
       name: this.name,
       email: this.email,
       userName: this.userName
     }    
 
     if (this.canScheduleAndRegisterPatient)
-      this.newUserData.capabilities.push(Capabilities.ScheduleAndRegisterPatient);
+      this.newUserData.capabilities.canScheduleAndRegisterPatient = true;
 
-    if (this.canRegisterSystemData)
-      this.newUserData.capabilities.push(Capabilities.RegisterSystemData);
+    if (this.canManageSystemData)
+      this.newUserData.capabilities.canManageSystemData = true;
 
     if (this.canRegisterUsers)
-      this.newUserData.capabilities.push(Capabilities.RegisterUsers);
+      this.newUserData.capabilities.canRegisterUsers = true;
 
     if (this.canAccessFinances)
-      this.newUserData.capabilities.push(Capabilities.AccessFinances);
+      this.newUserData.capabilities.canAccessFinances = true;
 
     this._dialog.close(DialogAddUserResult.OK);
   }

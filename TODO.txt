@@ -1,5 +1,5 @@
 [X] change add user alert; create new password alert
-[ ] user management [delete]
+[/] user management [delete]
 [ ] layout dialog add user
 [ ] loading spinner em todos cenários
 [ ] layout botões da alert-dialog com problema

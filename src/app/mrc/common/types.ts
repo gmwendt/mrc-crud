@@ -1,8 +1,19 @@
-export enum Capabilities {
-  AccessFinances,
-  RegisterSystemData,
-  RegisterUsers,
-  ScheduleAndRegisterPatient,
+export class Capabilities {
+  constructor(public canAccessFinances?: boolean | undefined, public canManageSystemData?: boolean | undefined, 
+    public canRegisterUsers?: boolean | undefined, public canScheduleAndRegisterPatient?: boolean | undefined) { }
+
+  toJSON(): string {
+    return JSON.stringify({
+      'canAccessFinances': this.canAccessFinances,
+      'canManageSystemData': this.canManageSystemData,
+      'canRegisterUsers': this.canRegisterUsers,
+      'canScheduleAndRegisterPatient': this.canScheduleAndRegisterPatient
+    });
+  }
+
+  static fromJSON(json: string): Capabilities {
+    return JSON.parse(json);
+  }
 }
 
 export class Account {
@@ -15,7 +26,7 @@ export class Account {
 export class User {
   public _id?: string;
   public accountRefId: number;
-  public capabilities: Capabilities[];
+  public capabilities: Capabilities;
   public email: string;
   public name: string;
   public passwordExpired: boolean;

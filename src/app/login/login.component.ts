@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { UserService} from './user.service';
 
 import { LocalStorageConstants } from '../mrc/common/constants';
-import { Account, User } from '../mrc/common/types';
+import { Account, User, Capabilities } from '../mrc/common/types';
 
 import { DialogAlertButton, DialogAlertResult, DialogAlertData } from '../shared/dialog-alert/dialog-alert.component';
 import { AccountService } from '../shared/account.service';
@@ -27,7 +27,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     //DEV MOCK
-     this._account.getAccountByAccountId('1004').then((acc => {
+    //Mock to delete users
+    //this._userService.deleteUser('5b3e2c23e99c4144988e601e');
+    
+     this._account.getAccountByAccountId('1005').then((acc => {
        if (acc.length == 0)
          return;
       

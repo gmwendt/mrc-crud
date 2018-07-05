@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
   private _pass: string;
 
   private user: User = {
-    accountRefId: 0, capabilities: [], email: '', name: '', passwordHash: '', passwordExpired: false, 
+    accountRefId: 0, capabilities: new Capabilities(), email: '', name: '', passwordHash: '', passwordExpired: false, 
     passwordSalt: '', resetPwdToken: '', userName: ''
   };
 
@@ -47,10 +47,10 @@ export class RegisterComponent implements OnInit {
     this.user.passwordHash = this.hashPassword(this._pass, this.user.passwordSalt);
     this.user.accountRefId = nextId;
 
-    this.user.capabilities.push(Capabilities.AccessFinances);
-    this.user.capabilities.push(Capabilities.RegisterSystemData);
-    this.user.capabilities.push(Capabilities.RegisterUsers);
-    this.user.capabilities.push(Capabilities.ScheduleAndRegisterPatient);
+    this.user.capabilities.canAccessFinances = true;
+    this.user.capabilities.canManageSystemData = true;
+    this.user.capabilities.canRegisterUsers = true;
+    this.user.capabilities.canScheduleAndRegisterPatient = true;
 
     var userList: string[] = [];
     userList.push(this.user.userName);

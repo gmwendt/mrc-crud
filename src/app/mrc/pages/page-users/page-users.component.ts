@@ -30,9 +30,7 @@ export class PageUsersComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.currentUser = this._userService.currentUser;
-		this._accId = this._account.current.accountId;
-		//Mock to delete users
-		//this._userService.deleteUser('5b1ad4100e5d5319e42327a6');
+		this._accId = this._account.current.accountId;		
 
 		this._account.getAccountByAccountId(this._accId.toString()).then(accs => {
 			if (accs.length == 0)

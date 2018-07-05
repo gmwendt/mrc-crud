@@ -34,3 +34,7 @@
   .icon-add:before {
       content: "\e901";
   }
+
+  .icon-delete:before {
+    content: "\e902";
+}
