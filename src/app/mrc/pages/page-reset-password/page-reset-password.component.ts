@@ -6,6 +6,8 @@ import { User } from '../../common/types';
 import { UserService } from '../../../login/user.service';
 
 import { AccountService } from '../../../shared/account.service';
+import { DialogService } from '../../../shared/dialog.service';
+import { DialogAlertData, DialogAlertButton } from '../../../shared/dialog-alert/dialog-alert.component';
 
 var sha512 = require('js-sha512');
 
@@ -30,7 +32,7 @@ export class PageResetPasswordComponent implements OnDestroy, OnInit {
 	private errorMsg: string;
 	private loading: boolean = true;
 
-	constructor(private _account: AccountService, private _userService: UserService, 
+	constructor(private _account: AccountService, private _userService: UserService, private _dialog: DialogService,
 		private _actRoute: ActivatedRoute, private _router: Router) {
 	}
 	
@@ -57,10 +59,6 @@ export class PageResetPasswordComponent implements OnDestroy, OnInit {
 		});
 	}
 
-	// private retrieveUser(): Promise<User> {
-		
-	// }
-
 	private ok_clicked(): void {
 		if (!this._user) {
 			this.errorMsg = 'Este usuário não foi localizado'
@@ -77,13 +75,33 @@ export class PageResetPasswordComponent implements OnDestroy, OnInit {
 		this._user.passwordExpired = false;
 
 		this._userService.updateUser(this._user).then(result => {
-			//todo: msg usuário atualizado; redirecionar
-		});
+			var dialogData: DialogAlertData = {
+				caption: 'Nova senha',
+				text: 'Sua senha foi atualizada com sucesso!',
+				button: DialogAlertButton.OK,
+				textAlign: 'center'
+			}
+
+			this._dialog.openAlert(dialogData, { height: '117px' }).then(() => {
+				this._router.navigate(['login']);
+			});
+		}, err => this.show_error(err));
 	}
 
 	private hashPassword(pwd: string, salt: string): string {
     return sha512.hex(pwd + salt);
-  }
+	}
+	
+	private show_error(error: any): void {
+		var dialogData: DialogAlertData = {
+			caption: 'Erro',
+			text: '[ERRO] ' + error,
+			button: DialogAlertButton.OK,
+			textAlign: 'center',
+		}
+
+		this._dialog.openAlert(dialogData, { height: '130px' });
+	}
 
 	ngOnDestroy() {
 		if (this._routeSubscription)

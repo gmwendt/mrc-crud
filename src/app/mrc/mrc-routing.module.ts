@@ -11,12 +11,10 @@ import { RegisterComponent } from '../register/register.component';
 const mrcRoutes: Routes = [
   {
     path: 'login',
-    // loadChildren: 'app/login/login.module#LoginModule'
     component: LoginComponent
   },
   {
     path: 'register',
-    //loadChildren: 'app/register/register.module#RegisterModule'
     component: RegisterComponent
   },
   {
@@ -31,12 +29,13 @@ const mrcRoutes: Routes = [
   {
     path: 'invalid-page',
     component: PageInvalidComponent
-  },
-  {
-    path: '',
-    redirectTo: '',
-    pathMatch: 'full'
-  }
+  },  
+  // {
+  //   path: '',
+  //   redirectTo: '',
+  //   pathMatch: 'full'
+  // }
+  { path: '**', component: PageInvalidComponent }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(mrcRoutes);

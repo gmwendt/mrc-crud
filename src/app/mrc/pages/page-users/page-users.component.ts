@@ -76,21 +76,21 @@ export class PageUsersComponent implements OnInit {
 			};
 
 			this._userService.addUser(userData).then((user: User) => {
+				console.log('Reset password link: http://localhost:4000/reset-pass/' + this._accId + '/' + btoa(user.userName).replace(/=/g , '') + '/' + user.resetPwdToken);
 				var dialogData: DialogAlertData = {
-					text: 'Usuário criado com sucesso!',
+					text: 'Usuário criado com sucesso! Um email será enviado para ' + user.email + ' com os passos para definição de senha.',
 					caption: 'Novo usuário',
-					button: DialogAlertButton.None,
-					textAlign: 'center',
-					timer: 1500
+					button: DialogAlertButton.OK,
+					textAlign: 'center'
 				}
 
-				this._dialog.openAlert(dialogData, { height: '70px' });
+				this._dialog.openAlert(dialogData, { height: '130px' });
 
 				this.addUserToTable(user);
 			}, err => this._dialog.openAlert({ 
 				text: '[ERRO] ' + err, 
 				caption: 'Novo usuário', 
-				button: DialogAlertButton.OK })
+				button: DialogAlertButton.OK }, { height: '130px' })
 			);
 		});
 	}
