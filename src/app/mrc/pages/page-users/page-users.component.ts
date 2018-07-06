@@ -92,4 +92,18 @@ export class PageUsersComponent implements OnInit {
 			);
 		});
 	}
+
+	private delete_user_clicked(user: User): void {
+		var index = this._usersList.indexOf(user);
+		this._userService.deleteUser(user._id).then((result: Response) => {
+			if(!result.ok){
+				//todo: show error message
+				return;
+			}
+
+			this._usersList.splice(index, 1);
+			this.dataSource.data = this._usersList;
+			//todo: alert removed success message.
+		})
+	}
 }

@@ -88,6 +88,7 @@
 .mrc-global .mat-table .mat-cell,
 .mrc-global .mat-table .mat-header-cell {
   font-size: 9pt;
+  font-family: sans-serif;
 }
 
 .mrc-global .mat-table .mat-row,

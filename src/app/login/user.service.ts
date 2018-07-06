@@ -3,7 +3,7 @@ import { Http, Headers } from '@angular/http';
 
 import 'rxjs/add/operator/map';
 
-import { User } from '../mrc/common/types';
+import { User, Capabilities } from '../mrc/common/types';
 
 @Injectable()
 export class UserService {
@@ -30,6 +30,7 @@ export class UserService {
       this._http.get('/user')
         .map(res => res.json())
         .subscribe(res => {
+          res.map(res => res.capabilities = Capabilities.fromJSON(res.capabilities));
           resolve(res);
         }, (err) => {
           reject(err);
@@ -42,6 +43,7 @@ export class UserService {
       this._http.get('/user/accountRefId/' + accountId + '/userName/' + username)
         .map(res => res.json())
         .subscribe(res => {
+          res.map(res => res.capabilities = Capabilities.fromJSON(res.capabilities));
           resolve(res);
         }, (err) => {
           reject(err);
@@ -52,8 +54,9 @@ export class UserService {
   listAccountUsers(accountId: number): Promise<User[]> {
     return new Promise((resolve, reject) => {
       this._http.get('/user/accountRefId/' + accountId)
-        .map(res => res.json())
+        .map(res => res.json())        
         .subscribe(res => {
+          res.map(res => res.capabilities = Capabilities.fromJSON(res.capabilities));
           resolve(res);
         }, (err) => {
           reject(err);

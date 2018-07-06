@@ -23,7 +23,8 @@
     <mat-header-cell *matHeaderCellDef> </mat-header-cell>
     <mat-cell *matCellDef="let element"> 
       <span>
-        <span *ngIf="element.capabilities.canRegisterUsers" title="Remover usuário" class="icon-delete"></span> 
+        <span *ngIf="currentUser.capabilities.canRegisterUsers && currentUser != element" title="Remover usuário" class="icon-delete"
+        (click)="delete_user_clicked(element)"></span> 
       </span>  
     </mat-cell>
   </ng-container>
