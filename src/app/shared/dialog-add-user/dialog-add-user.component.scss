@@ -27,12 +27,12 @@ dialog-add-user {
           }
           
           .column-1 {
-            width: 155px;
+            width: 215px;
           }
 
           &-checkbox {
             display: flex;
-            margin-left: 2px;
+            margin: 1px 0 8px 2px;
 
             &-text {
               font-size: 9pt;
@@ -56,7 +56,7 @@ dialog-add-user {
       float: right;
       margin-left: 8px;
       text-align: center;
-      width: 75px;
+      width: 83px;
     }
 
     .error-input {

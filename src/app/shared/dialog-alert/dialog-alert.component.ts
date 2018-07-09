@@ -23,6 +23,7 @@ export interface DialogAlertData {
   text?: string;
   button?: DialogAlertButton;
   textAlign?: string;
+  textHeight?: string;
   timer?: number;
 }
 
@@ -57,6 +58,11 @@ export class DialogAlertComponent {
   get textAlign(): string {
     var align = this._data.textAlign ? this._data.textAlign : 'left';
     return align;
+  }
+
+  get textHeight(): string {
+    if (this._data.textHeight)
+      return this._data.textHeight;
   }
 
   on_close(result: DialogAlertResult): void {

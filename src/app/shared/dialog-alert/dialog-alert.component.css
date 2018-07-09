@@ -15,4 +15,5 @@ dialog-alert > span {
 dialog-alert .dialog-alert-text {
   font-size: 9pt;
   margin-left: 4px;
+  overflow: auto;
 }

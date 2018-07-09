@@ -1,6 +1,7 @@
 <div class="mrc-dialog-title">{{ caption }}</div>
 <div class="mrc-dialog-separator"></div>
-<div class="dialog-alert-text" [style.text-align]="textAlign">{{ text }}</div>
+<div class="dialog-alert-text" [style.text-align]="textAlign" [style.height]="textHeight">{{ text }}</div>
+<div class="mrc-dialog-separator" style="margin-bottom: 0"></div>
 <mat-dialog-actions align="end" *ngIf="button != alertButton.None">
   <ng-container [ngSwitch]="button">
     <ng-container *ngSwitchCase="alertButton.OK">

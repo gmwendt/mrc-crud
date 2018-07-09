@@ -8,7 +8,7 @@ import { UserService } from '../../../login/user.service';
 import { AccountService } from '../../../shared/account.service';
 import { DialogService } from '../../../shared/dialog.service';
 import { DialogAddUserComponent, DialogAddUserResult } from '../../../shared/dialog-add-user/dialog-add-user.component';
-import { DialogAlertButton, DialogAlertData } from '../../../shared/dialog-alert/dialog-alert.component';
+import { DialogAlertButton, DialogAlertData, DialogAlertResult } from '../../../shared/dialog-alert/dialog-alert.component';
 
 @Component({
 	selector: 'page-users',
@@ -53,7 +53,7 @@ export class PageUsersComponent implements OnInit {
 	}
 
 	private add_user_clicked(): void {
-		var dialogRef = this._dialog.open(DialogAddUserComponent, { width: '650px' });
+		var dialogRef = this._dialog.open(DialogAddUserComponent, { height:'260px', width: '650px' });
 		dialogRef.componentInstance.usersList = this._usersList;
 		dialogRef.afterClosed().subscribe((result: DialogAddUserResult) => {
 			
@@ -79,31 +79,48 @@ export class PageUsersComponent implements OnInit {
 					text: 'Usuário criado com sucesso! Um email será enviado para ' + user.email + ' com os passos para definição de senha.',
 					caption: 'Novo usuário',
 					button: DialogAlertButton.OK,
-					textAlign: 'center'
+					textAlign: 'center',
+					textHeight: '70px'
 				}
 
-				this._dialog.openAlert(dialogData, { height: '130px' });
+				this._dialog.openAlert(dialogData, { height: '183px' });
 
 				this.addUserToTable(user);
-			}, err => this._dialog.openAlert({ 
-				text: '[ERRO] ' + err, 
-				caption: 'Novo usuário', 
-				button: DialogAlertButton.OK }, { height: '130px' })
-			);
+			}, err => this.show_error_dialog(err));
 		});
 	}
 
 	private delete_user_clicked(user: User): void {
-		var index = this._usersList.indexOf(user);
-		this._userService.deleteUser(user._id).then((result: Response) => {
-			if(!result.ok){
-				//todo: show error message
-				return;
-			}
+		var dialogData: DialogAlertData = {
+			text: 'Deseja remover ' + user.name + '?',
+			caption: 'Remover usuário',
+			button: DialogAlertButton.YesNo,
+			textAlign: 'center'
+		}
 
-			this._usersList.splice(index, 1);
-			this.dataSource.data = this._usersList;
-			//todo: alert removed success message.
-		})
+		this._dialog.openAlert(dialogData, { height: '120px' }).then(res => {
+			if (res == DialogAlertResult.No)
+				return;
+
+			var index = this._usersList.indexOf(user);
+			this._userService.deleteUser(user._id).then((resp: Response) => {
+				if(!resp.ok){
+					this.show_error_dialog(resp.statusText);
+					return;
+				}
+		
+				this._usersList.splice(index, 1);
+				this.dataSource.data = this._usersList;
+			}, err => this.show_error_dialog(err));	
+		});
 	}
+
+	private show_error_dialog(msg: string): void {
+    var dialogData: DialogAlertData = {
+      text: '[ERRO] ' + msg,
+      caption: 'Erro',
+      button: DialogAlertButton.OK
+    };
+    this._dialog.openAlert(dialogData, { height: '150px' }).then(result => { });
+  }
 }
