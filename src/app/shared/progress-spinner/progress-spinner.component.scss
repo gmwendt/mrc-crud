@@ -2,9 +2,10 @@ progress-spinner {
   //text-align: center;
 
   .progress-spinner-container {
-    position: absolute;
     left: calc(50% - 40px);
     top: calc(50% - 40px);
+    position: absolute;
+    text-align: center;
 
     > div {
       font-size: 9pt;

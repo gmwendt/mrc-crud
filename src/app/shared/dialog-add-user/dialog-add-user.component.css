@@ -50,11 +50,9 @@ dialog-add-user .dialog-user-error-msg {
   top: 8px;
 }
 
-dialog-add-user .mrc-button {
+dialog-add-user .mat-button {
   float: right;
   margin-left: 8px;
-  text-align: center;
-  width: 83px;
 }
 
 dialog-add-user .error-input {

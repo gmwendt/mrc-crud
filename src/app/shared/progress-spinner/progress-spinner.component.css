@@ -1,7 +1,8 @@
 progress-spinner .progress-spinner-container {
-  position: absolute;
   left: calc(50% - 40px);
   top: calc(50% - 40px);
+  position: absolute;
+  text-align: center;
 }
 
 progress-spinner .progress-spinner-container > div {

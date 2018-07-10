@@ -55,7 +55,7 @@ export class PageUsersComponent implements OnInit {
 	}
 
 	private add_user_clicked(): void {
-		var dialogRef = this._dialog.open(DialogAddUserComponent, { height:'260px', width: '650px' });
+		var dialogRef = this._dialog.open(DialogAddUserComponent, { height:'245px', width: '650px' });
 		dialogRef.componentInstance.usersList = this._usersList;
 		dialogRef.afterClosed().subscribe((result: DialogAddUserResult) => {
 			
@@ -84,7 +84,7 @@ export class PageUsersComponent implements OnInit {
 					text: 'Usuário criado com sucesso! Um email será enviado para ' + user.email + ' com os passos para definição de senha.',
 					button: DialogAlertButton.OK,
 					textAlign: 'center',
-					textHeight: '101px'
+					textHeight: '107px'
 				}
 
 				this._dialog.openAlert(dialogData, { height: '183px' });
@@ -101,7 +101,7 @@ export class PageUsersComponent implements OnInit {
 			text: 'Deseja remover ' + user.name + '?',
 			button: DialogAlertButton.YesNo,
 			textAlign: 'center',
-			textHeight: '40px'
+			textHeight: '46px'
 		}
 
 		this._dialog.openAlert(dialogData, { height: '120px' }).then(res => {

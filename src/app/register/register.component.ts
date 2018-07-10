@@ -6,6 +6,8 @@ import { UserService}  from '../login/user.service';
 import { Account, Capabilities, User } from '../mrc/common/types';
 import { AccountService } from '../shared/account.service';
 import { SystemInfoService } from '../shared/system-info.service';
+import { DialogAlertData, DialogAlertButton } from '../shared/dialog-alert/dialog-alert.component';
+import { DialogService } from '../shared/dialog.service';
 
 var sha512 = require('js-sha512');
 
@@ -22,9 +24,10 @@ export class RegisterComponent implements OnInit {
     accountRefId: 0, capabilities: new Capabilities(), email: '', name: '', passwordHash: '', passwordExpired: false, 
     passwordSalt: '', resetPwdToken: '', userName: ''
   };
+  private loading: boolean = false;
 
   constructor(private _accountService: AccountService, private _systemInfo: SystemInfoService, private _userService: UserService,
-    private _auth: AuthGuardService, private _router: Router) { 
+    private _auth: AuthGuardService, private _router: Router, private _dialog: DialogService) { 
   }
 
   ngOnInit() {
@@ -37,10 +40,10 @@ export class RegisterComponent implements OnInit {
   private create_user() {
 
     if (this._pass != this._confirmPass) {
-      //TODO: error message
+      this.show_error_dialog('Senhas não conferem.'); 
       return;
     }
-    
+    this.loading = true;
     var nextId = this._systemInfo.systemInfo.nextAccountSequence;
 
     this.user.passwordSalt = this._userService.generateSalt();
@@ -57,8 +60,7 @@ export class RegisterComponent implements OnInit {
 
     var account: Account = {
       accountId: nextId,
-      expireDate: new Date(),
-      userList: JSON.stringify(userList)
+      expireDate: new Date()
     };
 
     this._accountService.addAccount(account).then((result: Account) => {
@@ -69,14 +71,33 @@ export class RegisterComponent implements OnInit {
         this._userService.addUser(this.user).then(user => {
           //TODO
           console.log('User created');
-        }, (err) => console.log(err));
+          this._router.navigate(['home']); 
 
-      }, (err) => console.log(err));
-    }, (err) => console.log(err));
-
+        }, (err) => {
+          this.loading = false;
+          this.show_error_dialog(err);
+        });
+      }, (err) => { 
+        this.loading = false;
+        this.show_error_dialog(err); 
+      });
+    }, (err) => {
+      this.loading = false;
+      this.show_error_dialog(err);
+    });
   }
 
   private hashPassword(pwd: string, salt: string): string {
     return sha512.hex(pwd + salt);
+  }
+
+  private show_error_dialog(msg: string): void {
+    var dialogData: DialogAlertData = {
+      text: msg,
+      caption: 'Erro',
+      button: DialogAlertButton.OK,
+      textHeight: '77px'
+    };
+    this._dialog.openAlert(dialogData, { height: '180px' }).then(result => { });
   }
 }

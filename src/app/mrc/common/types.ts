@@ -20,7 +20,6 @@ export class Account {
   _id?: string;
   accountId: number;
   expireDate: Date;
-  userList: string;
 }
 
 export class User {

@@ -1,6 +1,6 @@
 [X] change add user alert; create new password alert
 [X] user management [delete] -> Todo: add removed success message
 [X] layout dialog add user
-[...] loading spinner em todos cenários
+[X] loading spinner em todos cenários
 [X] layout botões da alert-dialog com problema
 [ ] implementar restrições de páginas

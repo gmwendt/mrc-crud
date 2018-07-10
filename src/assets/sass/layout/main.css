@@ -105,6 +105,14 @@
   margin-bottom: -12px;
 }
 
+.mrc-global .mat-button {
+  font-family: sans-serif;
+  font-size: 9pt;
+  background-color: #e5e5e5;
+  height: 30px;
+  line-height: 30px;
+}
+
 html {
   height: 100%;
 }

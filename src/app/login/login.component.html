@@ -1,18 +1,20 @@
-<div>
-  <div>Conta</div>
-  <input (change)="_accountId = accountBox.value" #accountBox />
-</div>
-<div>
-  <div>Usuário</div>
-  <input (change)="_userName = userNameBox.value" #userNameBox />
-</div>
-<div>
-  <div>Senha</div>
-  <input (change)="_pwd = pwdBox.value" #pwdBox />
-</div>
-<div>
-  <button (click)="login()">Login</button>
-</div>
-<div>
-  <button routerLink="/register">Cadastro</button>
-</div>
+<progress-spinner [progress]="loading">
+  <div>
+    <div>Conta</div>
+    <input (change)="_accountId = accountBox.value" #accountBox />
+  </div>
+  <div>
+    <div>Usuário</div>
+    <input (change)="_userName = userNameBox.value" #userNameBox />
+  </div>
+  <div>
+    <div>Senha</div>
+    <input (change)="_pwd = pwdBox.value" #pwdBox />
+  </div>
+  <div>
+    <button (click)="login()">Login</button>
+  </div>
+  <div>
+    <button routerLink="/register">Cadastro</button>
+  </div>
+</progress-spinner>

@@ -21,18 +21,18 @@ export class LoginComponent implements OnInit {
   private _accountId: string;
   private _pwd: string;
   private _userName: string;
+  
+  private loading = false;
 
   constructor(private _account: AccountService, private _userService: UserService, private _router: Router, 
     private _dialog: DialogService) { }
 
   ngOnInit() {
     //DEV MOCK
-    //Mock to delete users
-    //this._userService.deleteUser('5b3e2c23e99c4144988e601e');
-    
-     this._account.getAccountByAccountId('1005').then((acc => {
-       if (acc.length == 0)
-         return;
+  /*  this.loading = true;
+    this._account.getAccountByAccountId('1005').then((acc => {
+      if (acc.length == 0)
+        return;
       
       this._userService.getUserByUsername(acc[0].accountId, 'admin').then((user => {
         if(user.length == 0)
@@ -42,26 +42,31 @@ export class LoginComponent implements OnInit {
           this._userService.currentUser = user[0];
           this._userService.typedPassword = '123456';
           this._router.navigate(['home']);
+          this.loading = false;
       }));
-     }));
+    }));*/
   }
 
   private login(): void {
+    this.loading = true;
     this._account.getAccountByAccountId(this._accountId).then((acc: Account[]) => {
       if (acc.length == 0) {
         this.show_error_dialog('Conta inválida.');
+        this.loading = false;
         return;
       }
 
       this._userService.getUserByUsername(acc[0].accountId, this._userName).then((result: User[]) => {
         if(result.length == 0) {
           this.show_error_dialog('Nome de usuário inválido.');
+          this.loading = false;
           return;
         }
 
         var user: User = result[0];
         if (user.passwordHash != this.hashPassword(this._pwd, user.passwordSalt)) {
           this.show_error_dialog('Senha incorreta.');
+          this.loading = false;
           return;
         }
 
@@ -70,9 +75,10 @@ export class LoginComponent implements OnInit {
         this._account.current = acc[0];
 
         this._router.navigate(['home']); 
-      }, (err) => console.log(err));
+        this.loading = false;
+      }, (err) => this.show_error_dialog(err));
     }, (err) => {
-      console.log(err);
+      this.show_error_dialog(err);
     });
   }
 

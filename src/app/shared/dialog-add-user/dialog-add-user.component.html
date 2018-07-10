@@ -41,8 +41,8 @@
 </div>
 <div class="mrc-dialog-separator"></div>
 <div>
-  <a class="mrc-button" (click)="cancel_clicked()">Cancelar</a>
-  <a class="mrc-button" (click)="create_clicked()">Criar usuário</a>
+  <button mat-button (click)="cancel_clicked()">Cancelar</button>
+  <button mat-button (click)="create_clicked()">Criar usuário</button>
 </div>
 <div *ngIf="hasError" class="dialog-user-error-msg">{{ errorMsg }}</div>
 

@@ -1,5 +1,5 @@
 <div class="page-users-title">Usuários do sistema</div>
-<a class="mrc-button" (click)="add_user_clicked()">Adicionar usuário</a>
+<button mat-button (click)="add_user_clicked()">Adicionar usuário</button>
 <progress-spinner [progress]="loading">
   <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
 
