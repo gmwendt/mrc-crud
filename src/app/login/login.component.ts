@@ -80,9 +80,10 @@ export class LoginComponent implements OnInit {
     var dialogData: DialogAlertData = {
       text: msg,
       caption: 'Erro',
-      button: DialogAlertButton.OK
+      button: DialogAlertButton.OK,
+      textHeight: '100px'
     };
-    this._dialog.openAlert(dialogData).then(result => { });
+    this._dialog.openAlert(dialogData, { height: '180px' }).then(result => { });
   }
 
   private hashPassword(pwd: string, salt: string): string {

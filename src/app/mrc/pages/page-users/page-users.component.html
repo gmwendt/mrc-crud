@@ -1,34 +1,36 @@
 <div class="page-users-title">Usuários do sistema</div>
 <a class="mrc-button" (click)="add_user_clicked()">Adicionar usuário</a>
-<mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+<progress-spinner [progress]="loading">
+  <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
 
-  <ng-container matColumnDef="current">
-    <mat-header-cell *matHeaderCellDef></mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <div *ngIf="currentUser.userName == element.userName">(você)</div>
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="current">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div *ngIf="currentUser.userName == element.userName">(você)</div>
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="username">
-    <mat-header-cell *matHeaderCellDef> NOME DE USUÁRIO </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.userName}} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef> NOME DE USUÁRIO </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.userName}} </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef> NOME </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-  </ng-container>
-  
-  <ng-container matColumnDef="commands">
-    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-    <mat-cell *matCellDef="let element"> 
-      <span>
-        <span *ngIf="currentUser.capabilities.canRegisterUsers && currentUser._id != element._id" 
-          title="Remover usuário" class="icon-delete" (click)="delete_user_clicked(element)"></span> 
-      </span>  
-    </mat-cell>
-  </ng-container>
-  
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</mat-table>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> NOME </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="commands">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let element"> 
+        <span>
+          <span *ngIf="currentUser.capabilities.canRegisterUsers && currentUser._id != element._id" 
+            title="Remover usuário" class="icon-delete" (click)="delete_user_clicked(element)"></span> 
+        </span>  
+      </mat-cell>
+    </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  </progress-spinner>

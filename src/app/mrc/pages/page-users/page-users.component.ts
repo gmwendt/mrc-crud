@@ -21,6 +21,7 @@ export class PageUsersComponent implements OnInit {
 	private currentUser: User;
 	private displayedColumns = ['current', 'username', 'name', 'commands'];
 	private dataSource;
+	private loading = true;
 
 	private _usersList: User[];
 	private _accId: number;
@@ -39,8 +40,9 @@ export class PageUsersComponent implements OnInit {
 			this._userService.listAccountUsers(accs[0].accountId).then(users => {
 				this._usersList = users;
 				this.createTable();
-			}, err => console.log(err));
-		}, err => console.log(err));
+				this.loading = false;
+			}, err => this.show_error_dialog(err));
+		}, err => this.show_error_dialog(err));
 	}
 
 	private createTable(): void {
@@ -60,6 +62,7 @@ export class PageUsersComponent implements OnInit {
 			if (result == DialogAddUserResult.Cancel)
 				return;
 
+			this.loading = true;
 			var userResult = dialogRef.componentInstance.newUserData;
 			var userData: User = {
 				accountRefId: this._accId,
@@ -75,33 +78,37 @@ export class PageUsersComponent implements OnInit {
 
 			this._userService.addUser(userData).then((user: User) => {
 				console.log('Reset password link: http://localhost:4000/reset-pass/' + this._accId + '/' + btoa(user.userName).replace(/=/g , '') + '/' + user.resetPwdToken);
+				this.addUserToTable(user);
+				this.loading = false;
 				var dialogData: DialogAlertData = {
 					text: 'Usuário criado com sucesso! Um email será enviado para ' + user.email + ' com os passos para definição de senha.',
-					caption: 'Novo usuário',
 					button: DialogAlertButton.OK,
 					textAlign: 'center',
-					textHeight: '70px'
+					textHeight: '101px'
 				}
 
 				this._dialog.openAlert(dialogData, { height: '183px' });
 
-				this.addUserToTable(user);
-			}, err => this.show_error_dialog(err));
+			}, err => {
+				this.loading = false;
+				this.show_error_dialog(err);
+			});
 		});
 	}
 
 	private delete_user_clicked(user: User): void {
 		var dialogData: DialogAlertData = {
 			text: 'Deseja remover ' + user.name + '?',
-			caption: 'Remover usuário',
 			button: DialogAlertButton.YesNo,
-			textAlign: 'center'
+			textAlign: 'center',
+			textHeight: '40px'
 		}
 
 		this._dialog.openAlert(dialogData, { height: '120px' }).then(res => {
 			if (res == DialogAlertResult.No)
 				return;
 
+			this.loading = true;
 			var index = this._usersList.indexOf(user);
 			this._userService.deleteUser(user._id).then((resp: Response) => {
 				if(!resp.ok){
@@ -111,7 +118,11 @@ export class PageUsersComponent implements OnInit {
 		
 				this._usersList.splice(index, 1);
 				this.dataSource.data = this._usersList;
-			}, err => this.show_error_dialog(err));	
+				this.loading = false;
+			}, err => { 
+				this.loading = false;
+				this.show_error_dialog(err);
+			});	
 		});
 	}
 
@@ -119,8 +130,9 @@ export class PageUsersComponent implements OnInit {
     var dialogData: DialogAlertData = {
       text: '[ERRO] ' + msg,
       caption: 'Erro',
-      button: DialogAlertButton.OK
+			button: DialogAlertButton.OK,
+			textHeight: '100px'
     };
-    this._dialog.openAlert(dialogData, { height: '150px' }).then(result => { });
+    this._dialog.openAlert(dialogData, { height: '180px' }).then(result => { });
   }
 }

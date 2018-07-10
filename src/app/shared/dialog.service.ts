@@ -70,7 +70,8 @@ import {
         button: dialogData.button,
         caption: dialogData.caption,
         text: dialogData.text,
-        textAlign: dialogData.textAlign
+        textAlign: dialogData.textAlign,
+        textHeight: dialogData.textHeight
       };
   
       var dialogRef = this.open_dialog(DialogAlertComponent, config);

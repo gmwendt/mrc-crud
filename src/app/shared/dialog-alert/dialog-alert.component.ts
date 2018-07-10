@@ -61,8 +61,7 @@ export class DialogAlertComponent {
   }
 
   get textHeight(): string {
-    if (this._data.textHeight)
-      return this._data.textHeight;
+    return this._data.textHeight;
   }
 
   on_close(result: DialogAlertResult): void {

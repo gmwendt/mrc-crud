@@ -1,5 +1,5 @@
-<div class="mrc-dialog-title">{{ caption }}</div>
-<div class="mrc-dialog-separator"></div>
+<div class="mrc-dialog-title" *ngIf="caption">{{ caption }}</div>
+<div class="mrc-dialog-separator" *ngIf="caption"></div>
 <div class="dialog-alert-text" [style.text-align]="textAlign" [style.height]="textHeight">{{ text }}</div>
 <div class="mrc-dialog-separator" style="margin-bottom: 0"></div>
 <mat-dialog-actions align="end" *ngIf="button != alertButton.None">
@@ -9,16 +9,16 @@
     </ng-container>
     <ng-container *ngSwitchCase="alertButton.OKCancel">
       <button mat-button (click)="on_close(alertResult.OK)">OK</button>
-      <button mat-button (click)="on_close(alertResult.Cancel)">Cancel</button>
+      <button mat-button (click)="on_close(alertResult.Cancel)">Cancelar</button>
     </ng-container>
     <ng-container *ngSwitchCase="alertButton.YesNo">
-      <button mat-button (click)="on_close(alertResult.Yes)">Yes</button>
-      <button mat-button (click)="on_close(alertResult.No)">No</button>
+      <button mat-button (click)="on_close(alertResult.Yes)">Sim</button>
+      <button mat-button (click)="on_close(alertResult.No)">Não</button>
     </ng-container>
     <ng-container *ngSwitchCase="alertButton.YesNoCancel">
-      <button mat-button (click)="on_close(alertResult.Yes)">Yes</button>
-      <button mat-button (click)="on_close(alertResult.No)">No</button>
-      <button mat-button (click)="on_close(alertResult.Cancel)">Cancel</button>
+      <button mat-button (click)="on_close(alertResult.Yes)">Sim</button>
+      <button mat-button (click)="on_close(alertResult.No)">Não</button>
+      <button mat-button (click)="on_close(alertResult.Cancel)">Cancelar</button>
     </ng-container>
     <ng-container *ngSwitchCaseDefault>
       <button mat-button (click)="on_close(alertResult.OK)">OK</button>
