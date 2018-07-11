@@ -50,10 +50,9 @@ export class RegisterComponent implements OnInit {
     this.user.passwordHash = this.hashPassword(this._pass, this.user.passwordSalt);
     this.user.accountRefId = nextId;
 
-    this.user.capabilities.canAccessFinances = true;
-    this.user.capabilities.canManageSystemData = true;
-    this.user.capabilities.canRegisterUsers = true;
-    this.user.capabilities.canScheduleAndRegisterPatient = true;
+    this.user.capabilities.accessGlobalFinances = true;
+    this.user.capabilities.fullAccessAdministrativeTools = true;
+    this.user.capabilities.scheduleAndRegisterPatient = true;
 
     var userList: string[] = [];
     userList.push(this.user.userName);

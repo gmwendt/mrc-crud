@@ -55,8 +55,8 @@ export class PageResetPasswordComponent implements OnDestroy, OnInit {
 					
 				this._user = users[0];	
 				this.loading = false;
-			});
-		});
+			}, err => this.show_error_dialog(err));
+		}, err => this.show_error_dialog(err));
 	}
 
 	private ok_clicked(): void {
@@ -82,26 +82,25 @@ export class PageResetPasswordComponent implements OnDestroy, OnInit {
 				textAlign: 'center'
 			}
 
-			this._dialog.openAlert(dialogData, { height: '117px' }).then(() => {
+			this._dialog.openAlert(dialogData, { height: '120px' }).then(() => {
 				this._router.navigate(['login']);
 			});
-		}, err => this.show_error(err));
+		}, err => this.show_error_dialog(err));
 	}
 
 	private hashPassword(pwd: string, salt: string): string {
     return sha512.hex(pwd + salt);
 	}
 	
-	private show_error(error: any): void {
-		var dialogData: DialogAlertData = {
-			caption: 'Erro',
-			text: '[ERRO] ' + error,
-			button: DialogAlertButton.OK,
-			textAlign: 'center',
-		}
-
-		this._dialog.openAlert(dialogData, { height: '130px' });
-	}
+	private show_error_dialog(msg: string): void {
+    var dialogData: DialogAlertData = {
+      text: msg,
+      caption: 'Erro',
+      button: DialogAlertButton.OK,
+      textHeight: '100px'
+    };
+    this._dialog.openAlert(dialogData, { height: '180px' }).then(result => { });
+  }
 
 	ngOnDestroy() {
 		if (this._routeSubscription)

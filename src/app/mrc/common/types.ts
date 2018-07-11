@@ -1,13 +1,22 @@
 export class Capabilities {
-  constructor(public canAccessFinances?: boolean | undefined, public canManageSystemData?: boolean | undefined, 
-    public canRegisterUsers?: boolean | undefined, public canScheduleAndRegisterPatient?: boolean | undefined) { }
+  constructor(public scheduleAndRegisterPatient?: boolean | undefined, public accessGlobalFinances?: boolean | undefined, 
+    public fullAccessAdministrativeTools?: boolean | undefined, public registerUsers?: boolean | undefined,
+    public registerPatients?: boolean | undefined, public registerDocuments?: boolean | undefined,
+    public registerServices?: boolean | undefined, public registerAgreements?: boolean | undefined,
+    public registerProfessionals?: boolean | undefined, public registerClinics?: boolean | undefined,) { }
 
-  toJSON(): string {
+  static toJSON(capabilities: Capabilities): string {
     return JSON.stringify({
-      'canAccessFinances': this.canAccessFinances,
-      'canManageSystemData': this.canManageSystemData,
-      'canRegisterUsers': this.canRegisterUsers,
-      'canScheduleAndRegisterPatient': this.canScheduleAndRegisterPatient
+      'scheduleAndRegisterPatient': capabilities.scheduleAndRegisterPatient,
+      'accessGlobalFinances': capabilities.accessGlobalFinances,
+      'fullAccessAdministrativeTools': capabilities.fullAccessAdministrativeTools,
+      'registerUsers': capabilities.registerUsers,
+      'registerPatients': capabilities.registerPatients,
+      'registerDocuments': capabilities.registerDocuments,
+      'registerServices': capabilities.registerServices,
+      'registerAgreements': capabilities.registerAgreements,
+      'registerProfessionals': capabilities.registerProfessionals,
+      'registerClinics': capabilities.registerClinics,
     });
   }
 

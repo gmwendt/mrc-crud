@@ -15,13 +15,14 @@ export class UserService {
   
   addUser(data: User): Promise<User> {
     return new Promise((resolve, reject) => {
-        this._http.post('/user', data)
-          .map(res => res.json())
-          .subscribe(res => {
-            resolve(res);
-          }, (err) => {
-            reject(err);
-          });
+      (<any>data).capabilities = Capabilities.toJSON(data.capabilities);
+      this._http.post('/user', data)
+        .map(res => res.json())
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
     });
   }
 
@@ -67,8 +68,9 @@ export class UserService {
   updateUser(data: User): Promise<any> {
     if (!data._id)
       return;
-
+    
     return new Promise((resolve, reject) => {
+        (<any>data).capabilities = Capabilities.toJSON(data.capabilities);
         this._http.put('/user/' + data._id, data)
           .map(res => res.json())
           .subscribe(res => {

@@ -128,7 +128,7 @@ export class PageUsersComponent implements OnInit {
 
 	private show_error_dialog(msg: string): void {
     var dialogData: DialogAlertData = {
-      text: '[ERRO] ' + msg,
+      text: msg,
       caption: 'Erro',
 			button: DialogAlertButton.OK,
 			textHeight: '100px'

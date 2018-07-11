@@ -57,17 +57,18 @@ export class DialogAddUserComponent {
       userName: this.userName
     }    
 
+    //TODO: listar todas capabilities
     if (this.canScheduleAndRegisterPatient)
-      this.newUserData.capabilities.canScheduleAndRegisterPatient = true;
+      this.newUserData.capabilities.scheduleAndRegisterPatient = true;
 
     if (this.canManageSystemData)
-      this.newUserData.capabilities.canManageSystemData = true;
+      this.newUserData.capabilities.fullAccessAdministrativeTools = true;
 
     if (this.canRegisterUsers)
-      this.newUserData.capabilities.canRegisterUsers = true;
+      this.newUserData.capabilities.registerUsers = true;
 
     if (this.canAccessFinances)
-      this.newUserData.capabilities.canAccessFinances = true;
+      this.newUserData.capabilities.accessGlobalFinances = true;
 
     this._dialog.close(DialogAddUserResult.OK);
   }
