@@ -62,7 +62,7 @@ export class PageUsersComponent implements OnInit {
 	}
 
 	private add_user_clicked(): void {
-		var dialogRef = this._dialog.open(DialogAddUserComponent, { height:'265px', width: '650px' });
+		var dialogRef = this._dialog.open(DialogAddUserComponent, { width: '650px' });
 		dialogRef.componentInstance.usersList = this._usersList;
 		dialogRef.afterClosed().subscribe((result: DialogAddUserResult) => {
 			
@@ -91,10 +91,9 @@ export class PageUsersComponent implements OnInit {
 					text: 'Usuário criado com sucesso! Um email será enviado para ' + user.email + ' com os passos para definição de senha.',
 					button: DialogAlertButton.OK,
 					textAlign: 'center',
-					textHeight: '107px'
 				}
 
-				this._dialog.openAlert(dialogData, { height: '183px' });
+				this._dialog.openAlert(dialogData);
 
 			}, err => {
 				this.loading = false;
@@ -108,10 +107,9 @@ export class PageUsersComponent implements OnInit {
 			text: 'Deseja remover ' + user.name + '?',
 			button: DialogAlertButton.YesNo,
 			textAlign: 'center',
-			textHeight: '46px'
 		}
 
-		this._dialog.openAlert(dialogData, { height: '120px' }).then(res => {
+		this._dialog.openAlert(dialogData).then(res => {
 			if (res == DialogAlertResult.No)
 				return;
 
@@ -138,9 +136,8 @@ export class PageUsersComponent implements OnInit {
       text: msg,
       caption: 'Erro',
 			button: DialogAlertButton.OK,
-			textHeight: '100px'
     };
-    this._dialog.openAlert(dialogData, { height: '180px' }).then(result => { });
+    this._dialog.openAlert(dialogData).then(result => { });
 	}
 	
 	private get hasPermission(): boolean {

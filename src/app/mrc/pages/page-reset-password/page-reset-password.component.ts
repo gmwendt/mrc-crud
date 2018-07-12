@@ -82,7 +82,7 @@ export class PageResetPasswordComponent implements OnDestroy, OnInit {
 				textAlign: 'center'
 			}
 
-			this._dialog.openAlert(dialogData, { height: '120px' }).then(() => {
+			this._dialog.openAlert(dialogData).then(() => {
 				this._router.navigate(['login']);
 			});
 		}, err => this.show_error_dialog(err));
@@ -97,9 +97,8 @@ export class PageResetPasswordComponent implements OnDestroy, OnInit {
       text: msg,
       caption: 'Erro',
       button: DialogAlertButton.OK,
-      textHeight: '100px'
     };
-    this._dialog.openAlert(dialogData, { height: '180px' }).then(result => { });
+    this._dialog.openAlert(dialogData).then(result => { });
   }
 
 	ngOnDestroy() {

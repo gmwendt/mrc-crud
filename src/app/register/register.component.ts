@@ -95,8 +95,7 @@ export class RegisterComponent implements OnInit {
       text: msg,
       caption: 'Erro',
       button: DialogAlertButton.OK,
-      textHeight: '77px'
     };
-    this._dialog.openAlert(dialogData, { height: '180px' }).then(result => { });
+    this._dialog.openAlert(dialogData).then(result => { });
   }
 }

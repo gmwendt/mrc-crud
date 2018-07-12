@@ -1,6 +1,9 @@
-import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
-import { MatDialogRef, MAT_DIALOG_DATA } from '../dialog.service';
+import { DialogCapabilitiesChecklistComponent } from '../dialog-capabilities-checklist/dialog-capabilities-checklist.component';
+
+import { MatDialogRef, DialogService } from '../dialog.service';
+
 import { Capabilities, User } from '../../mrc/common/types';
 
 export enum DialogAddUserResult {
@@ -40,10 +43,9 @@ export class DialogAddUserComponent {
 
   private canScheduleAndRegisterPatient: boolean;
   private canManageSystemData: boolean;
-  private canRegisterUsers: boolean;
   private canAccessFinances: boolean;
 
-  constructor(private _dialog: MatDialogRef<DialogAddUserComponent>) {
+  constructor(private _dialogRef: MatDialogRef<DialogAddUserComponent>, private _dialog: DialogService) {
   }
 
   private create_clicked(): void {
@@ -57,24 +59,27 @@ export class DialogAddUserComponent {
       userName: this.userName
     }    
 
-    //TODO: listar todas capabilities
     if (this.canScheduleAndRegisterPatient)
       this.newUserData.capabilities.scheduleAndRegisterPatient = true;
 
     if (this.canManageSystemData)
       this.newUserData.capabilities.fullAccessAdministrativeTools = true;
 
-    if (this.canRegisterUsers)
-      this.newUserData.capabilities.registerUsers = true;
-
     if (this.canAccessFinances)
       this.newUserData.capabilities.accessGlobalFinances = true;
 
-    this._dialog.close(DialogAddUserResult.OK);
+    this._dialogRef.close(DialogAddUserResult.OK);
   }
 
   private cancel_clicked(): void {
-    this._dialog.close(DialogAddUserResult.Cancel);
+    this._dialogRef.close(DialogAddUserResult.Cancel);
+  }
+
+  private customize_capabilities_clicked(): void {
+    var dialogRef = this._dialog.open(DialogCapabilitiesChecklistComponent, { disableClose: true });
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
   }
 
   private check_errors(): boolean {
@@ -91,7 +96,6 @@ export class DialogAddUserComponent {
 
     if (this.nameError || this.emailError || this.userNameError) {
       this.hasError = true;
-      this._dialog.updateSize('650px', '285px');
       this.errorMsg = 'Os campos em destaque devem ser preenchidos.'
       return false;
     }
@@ -100,7 +104,6 @@ export class DialogAddUserComponent {
     if (filter.length > 0) {
       this.emailError = true;
       this.hasError = true;
-      this._dialog.updateSize('650px', '285px');
       this.errorMsg = 'Já existe um usuário com este E-mail.'
       return false;
     }
@@ -109,7 +112,6 @@ export class DialogAddUserComponent {
     if (filter.length > 0) {
       this.userNameError = true;
       this.hasError = true;
-      this._dialog.updateSize('650px', '285px');
       this.errorMsg = 'Já existe um usuário com este Nome de usuário.'
       return false;
     }
