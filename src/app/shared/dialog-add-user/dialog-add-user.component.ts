@@ -91,7 +91,7 @@ export class DialogAddUserComponent {
 
     if (this.nameError || this.emailError || this.userNameError) {
       this.hasError = true;
-      this._dialog.updateSize('650px', '266px');
+      this._dialog.updateSize('650px', '285px');
       this.errorMsg = 'Os campos em destaque devem ser preenchidos.'
       return false;
     }
@@ -100,7 +100,7 @@ export class DialogAddUserComponent {
     if (filter.length > 0) {
       this.emailError = true;
       this.hasError = true;
-      this._dialog.updateSize('650px', '266px');
+      this._dialog.updateSize('650px', '285px');
       this.errorMsg = 'Já existe um usuário com este E-mail.'
       return false;
     }
@@ -109,7 +109,7 @@ export class DialogAddUserComponent {
     if (filter.length > 0) {
       this.userNameError = true;
       this.hasError = true;
-      this._dialog.updateSize('650px', '266px');
+      this._dialog.updateSize('650px', '285px');
       this.errorMsg = 'Já existe um usuário com este Nome de usuário.'
       return false;
     }

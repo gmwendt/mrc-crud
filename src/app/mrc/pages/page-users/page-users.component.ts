@@ -9,6 +9,7 @@ import { AccountService } from '../../../shared/account.service';
 import { DialogService } from '../../../shared/dialog.service';
 import { DialogAddUserComponent, DialogAddUserResult } from '../../../shared/dialog-add-user/dialog-add-user.component';
 import { DialogAlertButton, DialogAlertData, DialogAlertResult } from '../../../shared/dialog-alert/dialog-alert.component';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'page-users',
@@ -26,12 +27,18 @@ export class PageUsersComponent implements OnInit {
 	private _usersList: User[];
 	private _accId: number;
 
-	constructor(private _account: AccountService, private _userService: UserService, private _dialog: DialogService) {
+	constructor(private _account: AccountService, private _userService: UserService, 
+		private _dialog: DialogService, private _router: Router) {
 	}
 
 	ngOnInit(): void {
 		this.currentUser = this._userService.currentUser;
 		this._accId = this._account.current.accountId;		
+
+		if (!this.hasPermission) {
+			this._router.navigate(['invalid-page']);
+			return;
+		}
 
 		this._account.getAccountByAccountId(this._accId.toString()).then(accs => {
 			if (accs.length == 0)
@@ -55,7 +62,7 @@ export class PageUsersComponent implements OnInit {
 	}
 
 	private add_user_clicked(): void {
-		var dialogRef = this._dialog.open(DialogAddUserComponent, { height:'245px', width: '650px' });
+		var dialogRef = this._dialog.open(DialogAddUserComponent, { height:'265px', width: '650px' });
 		dialogRef.componentInstance.usersList = this._usersList;
 		dialogRef.afterClosed().subscribe((result: DialogAddUserResult) => {
 			
@@ -134,5 +141,10 @@ export class PageUsersComponent implements OnInit {
 			textHeight: '100px'
     };
     this._dialog.openAlert(dialogData, { height: '180px' }).then(result => { });
-  }
+	}
+	
+	private get hasPermission(): boolean {
+		return this.currentUser.capabilities.registerUsers ||
+			this.currentUser.capabilities.fullAccessAdministrativeTools;
+	}
 }

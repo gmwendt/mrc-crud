@@ -3,4 +3,6 @@
 [X] layout dialog add user
 [X] loading spinner em todos cenários
 [X] layout botões da alert-dialog com problema
-[ ] implementar restrições de páginas
+[X] implementar restrições de páginas
+[ ] listar todas permissões na dialog add user
+[ ] implementar página add professional

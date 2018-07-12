@@ -29,8 +29,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     //DEV MOCK
-  /*  this.loading = true;
-    this._account.getAccountByAccountId('1005').then((acc => {
+    this.loading = true;
+    this._account.getAccountByAccountId('1009').then((acc => {
       if (acc.length == 0)
         return;
       
@@ -40,11 +40,11 @@ export class LoginComponent implements OnInit {
 
           this._account.current = acc[0];
           this._userService.currentUser = user[0];
-          this._userService.typedPassword = '123456';
+          this._userService.typedPassword = 'admin';
           this._router.navigate(['home']);
           this.loading = false;
       }));
-    }));*/
+    }));
   }
 
   private login(): void {
