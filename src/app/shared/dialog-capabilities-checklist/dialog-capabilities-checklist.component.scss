@@ -1,4 +1,17 @@
 dialog-capabilities-checklist {
+  .dialog-capabilities-checklist-item {
+    display: flex;
+    font-size: 9pt;
+
+    > div {
+      margin-top: 6px;
+    }
+  }
+
+  .dialog-capabilities-checklist-item.subitem {
+    margin-left: 16px;
+  }
+
   .mat-button {
     float: right;
     margin-left: 8px;
