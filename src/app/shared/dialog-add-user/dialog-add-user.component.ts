@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import { DialogCapabilitiesChecklistComponent } from '../dialog-capabilities-checklist/dialog-capabilities-checklist.component';
+import { DialogCapabilitiesChecklistComponent, DialogCapabilitiesCheckListResult } from '../dialog-capabilities-checklist/dialog-capabilities-checklist.component';
 
 import { MatDialogRef, DialogService } from '../dialog.service';
 
@@ -77,8 +77,9 @@ export class DialogAddUserComponent {
 
   private customize_capabilities_clicked(): void {
     var dialogRef = this._dialog.open(DialogCapabilitiesChecklistComponent, { disableClose: true });
-    dialogRef.afterClosed().subscribe(result => {
-      
+    dialogRef.afterClosed().subscribe((result: DialogCapabilitiesCheckListResult) => {
+      if (result == DialogCapabilitiesCheckListResult.Cancel) 
+        return;
     });
   }
 

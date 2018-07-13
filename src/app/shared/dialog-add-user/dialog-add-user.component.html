@@ -20,16 +20,13 @@
       <div class="mrc-text-1">Permissões:</div>
       <div>
         <div class="dialog-add-user-content-column-item-checkbox">
-          <input type="checkbox" [(ngModel)]="canScheduleAndRegisterPatient" />
-          <div class="dialog-add-user-content-column-item-checkbox-text">Agendamento de consultas e cadastro de pacientes.</div>
+          <mat-checkbox [(ngModel)]="canScheduleAndRegisterPatient">Agendamento de consultas e cadastro de pacientes</mat-checkbox>
         </div>
         <div class="dialog-add-user-content-column-item-checkbox">
-          <input type="checkbox" [(ngModel)]="canManageSystemData" />
-          <div class="dialog-add-user-content-column-item-checkbox-text">Gerenciamento de todos os recursos do sistema.</div>
+          <mat-checkbox [(ngModel)]="canManageSystemData">Gerenciamento de todos os recursos do sistema</mat-checkbox>
         </div>
         <div class="dialog-add-user-content-column-item-checkbox">
-          <input type="checkbox" [(ngModel)]="canAccessFinances" />
-          <div class="dialog-add-user-content-column-item-checkbox-text">Acessar as finanças da clínica.</div>
+          <mat-checkbox [(ngModel)]="canAccessFinances">Acessar as finanças da clínica</mat-checkbox>
         </div>
         <div class="dialog-add-user-link" (click)="customize_capabilities_clicked()">Personalizar...</div>
       </div>

@@ -70,6 +70,19 @@
   margin: 8px 0 8px 0;
 }
 
+.mrc-global .mat-checkbox {
+  font-size: 9pt;
+}
+
+.mrc-global .mat-checkbox .mat-checkbox-inner-container {
+  height: 15px;
+  width: 15px;
+}
+
+.mrc-global .mat-checkbox .mat-checkbox-label {
+  line-height: 20px;
+}
+
 .mrc-global .mat-menu-content {
   padding: 0;
 }

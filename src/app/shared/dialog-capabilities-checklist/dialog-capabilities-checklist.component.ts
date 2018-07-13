@@ -1,6 +1,13 @@
-import { AfterViewInit, Component, ElementRef, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ViewEncapsulation } from '@angular/core';
 
 import { MatDialogRef } from '../dialog.service';
+import { CheckListItem } from '../check-list/check-list.component';
+import { Capabilities } from '../../mrc/common/types';
+
+export enum DialogCapabilitiesCheckListResult {
+  Cancel,
+  OK
+}
 
 @Component({
   selector: 'dialog-capabilities-checklist',
@@ -10,23 +17,47 @@ import { MatDialogRef } from '../dialog.service';
 })
 export class DialogCapabilitiesChecklistComponent implements AfterViewInit {
 
-  @ViewChildren('boxLevel0') _boxLevel0;
-  @ViewChildren('boxLevel1') _boxLevel1;
+  public data: CheckListItem[] = [];
+  
+  private capabilities: Capabilities = new Capabilities();
 
-  constructor(private _dialogRef: MatDialogRef<DialogCapabilitiesChecklistComponent>, private _element: ElementRef) {
+  constructor(private _dialogRef: MatDialogRef<DialogCapabilitiesChecklistComponent>) {
   }
 
   ngAfterViewInit() {
-    console.log(this._boxLevel0);
-    console.log(this._element);
-    this._boxLevel0.last.nativeElement.checked = true;
-    this._boxLevel0.first.nativeElement.indeterminate = true;
+    this.createData();
   }
 
-  private create_clicked(): void {
+  private ok_clicked(): void {
+    this.retrieveCapabilities();
+    this._dialogRef.close(DialogCapabilitiesCheckListResult.OK);
   }
 
   private cancel_clicked(): void {
-    this._dialogRef.close();
+    this._dialogRef.close(DialogCapabilitiesCheckListResult.Cancel);
+  }
+
+  private createData(): void {
+    this.data.push(new CheckListItem([], 'Agendamento de consultas e cadastro de pacientes'));
+    this.data.push(new CheckListItem([], 'Acesso às finanças da clínica/consultório'));
+
+    var managementCapabilities: CheckListItem[] = [];
+    managementCapabilities.push(new CheckListItem([], 'Gerenciamento de usuários'));
+    managementCapabilities.push(new CheckListItem([], 'Gerenciamento de profissionais'));
+
+    this.data.push(new CheckListItem(managementCapabilities, 'Gerenciamento de todos os recursos do sistema'));
+  }
+
+  private retrieveCapabilities(): void {
+    if (this.data[0].checked)
+      this.capabilities.scheduleAndRegisterPatient = true;
+    if (this.data[1].checked)
+      this.capabilities.accessGlobalFinances = true;
+    if (this.data[2].checked && !this.data[2].indeterminate)
+      this.capabilities.fullAccessAdministrativeTools = true;
+
+    if (this.data[2].indeterminate) {
+      //if (this.data[2].children[0].checked) TODO todos
+    }
   }
 }

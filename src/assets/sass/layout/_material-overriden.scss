@@ -1,4 +1,17 @@
 .mrc-global {
+  .mat-checkbox {
+    font-size: 9pt;
+
+    .mat-checkbox-inner-container {
+      height: 15px;
+      width: 15px;
+    }
+
+    .mat-checkbox-label {
+      line-height: 20px;
+    }
+  }
+
 	.mat-menu-content {
     padding: 0;
 

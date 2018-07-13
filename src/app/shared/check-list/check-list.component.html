@@ -1,0 +1,4 @@
+<div *ngFor="let item of data" [style.margin-left]="marginLeft">
+  <mat-checkbox [(ngModel)]="item.checked" [(indeterminate)]="item.indeterminate" (change)="checkbox_changed($event.checked, item)">{{ item.text }}</mat-checkbox>
+  <mrc-check-list [data]="item.children" marginLeft="16px"></mrc-check-list>
+</div>

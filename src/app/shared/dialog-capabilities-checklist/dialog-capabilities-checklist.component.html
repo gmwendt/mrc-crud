@@ -1,21 +1,8 @@
 <div class="mrc-dialog-title">Selecione as permissões abaixo</div>
 <div class="mrc-dialog-separator"></div>
-<div>
-  <div class="dialog-capabilities-checklist-item">
-    <input type="checkbox" #boxLevel0 />
-    <div>Agendamento de consultas e cadastro de pacientes.</div>
-  </div>
-  <div class="dialog-capabilities-checklist-item">
-    <input type="checkbox" #boxLevel0 />
-    <div>Gerenciamento de todos os recursos do sistema.</div>
-  </div>
-  <div class="dialog-capabilities-checklist-item subitem">
-    <input type="checkbox" #boxLevel1 />
-    <div>Gerenciar usuários</div>
-  </div>
-</div>
+<mrc-check-list [data]="data"></mrc-check-list>
 <div class="mrc-dialog-separator"></div>
 <div>
   <button mat-button (click)="cancel_clicked()">Cancelar</button>
-  <button mat-button (click)="create_clicked()">OK</button>
+  <button mat-button (click)="ok_clicked()">OK</button>
 </div>
