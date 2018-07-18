@@ -5,5 +5,5 @@
 [X] layout botões da alert-dialog com problema
 [X] implementar restrições de páginas
 [X] implementação da dialog capabilities checklist
-[ ] editar permissões
+[...] editar usuários
 [ ] implementar página add professional

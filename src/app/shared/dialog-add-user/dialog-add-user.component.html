@@ -4,15 +4,15 @@
   <div class="dialog-add-user-content-column">
     <div class="dialog-add-user-content-column-item">
       <div class="mrc-text-1 column-1">Nome:</div>
-      <input type="text" [ngClass]="{ 'error-input': nameError }" (change)="name = nameBox.value" #nameBox />
+      <input type="text" [ngClass]="{ 'error-input': nameError }" [value]="newUserData.name" (change)="newUserData.name = nameBox.value" #nameBox />
     </div>
     <div class="dialog-add-user-content-column-item">
       <div class="mrc-text-1 column-1">E-mail:</div>
-      <input type="text" [ngClass]="{ 'error-input': emailError }" (change)="email = emailBox.value" #emailBox />
+      <input type="text" [ngClass]="{ 'error-input': emailError }" [value]="newUserData.email" (change)="newUserData.email = emailBox.value" [readonly]="editMode ? 'readonly' : ''" #emailBox />
     </div>
     <div class="dialog-add-user-content-column-item">
       <div class="mrc-text-1 column-1">Nome de usuário:</div>
-      <input type="text" [ngClass]="{ 'error-input': userNameError }" (change)="userName = usernameBox.value" #usernameBox/>
+      <input type="text" [ngClass]="{ 'error-input': userNameError }" [value]="newUserData.userName" (change)="newUserData.userName = usernameBox.value" [readonly]="editMode ? 'readonly' : ''" #usernameBox/>
     </div>
   </div>
   <div class="dialog-add-user-content-column">
@@ -42,7 +42,8 @@
 <div class="mrc-dialog-separator"></div>
 <div>
   <button mat-button (click)="cancel_clicked()">Cancelar</button>
-  <button mat-button (click)="create_clicked()">Criar usuário</button>
+  <button mat-button *ngIf="!editMode" (click)="create_clicked()">Criar usuário</button>
+  <button mat-button *ngIf="editMode" (click)="update_clicked()">Salvar</button>
 </div>
 <div *ngIf="hasError" class="dialog-user-error-msg">{{ errorMsg }}</div>
 

@@ -10,7 +10,12 @@ input, textarea, select {
     white-space: nowrap;
 		text-overflow: ellipsis;
 		border-color: #b0b0b0;
-  }
+	}
+	
+	input:read-only { 
+		background-color: #e7e7e7;
+    color: #343434;
+	}
   
   h1 {
       color: #252525;

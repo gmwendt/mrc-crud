@@ -103,7 +103,21 @@ export class PageUsersComponent implements OnInit {
 	}
 
 	private edit_user_clicked(user: User): void {
-		//TODO
+		var dialogRef = this._dialog.open(DialogAddUserComponent);
+
+		dialogRef.componentInstance.editMode = true;
+		dialogRef.componentInstance.newUserData.capabilities = user.capabilities;
+		dialogRef.componentInstance.newUserData.email = user.email;
+		dialogRef.componentInstance.newUserData.name = user.name;
+		dialogRef.componentInstance.newUserData.userName = user.userName;
+		dialogRef.componentInstance.usersList = this._usersList;
+
+		dialogRef.afterClosed().subscribe((result: DialogAddUserResult) => {
+			if (result == DialogAddUserResult.Cancel)
+				return;
+
+				//TODO
+		});
 	}
 
 	private delete_user_clicked(user: User): void {

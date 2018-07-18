@@ -33,31 +33,30 @@ export class DialogAddUserComponent {
     userName: ''
   };
   public usersList: User[];
+  public editMode: boolean;
 
   private errorMsg: string;
   private hasError: boolean;
 
-  private email: string;
   private emailError: boolean;
-
-  private name: string;
   private nameError: boolean;
-
-  private userName: string;
   private userNameError: boolean;
 
   constructor(private _dialogRef: MatDialogRef<DialogAddUserComponent>, private _dialog: DialogService) {
   }
 
   private create_clicked(): void {
-    if (!this.check_errors())
+    if (!this.check_creation_errors())
       return;
 
-    this.newUserData.name = this.name;
-    this.newUserData.email = this.email;
-    this.newUserData.userName = this.userName;
-
     this._dialogRef.close(DialogAddUserResult.OK);
+  }
+
+  private update_clicked(): void {
+    if (!this.check_update_errors())
+      return;
+      
+    //TODO
   }
 
   private cancel_clicked(): void {
@@ -77,16 +76,16 @@ export class DialogAddUserComponent {
     });
   }
 
-  private check_errors(): boolean {
+  private check_creation_errors(): boolean {
     this.clear_errors();
 
-    if (!this.name) 
+    if (!this.newUserData.name) 
       this.nameError = true;
 
-    if (!this.email)
+    if (!this.newUserData.email)
       this.emailError = true;
 
-    if (!this.userName)
+    if (!this.newUserData.userName)
       this.userNameError = true;
 
     if (this.nameError || this.emailError || this.userNameError) {
@@ -95,7 +94,7 @@ export class DialogAddUserComponent {
       return false;
     }
 
-    var filter = this.usersList.filter(u => u.email === this.email);
+    var filter = this.usersList.filter(u => u.email === this.newUserData.email);
     if (filter.length > 0) {
       this.emailError = true;
       this.hasError = true;
@@ -103,7 +102,7 @@ export class DialogAddUserComponent {
       return false;
     }
    
-    filter = this.usersList.filter(u => u.userName === this.userName);
+    filter = this.usersList.filter(u => u.userName === this.newUserData.userName);
     if (filter.length > 0) {
       this.userNameError = true;
       this.hasError = true;
@@ -113,6 +112,19 @@ export class DialogAddUserComponent {
 
     //TODO: Check if email format is valid.
 
+    return true;
+  }
+
+  private check_update_errors(): boolean {
+    if (!this.newUserData.name) 
+      this.nameError = true;
+
+    if (this.nameError) {
+      this.hasError = true;
+      this.errorMsg = 'Os campos em destaque devem ser preenchidos.'
+      return false;
+    }
+    
     return true;
   }
 
