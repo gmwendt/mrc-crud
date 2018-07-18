@@ -102,6 +102,10 @@ export class PageUsersComponent implements OnInit {
 		});
 	}
 
+	private edit_user_clicked(user: User): void {
+		//TODO
+	}
+
 	private delete_user_clicked(user: User): void {
 		var dialogData: DialogAlertData = {
 			text: 'Deseja remover ' + user.name + '?',

@@ -79,6 +79,19 @@
   width: 15px;
 }
 
+.mrc-global .mat-checkbox .mat-checkbox-inner-container .mat-checkbox-background {
+  background-color: white;
+  border: solid 1px #b0b0b0;
+}
+
+.mrc-global .mat-checkbox .mat-checkbox-inner-container .mat-checkbox-background .mat-checkbox-checkmark-path {
+  stroke: #298dca !important;
+}
+
+.mrc-global .mat-checkbox .mat-checkbox-inner-container .mat-checkbox-background .mat-checkbox-mixedmark {
+  background-color: #298dca;
+}
+
 .mrc-global .mat-checkbox .mat-checkbox-label {
   line-height: 20px;
 }

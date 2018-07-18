@@ -25,6 +25,8 @@
       <mat-cell *matCellDef="let element"> 
         <span>
           <span *ngIf="(currentUser.capabilities.registerUsers || currentUser.capabilities.fullAccessAdministrativeTools) && currentUser._id != element._id" 
+            title="Editar" class="icon-edit" (click)="edit_user_clicked(element)"></span> 
+          <span *ngIf="(currentUser.capabilities.registerUsers || currentUser.capabilities.fullAccessAdministrativeTools) && currentUser._id != element._id" 
             title="Remover usuário" class="icon-delete" (click)="delete_user_clicked(element)"></span> 
         </span>  
       </mat-cell>

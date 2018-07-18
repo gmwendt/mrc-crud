@@ -5,6 +5,21 @@
     .mat-checkbox-inner-container {
       height: 15px;
       width: 15px;
+
+      .mat-checkbox-background {
+        background-color: white;
+        border: solid 1px #b0b0b0;
+
+        .mat-checkbox-checkmark {
+          &-path {
+            stroke: #298dca!important;
+          }
+        }
+
+        .mat-checkbox-mixedmark {
+          background-color: #298dca;
+        }
+      }
     }
 
     .mat-checkbox-label {

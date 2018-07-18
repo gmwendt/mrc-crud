@@ -24,7 +24,7 @@ page-users .mat-button {
   margin: 8px 8px 8px 22px;
 }
 
-page-users .icon-delete {
+page-users .icon-delete, page-users .icon-edit {
   cursor: pointer;
   font-size: 12pt;
   color: #4f4f4f;
