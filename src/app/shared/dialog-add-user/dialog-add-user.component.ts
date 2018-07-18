@@ -26,7 +26,12 @@ export class NewUserData {
 })
 export class DialogAddUserComponent {
 
-  public newUserData: NewUserData;
+  public newUserData: NewUserData = {
+    capabilities: new Capabilities(),
+    name: '',
+    email: '',
+    userName: ''
+  };
   public usersList: User[];
 
   private errorMsg: string;
@@ -41,10 +46,6 @@ export class DialogAddUserComponent {
   private userName: string;
   private userNameError: boolean;
 
-  private canScheduleAndRegisterPatient: boolean;
-  private canManageSystemData: boolean;
-  private canAccessFinances: boolean;
-
   constructor(private _dialogRef: MatDialogRef<DialogAddUserComponent>, private _dialog: DialogService) {
   }
 
@@ -52,21 +53,9 @@ export class DialogAddUserComponent {
     if (!this.check_errors())
       return;
 
-    this.newUserData = {
-      capabilities: new Capabilities(),
-      name: this.name,
-      email: this.email,
-      userName: this.userName
-    }    
-
-    if (this.canScheduleAndRegisterPatient)
-      this.newUserData.capabilities.scheduleAndRegisterPatient = true;
-
-    if (this.canManageSystemData)
-      this.newUserData.capabilities.fullAccessAdministrativeTools = true;
-
-    if (this.canAccessFinances)
-      this.newUserData.capabilities.accessGlobalFinances = true;
+    this.newUserData.name = this.name;
+    this.newUserData.email = this.email;
+    this.newUserData.userName = this.userName;
 
     this._dialogRef.close(DialogAddUserResult.OK);
   }
@@ -77,9 +66,14 @@ export class DialogAddUserComponent {
 
   private customize_capabilities_clicked(): void {
     var dialogRef = this._dialog.open(DialogCapabilitiesChecklistComponent, { disableClose: true });
+    dialogRef.componentInstance.capabilities = this.newUserData.capabilities;
+    dialogRef.componentInstance.createData();
+
     dialogRef.afterClosed().subscribe((result: DialogCapabilitiesCheckListResult) => {
       if (result == DialogCapabilitiesCheckListResult.Cancel) 
         return;
+
+      this.newUserData.capabilities = dialogRef.componentInstance.capabilities;
     });
   }
 
@@ -126,5 +120,19 @@ export class DialogAddUserComponent {
     this.nameError = false;
     this.emailError = false;
     this. userNameError = false;
+  }
+
+  private get canManageSystemData(): boolean {
+    return this.newUserData.capabilities.fullAccessAdministrativeTools;
+  }
+
+  private get canManageSystemDataIndeterminate(): boolean {
+    if (!this.canManageSystemData) {
+      if (this.newUserData.capabilities.registerAgreements || this.newUserData.capabilities.registerClinics ||
+        this.newUserData.capabilities.registerDocuments || this.newUserData.capabilities.registerPatients ||
+        this.newUserData.capabilities.registerProfessionals || this.newUserData.capabilities.registerServices ||
+        this.newUserData.capabilities.registerUsers)
+        return true;
+    }
   }
 }

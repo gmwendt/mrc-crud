@@ -3,7 +3,9 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 export class CheckListItem {
   private _checked: boolean = false;
 
-  constructor(public children: CheckListItem[], public text: string) { }
+  constructor(public children: CheckListItem[], public text: string, public isChecked?: boolean) { 
+    this._checked = isChecked;
+  }
 
   public set checked(value: boolean) {
     if (this._checked == value)
