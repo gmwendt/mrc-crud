@@ -117,6 +117,18 @@ export class PageUsersComponent implements OnInit {
 				return;
 
 				//TODO
+			this.loading = true;
+
+			var userResult = dialogRef.componentInstance.newUserData;
+			user.capabilities = userResult.capabilities;
+			user.name = userResult.name;
+
+			this._userService.updateUser(user).then(updateResult => {
+				this.loading = false;
+			}, err => {
+				this.loading = false;
+				this.show_error_dialog(err);
+			});
 		});
 	}
 

@@ -56,7 +56,7 @@ export class DialogAddUserComponent {
     if (!this.check_update_errors())
       return;
       
-    //TODO
+    this._dialogRef.close(DialogAddUserResult.OK);
   }
 
   private cancel_clicked(): void {
@@ -116,6 +116,8 @@ export class DialogAddUserComponent {
   }
 
   private check_update_errors(): boolean {
+    this.clear_errors();
+
     if (!this.newUserData.name) 
       this.nameError = true;
 
