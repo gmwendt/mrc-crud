@@ -1,0 +1,9 @@
+mrc-content {
+  display: flex;
+  overflow: auto;
+  height: calc(100% - 141px);
+}
+
+mrc-content page-invalid {
+  width: 100%;
+}

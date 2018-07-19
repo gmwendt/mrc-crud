@@ -2,17 +2,16 @@
     <!--  -->
     <div class="mrc-ribbon-config-group">
       <div class="mrc-ribbon-config-group-content">
-        <div class="mrc-ribbon-config-group-item" *ngIf="canRegisterDocuments">
+        <div class="mrc-ribbon-config-group-item" *ngIf="canRegisterDocuments" (click)="ribbon_item_clicked()">
           <div class="icon-list icon"></div>	
           <span>Documentos</span>
         </div>
-        <div class="mrc-ribbon-config-group-item" *ngIf="canRegisterProfessionals">
-          <div class="icon-list icon"></div>	
+        <div class="mrc-ribbon-config-group-item" *ngIf="canRegisterProfessionals" (click)="ribbon_item_clicked('professionals')">
+          <div class="icon-professional icon"></div>	
           <span>Profissionais</span>
         </div>        
-        <div class="mrc-ribbon-config-group-item" *ngIf="canRegisterUsers" 
-        (click)="item_users_clicked()">
-          <div class="icon-add icon"></div>	
+        <div class="mrc-ribbon-config-group-item" *ngIf="canRegisterUsers" (click)="ribbon_item_clicked('users')">
+          <div class="icon-user icon"></div>	
           <span>Usuários</span>
         </div>        
       </div>

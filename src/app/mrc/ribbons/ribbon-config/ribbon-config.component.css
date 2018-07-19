@@ -1,6 +1,6 @@
 .mrc-ribbon-config {
   width: 100%;
-  height: 70px;
+  height: 82px;
   background-color: #f2f2f2;
   display: flex;
 }
@@ -14,8 +14,9 @@
 }
 
 .mrc-ribbon-config .mrc-ribbon-config-group-content {
-  height: 100%;
   display: flex;
+  height: 100%;
+  margin: 8px 0 8px 0;
 }
 
 .mrc-ribbon-config .mrc-ribbon-config-group-item {
@@ -46,13 +47,13 @@
 .mrc-ribbon-config .mrc-ribbon-config-group-footer {
   color: #bdbdbd;
   font-size: 8pt;
-  margin-left: 16px;
+  margin: 0 0 4px 16px;
   text-align: center;
   width: 100%;
 }
 
 .mrc-ribbon-config .mrc-ribbon-config-divider {
-  height: 56px;
+  height: 66px;
   background-color: #bdbdbd;
   margin-left: 16px;
   margin-top: 8px;

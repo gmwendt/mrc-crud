@@ -1,9 +1,10 @@
-[X] change add user alert; create new password alert
+﻿[X] change add user alert; create new password alert
 [X] user management [delete] -> Todo: add removed success message
 [X] layout dialog add user
 [X] loading spinner em todos cenários
 [X] layout botões da alert-dialog com problema
 [X] implementar restrições de páginas
 [X] implementação da dialog capabilities checklist
-[...] editar usuários
+[X] editar usuários
+[X] BUG dialog add user check box fica apenas indeterminate ou true
 [ ] implementar página add professional

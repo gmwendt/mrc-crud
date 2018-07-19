@@ -11,6 +11,11 @@ input, textarea, select {
 		text-overflow: ellipsis;
 		border-color: #b0b0b0;
 	}
+
+	input:-moz-read-only {
+		background-color: #e7e7e7;
+    color: #343434;
+	}
 	
 	input:read-only { 
 		background-color: #e7e7e7;

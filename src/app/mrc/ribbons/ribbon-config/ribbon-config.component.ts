@@ -4,6 +4,8 @@ import { User } from '../../common/types';
 
 import { MrcContentService } from '../../mrc-content/mrc-content.service';
 
+import { PageInvalidComponent } from '../../pages/page-invalid/page-invalid.component';
+import { PageProfessionalsComponent } from '../../pages/page-professionals/page-professionals.component';
 import { PageUsersComponent } from '../../pages/page-users/page-users.component';
 
 import { UserService } from '../../../login/user.service';
@@ -19,15 +21,20 @@ export class RibbonConfigComponent implements OnInit {
 	private user: User;
 
 	constructor(private _service: MrcContentService, private _userService: UserService) {
-		
 	}
 
 	ngOnInit() {
 		this.user = this._userService.currentUser;
 	}
 	
-	private item_users_clicked(): void {
-		this._service.Current = PageUsersComponent;
+	private ribbon_item_clicked(page?: string): void {
+		switch (page) {
+			case 'users': this._service.Current = PageUsersComponent;
+				break;
+			case 'professionals': this._service.Current = PageProfessionalsComponent;
+				break;
+			default: this._service.Current = PageInvalidComponent;
+		}
 	}
 
 	private get canRegisterUsers(): boolean {

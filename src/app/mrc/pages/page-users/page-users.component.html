@@ -10,14 +10,14 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="username">
-      <mat-header-cell *matHeaderCellDef> NOME DE USUÁRIO </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.userName}} </mat-cell>
-    </ng-container>
-
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef> NOME </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef> NOME DE USUÁRIO </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.userName }}</mat-cell>
     </ng-container>
     
     <ng-container matColumnDef="commands">

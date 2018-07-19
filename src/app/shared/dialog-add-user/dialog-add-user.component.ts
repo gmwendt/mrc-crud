@@ -45,6 +45,15 @@ export class DialogAddUserComponent {
   constructor(private _dialogRef: MatDialogRef<DialogAddUserComponent>, private _dialog: DialogService) {
   }
 
+  public setUserData(user: User): void {
+    //clone capabilities
+    this.newUserData.capabilities = Capabilities.fromJSON(Capabilities.toJSON(user.capabilities));
+    
+    this.newUserData.email = user.email;
+    this.newUserData.name = user.name;
+    this.newUserData.userName = user.userName;
+  }
+
   private create_clicked(): void {
     if (!this.check_creation_errors())
       return;
@@ -136,11 +145,25 @@ export class DialogAddUserComponent {
     this. userNameError = false;
   }
 
+  private set canManageSystemData(value: boolean) {
+    if (this.newUserData.capabilities.fullAccessAdministrativeTools == value)
+      return;
+
+    this.newUserData.capabilities.fullAccessAdministrativeTools = value;
+    this.newUserData.capabilities.registerAgreements = value;
+    this.newUserData.capabilities.registerClinics = value;
+    this.newUserData.capabilities.registerDocuments = value;
+    this.newUserData.capabilities.registerPatients = value;
+    this.newUserData.capabilities.registerProfessionals = value;
+    this.newUserData.capabilities.registerServices = value;
+    this.newUserData.capabilities.registerUsers = value;
+  }
+
   private get canManageSystemData(): boolean {
     return this.newUserData.capabilities.fullAccessAdministrativeTools;
   }
 
-  private get canManageSystemDataIndeterminate(): boolean {
+  private get manageSystemDataIsIndeterminate(): boolean {
     if (!this.canManageSystemData) {
       if (this.newUserData.capabilities.registerAgreements || this.newUserData.capabilities.registerClinics ||
         this.newUserData.capabilities.registerDocuments || this.newUserData.capabilities.registerPatients ||

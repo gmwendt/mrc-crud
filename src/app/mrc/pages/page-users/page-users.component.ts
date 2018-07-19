@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 export class PageUsersComponent implements OnInit { 
 	
 	private currentUser: User;
-	private displayedColumns = ['current', 'username', 'name', 'commands'];
+	private displayedColumns = ['current', 'name', 'username', 'commands'];
 	private dataSource;
 	private loading = true;
 
@@ -44,11 +44,7 @@ export class PageUsersComponent implements OnInit {
 			if (accs.length == 0)
 				return;
 
-			this._userService.listAccountUsers(accs[0].accountId).then(users => {
-				this._usersList = users;
-				this.createTable();
-				this.loading = false;
-			}, err => this.show_error_dialog(err));
+			this.listUsers(accs[0].accountId);
 		}, err => this.show_error_dialog(err));
 	}
 
@@ -106,24 +102,21 @@ export class PageUsersComponent implements OnInit {
 		var dialogRef = this._dialog.open(DialogAddUserComponent);
 
 		dialogRef.componentInstance.editMode = true;
-		dialogRef.componentInstance.newUserData.capabilities = user.capabilities;
-		dialogRef.componentInstance.newUserData.email = user.email;
-		dialogRef.componentInstance.newUserData.name = user.name;
-		dialogRef.componentInstance.newUserData.userName = user.userName;
 		dialogRef.componentInstance.usersList = this._usersList;
+		dialogRef.componentInstance.setUserData(user);
 
 		dialogRef.afterClosed().subscribe((result: DialogAddUserResult) => {
 			if (result == DialogAddUserResult.Cancel)
 				return;
 
-				//TODO
 			this.loading = true;
 
 			var userResult = dialogRef.componentInstance.newUserData;
 			user.capabilities = userResult.capabilities;
 			user.name = userResult.name;
 
-			this._userService.updateUser(user).then(updateResult => {
+			this._userService.updateUser(user).then(updatedUser => {
+				this.listUsers(this._accId);
 				this.loading = false;
 			}, err => {
 				this.loading = false;
@@ -159,6 +152,14 @@ export class PageUsersComponent implements OnInit {
 				this.show_error_dialog(err);
 			});	
 		});
+	}
+
+	private listUsers(accID: number): void {
+		this._userService.listAccountUsers(accID).then(users => {
+			this._usersList = users;
+			this.createTable();
+			this.loading = false;
+		}, err => this.show_error_dialog(err));
 	}
 
 	private show_error_dialog(msg: string): void {

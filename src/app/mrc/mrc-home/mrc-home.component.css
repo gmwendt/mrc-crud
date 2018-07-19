@@ -1,4 +1,3 @@
-mrc-home mrc-content {
-  display: flex;
-  overflow: auto;
+mrc-home {
+  height: 100%;
 }

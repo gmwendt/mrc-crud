@@ -42,3 +42,11 @@
   .icon-edit:before {
     content: "\e903";
   }
+
+  .icon-professional:before {
+    content: "\e904";
+  }
+
+  .icon-user:before {
+    content: "\e905";
+  }

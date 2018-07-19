@@ -19,6 +19,7 @@ export class UserService {
       this._http.post('/user', data)
         .map(res => res.json())
         .subscribe(res => {
+          res.capabilities = Capabilities.fromJSON(res.capabilities);
           resolve(res);
         }, (err) => {
           reject(err);

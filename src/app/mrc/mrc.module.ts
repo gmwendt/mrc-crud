@@ -9,7 +9,6 @@ import { MrcHeaderComponent }     from './mrc-header/mrc-header.component';
 import { MrcHeaderConfigComponent } from './mrc-header/mrc-header-config/mrc-header-config.component';
 import { MrcHeaderMenuComponent } from './mrc-header-menu/mrc-header-menu.component';
 import { MrcHomeComponent } from './mrc-home/mrc-home.component';
-import { NavigationComponent }     from './navigation/navigation.component';
 
 import { MrcContentService } from './mrc-content/mrc-content.service';
 import { AuthGuardService } from '../login/auth-guard.service';
@@ -19,7 +18,7 @@ import { MaterialModule } from '../material.module';
 @NgModule({
   declarations: [
     MrcComponent, MrcContentComponent, MrcHeaderComponent, MrcHeaderConfigComponent, 
-    MrcHeaderMenuComponent, MrcHomeComponent, NavigationComponent,
+    MrcHeaderMenuComponent, MrcHomeComponent, 
   ],
   imports: [ CommonModule, MaterialModule, routing ],
   exports: [ MrcComponent ],
