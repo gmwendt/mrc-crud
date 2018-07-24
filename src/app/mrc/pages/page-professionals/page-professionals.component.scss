@@ -1,3 +1,14 @@
 page-professionals {
-	
+  display: block;
+	margin: 16px;
+  width: 100%;
+  
+  .page-professionals-title {
+		font-size: 12pt;
+		margin: 8px 8px 8px 22px;
+  }
+  
+  .mat-button {
+		margin: 8px 8px 8px 22px;
+	}
 }

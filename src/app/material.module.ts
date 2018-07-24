@@ -6,11 +6,13 @@ import {
   MatExpansionModule, 
 	MatButtonModule,
 	MatCheckboxModule,
+	MatDatepickerModule,
 	MatDialogModule,
 	MatInputModule, 
 	MatMenuModule,
+	MatNativeDateModule,
 	MatTableModule,
-	MatTabsModule
+	MatTabsModule,
 } from '@angular/material';
 
 import { CdkTableModule } from '@angular/cdk/table';
@@ -21,24 +23,28 @@ import { CdkTableModule } from '@angular/cdk/table';
 		CdkTableModule,
 		MatButtonModule,
 		MatCheckboxModule,
+		MatDatepickerModule,
 		MatDialogModule,
     MatExpansionModule, 
 		MatInputModule, 
 		MatMenuModule,
+		MatNativeDateModule,
 		MatTableModule,
-		MatTabsModule
+		MatTabsModule,
   ],
   exports: [
 		BrowserAnimationsModule,
 		CdkTableModule,
 		MatButtonModule,
 		MatCheckboxModule,
+		MatDatepickerModule,
 		MatDialogModule,
 		MatExpansionModule, 
 		MatInputModule, 
 		MatMenuModule,
+		MatNativeDateModule,
 		MatTableModule,
-		MatTabsModule
+		MatTabsModule,
   ]
 })
 export class MaterialModule {}

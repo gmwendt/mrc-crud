@@ -58,11 +58,11 @@ export class PageUsersComponent implements OnInit {
 	}
 
 	private add_user_clicked(): void {
-		var dialogRef = this._dialog.open(DialogAddUserComponent);
+		var dialogRef = this._dialog.open(DialogAddUserComponent, { disableClose: true });
 		dialogRef.componentInstance.usersList = this._usersList;
 		dialogRef.afterClosed().subscribe((result: DialogAddUserResult) => {
 			
-			if (result == DialogAddUserResult.Cancel)
+			if (result != DialogAddUserResult.OK)
 				return;
 
 			this.loading = true;
@@ -70,6 +70,7 @@ export class PageUsersComponent implements OnInit {
 			var userData: User = {
 				accountRefId: this._accId,
 				capabilities: userResult.capabilities,
+				birthDate: userResult.birthdate,
 				email: userResult.email,
 				name: userResult.name,
 				userName: userResult.userName,
@@ -99,19 +100,20 @@ export class PageUsersComponent implements OnInit {
 	}
 
 	private edit_user_clicked(user: User): void {
-		var dialogRef = this._dialog.open(DialogAddUserComponent);
+		var dialogRef = this._dialog.open(DialogAddUserComponent, { disableClose: true });
 
 		dialogRef.componentInstance.editMode = true;
 		dialogRef.componentInstance.usersList = this._usersList;
 		dialogRef.componentInstance.setUserData(user);
 
 		dialogRef.afterClosed().subscribe((result: DialogAddUserResult) => {
-			if (result == DialogAddUserResult.Cancel)
+			if (result != DialogAddUserResult.OK)
 				return;
 
 			this.loading = true;
 
 			var userResult = dialogRef.componentInstance.newUserData;
+			user.birthDate = userResult.birthdate;
 			user.capabilities = userResult.capabilities;
 			user.name = userResult.name;
 

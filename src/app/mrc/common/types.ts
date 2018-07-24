@@ -34,14 +34,25 @@ export class Account {
 export class User {
   public _id?: string;
   public accountRefId: number;
+  public birthDate: Date;
   public capabilities: Capabilities;
   public email: string;
   public name: string;
   public passwordExpired: boolean;
   public passwordHash: string;
   public passwordSalt: string;
+  public professionalRefId?: string;
   public resetPwdToken: string;
   public userName: string;
+}
+
+export class Professional {
+  public _id?: string;
+  public accountRefId: number;
+  public name: string;
+  public professionalRegisterNum: string;
+  public professionalRegisterState: string;
+  public userRefId: string;
 }
 
 export class SystemInfo {

@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
   private _pass: string;
 
   private user: User = {
-    accountRefId: 0, capabilities: new Capabilities(), email: '', name: '', passwordHash: '', passwordExpired: false, 
+    accountRefId: 0, birthDate: new Date(), capabilities: new Capabilities(), email: '', name: '', passwordHash: '', passwordExpired: false, 
     passwordSalt: '', resetPwdToken: '', userName: ''
   };
   private loading: boolean = false;

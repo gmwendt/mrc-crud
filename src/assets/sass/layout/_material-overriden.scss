@@ -69,4 +69,24 @@
     height: 30px;
     line-height: 30px;
   }
+
+  .mat-form-field {
+
+    &-label {
+      display: none;
+    }
+
+    .mat-input-wrapper {
+      padding: 0;
+
+      .mat-input-infix {
+        border-top: none;
+        padding: 0;
+      }
+    }
+
+    .mat-input-underline {
+      display: none;
+    }
+  }
 }

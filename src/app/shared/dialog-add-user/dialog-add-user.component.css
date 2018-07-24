@@ -15,7 +15,7 @@ dialog-add-user input[type="checkbox"] {
 }
 
 dialog-add-user .dialog-add-user-content {
-  display: flex;
+  display: block;
 }
 
 dialog-add-user .dialog-add-user-content-column-item {
@@ -34,6 +34,10 @@ dialog-add-user .dialog-add-user-content-column-item .column-1 {
 dialog-add-user .dialog-add-user-content-column-item-checkbox {
   display: flex;
   margin: 1px 0 8px 2px;
+}
+
+dialog-add-user .dialog-add-user-content-line {
+  display: flex;
 }
 
 dialog-add-user .dialog-add-user-link {
@@ -55,6 +59,11 @@ dialog-add-user .dialog-user-error-msg {
 dialog-add-user .mat-button {
   float: right;
   margin-left: 8px;
+}
+
+dialog-add-user .mat-form-field {
+  margin-left: 2px;
+  width: 100%;
 }
 
 dialog-add-user .error-input {

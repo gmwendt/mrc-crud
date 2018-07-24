@@ -149,6 +149,23 @@
   line-height: 30px;
 }
 
+.mrc-global .mat-form-field-label {
+  display: none;
+}
+
+.mrc-global .mat-form-field .mat-input-wrapper {
+  padding: 0;
+}
+
+.mrc-global .mat-form-field .mat-input-wrapper .mat-input-infix {
+  border-top: none;
+  padding: 0;
+}
+
+.mrc-global .mat-form-field .mat-input-underline {
+  display: none;
+}
+
 html {
   height: 100%;
 }

@@ -13,6 +13,7 @@ export enum DialogAddUserResult {
 
 export class NewUserData {
   public capabilities: Capabilities;
+  public birthdate: Date;
   public email: string;
   public name: string;
   public userName: string;
@@ -28,6 +29,7 @@ export class DialogAddUserComponent {
 
   public newUserData: NewUserData = {
     capabilities: new Capabilities(),
+    birthdate: null,
     name: '',
     email: '',
     userName: ''
@@ -49,6 +51,7 @@ export class DialogAddUserComponent {
     //clone capabilities
     this.newUserData.capabilities = Capabilities.fromJSON(Capabilities.toJSON(user.capabilities));
     
+    this.newUserData.birthdate = user.birthDate;
     this.newUserData.email = user.email;
     this.newUserData.name = user.name;
     this.newUserData.userName = user.userName;

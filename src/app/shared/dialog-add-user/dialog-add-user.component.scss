@@ -14,7 +14,7 @@ dialog-add-user {
     }
 
     .dialog-add-user-content {
-      display: flex;
+      display: block;
 
       &-column {
 
@@ -35,6 +35,10 @@ dialog-add-user {
             margin: 1px 0 8px 2px;
           }
         }
+      }
+
+      &-line {
+        display: flex;
       }
     }
 
@@ -57,6 +61,11 @@ dialog-add-user {
     .mat-button {
       float: right;
       margin-left: 8px;
+    }
+
+    .mat-form-field {
+      margin-left: 2px;
+      width: 100%;
     }
 
     .error-input {
