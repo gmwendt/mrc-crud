@@ -44,6 +44,8 @@ export class DialogAddUserComponent {
   private nameError: boolean;
   private userNameError: boolean;
 
+  private isProfessional: boolean;
+
   constructor(private _dialogRef: MatDialogRef<DialogAddUserComponent>, private _dialog: DialogService) {
   }
 

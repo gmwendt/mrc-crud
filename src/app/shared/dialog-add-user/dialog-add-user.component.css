@@ -20,6 +20,7 @@ dialog-add-user .dialog-add-user-content {
 
 dialog-add-user .dialog-add-user-content-column-item {
   display: flex;
+  font-size: 9pt;
   margin: 4px;
 }
 
@@ -29,6 +30,11 @@ dialog-add-user .dialog-add-user-content-column-item .mrc-text-1 {
 
 dialog-add-user .dialog-add-user-content-column-item .column-1 {
   width: 215px;
+}
+
+dialog-add-user .dialog-add-user-content-column-item .column-unique {
+  width: 390px;
+  margin-bottom: 16px;
 }
 
 dialog-add-user .dialog-add-user-content-column-item-checkbox {
@@ -48,6 +54,10 @@ dialog-add-user .dialog-add-user-link {
   text-decoration: underline;
 }
 
+dialog-add-user .dialog-add-user-professional-checkbox {
+  margin: 4px;
+}
+
 dialog-add-user .dialog-user-error-msg {
   color: #ff1919;
   font-size: 9pt;
@@ -62,8 +72,13 @@ dialog-add-user .mat-button {
 }
 
 dialog-add-user .mat-form-field {
+  font-size: 12pt;
   margin-left: 2px;
   width: 100%;
+}
+
+dialog-add-user .mat-checkbox {
+  margin-left: 4px;
 }
 
 dialog-add-user .error-input {
