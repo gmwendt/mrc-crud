@@ -7,12 +7,11 @@
   <input type="text" #proRegBox />
 </div>
 <div class="add-professional-item">
-  <div class="add-professional-item-text add-professional-item-text-iconed mrc-text-1" 
-      (click)="select_specialties_clicked()">
+  <div class="add-professional-item-text add-professional-item-text-iconed mrc-text-1">
     Especialidade(s):
   </div>
   <input type="text" readonly="readonly"/>
-  <div class="icon-list"></div>
+  <div class="icon-list" (click)="select_specialties_clicked()"></div>
 </div>
 <div class="add-professional-item">
   <mat-checkbox disableRipple="true">Ativo</mat-checkbox>  

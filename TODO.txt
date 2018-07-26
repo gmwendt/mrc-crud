@@ -8,4 +8,4 @@
 [X] editar usuários
 [X] BUG dialog add user check box fica apenas indeterminate ou true
 [o] implementar página add professional update4
-[ ] implementar dialog de seleção genérica
+[o] implementar dialog de seleção genérica update
