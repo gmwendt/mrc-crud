@@ -7,4 +7,5 @@
 [X] implementação da dialog capabilities checklist
 [X] editar usuários
 [X] BUG dialog add user check box fica apenas indeterminate ou true
-[ ] implementar página add professional
+[o] implementar página add professional update4
+[ ] implementar dialog de seleção genérica

@@ -29,10 +29,14 @@ dialog-add-user {
           
           .column-1 {
             width: 215px;
+
+            &-withIcon {
+              margin-right: 8px;
+            }
           }
 
           .column-unique {
-            width: 390px;
+            width: 430px;
             margin-bottom: 16px;
           }
 

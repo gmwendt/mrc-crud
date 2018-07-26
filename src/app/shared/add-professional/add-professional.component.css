@@ -1,0 +1,23 @@
+add-professional .add-professional-item {
+  display: flex;
+  font-size: 9pt;
+  margin: 4px;
+}
+
+add-professional .add-professional-item-text {
+  width: 215px;
+}
+
+add-professional .add-professional-item-text-iconed {
+  margin-right: 8px;
+}
+
+add-professional .add-professional-item .mrc-text-1 {
+  margin-top: 3px;
+}
+
+add-professional .icon-list {
+  cursor: pointer;
+  font-size: 14pt;
+  margin: 1px 0 0 2px;
+}

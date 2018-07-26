@@ -32,8 +32,12 @@ dialog-add-user .dialog-add-user-content-column-item .column-1 {
   width: 215px;
 }
 
+dialog-add-user .dialog-add-user-content-column-item .column-1-withIcon {
+  margin-right: 8px;
+}
+
 dialog-add-user .dialog-add-user-content-column-item .column-unique {
-  width: 390px;
+  width: 430px;
   margin-bottom: 16px;
 }
 
