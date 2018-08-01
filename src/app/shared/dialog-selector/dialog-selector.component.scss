@@ -1,0 +1,22 @@
+dialog-selector {
+
+  .cdk-column-select {
+    max-width: 30px;
+  }
+
+  .dialog-selector-filter {
+    margin: 4px;
+    width: calc(100% - 4px);
+  }
+
+  mat-table {
+    height: calc(100% - 106px);
+    overflow: auto;
+  }
+
+  mat-header-row {
+    position: sticky;
+    // top: -.5px;
+    z-index: 100;
+  }
+}

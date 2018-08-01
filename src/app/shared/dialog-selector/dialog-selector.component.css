@@ -1,0 +1,18 @@
+dialog-selector .cdk-column-select {
+  max-width: 30px;
+}
+
+dialog-selector .dialog-selector-filter {
+  margin: 4px;
+  width: calc(100% - 4px);
+}
+
+dialog-selector mat-table {
+  height: calc(100% - 106px);
+  overflow: auto;
+}
+
+dialog-selector mat-header-row {
+  position: sticky;
+  z-index: 100;
+}

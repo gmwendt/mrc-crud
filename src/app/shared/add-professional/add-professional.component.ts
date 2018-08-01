@@ -16,7 +16,7 @@ export class AddProfessionalComponent {
   }
 
   private select_specialties_clicked(): void {
-    var dialogRef = this._dialog.open(DialogSelector, { disableClose: true});
+    var dialogRef = this._dialog.open(DialogSelector, { disableClose: true, height: "400px"});
 
     dialogRef.afterClosed().subscribe(result => {
 
