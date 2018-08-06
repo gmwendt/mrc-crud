@@ -15,14 +15,14 @@ export class DialogSelectorColumn {
   encapsulation: ViewEncapsulation.None,
 })
 export class DialogSelector {
-  public dataSource = new MatTableDataSource(DATA_MOCKED);
+  public dataSource: MatTableDataSource<any>;
   public columns: DialogSelectorColumn[] = [];
 
   private selection = new SelectionModel<any>(true, []);
+  
+  private _data: any[];
 
   constructor(private _dialogRef: MatDialogRef<DialogSelector>) {
-    //mock
-    this.columns.push({key:'especialidade', title: 'Especialidade'});
   }
 
   isAllSelected() {
@@ -47,6 +47,10 @@ export class DialogSelector {
     this._dialogRef.close();
   }
 
+  private save_clicked(): void {
+    this._dialogRef.close(this.selection.selected);
+  }
+
   private get displayedColumns(): string[] {
     var columns: string[] = [];
 
@@ -55,24 +59,18 @@ export class DialogSelector {
 
     return columns;
   }
+
+  get data(): any[] {
+    return this._data;
+  }
+
+  set data(value: any[]) {
+    if (value == this._data)
+      return;
+
+    this._data = value;
+    this.dataSource = new MatTableDataSource(value);
+  }
 }
 
-const DATA_MOCKED: any[] = [
-  { 'especialidade': 'Cardiologista' }, 
-  { 'especialidade': 'Dermatologista' }, 
-  { 'especialidade': 'Oftalmologista' }, 
-  { 'especialidade': 'Oftalmologista' }, 
-  { 'especialidade': 'Oftalmologista' }, 
-  { 'especialidade': 'Oftalmologista' }, 
-  { 'especialidade': 'Oftalmologista' }, 
-  { 'especialidade': 'Oftalmologista' }, 
-  { 'especialidade': 'Oftalmologista' }, 
-  { 'especialidade': 'Oftalmologista' }, 
-  { 'especialidade': 'Oftalmologista' }, 
-  { 'especialidade': 'Oftalmologista' }, 
-  { 'especialidade': 'Oftalmologista' }, 
-  { 'especialidade': 'Oftalmologista' }, 
-  { 'especialidade': 'Oftalmologista' }, 
-  { 'especialidade': 'Oftalmologista' }, 
-  { 'especialidade': 'Urologista' }
-]
+

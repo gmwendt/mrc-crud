@@ -7,12 +7,18 @@ dialog-selector .dialog-selector-filter {
   width: calc(100% - 4px);
 }
 
+dialog-selector .mat-button {
+  float: right;
+  margin-left: 8px;
+}
+
 dialog-selector mat-table {
   height: calc(100% - 106px);
   overflow: auto;
 }
 
 dialog-selector mat-header-row {
+  background-color: #fff;
   position: sticky;
   z-index: 100;
 }

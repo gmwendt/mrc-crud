@@ -9,14 +9,19 @@ dialog-selector {
     width: calc(100% - 4px);
   }
 
+  .mat-button {
+    float: right;
+    margin-left: 8px;
+  }
+
   mat-table {
     height: calc(100% - 106px);
     overflow: auto;
   }
 
   mat-header-row {
+    background-color: #fff;
     position: sticky;
-    // top: -.5px;
     z-index: 100;
   }
 }
