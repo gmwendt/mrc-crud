@@ -1,10 +1,12 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
+import { ProfessionalData } from '../add-professional/add-professional.component';
+
 import { DialogCapabilitiesChecklistComponent, DialogCapabilitiesCheckListResult } from '../dialog-capabilities-checklist/dialog-capabilities-checklist.component';
 
 import { MatDialogRef, DialogService } from '../dialog.service';
 
-import { Capabilities, User } from '../../mrc/common/types';
+import { Capabilities, User, Professional } from '../../mrc/common/types';
 
 export enum DialogAddUserResult {
   Cancel,
@@ -17,6 +19,7 @@ export class NewUserData {
   public email: string;
   public name: string;
   public userName: string;
+  public isProfessional: boolean;
 } 
 
 @Component({
@@ -32,7 +35,14 @@ export class DialogAddUserComponent {
     birthdate: null,
     name: '',
     email: '',
-    userName: ''
+    userName: '',
+    isProfessional: false
+  };
+  public newProfessionalData: ProfessionalData = {
+    active: true,
+    professionalRegisterNum: '',
+    professionalRegisterState: '',
+    specialites: ''
   };
   public usersList: User[];
   public editMode: boolean;
@@ -44,25 +54,37 @@ export class DialogAddUserComponent {
   private nameError: boolean;
   private userNameError: boolean;
 
-  private isProfessional: boolean;
+  private editedUser: User;
+  private currentUser: User;
 
   constructor(private _dialogRef: MatDialogRef<DialogAddUserComponent>, private _dialog: DialogService) {
   }
 
-  public setUserData(user: User): void {
+  public setUserData(user: User, currentUser: User, professional?: Professional): void {
     //clone capabilities
     this.newUserData.capabilities = Capabilities.fromJSON(Capabilities.toJSON(user.capabilities));
     
     this.newUserData.birthdate = user.birthDate;
     this.newUserData.email = user.email;
+    this.newUserData.isProfessional = user.isProfessional;
     this.newUserData.name = user.name;
     this.newUserData.userName = user.userName;
+
+    this.editedUser = user;
+    this.currentUser = currentUser;
+
+    if (professional) {
+      this.newProfessionalData.active = professional.active;
+      this.newProfessionalData.professionalRegisterNum = professional.professionalRegisterNum;
+      this.newProfessionalData.professionalRegisterState = professional.professionalRegisterState;
+      this.newProfessionalData.specialites = professional.specialites;
+    }
   }
 
-  private create_clicked(): void {
+  private create_clicked(professional: any): void {
     if (!this.check_creation_errors())
       return;
-
+    
     this._dialogRef.close(DialogAddUserResult.OK);
   }
 

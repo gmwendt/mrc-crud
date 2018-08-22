@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
 
   private user: User = {
     accountRefId: 0, birthDate: new Date(), capabilities: new Capabilities(), email: '', name: '', passwordHash: '', passwordExpired: false, 
-    passwordSalt: '', resetPwdToken: '', userName: ''
+    passwordSalt: '', resetPwdToken: '', userName: '', isProfessional: false
   };
   private loading: boolean = false;
 

@@ -12,6 +12,7 @@ import { RegisterModule } from './register/register.module';
 import { UserService } from './login/user.service';
 import { AccountService } from './shared/account.service';
 import { DialogService } from './shared/dialog.service';
+import { ProfessionalService } from './shared/professional.service';
 import { SystemInfoService } from './shared/system-info.service';
 
 //Modules
@@ -37,7 +38,7 @@ import { SharedModule } from './shared/shared.module';
     RibbonsModule,
     SharedModule
   ],
-  providers: [AccountService, DialogService, SystemInfoService, UserService],
+  providers: [AccountService, DialogService, ProfessionalService, SystemInfoService, UserService],
   exports: [LoginModule, MaterialModule, MrcModule, PagesModule, RegisterModule, RibbonsModule],
   bootstrap: [AppComponent],
   

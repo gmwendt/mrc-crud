@@ -12,6 +12,7 @@ mongoose.connect('mongodb+srv://sa:Abcd1234@cluster0-rewhk.mongodb.net/mean-app?
 
 var user = require('./routes/user');
 var account = require('./routes/account');
+var professional = require('./routes/professional');
 var sysInfo = require('./routes/systemInfo');
 
 var app = express();
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/user', user);
 app.use('/account', account);
+app.use('/professional', professional);
 app.use('/sysInfo', sysInfo);
 app.use('/', express.static('dist', { redirect: false }));
 app.get('*',  function(req, res, next) {

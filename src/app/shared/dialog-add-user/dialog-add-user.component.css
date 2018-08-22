@@ -37,7 +37,7 @@ dialog-add-user .dialog-add-user-content-column-item .column-1-withIcon {
 }
 
 dialog-add-user .dialog-add-user-content-column-item .column-unique {
-  width: 430px;
+  width: 371px;
   margin-bottom: 16px;
 }
 
@@ -83,6 +83,19 @@ dialog-add-user .mat-form-field {
 
 dialog-add-user .mat-checkbox {
   margin-left: 4px;
+}
+
+dialog-add-user .mat-tab-header {
+  border: none;
+}
+
+dialog-add-user .mat-tab-body-content {
+  overflow: hidden;
+}
+
+dialog-add-user .mat-tab-body {
+  width: 842px;
+  height: 135px;
 }
 
 dialog-add-user .error-input {

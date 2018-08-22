@@ -1,7 +1,7 @@
 <div class="mrc-dialog-title">Selecione as especialidades abaixo</div>
 <div class="mrc-dialog-separator"></div>
 <input class="dialog-selector-filter" (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
-<mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+<mat-table #table [dataSource]="dataSource" class="mat-elevation-z8" [style.height]="isNullOrEmpty(this.notfoundMsg || this.notfoundLinkMsg) ? 'calc(100% - 106px)' : 'calc(100% - 142px)'">
 
   <!-- Checkbox Column -->
   <ng-container matColumnDef="select">
@@ -27,6 +27,8 @@
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
+<div class="dialog-selector-notfound-msg">{{ notfoundMsg }}</div>
+<div class="dialog-selector-notfound-link" (click)="add_item_clicked()">{{ notfoundLinkMsg }}</div>
 <div class="mrc-dialog-separator"></div>
 <div>
   <button mat-button (click)="cancel_clicked()">Cancelar</button>

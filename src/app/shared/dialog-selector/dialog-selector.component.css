@@ -12,8 +12,20 @@ dialog-selector .mat-button {
   margin-left: 8px;
 }
 
+dialog-selector .dialog-selector-notfound-msg {
+  font-size: 9pt;
+  margin: 4px;
+}
+
+dialog-selector .dialog-selector-notfound-link {
+  color: #3a9cd8;
+  cursor: pointer;
+  font-size: 9pt;
+  margin: 4px;
+  text-decoration: underline;
+}
+
 dialog-selector mat-table {
-  height: calc(100% - 106px);
   overflow: auto;
 }
 

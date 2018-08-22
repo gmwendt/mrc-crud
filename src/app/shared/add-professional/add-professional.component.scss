@@ -6,7 +6,7 @@ add-professional {
     margin: 4px;
 
     &-text {
-      width: 215px;
+      width: 124px;
 
       &-iconed {
         margin-right: 8px;
@@ -15,6 +15,19 @@ add-professional {
 
     .mrc-text-1 {
       margin-top: 3px;
+    }
+
+    select {
+      margin-left: 4px;
+      width: 141px;
+    }
+
+    .prof-register-box {
+      width: 300px;
+    }
+
+    .specialite-box {
+      margin-left: 20px;
     }
   }
 

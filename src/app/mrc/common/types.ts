@@ -37,6 +37,7 @@ export class User {
   public birthDate: Date;
   public capabilities: Capabilities;
   public email: string;
+  public isProfessional: boolean;
   public name: string;
   public passwordExpired: boolean;
   public passwordHash: string;
@@ -49,9 +50,10 @@ export class User {
 export class Professional {
   public _id?: string;
   public accountRefId: number;
-  public name: string;
+  public active: boolean
   public professionalRegisterNum: string;
   public professionalRegisterState: string;
+  public specialites: string;
   public userRefId: string;
 }
 

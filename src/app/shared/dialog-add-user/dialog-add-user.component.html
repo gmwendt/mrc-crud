@@ -1,75 +1,70 @@
-<div class="mrc-dialog-title">Novo usuário</div>
+<div class="mrc-dialog-title" *ngIf="!editMode; else editModeTitle">Novo usuário</div>
+<ng-template #editModeTitle>
+  <div class="mrc-dialog-title">Editar usuário</div>
+</ng-template>
 <div class="mrc-dialog-separator"></div>
-<div class="dialog-add-user-content">
-  <div class="dialog-add-user-content-line">
-    <div class="dialog-add-user-content-column">
-      <div class="dialog-add-user-content-column-item">
-        <div class="mrc-text-1 column-1">Nome:</div>
-        <input type="text" [ngClass]="{ 'error-input': nameError }" [value]="newUserData.name" (change)="newUserData.name = nameBox.value" #nameBox />
-      </div>
-      <div class="dialog-add-user-content-column-item">
-        <div class="mrc-text-1 column-1">E-mail:</div>
-        <input type="text" [ngClass]="{ 'error-input': emailError }" [value]="newUserData.email" (change)="newUserData.email = emailBox.value" [readonly]="editMode ? 'readonly' : ''" #emailBox />
-      </div>
-      <div class="dialog-add-user-content-column-item">
-        <div class="mrc-text-1 column-1">Nome de usuário:</div>
-        <input type="text" [ngClass]="{ 'error-input': userNameError }" [value]="newUserData.userName" (change)="newUserData.userName = usernameBox.value" [readonly]="editMode ? 'readonly' : ''" #usernameBox/>
-      </div>
-      <div class="dialog-add-user-content-column-item">
-          <div class="mrc-text-1 column-1">Data de nascimento:</div>
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker" [(ngModel)]="newUserData.birthdate">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="dialog-add-user-content-column">
-      <div class="dialog-add-user-content-column-item">
-        <div class="mrc-text-1">Permissões:</div>
-        <div>
-          <div class="dialog-add-user-content-column-item-checkbox">
-            <mat-checkbox [(ngModel)]="newUserData.capabilities.scheduleAndRegisterPatient" disableRipple="true">
-              Agendamento de consultas e cadastro de pacientes.
-            </mat-checkbox>
-          </div>        
-          <div class="dialog-add-user-content-column-item-checkbox">
-            <mat-checkbox [(ngModel)]="newUserData.capabilities.accessGlobalFinances" disableRipple="true">
-              Acesso às finanças da clínica/consultório.
-            </mat-checkbox>
+<mat-tab-group>
+  <mat-tab label="DADOS DO USUÁRIO">
+    <div class="dialog-add-user-content">
+      <div class="dialog-add-user-content-line">
+        <div class="dialog-add-user-content-column">
+          <div class="dialog-add-user-content-column-item">
+            <div class="mrc-text-1 column-1">Nome:</div>
+            <input type="text" [ngClass]="{ 'error-input': nameError }" [value]="newUserData.name" (change)="newUserData.name = nameBox.value" #nameBox />
           </div>
-          <div class="dialog-add-user-content-column-item-checkbox">
-            <mat-checkbox [(ngModel)]="canManageSystemData" [(indeterminate)]="manageSystemDataIsIndeterminate" disableRipple="true">
-              Gerenciamento de todos os recursos do sistema.
-            </mat-checkbox>
+          <div class="dialog-add-user-content-column-item">
+            <div class="mrc-text-1 column-1">E-mail:</div>
+            <input type="text" [ngClass]="{ 'error-input': emailError }" [value]="newUserData.email" (change)="newUserData.email = emailBox.value" [readonly]="editMode ? 'readonly' : ''" #emailBox />
           </div>
-          <div class="dialog-add-user-link" (click)="customize_capabilities_clicked()">Personalizar...</div>
+          <div class="dialog-add-user-content-column-item">
+            <div class="mrc-text-1 column-1">Nome de usuário:</div>
+            <input type="text" [ngClass]="{ 'error-input': userNameError }" [value]="newUserData.userName" (change)="newUserData.userName = usernameBox.value" [readonly]="editMode ? 'readonly' : ''" #usernameBox/>
+          </div>
+          <div class="dialog-add-user-content-column-item">
+              <div class="mrc-text-1 column-1">Data de nascimento:</div>
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker" [(ngModel)]="newUserData.birthdate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="dialog-add-user-content-column">
+          <div class="dialog-add-user-content-column-item">
+            <div class="mrc-text-1">Permissões:</div>
+            <div>
+              <div class="dialog-add-user-content-column-item-checkbox">
+                <mat-checkbox [(ngModel)]="newUserData.capabilities.scheduleAndRegisterPatient" disableRipple="true" [disabled]="editMode && editedUser._id == currentUser._id">
+                  Agendamento de consultas e cadastro de pacientes.
+                </mat-checkbox>
+              </div>        
+              <div class="dialog-add-user-content-column-item-checkbox">
+                <mat-checkbox [(ngModel)]="newUserData.capabilities.accessGlobalFinances" disableRipple="true" [disabled]="editMode && editedUser._id == currentUser._id">
+                  Acesso às finanças da clínica/consultório.
+                </mat-checkbox>
+              </div>
+              <div class="dialog-add-user-content-column-item-checkbox">
+                <mat-checkbox [(ngModel)]="canManageSystemData" [(indeterminate)]="manageSystemDataIsIndeterminate" disableRipple="true" [disabled]="editMode && editedUser._id == currentUser._id">
+                  Gerenciamento de todos os recursos do sistema.
+                </mat-checkbox>
+              </div>
+              <div class="dialog-add-user-link" (click)="customize_capabilities_clicked()" *ngIf="!editMode || editedUser._id != currentUser._id">Personalizar...</div>
+            </div>
+          </div>
         </div>
       </div>
+      <div class="dialog-add-user-content-line">
+        <mat-checkbox class="dialog-add-user-professional-checkbox" [(ngModel)]="newUserData.isProfessional" disableRipple="true">Usuário Profissional</mat-checkbox>
+      </div>
     </div>
-  </div>
-  <div class="dialog-add-user-content-line">
-    <mat-checkbox class="dialog-add-user-professional-checkbox" [(ngModel)]="isProfessional" disableRipple="true">Usuário Profissional</mat-checkbox>
-  </div>
-  <div class="dialog-add-user-content-line" *ngIf="isProfessional">
-    <div class="dialog-add-user-content-column-item">
-      Você deve associar este usuário a um profissional já cadastrado ou criar um novo profissional.
+  </mat-tab>
+  <mat-tab label="DADOS PROFISSIONAIS" *ngIf="newUserData.isProfessional">
+    <div style="height: 100%; width: 584px;">
+      <add-professional [data]="newProfessionalData"></add-professional>
     </div>
-  </div>
-  <div class="mrc-dialog-separator"></div>
-  <div class="dialog-add-user-content-line" *ngIf="isProfessional">
-    <div class="dialog-add-user-content-column">
-      <div class="dialog-add-user-content-column-item">
-        <div class="mrc-text-1 column-unique">Buscar por profissional já cadastrado:</div>
-        <input type="text" #professionalSearchBox/>
-      </div>  
-      
-      <add-professional></add-professional>
-
-    </div>
-  </div>
-</div>
-<div class="mrc-dialog-separator" *ngIf="isProfessional"></div>
+  </mat-tab>
+</mat-tab-group>
+<div class="mrc-dialog-separator"></div>
 <div>
   <button mat-button (click)="cancel_clicked()">Cancelar</button>
   <button mat-button *ngIf="!editMode" (click)="create_clicked()">Criar usuário</button>

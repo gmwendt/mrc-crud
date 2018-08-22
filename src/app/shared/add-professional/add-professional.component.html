@@ -1,18 +1,43 @@
 <div class="add-professional-item">
-  <div class="mrc-text-1 add-professional-item-text">Nome:</div>
-  <input type="text" #proNameBox />
-</div>
-<div class="add-professional-item">
   <div class="add-professional-item-text mrc-text-1">Registro profissional:</div>
-  <input type="text" #proRegBox />
+  <input type="number" class="prof-register-box" [value]="data.professionalRegisterNum" (change)="data.professionalRegisterNum = proRegNum.value" #proRegNum />
+  <select id="estado" name="estado" [value]="data.professionalRegisterState" (change)="data.professionalRegisterState = proRegState.value" #proRegState>
+    <option value="AC">Acre</option>
+    <option value="AL">Alagoas</option>
+    <option value="AP">Amapá</option>
+    <option value="AM">Amazonas</option>
+    <option value="BA">Bahia</option>
+    <option value="CE">Ceará</option>
+    <option value="DF">Distrito Federal</option>
+    <option value="ES">Espírito Santo</option>
+    <option value="GO">Goiás</option>
+    <option value="MA">Maranhão</option>
+    <option value="MT">Mato Grosso</option>
+    <option value="MS">Mato Grosso do Sul</option>
+    <option value="MG">Minas Gerais</option>
+    <option value="PA">Pará</option>
+    <option value="PB">Paraíba</option>
+    <option value="PR">Paraná</option>
+    <option value="PE">Pernambuco</option>
+    <option value="PI">Piauí</option>
+    <option value="RJ">Rio de Janeiro</option>
+    <option value="RN">Rio Grande do Norte</option>
+    <option value="RS">Rio Grande do Sul</option>
+    <option value="RO">Rondônia</option>
+    <option value="RR">Roraima</option>
+    <option value="SC">Santa Catarina</option>
+    <option value="SP">São Paulo</option>
+    <option value="SE">Sergipe</option>
+    <option value="TO">Tocantins</option>
+</select>
 </div>
 <div class="add-professional-item">
   <div class="add-professional-item-text add-professional-item-text-iconed mrc-text-1">
     Especialidade(s):
   </div>
-  <input type="text" readonly="readonly" [(ngModel)]="specialties" />
-  <div class="icon-list" (click)="select_specialties_clicked()"></div>
+  <input type="text" readonly="readonly" class="specialite-box" [value]="data.specialites" (change)="data.specialites = specialiteBox.value" #specialiteBox />
+  <div class="icon-list" (click)="select_specialites_clicked()"></div>
 </div>
 <div class="add-professional-item">
-  <mat-checkbox disableRipple="true">Ativo</mat-checkbox>  
+  <mat-checkbox disableRipple="true" [(ngModel)]="data.active">Ativo</mat-checkbox>  
 </div>

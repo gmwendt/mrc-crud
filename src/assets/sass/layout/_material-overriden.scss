@@ -87,6 +87,31 @@
 
     .mat-input-underline {
       background-color: transparent;
+
+      .mat-form-field-ripple {
+        background-color: transparent;
+      }
     }
+  }
+
+  .mat-tab-header {
+    .mat-tab-label {
+      font-size: 9pt;
+      font-weight: 400;
+      height: 25px;
+      min-width: 25px !important;
+      opacity: 1;
+      padding: 8px;
+    }
+  }
+
+  .mat-tab-group {
+    .mat-ink-bar {
+      background-color: #298dca;
+    }
+  }
+
+  .mat-tab-body {
+    margin-top: 8px;
   }
 }
