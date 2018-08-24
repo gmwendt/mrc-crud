@@ -50,3 +50,7 @@
   .icon-user:before {
     content: "\e905";
   }
+
+  .icon-schedule:before {
+    content: "\e906";
+  }

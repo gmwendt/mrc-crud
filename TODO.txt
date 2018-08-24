@@ -10,6 +10,6 @@
 [O] implementar página add professional
 [X] implementar dialog de seleção genérica 
 [X] create/update/delete professional
+[>] dialog professional schedule
 [ ] check professional data before save
-[ ] professional schedule
 [ ] user enable/disable
