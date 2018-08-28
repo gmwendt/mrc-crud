@@ -1,0 +1,15 @@
+dialog-professional-schedule .dialog-professional-schedule-content-item {
+  display: flex;
+}
+
+dialog-professional-schedule .dialog-professional-schedule-content-item label {
+  font-size: 9pt;
+}
+
+dialog-professional-schedule .dialog-professional-schedule-content-item input {
+  width: 60px;
+}
+
+dialog-professional-schedule .dialog-professional-schedule-content-item-title {
+  width: 92px;
+}

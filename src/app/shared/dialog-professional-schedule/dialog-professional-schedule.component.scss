@@ -1,3 +1,19 @@
 dialog-professional-schedule {
-  
+  .dialog-professional-schedule-content-item {
+    display: flex;
+    margin: 4px;
+
+    label {
+      font-size: 9pt;
+    }
+
+    input {
+      margin: 0 4px;
+      width: 60px;
+    }
+    
+    &-title {
+      width: 95px;
+    }
+  }  
 }

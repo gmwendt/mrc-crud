@@ -2,6 +2,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 import { DialogService } from '../dialog.service';
 
+import { DialogProfessionalScheduleComponent } from '../dialog-professional-schedule/dialog-professional-schedule.component';
 import { DialogSelector } from '../dialog-selector/dialog-selector.component';
 
 export class ProfessionalData {
@@ -61,6 +62,11 @@ export class AddProfessionalComponent {
       this.data.specialites = '';
       result.forEach(esp => this.data.specialites += esp[this.Key] + '; ');
     });
+  }
+
+  private professional_schedule_clicked(): void {
+    var dialogRef = this._dialog.open(DialogProfessionalScheduleComponent)//, { disableClose: true, height: "450px"});
+
   }
 
   private add_specialite(): void {
