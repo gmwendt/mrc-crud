@@ -1,19 +1,17 @@
 dialog-professional-schedule {
-  .dialog-professional-schedule-content-item {
+  #dialog-professional-schedule-add-button {
     display: flex;
-    margin: 4px;
+    width: 132px;
+    cursor: pointer;
 
-    label {
+    > div {
       font-size: 9pt;
-    }
-
-    input {
-      margin: 0 4px;
-      width: 60px;
-    }
-    
-    &-title {
-      width: 95px;
+      margin: 2px 0 0 4px;
     }
   }  
+
+  #dialog-professional-schedule-actions {
+    float: right;
+    margin-left: 8px;
+  }
 }

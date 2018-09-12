@@ -1,15 +1,15 @@
-dialog-professional-schedule .dialog-professional-schedule-content-item {
+dialog-professional-schedule #dialog-professional-schedule-add-button {
   display: flex;
+  width: 132px;
+  cursor: pointer;
 }
 
-dialog-professional-schedule .dialog-professional-schedule-content-item label {
+dialog-professional-schedule #dialog-professional-schedule-add-button > div {
   font-size: 9pt;
+  margin: 2px 0 0 4px;
 }
 
-dialog-professional-schedule .dialog-professional-schedule-content-item input {
-  width: 60px;
-}
-
-dialog-professional-schedule .dialog-professional-schedule-content-item-title {
-  width: 92px;
+dialog-professional-schedule #dialog-professional-schedule-actions {
+  float: right;
+  margin-left: 8px;
 }
