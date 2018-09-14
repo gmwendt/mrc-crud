@@ -20,7 +20,23 @@
     <span class="icon-add"></span>
     <div>Adicionar horário</div>
 </div>
-<div style="height: 150px;"></div>
+<mat-table [dataSource]="dataSource" style="height: 150px;">
+
+  <ng-container matColumnDef="start">
+    <th mat-header-cell *matHeaderCellDef> Início </th>
+    <td mat-cell *matCellDef="let element"> {{ element.start }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="end">
+    <th mat-header-cell *matHeaderCellDef> Fim </th>
+    <td mat-cell *matCellDef="let element"> {{ element.end }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="commands">
+    <td mat-cell *matCellDef="let element"></td>
+  </ng-container>
+
+</mat-table>
 <div class="mrc-dialog-separator"></div>
 <div id="dialog-professional-schedule-actions">
   <button mat-button (click)="ok_clicked()">OK</button>
