@@ -23,7 +23,6 @@
 <mat-table [dataSource]="dataSource" style="height: 150px;">
 
   <ng-container matColumnDef="start">
-<<<<<<< HEAD
     <mat-header-cell *matHeaderCellDef> Início </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{ element.start }} </mat-cell>
   </ng-container>
@@ -36,20 +35,6 @@
   <ng-container matColumnDef="commands">
     <mat-header-cell *matHeaderCellDef></mat-header-cell>
     <mat-cell *matCellDef="let element"></mat-cell>
-=======
-    <mat-header-cell *matHeaderCellDef> Início </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{ element.start }} </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="end">
-    <mat-header-cell *matHeaderCellDef> Fim </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{ element.end }} </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="commands">
-    <mat-header-cell *matHeaderCellDef></mat-header-cell>
-    <mat-cell *matCellDef="let element"></mat-cell>
->>>>>>> 53c48ea3d124163c50ac42012edd78785bf302bc
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
