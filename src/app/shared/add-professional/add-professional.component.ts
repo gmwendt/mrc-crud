@@ -12,6 +12,19 @@ export class ProfessionalData {
   public specialites: string;
 }
 
+export interface ScheduleInterval {
+  end: string;
+  start: string;
+}
+
+const TABLE_DATA: ScheduleInterval[] = [
+  { start: '9:00', end: '12:00' },
+  { start: '13:00', end: '18:00' },
+  { start: '13:00', end: '18:00' },
+  { start: '13:00', end: '18:00' },
+  { start: '13:00', end: '18:00' },
+];
+
 @Component({
   selector: 'add-professional',
   templateUrl: './add-professional.component.html',
@@ -21,6 +34,9 @@ export class ProfessionalData {
 export class AddProfessionalComponent {
   private Key: string = 'especialidade';
   private Title: string = 'Especialidade';
+
+  private displayedColumns: string[] = ['start', 'end', 'commands' ];
+  private dataSource = TABLE_DATA;
 
   @Input() data: ProfessionalData;
   // public current: ProfessionalData = {

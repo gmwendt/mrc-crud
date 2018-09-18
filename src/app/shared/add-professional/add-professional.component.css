@@ -5,7 +5,7 @@ add-professional .add-professional-item {
 }
 
 add-professional .add-professional-item-text {
-  width: 138px;
+  width: 125px;
 }
 
 add-professional .add-professional-item-text-iconed {
@@ -40,4 +40,21 @@ add-professional .icon-schedule {
   cursor: pointer;
   display: flex;
   font-size: 12pt;
+}
+
+add-professional .mat-table {
+  width: 100%;
+  overflow: auto;
+}
+
+add-professional .mat-header-row {
+  background-color: #fff;
+  position: sticky;
+  z-index: 100;
+  top: 0;
+}
+
+add-professional .mat-tab-body {
+  height: 0;
+  width: 0;
 }

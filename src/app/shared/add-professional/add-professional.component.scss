@@ -6,7 +6,7 @@ add-professional {
     margin: 4px;
 
     &-text {
-      width: 138px;
+      width: 125px;
 
       &-iconed {
         margin-right: 8px;
@@ -42,5 +42,22 @@ add-professional {
     cursor: pointer;
     display: flex;
     font-size: 12pt;
+  }
+
+  .mat-table {
+    width: 100%;
+    overflow: auto;
+  }
+
+  .mat-header-row {
+    background-color: #fff;
+    position: sticky;
+    z-index: 100;
+    top: 0;
+  }
+
+  .mat-tab-body {
+    height: 0;
+    width: 0;
   }
 }

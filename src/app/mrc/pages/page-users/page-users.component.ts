@@ -121,10 +121,10 @@ export class PageUsersComponent implements OnInit {
 
 	private edit_user_clicked(user: User): void {
 		if (user.isProfessional) {
-			this.loading = true;
+			//this.loading = true;
 			this._professionalService.getProfessionalByUserId(user._id).then(professionals => {
 
-				this.loading = false;
+				//this.loading = false;
 				
 				if (professionals.length == 0) {
 					user.isProfessional = false;
@@ -133,7 +133,7 @@ export class PageUsersComponent implements OnInit {
 				else
 					this.editUser(user, professionals[0]);
 			}, err => {
-				this.loading = false;
+				//this.loading = false;
 				this.show_error_dialog(err);
 			})
 		}
