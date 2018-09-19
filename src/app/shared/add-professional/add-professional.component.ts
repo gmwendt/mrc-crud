@@ -1,8 +1,9 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 
+import { MatTabChangeEvent } from '@angular/material/tabs';
+
 import { DialogService } from '../dialog.service';
 
-import { DialogProfessionalScheduleComponent } from '../dialog-professional-schedule/dialog-professional-schedule.component';
 import { DialogSelector } from '../dialog-selector/dialog-selector.component';
 
 export class ProfessionalData {
@@ -19,10 +20,7 @@ export interface ScheduleInterval {
 
 const TABLE_DATA: ScheduleInterval[] = [
   { start: '9:00', end: '12:00' },
-  { start: '13:00', end: '18:00' },
-  { start: '13:00', end: '18:00' },
-  { start: '13:00', end: '18:00' },
-  { start: '13:00', end: '18:00' },
+  { start: '13:30', end: '18:30' },
 ];
 
 @Component({
@@ -37,6 +35,8 @@ export class AddProfessionalComponent {
 
   private displayedColumns: string[] = ['start', 'end', 'commands' ];
   private dataSource = TABLE_DATA;
+
+  private _selectedTabIndex: number = 0;
 
   @Input() data: ProfessionalData;
   // public current: ProfessionalData = {
@@ -80,13 +80,12 @@ export class AddProfessionalComponent {
     });
   }
 
-  private professional_schedule_clicked(): void {
-    var dialogRef = this._dialog.open(DialogProfessionalScheduleComponent)//, { disableClose: true, height: "450px"});
-
-  }
-
   private add_specialite(): void {
     //todo
+  }
+
+  private selected_tab_changed(event: MatTabChangeEvent): void {
+    console.log(this._selectedTabIndex);
   }
 }
 

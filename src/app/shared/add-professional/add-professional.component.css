@@ -43,8 +43,14 @@ add-professional .icon-schedule {
 }
 
 add-professional .mat-table {
-  width: 100%;
+  height: 112px;
   overflow: auto;
+  width: 100%;
+}
+
+add-professional .mat-table .mat-cell > span {
+  cursor: pointer;
+  font-size: 12pt;
 }
 
 add-professional .mat-header-row {
@@ -57,4 +63,16 @@ add-professional .mat-header-row {
 add-professional .mat-tab-body {
   height: 0;
   width: 0;
+}
+
+add-professional #add-professional-add-button {
+  cursor: pointer;
+  display: flex;
+  margin: 4px 0 0 4px;
+  width: 132px;
+}
+
+add-professional #add-professional-add-button > div {
+  font-size: 9pt;
+  margin-left: 4px;
 }
