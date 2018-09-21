@@ -6,16 +6,13 @@ import { DialogService } from '../dialog.service';
 
 import { DialogSelector } from '../dialog-selector/dialog-selector.component';
 
+import { ScheduleInterval } from '../../mrc/common/types';
+
 export class ProfessionalData {
   public active: boolean;
   public professionalRegisterNum: string;
   public professionalRegisterState: string;
   public specialites: string;
-}
-
-export interface ScheduleInterval {
-  end: string;
-  start: string;
 }
 
 const TABLE_DATA: ScheduleInterval[] = [

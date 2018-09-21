@@ -11,5 +11,6 @@
 [X] implementar dialog de seleção genérica 
 [X] create/update/delete professional
 [>] dialog professional schedule
+[ ] global loading
 [ ] check professional data before save
 [ ] user enable/disable

@@ -55,6 +55,12 @@ export class Professional {
   public professionalRegisterState: string;
   public specialites: string;
   public userRefId: string;
+  public schedule: Map<number, ScheduleInterval[]>;
+}
+
+export interface ScheduleInterval {
+  end: string;
+  start: string;
 }
 
 export class SystemInfo {

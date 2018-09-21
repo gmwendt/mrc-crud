@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { User, Professional } from '../../common/types';
+import { User, Professional, ScheduleInterval } from '../../common/types';
 
 import { UserService } from '../../../login/user.service';
 
@@ -12,6 +12,7 @@ import { DialogService } from '../../../shared/dialog.service';
 import { DialogAddUserComponent, DialogAddUserResult } from '../../../shared/dialog-add-user/dialog-add-user.component';
 import { DialogAlertButton, DialogAlertData, DialogAlertResult } from '../../../shared/dialog-alert/dialog-alert.component';
 import { ProfessionalService } from '../../../shared/professional.service';
+import { DaysName } from '../../common/constants';
 
 @Component({
 	selector: 'page-users',
@@ -245,12 +246,29 @@ export class PageUsersComponent implements OnInit {
 	}
 
 	private async addProfessional(data: ProfessionalData, userRefId: string): Promise<Professional> {
+
+		var schedule: Map<number, ScheduleInterval[]> = new Map<number, ScheduleInterval[]>();
+		for (var day = 0; day < 7; day++) {
+			var interval: ScheduleInterval[] = [];
+			if (day != 5 && day != 6) {
+				interval.push({
+					start: '9:00', end: '12:00'
+				});
+				interval.push({
+					start: '13:30', end: '18:30'
+				});
+			}
+
+			schedule.set(day, interval);
+		}
+
 		var professional: Professional = {
 			accountRefId: this._accId,
 			active: data.active,
 			professionalRegisterNum: data.professionalRegisterNum,
 			professionalRegisterState: data.professionalRegisterState,
 			specialites: data.specialites,
+			schedule: schedule,
 			userRefId: userRefId
 		};
 
