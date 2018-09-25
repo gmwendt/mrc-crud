@@ -5,6 +5,7 @@ var ProfessionalSchema = new mongoose.Schema({
   accountRefId: Number,
   professionalRegisterNum: String,
   professionalRegisterState: String,
+  schedule: String,
   specialites: String,
   userRefId: String
 });

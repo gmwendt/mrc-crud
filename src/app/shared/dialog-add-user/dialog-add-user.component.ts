@@ -42,7 +42,8 @@ export class DialogAddUserComponent {
     active: true,
     professionalRegisterNum: '',
     professionalRegisterState: '',
-    specialites: ''
+    specialites: '',
+    schedule: null
   };
   public usersList: User[];
   public editMode: boolean;
@@ -78,6 +79,7 @@ export class DialogAddUserComponent {
       this.newProfessionalData.professionalRegisterNum = professional.professionalRegisterNum;
       this.newProfessionalData.professionalRegisterState = professional.professionalRegisterState;
       this.newProfessionalData.specialites = professional.specialites;
+      this.newProfessionalData.schedule = professional.schedule;
     }
   }
 

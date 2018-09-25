@@ -246,7 +246,7 @@ export class PageUsersComponent implements OnInit {
 	}
 
 	private async addProfessional(data: ProfessionalData, userRefId: string): Promise<Professional> {
-
+		
 		var schedule: Map<number, ScheduleInterval[]> = new Map<number, ScheduleInterval[]>();
 		for (var day = 0; day < 7; day++) {
 			var interval: ScheduleInterval[] = [];

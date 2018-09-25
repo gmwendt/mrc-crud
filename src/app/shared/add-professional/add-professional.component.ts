@@ -13,6 +13,7 @@ export class ProfessionalData {
   public professionalRegisterNum: string;
   public professionalRegisterState: string;
   public specialites: string;
+  public schedule: Map<number, ScheduleInterval[]>;
 }
 
 const TABLE_DATA: ScheduleInterval[] = [
