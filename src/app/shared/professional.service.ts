@@ -3,7 +3,7 @@ import { Http, Headers } from '@angular/http';
 
 import 'rxjs/add/operator/map';
 
-import { Professional } from '../mrc/common/types';
+import { Professional, ScheduleMap } from '../mrc/common/types';
 
 @Injectable()
 export class ProfessionalService {
@@ -11,13 +11,14 @@ export class ProfessionalService {
 
   addProfessional(data: Professional) {
     return new Promise((resolve, reject) => {
-        this._http.post('/professional', data)
-          .map(res => res.json())
-          .subscribe(res => {
-            resolve(res);
-          }, (err) => {
-            reject(err);
-          });
+      (<any>data).schedule = ScheduleMap.toJSON(data.schedule);
+      this._http.post('/professional', data)
+        .map(res => res.json())
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
     });
   }
 
@@ -26,6 +27,7 @@ export class ProfessionalService {
       this._http.get('/professional')
         .map(res => res.json())
         .subscribe(res => {
+          res.map(res => res.schedule = ScheduleMap.fromJSON(res.schedule));
           resolve(res);
         }, (err) => {
           reject(err);
@@ -38,6 +40,7 @@ export class ProfessionalService {
       this._http.get('/professional/userRefId/' + userId)
         .map(res => res.json())
         .subscribe(res => {
+          res.map(res => res.schedule = ScheduleMap.fromJSON(res.schedule));
           resolve(res);
         }, (err) => {
           reject(err);

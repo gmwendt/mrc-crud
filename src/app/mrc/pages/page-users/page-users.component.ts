@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { User, Professional, ScheduleInterval } from '../../common/types';
+import { User, Professional, ScheduleInterval, ScheduleMap } from '../../common/types';
 
 import { UserService } from '../../../login/user.service';
 
@@ -91,23 +91,22 @@ export class PageUsersComponent implements OnInit {
 				this.addUserToTable(user);
 				
 				if (user.isProfessional) {
-					this.addProfessional(professionalResult, user._id).then(() => {
-						this.loading = false;
-					 	this.user_created_message(user);
-					}, err => {
-						 	this.loading = false;
-						 	this.show_error_dialog(err);
-					});
+					this.addProfessional(professionalResult, user._id).then((professional: Professional) => {
+
+						user.professionalRefId = professional._id;
+						this._userService.updateUser(user).then(() => {
+							this.user_created_message(user);
+							this.loading = false;
+						}, err => this.on_error(err));
+
+					}, err => this.on_error(err));
 				}
 				else {
 					this.loading = false;
 					this.user_created_message(user);
 				}
 
-			}, err => {
-				this.loading = false;
-				this.show_error_dialog(err);
-			});
+			}, err => this.on_error(err));
 		});
 	}
 
@@ -155,19 +154,29 @@ export class PageUsersComponent implements OnInit {
 
 			this.loading = true;
 			var index = this._usersList.indexOf(user);
+
+			if (user.isProfessional)
+				this._professionalService.deleteProfessional(user.professionalRefId).then((resp2: Response) => {
+					if (!resp2.ok) {
+						this.on_error(resp2.statusText);
+						return;
+					}
+				}, err => { 
+					this.loading = false;
+					this.show_error_dialog(err);
+				});
+
 			this._userService.deleteUser(user._id).then((resp: Response) => {
-				if(!resp.ok){
-					this.show_error_dialog(resp.statusText);
+				if (!resp.ok) {
+					this.on_error(resp.statusText);
 					return;
 				}
-		
+								
 				this._usersList.splice(index, 1);
 				this.dataSource.data = this._usersList;
 				this.loading = false;
-			}, err => { 
-				this.loading = false;
-				this.show_error_dialog(err);
-			});	
+				
+			}, err => this.on_error(err));	
 		});
 	}
 
@@ -203,10 +212,7 @@ export class PageUsersComponent implements OnInit {
 			this._userService.updateUser(user).then(updatedUser => {
 				this.listUsers(this._accId);
 				this.loading = false;
-			}, err => {
-				this.loading = false;
-				this.show_error_dialog(err);
-			});
+			}, err => this.on_error(err));
 
 			if (professional && user.isProfessional) {
 				//update professional
@@ -219,38 +225,30 @@ export class PageUsersComponent implements OnInit {
 				this.loading = true;
 				this._professionalService.updateProfessional(professional).then(() => {
 					this.loading = false;
-				}, err => {
-					this.loading = false;
-					this.show_error_dialog(err);
-				});
+				}, err => this.on_error(err));
 			}
 			else if (professional && !user.isProfessional)
 				//delete professional
 				this._professionalService.deleteProfessional(professional._id).then(() => {
 					this.loading = false;
-				}, err => {
-					this.loading = false;
-					this.show_error_dialog(err);
-				});
+				}, err => this.on_error(err));
 			else if (!professional && user.isProfessional) {
 				//create professional
 				var professionalResult = dialogRef.componentInstance.newProfessionalData;
-				this.addProfessional(professionalResult, user._id).then(() => {
-					this.loading = false;
-				}, err => {
-					this.loading = false;
-					this.show_error_dialog(err);
-				});
+				this.addProfessional(professionalResult, user._id).then((p: Professional) => {
+					user.professionalRefId = p._id;
+					this._userService.updateUser(user).then(() => this.loading = false, err => this.on_error(err));
+				}, err => this.on_error(err));
 			}
 		});
 	}
 
 	private async addProfessional(data: ProfessionalData, userRefId: string): Promise<Professional> {
 		
-		var schedule: Map<number, ScheduleInterval[]> = new Map<number, ScheduleInterval[]>();
+		var schedule: ScheduleMap = {};
 		for (var day = 0; day < 7; day++) {
 			var interval: ScheduleInterval[] = [];
-			if (day != 5 && day != 6) {
+			if (day != DaysName.Saturday && day != DaysName.Sunday) {
 				interval.push({
 					start: '9:00', end: '12:00'
 				});
@@ -259,7 +257,7 @@ export class PageUsersComponent implements OnInit {
 				});
 			}
 
-			schedule.set(day, interval);
+			schedule[day] = interval;
 		}
 
 		var professional: Professional = {
@@ -286,6 +284,11 @@ export class PageUsersComponent implements OnInit {
 			button: DialogAlertButton.OK,
     };
     this._dialog.openAlert(dialogData).then(result => { });
+	}
+
+	private on_error(error: any): void {
+		this.loading = false;
+		this.show_error_dialog(error);
 	}
 	
 	private get hasPermission(): boolean {

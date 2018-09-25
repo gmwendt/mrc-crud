@@ -55,12 +55,24 @@ export class Professional {
   public professionalRegisterState: string;
   public specialites: string;
   public userRefId: string;
-  public schedule: Map<number, ScheduleInterval[]>;
+  public schedule: ScheduleMap;
 }
 
 export interface ScheduleInterval {
   end: string;
   start: string;
+}
+
+export class ScheduleMap {
+  [key: string]: Array<ScheduleInterval>;
+
+  static toJSON(scheduleMap: ScheduleMap): string {
+    return JSON.stringify(scheduleMap);
+  }
+
+  static fromJSON(json: string): ScheduleMap{
+    return JSON.parse(json);
+  }
 }
 
 export class SystemInfo {
