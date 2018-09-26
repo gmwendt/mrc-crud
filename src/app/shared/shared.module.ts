@@ -9,15 +9,16 @@ import { DialogAlertComponent } from './dialog-alert/dialog-alert.component';
 import { DialogCapabilitiesChecklistComponent } from './dialog-capabilities-checklist/dialog-capabilities-checklist.component';
 import { DialogSelector } from './dialog-selector/dialog-selector.component';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
+import { TimeInputComponent } from './time-input/time-input.component';
 
 import { MaterialModule } from '../material.module';
 
 @NgModule({
   imports: [ BrowserModule, FormsModule, MaterialModule ],
   declarations: [ AddProfessionalComponent, CheckListComponent, DialogAddUserComponent, DialogAlertComponent, 
-    DialogCapabilitiesChecklistComponent, DialogSelector, ProgressSpinnerComponent ],
+    DialogCapabilitiesChecklistComponent, DialogSelector, ProgressSpinnerComponent, TimeInputComponent ],
   exports: [ AddProfessionalComponent, CheckListComponent, DialogAddUserComponent, DialogAlertComponent, 
-    DialogCapabilitiesChecklistComponent, DialogSelector, ProgressSpinnerComponent ],
+    DialogCapabilitiesChecklistComponent, DialogSelector, ProgressSpinnerComponent, TimeInputComponent ],
   entryComponents: [DialogAddUserComponent, DialogAlertComponent, DialogCapabilitiesChecklistComponent, DialogSelector]
 })
 export class SharedModule { }

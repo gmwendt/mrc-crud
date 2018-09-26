@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { MatTabChangeEvent } from '@angular/material/tabs';
 
@@ -7,6 +7,7 @@ import { DialogService } from '../dialog.service';
 import { DialogSelector } from '../dialog-selector/dialog-selector.component';
 
 import { ScheduleInterval, ScheduleMap } from '../../mrc/common/types';
+import { DaysName } from '../../mrc/common/constants';
 
 export class ProfessionalData {
   public active: boolean;
@@ -16,35 +17,49 @@ export class ProfessionalData {
   public schedule: ScheduleMap;
 }
 
-const TABLE_DATA: ScheduleInterval[] = [
-  { start: '9:00', end: '12:00' },
-  { start: '13:30', end: '18:30' },
-];
-
 @Component({
   selector: 'add-professional',
   templateUrl: './add-professional.component.html',
   styleUrls: ['./add-professional.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AddProfessionalComponent {
+export class AddProfessionalComponent implements OnInit {
   private Key: string = 'especialidade';
   private Title: string = 'Especialidade';
 
   private displayedColumns: string[] = ['start', 'end', 'commands' ];
-  private dataSource = TABLE_DATA;
+  private dataSource: ScheduleInterval[];
 
   private _selectedTabIndex: number = 0;
 
   @Input() data: ProfessionalData;
-  // public current: ProfessionalData = {
-  //   active: true,
-  //   professionalRegisterNum: '',
-  //   professionalRegisterState: '',
-  //   specialites: ''
-  // };
 
   constructor(private _dialog: DialogService) {    
+  }
+
+  ngOnInit() {
+    if (this.data.schedule) {
+      this.dataSource = this.data.schedule[this._selectedTabIndex];
+      return;
+    }
+    
+    var schedule: ScheduleMap = {};
+		for (var day = 0; day < 7; day++) {
+			var interval: ScheduleInterval[] = [];
+			if (day != DaysName.Saturday && day != DaysName.Sunday) {
+				interval.push({
+					start: '9:00', end: '12:00'
+				});
+				interval.push({
+					start: '13:30', end: '18:30'
+				});
+			}
+
+			schedule[day] = interval;
+    }
+    
+    this.data.schedule = schedule;
+    this.dataSource = this.data.schedule[this._selectedTabIndex];
   }
 
   private select_specialites_clicked(): void {
@@ -83,7 +98,7 @@ export class AddProfessionalComponent {
   }
 
   private selected_tab_changed(event: MatTabChangeEvent): void {
-    console.log(this._selectedTabIndex);
+    this.dataSource = this.data.schedule[this._selectedTabIndex];
   }
 }
 
