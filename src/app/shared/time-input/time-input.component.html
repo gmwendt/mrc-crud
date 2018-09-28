@@ -1,1 +1,2 @@
-<input [value]="value" (change)="value = box.value" (keypress)="on_key_press($event)" #box>
+<input [value]="value" maxlength="5"
+(change)="value = box.value" (keypress)="on_key_press($event)" (blur)="on_blur()" #box>
