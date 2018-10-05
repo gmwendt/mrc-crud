@@ -16,10 +16,16 @@ export class TimeInputComponent {
   private on_key_press(e: KeyboardEvent): void {
     if ((e.charCode < 48 || e.charCode > 58 ) && e.keyCode != 9 && e.keyCode != 8)
       e.preventDefault();
-    console.log(e);
-    var text: string = this.box.nativeElement.innerHTML;
-    console.log(text);
-    console.log(this.caret);
+    
+    var key = String.fromCharCode(e.which || e.charCode || e.keyCode);
+    if (/([0-9])/.test(key)) {
+        var text = this.box.nativeElement.value;
+        var caret = this.caret;
+        var output = text.substring(0, caret);
+        this.box.nativeElement.value = output + key + text.substring(caret + 1);
+        this.box.nativeElement.setSelectionRange(caret + 1, caret + 1);//setCaretPosition(this, caret + 1);
+        e.preventDefault();
+    }
   }
 
   private get caret(): number {
