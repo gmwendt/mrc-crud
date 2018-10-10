@@ -1,3 +1,3 @@
-<input [value]="value" maxlength="5"
-(keypress)="on_key_press($event)" 
-(blur)="on_blur()" #box>
+<input [value]="value" (keypress)="on_key_press($event)" (blur)="on_blur()" #boxHours>
+<span>:</span>
+<input [value]="value" (keypress)="on_key_press($event)" (blur)="on_blur()" #boxMinutes>
