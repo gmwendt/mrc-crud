@@ -11,8 +11,11 @@ export class TimeInputComponent {
   @Input()
   value: string = "";
 
+  @ViewChild('boxHours') _boxHours: ElementRef;
+  @ViewChild('boxMinutes') _boxMinutes: ElementRef;
+
   private _maxCharacters: number = 2;
-  private _minValue: number = 0
+  private _minValue: number = 0;
 
   private on_key_down(e: KeyboardEvent, target: HTMLInputElement, max: number): void {
     //UP ARROW
@@ -24,6 +27,7 @@ export class TimeInputComponent {
         value = max;
 
       target.value = value.toString();
+      this.value = target.value;
     }
     //DOWN ARROW
     else if (e.keyCode == 40) { 
@@ -34,6 +38,7 @@ export class TimeInputComponent {
         value = this._minValue;
 
       target.value = value.toString();
+      this.value = target.value;
     }
   }
 
@@ -56,6 +61,7 @@ export class TimeInputComponent {
         target.value = output + key + text.substring(caret + 1);
         target.setSelectionRange(caret + 1, caret + 1);
 
+        this.value = target.value;
         e.preventDefault();
     }
   }
@@ -71,5 +77,23 @@ export class TimeInputComponent {
   private on_blur(): void {
     console.log('on_blur');
     
+  }
+
+  get errorHours(): boolean {
+    var text: string = this._boxHours.nativeElement.value;
+    
+    if (this.isNullOrEmpty(text) || parseInt(text) > 23)
+      return true;
+
+    return false;
+  }
+
+  get errorMinutes(): boolean {
+    var text: string = this._boxMinutes.nativeElement.value;
+    
+    if (this.isNullOrEmpty(text) || parseInt(text) > 59)
+      return true;
+
+    return false;
   }
 }

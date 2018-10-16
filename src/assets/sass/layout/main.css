@@ -80,6 +80,10 @@
   margin: 8px 0 8px 0;
 }
 
+.mrc-global .mrc-textbox-error {
+  border: solid 1px #ff1919;
+}
+
 .mrc-global .mat-checkbox {
   font-size: 9pt;
 }
