@@ -8,14 +8,38 @@ import { Component, ElementRef, Input, ViewChild, ViewEncapsulation, } from "@an
 })
 export class TimeInputComponent {
 
-  @Input()
-  value: string = "";
-
   @ViewChild('boxHours') _boxHours: ElementRef;
   @ViewChild('boxMinutes') _boxMinutes: ElementRef;
 
   private _maxCharacters: number = 2;
   private _minValue: number = 0;
+  private _value: string = '';
+
+  private minuteValue: string = '';
+  private hourValue: string = '';
+
+  @Input() 
+  set value(value: string) {
+    if (value == this._value)
+      return;
+
+    this._value = value;
+
+    var splitted: string[] = value.split(':');
+    
+    if (splitted.length < 2)
+      return;
+
+    this._boxHours.nativeElement.value = splitted[0];
+    this._boxMinutes.nativeElement.value = splitted[1];
+  }
+
+  get value(): string {
+    var hourValue = this._boxHours.nativeElement.value;
+    var minuteValue = this._boxMinutes.nativeElement.value; 
+
+    return hourValue + ':' + minuteValue;
+  }
 
   private on_key_down(e: KeyboardEvent, target: HTMLInputElement, max: number): void {
     //UP ARROW
@@ -27,7 +51,8 @@ export class TimeInputComponent {
         value = max;
 
       target.value = value.toString();
-      this.value = target.value;
+
+      this.normalize_value();
     }
     //DOWN ARROW
     else if (e.keyCode == 40) { 
@@ -38,7 +63,8 @@ export class TimeInputComponent {
         value = this._minValue;
 
       target.value = value.toString();
-      this.value = target.value;
+
+      this.normalize_value();
     }
   }
 
@@ -75,8 +101,18 @@ export class TimeInputComponent {
   }
 
   private on_blur(): void {
-    console.log('on_blur');
-    
+    this.normalize_value();
+  }
+
+  private normalize_value(): void {
+    var hour: string = this._boxHours.nativeElement.value;
+    var minute: string = this._boxMinutes.nativeElement.value;
+
+    if (hour.length == 1)
+      this._boxHours.nativeElement.value = '0' + hour;
+
+    if (minute.length == 1)
+      this._boxMinutes.nativeElement.value = '0' + minute;
   }
 
   get errorHours(): boolean {

@@ -1,7 +1,7 @@
-<input [value]="value" [ngClass]="{'mrc-textbox-error': errorHours}" style="font-size: 8pt"
+<input [ngClass]="{'mrc-textbox-error': errorHours}" style="font-size: 8pt"
   (keypress)="on_key_press($event, boxHours)" (keydown)="on_key_down($event, boxHours, 23)" 
   (blur)="on_blur()" #boxHours>
 <span>:</span>
-<input [value]="value" [ngClass]="{'mrc-textbox-error': errorMinutes}" style="font-size: 8pt"
+<input [ngClass]="{'mrc-textbox-error': errorMinutes}" style="font-size: 8pt"
   (keypress)="on_key_press($event, boxMinutes)" (keydown)="on_key_down($event, boxMinutes, 59)" 
   (blur)="on_blur()" #boxMinutes>
