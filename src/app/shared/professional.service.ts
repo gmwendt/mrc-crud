@@ -61,6 +61,7 @@ export class ProfessionalService {
 
   updateProfessional(data: Professional) {
     return new Promise((resolve, reject) => {
+      (<any>data).schedule = ScheduleMap.toJSON(data.schedule);
       this._http.put('/professional/' + data._id, data)
         .map(res => res.json())
         .subscribe(res => {

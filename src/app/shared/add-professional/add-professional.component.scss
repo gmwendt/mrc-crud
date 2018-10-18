@@ -69,6 +69,12 @@ add-professional {
     width: 0;
   }
 
+  .icon-delete {
+		cursor: pointer;
+		font-size: 12pt;
+		color: #4f4f4f;		
+	}
+
   #add-professional-add-button {
     cursor: pointer;
     display: flex;
@@ -79,5 +85,11 @@ add-professional {
       font-size: 9pt;
       margin-left: 4px;
     }
+  }
+
+  #add-professional-no-records {
+    font-size: 12pt;
+    height: 112px;
+    text-align: center;
   }
 }

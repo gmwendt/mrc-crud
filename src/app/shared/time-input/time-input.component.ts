@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild, ViewEncapsulation, } from "@angular/core";
+import { Component, ElementRef, EventEmitter, Input, ViewChild, ViewEncapsulation, Output, } from "@angular/core";
 
 @Component({
   selector: 'time-input',
@@ -18,6 +18,8 @@ export class TimeInputComponent {
   private minuteValue: string = '';
   private hourValue: string = '';
 
+  @Output() change: EventEmitter<string> = new EventEmitter<string>();;
+
   @Input() 
   set value(value: string) {
     if (value == this._value)
@@ -32,6 +34,8 @@ export class TimeInputComponent {
 
     this._boxHours.nativeElement.value = splitted[0];
     this._boxMinutes.nativeElement.value = splitted[1];
+
+    this.normalize_value();
   }
 
   get value(): string {
@@ -102,6 +106,7 @@ export class TimeInputComponent {
 
   private on_blur(): void {
     this.normalize_value();
+    this.change.emit(this.value);
   }
 
   private normalize_value(): void {

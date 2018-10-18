@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatTableDataSource } from '@angular/material';
 
 import { DialogService } from '../dialog.service';
 
@@ -28,7 +29,7 @@ export class AddProfessionalComponent implements OnInit {
   private Title: string = 'Especialidade';
 
   private displayedColumns: string[] = ['start', 'end', 'commands' ];
-  private dataSource: ScheduleInterval[];
+  private dataSource;
 
   private _selectedTabIndex: number = 0;
 
@@ -38,31 +39,13 @@ export class AddProfessionalComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.data.schedule) {
-      this.dataSource = this.data.schedule[this._selectedTabIndex];
-      return;
-    }
-    
-    var schedule: ScheduleMap = {};
-		for (var day = 0; day < 7; day++) {
-			var interval: ScheduleInterval[] = [];
-			if (day != DaysName.Saturday && day != DaysName.Sunday) {
-				interval.push({
-					start: '9:00', end: '12:00'
-				});
-				interval.push({
-					start: '13:30', end: '18:30'
-				});
-			}
-
-			schedule[day] = interval;
-    }
-    
-    this.data.schedule = schedule;
-    this.dataSource = this.data.schedule[this._selectedTabIndex];
+    if (this.data.schedule) 
+      this.dataSource = new MatTableDataSource(this.data.schedule[this._selectedTabIndex]);
+    else 
+      this.dataSource = new MatTableDataSource();
   }
 
-  private select_specialites_clicked(): void {
+  private open_specialites_dialog(): void {
     var dialogRef = this._dialog.open(DialogSelector, { disableClose: true, height: "450px"});
     dialogRef.componentInstance.columns.push({ key: this.Key, title: this.Title });
     dialogRef.componentInstance.data = DATA_MOCKED;
@@ -97,8 +80,29 @@ export class AddProfessionalComponent implements OnInit {
     //todo
   }
 
-  private selected_tab_changed(event: MatTabChangeEvent): void {
+  private on_select_specialites_click(): void {
+    this.open_specialites_dialog();
+  }
+
+  private on_selected_tab_change(event: MatTabChangeEvent): void {
     this.dataSource = this.data.schedule[this._selectedTabIndex];
+  }
+
+  private on_start_change(index: number, value: string): void {
+    this.data.schedule[this._selectedTabIndex][index].start = value;
+  }
+
+  private on_end_change(index: number, value: string): void {
+    this.data.schedule[this._selectedTabIndex][index].end = value;
+  }
+
+  private on_delete_click(index: number): void {
+    this.data.schedule[this._selectedTabIndex].splice(index, 1);
+    this.dataSource.data = this.data.schedule[this._selectedTabIndex];
+  }
+
+  private on_add_schedule_click(): void {
+    //TODO: next step
   }
 }
 

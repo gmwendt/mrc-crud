@@ -220,6 +220,7 @@ export class PageUsersComponent implements OnInit {
 				professional.professionalRegisterNum = professionalResult.professionalRegisterNum;
 				professional.professionalRegisterState = professionalResult.professionalRegisterState;
 				professional.specialites = professionalResult.specialites;
+				professional.schedule = professionalResult.schedule;
 
 				this.loading = true;
 				this._professionalService.updateProfessional(professional).then(() => {

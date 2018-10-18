@@ -39,14 +39,14 @@
     Especialidade(s):
   </div>
   <input type="text" readonly="readonly" class="specialite-box" [value]="data.specialites" (change)="data.specialites = specialiteBox.value" #specialiteBox />
-  <div class="icon-list" (click)="select_specialites_clicked()"></div>
+  <div class="icon-list" (click)="on_select_specialites_click()"></div>
 </div>
 <div class="add-professional-item" style="margin-top: 8px">
   <div class="add-professional-item-text add-professional-item-text-iconed mrc-text-1">
     Horários de atendimento:
   </div>
   <div style="margin-top: -2px">
-    <mat-tab-group [(selectedIndex)]="_selectedTabIndex" (selectedTabChange)="selected_tab_changed($event)">
+    <mat-tab-group [(selectedIndex)]="_selectedTabIndex" (selectedTabChange)="on_selected_tab_change($event)">
       <mat-tab label="Segunda-feira">    
       </mat-tab>
       <mat-tab label="Terça-feira">
@@ -62,31 +62,37 @@
       <mat-tab label="Domingo">
       </mat-tab>
     </mat-tab-group>
-    <mat-table [dataSource]="dataSource">
+    <mat-table [dataSource]="dataSource" *ngIf="dataSource.length > 0; else elseBlock">
 
       <ng-container matColumnDef="start">
         <mat-header-cell *matHeaderCellDef> Início </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.start }} </mat-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+          <time-input [value]="element.start" (change)="on_start_change(i, boxStart.value)" #boxStart></time-input>
+        </mat-cell>
       </ng-container>
     
       <ng-container matColumnDef="end">
         <mat-header-cell *matHeaderCellDef> Fim </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{ element.end }} </mat-cell>
+        <mat-cell *matCellDef="let element; let i = index"> 
+          <time-input [value]="element.end" (change)="on_end_change(i, boxEnd.value)" #boxEnd></time-input>
+        </mat-cell>
       </ng-container>
     
       <ng-container matColumnDef="commands">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <span title="Editar" class="icon-edit"></span> 
-          <span title="Remover" class="icon-delete"></span>
+        <mat-cell *matCellDef="let element; let i = index">
+          <span title="Remover" class="icon-delete" (click)="on_delete_click(i)"></span>
         </mat-cell>
       </ng-container>
     
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
+    <ng-template #elseBlock>
+      <div id="add-professional-no-records">Não há expediente neste dia. Para adicionar horários de atendimento clique em 'Adicionar horário'.</div>
+    </ng-template>
     <div id="add-professional-add-button">
-      <span class="icon-add"></span>
+      <span class="icon-add" (click)="on_add_schedule_click()"></span>
       <div>Adicionar horário</div>
   </div>
   </div>
