@@ -62,7 +62,7 @@
       <mat-tab label="Domingo">
       </mat-tab>
     </mat-tab-group>
-    <mat-table [dataSource]="dataSource" *ngIf="dataSource.length > 0; else elseBlock">
+    <mat-table [dataSource]="dataSource" *ngIf="data.schedule[_selectedTabIndex].length > 0; else elseBlock">
 
       <ng-container matColumnDef="start">
         <mat-header-cell *matHeaderCellDef> Início </mat-header-cell>
@@ -91,8 +91,8 @@
     <ng-template #elseBlock>
       <div id="add-professional-no-records">Não há expediente neste dia. Para adicionar horários de atendimento clique em 'Adicionar horário'.</div>
     </ng-template>
-    <div id="add-professional-add-button">
-      <span class="icon-add" (click)="on_add_schedule_click()"></span>
+    <div id="add-professional-add-button" (click)="on_add_schedule_click()">
+      <span class="icon-add"></span>
       <div>Adicionar horário</div>
   </div>
   </div>

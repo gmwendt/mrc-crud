@@ -7,7 +7,7 @@ import { DialogService } from '../dialog.service';
 
 import { DialogSelector } from '../dialog-selector/dialog-selector.component';
 
-import { ScheduleInterval, ScheduleMap } from '../../mrc/common/types';
+import { ScheduleMap } from '../../mrc/common/types';
 import { DaysName } from '../../mrc/common/constants';
 
 export class ProfessionalData {
@@ -80,6 +80,11 @@ export class AddProfessionalComponent implements OnInit {
     //todo
   }
 
+  private check_schedule_consistency(): boolean {
+    //TODO: next step
+    return false;
+  }
+
   private on_select_specialites_click(): void {
     this.open_specialites_dialog();
   }
@@ -98,11 +103,12 @@ export class AddProfessionalComponent implements OnInit {
 
   private on_delete_click(index: number): void {
     this.data.schedule[this._selectedTabIndex].splice(index, 1);
-    this.dataSource.data = this.data.schedule[this._selectedTabIndex];
+    this.dataSource = new MatTableDataSource(this.data.schedule[this._selectedTabIndex]);
   }
 
   private on_add_schedule_click(): void {
-    //TODO: next step
+    this.data.schedule[this._selectedTabIndex].push({ end: '', start: '' });
+    this.dataSource = new MatTableDataSource(this.data.schedule[this._selectedTabIndex]);
   }
 }
 
