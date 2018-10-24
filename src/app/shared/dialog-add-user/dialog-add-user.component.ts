@@ -1,6 +1,6 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 
-import { ProfessionalData } from '../add-professional/add-professional.component';
+import { ProfessionalData, AddProfessionalComponent } from '../add-professional/add-professional.component';
 
 import { DialogCapabilitiesChecklistComponent, DialogCapabilitiesCheckListResult } from '../dialog-capabilities-checklist/dialog-capabilities-checklist.component';
 
@@ -29,6 +29,8 @@ export class NewUserData {
   encapsulation: ViewEncapsulation.None,
 })
 export class DialogAddUserComponent {
+
+  @ViewChild(AddProfessionalComponent) professionalView: any;
 
   public newUserData: NewUserData = {
     capabilities: new Capabilities(),

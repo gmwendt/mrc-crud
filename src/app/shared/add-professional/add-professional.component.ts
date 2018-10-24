@@ -45,6 +45,11 @@ export class AddProfessionalComponent implements OnInit {
       this.dataSource = new MatTableDataSource();
   }
 
+  get hasErrors(): boolean {
+    //TODO: next step
+    return false;
+  }
+
   private open_specialites_dialog(): void {
     var dialogRef = this._dialog.open(DialogSelector, { disableClose: true, height: "450px"});
     dialogRef.componentInstance.columns.push({ key: this.Key, title: this.Title });

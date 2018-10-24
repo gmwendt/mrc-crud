@@ -62,7 +62,7 @@
       <mat-tab label="Domingo">
       </mat-tab>
     </mat-tab-group>
-    <mat-table [dataSource]="dataSource" *ngIf="data.schedule[_selectedTabIndex].length > 0; else elseBlock">
+    <mat-table [dataSource]="dataSource" *ngIf="data.schedule && data.schedule[_selectedTabIndex].length > 0; else elseBlock">
 
       <ng-container matColumnDef="start">
         <mat-header-cell *matHeaderCellDef> Início </mat-header-cell>
