@@ -3,5 +3,5 @@ export class LocalStorageConstants {
 }
 
 export enum DaysName {
-  Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday 
+  Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Length
 }

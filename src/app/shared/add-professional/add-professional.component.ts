@@ -7,7 +7,7 @@ import { DialogService } from '../dialog.service';
 
 import { DialogSelector } from '../dialog-selector/dialog-selector.component';
 
-import { ScheduleMap } from '../../mrc/common/types';
+import { ScheduleMap, ScheduleInterval } from '../../mrc/common/types';
 import { DaysName } from '../../mrc/common/constants';
 
 export class ProfessionalData {
@@ -16,6 +16,10 @@ export class ProfessionalData {
   public professionalRegisterState: string;
   public specialites: string;
   public schedule: ScheduleMap;
+}
+
+export class ProfessionalDataErrors {
+
 }
 
 @Component({
@@ -39,10 +43,13 @@ export class AddProfessionalComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.data.schedule) 
-      this.dataSource = new MatTableDataSource(this.data.schedule[this._selectedTabIndex]);
-    else 
-      this.dataSource = new MatTableDataSource();
+    if (!this.data.schedule) {
+      this.data.schedule = {};
+      for (var i = 0; i < DaysName.Length; i++) 
+        this.data.schedule[i] = [];
+    }
+
+    this.dataSource = new MatTableDataSource(this.data.schedule[this._selectedTabIndex]);
   }
 
   get hasErrors(): boolean {
@@ -86,7 +93,12 @@ export class AddProfessionalComponent implements OnInit {
   }
 
   private check_schedule_consistency(): boolean {
+    for (var i = 0; i < DaysName.Length; i++) {
+      var interval: ScheduleInterval[] = this.data.schedule[i];
     //TODO: next step
+
+    }
+
     return false;
   }
 
