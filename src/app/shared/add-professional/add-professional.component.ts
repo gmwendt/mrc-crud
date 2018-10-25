@@ -94,12 +94,40 @@ export class AddProfessionalComponent implements OnInit {
 
   private check_schedule_consistency(): boolean {
     for (var i = 0; i < DaysName.Length; i++) {
-      var interval: ScheduleInterval[] = this.data.schedule[i];
-    //TODO: next step
+      var daySchedule: ScheduleInterval[] = this.data.schedule[i];
+      
+      for (var j = 0; j < daySchedule.length; j++) {
+        for (var k = 0; k < daySchedule.length; k++) {
 
+          if (j == k) continue;
+
+          var interval: ScheduleInterval = daySchedule[j];
+          var intervalAux: ScheduleInterval = daySchedule[k];
+
+          var startJ = this.timeStringToNumber(interval.start);
+          var endJ = this.timeStringToNumber(interval.end);
+          var startK = this.timeStringToNumber(intervalAux.start);
+          var endK = this.timeStringToNumber(intervalAux.end);
+
+          if (endJ <= startJ)
+            return true;
+          if (startJ >= startK && startJ <= endK)
+            return true;
+          if (endJ >= startK && endJ <= endK)
+            return true;
+        }
+      }
     }
 
     return false;
+  }
+
+  private timeStringToNumber(time: string): number {
+    var hoursMinutes = time.split(/[.:]/);
+    var hours = parseInt(hoursMinutes[0], 10);
+    var minutes = hoursMinutes[1] ? parseInt(hoursMinutes[1], 10) : 0;
+
+    return hours + minutes / 60;
   }
 
   private on_select_specialites_click(): void {
