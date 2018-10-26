@@ -16,10 +16,18 @@ export class ProfessionalData {
   public professionalRegisterState: string;
   public specialites: string;
   public schedule: ScheduleMap;
+  public errors: ProfessionalDataErrors
 }
 
 export class ProfessionalDataErrors {
+  public scheduleError?: boolean;
+  public scheduleErrorMsg?: string;
 
+  public registerNumError?: boolean;
+  public registerNumErrorMsg?: string;
+
+  public registerStateError?: boolean;
+  public registerStateErrorMsg?: string;
 }
 
 @Component({
@@ -52,8 +60,13 @@ export class AddProfessionalComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.data.schedule[this._selectedTabIndex]);
   }
 
-  get hasErrors(): boolean {
-    //TODO: next step
+  checkErrors(): boolean {
+    if (this.check_schedule_consistency()) {
+      this.data.errors.scheduleError = true;
+      this.data.errors.scheduleErrorMsg = ''; //TODO
+    }
+
+
     return false;
   }
 
