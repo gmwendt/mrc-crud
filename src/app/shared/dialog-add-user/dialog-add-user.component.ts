@@ -30,7 +30,7 @@ export class NewUserData {
 })
 export class DialogAddUserComponent {
 
-  @ViewChild(AddProfessionalComponent) professionalView: any;
+  @ViewChild(AddProfessionalComponent) professionalView: AddProfessionalComponent;
 
   public newUserData: NewUserData = {
     capabilities: new Capabilities(),
@@ -45,7 +45,8 @@ export class DialogAddUserComponent {
     professionalRegisterNum: '',
     professionalRegisterState: '',
     specialites: '',
-    schedule: null
+    schedule: null,
+    errors: { }
   };
   public usersList: User[];
   public editMode: boolean;
@@ -95,7 +96,7 @@ export class DialogAddUserComponent {
   private update_clicked(): void {
     if (!this.check_update_errors())
       return;
-      
+
     this._dialogRef.close(DialogAddUserResult.OK);
   }
 
@@ -164,6 +165,15 @@ export class DialogAddUserComponent {
     if (this.nameError) {
       this.hasError = true;
       this.errorMsg = 'Os campos em destaque devem ser preenchidos.'
+      return false;
+    }
+    
+    if (this.professionalView.checkErrors()) {
+      this.hasError = true;
+
+      if (this.newProfessionalData.errors.scheduleError)
+        this.errorMsg = this.newProfessionalData.errors.scheduleErrorMsg;
+      //TODO: other profesional errors
       return false;
     }
     

@@ -8,7 +8,7 @@ import { DialogService } from '../dialog.service';
 import { DialogSelector } from '../dialog-selector/dialog-selector.component';
 
 import { ScheduleMap, ScheduleInterval } from '../../mrc/common/types';
-import { DaysName } from '../../mrc/common/constants';
+import { DaysNameEnum, DaysName } from '../../mrc/common/constants';
 
 export class ProfessionalData {
   public active: boolean;
@@ -28,6 +28,11 @@ export class ProfessionalDataErrors {
 
   public registerStateError?: boolean;
   public registerStateErrorMsg?: string;
+}
+
+export class ScheduleError {
+  public hasError: boolean;
+  public errorMsg?: string;
 }
 
 @Component({
@@ -53,7 +58,7 @@ export class AddProfessionalComponent implements OnInit {
   ngOnInit() {
     if (!this.data.schedule) {
       this.data.schedule = {};
-      for (var i = 0; i < DaysName.Length; i++) 
+      for (var i = 0; i < DaysNameEnum.Length; i++) 
         this.data.schedule[i] = [];
     }
 
@@ -61,11 +66,14 @@ export class AddProfessionalComponent implements OnInit {
   }
 
   checkErrors(): boolean {
-    if (this.check_schedule_consistency()) {
-      this.data.errors.scheduleError = true;
-      this.data.errors.scheduleErrorMsg = ''; //TODO
-    }
+    var error = this.check_schedule_consistency();
 
+    if (error.hasError) {
+      this.data.errors.scheduleError = true;
+      this.data.errors.scheduleErrorMsg = error.errorMsg;
+      return true;
+    }
+      //TODO: other profesional errors
 
     return false;
   }
@@ -105,14 +113,12 @@ export class AddProfessionalComponent implements OnInit {
     //todo
   }
 
-  private check_schedule_consistency(): boolean {
-    for (var i = 0; i < DaysName.Length; i++) {
+  private check_schedule_consistency(): ScheduleError {
+    for (var i = 0; i < DaysNameEnum.Length; i++) {
       var daySchedule: ScheduleInterval[] = this.data.schedule[i];
       
       for (var j = 0; j < daySchedule.length; j++) {
         for (var k = 0; k < daySchedule.length; k++) {
-
-          if (j == k) continue;
 
           var interval: ScheduleInterval = daySchedule[j];
           var intervalAux: ScheduleInterval = daySchedule[k];
@@ -122,17 +128,24 @@ export class AddProfessionalComponent implements OnInit {
           var startK = this.timeStringToNumber(intervalAux.start);
           var endK = this.timeStringToNumber(intervalAux.end);
 
+          if (j == k)  {
+            if (endJ <= startJ)
+              return { hasError: true, errorMsg: 'Verifique hora inválida em ' + DaysName.translateDayName(i) };
+
+            continue;
+          }
+
           if (endJ <= startJ)
-            return true;
+            return { hasError: true, errorMsg: 'Verifique hora inválida em ' + DaysName.translateDayName(i) };
           if (startJ >= startK && startJ <= endK)
-            return true;
+            return { hasError: true, errorMsg: 'Verifique hora inválida em ' + DaysName.translateDayName(i) };
           if (endJ >= startK && endJ <= endK)
-            return true;
+            return { hasError: true, errorMsg: 'Verifique hora inválida em ' + DaysName.translateDayName(i) };
         }
       }
     }
 
-    return false;
+    return { hasError: false };
   }
 
   private timeStringToNumber(time: string): number {
