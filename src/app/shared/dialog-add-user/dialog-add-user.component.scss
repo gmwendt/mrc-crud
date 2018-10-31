@@ -28,7 +28,7 @@ dialog-add-user {
           }
           
           .column-1 {
-            width: 215px;
+            width: 145px;
 
             &-withIcon {
               margin-right: 8px;
@@ -43,6 +43,14 @@ dialog-add-user {
           &-checkbox {
             display: flex;
             margin: 1px 0 8px 2px;
+          }
+
+          .box-1 {
+            width: 655px;
+          }
+
+          .box-2 {
+            width: 200px;
           }
         }
       }
@@ -79,8 +87,7 @@ dialog-add-user {
 
     .mat-form-field {
       font-size: 12pt;
-      margin-left: 2px;
-      width: 100%;
+      margin-left: 4px;
     }
 
     .mat-checkbox {

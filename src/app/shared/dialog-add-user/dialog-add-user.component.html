@@ -10,28 +10,26 @@
         <div class="dialog-add-user-content-column">
           <div class="dialog-add-user-content-column-item">
             <div class="mrc-text-1 column-1">Nome:</div>
-            <input type="text" [ngClass]="{ 'error-input': nameError }" [value]="newUserData.name" (change)="newUserData.name = nameBox.value" #nameBox />
+            <input type="text" class="box-1" [ngClass]="{ 'error-input': nameError }" [value]="newUserData.name" (change)="newUserData.name = nameBox.value" #nameBox />
           </div>
           <div class="dialog-add-user-content-column-item">
             <div class="mrc-text-1 column-1">E-mail:</div>
-            <input type="text" [ngClass]="{ 'error-input': emailError }" [value]="newUserData.email" (change)="newUserData.email = emailBox.value" [readonly]="editMode ? 'readonly' : ''" #emailBox />
+            <input type="text" class="box-1" [ngClass]="{ 'error-input': emailError }" [value]="newUserData.email" (change)="newUserData.email = emailBox.value" [readonly]="editMode ? 'readonly' : ''" #emailBox />
           </div>
           <div class="dialog-add-user-content-column-item">
             <div class="mrc-text-1 column-1">Nome de usuário:</div>
-            <input type="text" [ngClass]="{ 'error-input': userNameError }" [value]="newUserData.userName" (change)="newUserData.userName = usernameBox.value" [readonly]="editMode ? 'readonly' : ''" #usernameBox/>
+            <input type="text" class="box-2" [ngClass]="{ 'error-input': userNameError }" [value]="newUserData.userName" (change)="newUserData.userName = usernameBox.value" [readonly]="editMode ? 'readonly' : ''" #usernameBox/>
           </div>
           <div class="dialog-add-user-content-column-item">
-              <div class="mrc-text-1 column-1">Data de nascimento:</div>
-            <mat-form-field>
+            <div class="mrc-text-1 column-1">Data de nascimento:</div>
+            <mat-form-field class="box-2">
               <input matInput [matDatepicker]="picker" [(ngModel)]="newUserData.birthdate">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
           </div>
-        </div>
-        <div class="dialog-add-user-content-column">
           <div class="dialog-add-user-content-column-item">
-            <div class="mrc-text-1">Permissões:</div>
+            <div class="mrc-text-1 column-1">Permissões:</div>
             <div>
               <div class="dialog-add-user-content-column-item-checkbox">
                 <mat-checkbox [(ngModel)]="newUserData.capabilities.scheduleAndRegisterPatient" disableRipple="true" [disabled]="editMode && editedUser._id == currentUser._id">
@@ -59,7 +57,7 @@
     </div>
   </mat-tab>
   <mat-tab label="DADOS PROFISSIONAIS" *ngIf="newUserData.isProfessional">
-    <div style="height: 100%; width: 584px;">
+    <div>
       <add-professional [data]="newProfessionalData"></add-professional>
     </div>
   </mat-tab>

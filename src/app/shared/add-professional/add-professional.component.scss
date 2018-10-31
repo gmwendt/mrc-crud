@@ -6,11 +6,7 @@ add-professional {
     margin: 4px;
 
     &-text {
-      width: 125px;
-
-      &-iconed {
-        margin-right: 8px;
-      }
+      width: 145px;
     }
 
     .mrc-text-1 {
@@ -23,11 +19,11 @@ add-professional {
     }
 
     .prof-register-box {
-      width: 300px;
+      width: 150px;
     }
 
     .specialite-box {
-      margin-left: 20px;
+      width: 275px;
     }
   }
 
@@ -88,8 +84,10 @@ add-professional {
   }
 
   #add-professional-no-records {
-    font-size: 12pt;
+    color: #212121;
+    font-size: 11pt;
     height: 112px;
     text-align: center;
+    width: 590px;
   }
 }

@@ -29,7 +29,7 @@ dialog-add-user .dialog-add-user-content-column-item .mrc-text-1 {
 }
 
 dialog-add-user .dialog-add-user-content-column-item .column-1 {
-  width: 215px;
+  width: 145px;
 }
 
 dialog-add-user .dialog-add-user-content-column-item .column-1-withIcon {
@@ -44,6 +44,14 @@ dialog-add-user .dialog-add-user-content-column-item .column-unique {
 dialog-add-user .dialog-add-user-content-column-item-checkbox {
   display: flex;
   margin: 1px 0 8px 2px;
+}
+
+dialog-add-user .dialog-add-user-content-column-item .box-1 {
+  width: 655px;
+}
+
+dialog-add-user .dialog-add-user-content-column-item .box-2 {
+  width: 200px;
 }
 
 dialog-add-user .dialog-add-user-content-line {
@@ -77,8 +85,7 @@ dialog-add-user .mat-button {
 
 dialog-add-user .mat-form-field {
   font-size: 12pt;
-  margin-left: 2px;
-  width: 100%;
+  margin-left: 4px;
 }
 
 dialog-add-user .mat-checkbox {

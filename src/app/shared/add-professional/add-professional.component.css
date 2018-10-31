@@ -5,11 +5,7 @@ add-professional .add-professional-item {
 }
 
 add-professional .add-professional-item-text {
-  width: 125px;
-}
-
-add-professional .add-professional-item-text-iconed {
-  margin-right: 8px;
+  width: 145px;
 }
 
 add-professional .add-professional-item .mrc-text-1 {
@@ -22,11 +18,11 @@ add-professional .add-professional-item select {
 }
 
 add-professional .add-professional-item .prof-register-box {
-  width: 300px;
+  width: 150px;
 }
 
 add-professional .add-professional-item .specialite-box {
-  margin-left: 20px;
+  width: 275px;
 }
 
 add-professional .icon-list {
@@ -84,7 +80,9 @@ add-professional #add-professional-add-button > div {
 }
 
 add-professional #add-professional-no-records {
-  font-size: 12pt;
+  color: #212121;
+  font-size: 11pt;
   height: 112px;
   text-align: center;
+  width: 590px;
 }
