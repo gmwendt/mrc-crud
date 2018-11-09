@@ -213,4 +213,10 @@ export class DialogAddUserComponent {
         return true;
     }
   }
+
+  private get userBirthDate(): string {
+    console.log(this.newUserData.birthdate);
+    if (this.newUserData && this.newUserData.birthdate)
+      return this.newUserData.birthdate.toISOString().slice(0, 10);
+  }
 }

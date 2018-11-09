@@ -32,7 +32,10 @@ export class UserService {
       this._http.get('/user')
         .map(res => res.json())
         .subscribe(res => {
-          res.map(res => res.capabilities = Capabilities.fromJSON(res.capabilities));
+          res.map(res => {
+            res.capabilities = Capabilities.fromJSON(res.capabilities);
+            res.birthDate = new Date(res.birthDate);
+          });
           resolve(res);
         }, (err) => {
           reject(err);
@@ -45,7 +48,10 @@ export class UserService {
       this._http.get('/user/accountRefId/' + accountId + '/userName/' + username)
         .map(res => res.json())
         .subscribe(res => {
-          res.map(res => res.capabilities = Capabilities.fromJSON(res.capabilities));
+          res.map(res => { 
+            res.capabilities = Capabilities.fromJSON(res.capabilities);
+            res.birthDate = new Date(res.birthDate);
+          });
           resolve(res);
         }, (err) => {
           reject(err);
@@ -58,7 +64,10 @@ export class UserService {
       this._http.get('/user/accountRefId/' + accountId)
         .map(res => res.json())        
         .subscribe(res => {
-          res.map(res => res.capabilities = Capabilities.fromJSON(res.capabilities));
+          res.map(res => { 
+            res.capabilities = Capabilities.fromJSON(res.capabilities);
+            res.birthDate = new Date(res.birthDate);
+          });
           resolve(res);
         }, (err) => {
           reject(err);
@@ -76,6 +85,7 @@ export class UserService {
           .map(res => res.json())
           .subscribe(res => {
             res.capabilities = Capabilities.fromJSON(res.capabilities);
+            res.birthDate = new Date(res.birthDate);
             resolve(res);
           }, (err) => {
             reject(err);
