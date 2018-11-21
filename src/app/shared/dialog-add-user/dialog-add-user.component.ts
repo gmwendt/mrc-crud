@@ -52,11 +52,11 @@ export class DialogAddUserComponent {
   public editMode: boolean;
 
   private errorMsg: string;
-  private hasError: boolean;
 
   private emailError: boolean;
   private nameError: boolean;
   private userNameError: boolean;
+  private birthDateError: boolean;
 
   private editedUser: User;
   private currentUser: User;
@@ -87,14 +87,14 @@ export class DialogAddUserComponent {
   }
 
   private create_clicked(professional: any): void {
-    if (!this.check_creation_errors())
+    if (!this.check_errors())
       return;
     
     this._dialogRef.close(DialogAddUserResult.OK);
   }
 
   private update_clicked(): void {
-    if (!this.check_update_errors())
+    if (!this.check_errors())
       return;
 
     this._dialogRef.close(DialogAddUserResult.OK);
@@ -117,66 +117,49 @@ export class DialogAddUserComponent {
     });
   }
 
-  private check_creation_errors(): boolean {
+  private check_errors(): boolean {
     this.clear_errors();
 
-    if (!this.newUserData.name) 
+    if (!this.editMode && this.is_null_or_empty(this.newUserData.email))
+      this.emailError = true;
+    
+    if (!this.editMode && this.is_null_or_empty(this.newUserData.userName))
+      this.userNameError = true;
+    
+    if (this.is_null_or_empty(this.newUserData.name))
       this.nameError = true;
 
-    if (!this.newUserData.email)
-      this.emailError = true;
+    if (this.is_null_or_empty(this.newUserData.birthdate))
+      this.birthDateError = true;
 
-    if (!this.newUserData.userName)
-      this.userNameError = true;
+    //TODO: Check if email format is valid.
 
-    if (this.nameError || this.emailError || this.userNameError) {
-      this.hasError = true;
+    if (this.hasError) {
       this.errorMsg = 'Os campos em destaque devem ser preenchidos.'
       return false;
     }
 
-    var filter = this.usersList.filter(u => u.email === this.newUserData.email);
-    if (filter.length > 0) {
+    var emailDuplicated = !this.editMode ? this.usersList.find(u => u.email === this.newUserData.email) : null;
+    if (emailDuplicated) {
       this.emailError = true;
-      this.hasError = true;
       this.errorMsg = 'Já existe um usuário com este E-mail.'
       return false;
     }
    
-    filter = this.usersList.filter(u => u.userName === this.newUserData.userName);
-    if (filter.length > 0) {
+    var userNameDuplicated = !this.editMode ? this.usersList.find(u => u.userName === this.newUserData.userName) : null;
+    if (userNameDuplicated) {
       this.userNameError = true;
-      this.hasError = true;
       this.errorMsg = 'Já existe um usuário com este Nome de usuário.'
       return false;
     }
 
-    //TODO: Check if email format is valid.
+    var profError = this.professionalView.hasErrors();
+    console.log(profError);
+    console.log(this.newProfessionalData.errors);
 
-    return true;
-  }
-
-  private check_update_errors(): boolean {
-    this.clear_errors();
-
-    if (!this.newUserData.name) 
-      this.nameError = true;
-
-    if (this.nameError) {
-      this.hasError = true;
-      this.errorMsg = 'Os campos em destaque devem ser preenchidos.'
+    if (profError)
       return false;
-    }
-    
-    if (this.professionalView.checkErrors()) {
-      this.hasError = true;
 
-      if (this.newProfessionalData.errors.scheduleError)
-        this.errorMsg = this.newProfessionalData.errors.scheduleErrorMsg;
-      //TODO: other profesional errors
-      return false;
-    }
-    
     return true;
   }
 
@@ -184,6 +167,15 @@ export class DialogAddUserComponent {
     this.nameError = false;
     this.emailError = false;
     this. userNameError = false;
+  }
+
+  private is_null_or_empty(content: string | Date): boolean {
+    if (content == null)
+      return true;
+    if (content instanceof Date)
+      return content.toString().length < 1;
+    
+    return content.length < 1;
   }
 
   private set canManageSystemData(value: boolean) {
@@ -215,8 +207,12 @@ export class DialogAddUserComponent {
   }
 
   private get userBirthDate(): string {
-    console.log(this.newUserData.birthdate);
-    if (this.newUserData && this.newUserData.birthdate)
+    if (this.newUserData && !this.is_null_or_empty(this.newUserData.birthdate))
       return this.newUserData.birthdate.toISOString().slice(0, 10);
+  }
+
+  public get hasError(): boolean {
+    if (this.nameError || this.emailError || this.userNameError || this.birthDateError) 
+      return true;
   }
 }

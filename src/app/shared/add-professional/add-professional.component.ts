@@ -65,15 +65,30 @@ export class AddProfessionalComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.data.schedule[this._selectedTabIndex]);
   }
 
-  checkErrors(): boolean {
+  hasErrors(): boolean {
+    this.data.errors = {};
+
+
     var error = this.check_schedule_consistency();
 
     if (error.hasError) {
       this.data.errors.scheduleError = true;
       this.data.errors.scheduleErrorMsg = error.errorMsg;
-      return true;
     }
-      //TODO: other profesional errors
+    
+    if (this.is_null_or_empty(this.data.professionalRegisterNum)) {
+      this.data.errors.registerNumError = true;
+      this.data.errors.registerNumErrorMsg = 'Informe o número de registro profissional';
+    }
+
+    if (this.is_null_or_empty(this.data.professionalRegisterState)) {
+      this.data.errors.registerStateError = true;
+      this.data.errors.registerStateErrorMsg = 'Informe o estado do registro profissional';
+    }
+    //TODO: other profesional errors
+    
+    if (this.data.errors.scheduleError || this.data.errors.registerNumError || this.data.errors.registerStateError)
+      return true;
 
     return false;
   }
@@ -154,6 +169,15 @@ export class AddProfessionalComponent implements OnInit {
     var minutes = hoursMinutes[1] ? parseInt(hoursMinutes[1], 10) : 0;
 
     return hours + minutes / 60;
+  }
+
+  private is_null_or_empty(content: string | Date): boolean {
+    if (content == null)
+      return true;
+    if (content instanceof Date)
+      return content.toString().length < 1;
+    
+    return content.length < 1;
   }
 
   private on_select_specialites_click(): void {

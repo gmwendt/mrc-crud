@@ -10,7 +10,8 @@
 [O] implementar página add professional
 [X] implementar dialog de seleção genérica 
 [X] create/update/delete professional
-[>] dialog professional schedule
-[ ] check professional data before save
+[X] dialog professional schedule
+[X] check professional data before save
+[>] cadastro clínica
 [ ] global loading
 [ ] user enable/disable

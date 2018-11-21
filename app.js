@@ -14,6 +14,7 @@ var user = require('./routes/user');
 var account = require('./routes/account');
 var professional = require('./routes/professional');
 var sysInfo = require('./routes/systemInfo');
+var clinic = require('./routes/clinic');
 
 var app = express();
 
@@ -26,6 +27,7 @@ app.use('/user', user);
 app.use('/account', account);
 app.use('/professional', professional);
 app.use('/sysInfo', sysInfo);
+app.use('/clinic', clinic);
 app.use('/', express.static('dist', { redirect: false }));
 app.get('*',  function(req, res, next) {
   res.sendFile(path.resolve('dist/index.html')); 

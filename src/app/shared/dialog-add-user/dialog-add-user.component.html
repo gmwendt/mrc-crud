@@ -22,12 +22,7 @@
           </div>
           <div class="dialog-add-user-content-column-item">
             <div class="mrc-text-1 column-1">Data de nascimento:</div>
-            <!-- <mat-form-field class="box-2">
-              <input matInput [matDatepicker]="picker" [(ngModel)]="newUserData.birthdate">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field> -->
-            <input type="date" [value]="userBirthDate" (change)="newUserData.birthdate = birthBox.value" #birthBox>
+            <input type="date" class="box-2" [ngClass]="{ 'error-input': birthDateError }" [value]="userBirthDate" (change)="newUserData.birthdate = birthBox.value" #birthBox>
           </div>
           <div class="dialog-add-user-content-column-item">
             <div class="mrc-text-1 column-1">Permissões:</div>
