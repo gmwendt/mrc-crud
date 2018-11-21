@@ -3,25 +3,16 @@ import { CommonModule } from '@angular/common';
 
 import { routing } from './mrc-routing.module';
 
-import { MrcComponent }     from './mrc.component';
-import { MrcContentComponent } from './mrc-content/mrc-content.component';
-import { MrcHeaderComponent }     from './mrc-header/mrc-header.component';
-import { MrcHeaderConfigComponent } from './mrc-header/mrc-header-config/mrc-header-config.component';
-import { MrcHeaderMenuComponent } from './mrc-header-menu/mrc-header-menu.component';
-import { MrcHomeComponent } from './mrc-home/mrc-home.component';
+import { ENTRY_COMPONENTS, COMMON_COMPONENTS } from './common/components';
+import { COMMON_PROVIDERS } from './common/providers';
 
-import { MrcContentService } from './mrc-content/mrc-content.service';
-import { AuthGuardService } from '../login/auth-guard.service';
-
-import { MaterialModule } from '../material.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  declarations: [
-    MrcComponent, MrcContentComponent, MrcHeaderComponent, MrcHeaderConfigComponent, 
-    MrcHeaderMenuComponent, MrcHomeComponent, 
-  ],
-  imports: [ CommonModule, MaterialModule, routing ],
-  exports: [ MrcComponent ],
-  providers: [ AuthGuardService, MrcContentService ]
+  imports: [ CommonModule, SharedModule, routing ],
+  declarations: [COMMON_COMPONENTS],
+  exports: [COMMON_COMPONENTS],
+  providers: [ COMMON_PROVIDERS ],
+  entryComponents: [ENTRY_COMPONENTS]
 })
 export class MrcModule { }

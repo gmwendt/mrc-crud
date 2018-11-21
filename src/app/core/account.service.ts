@@ -3,7 +3,7 @@ import { Http, Headers } from '@angular/http';
 
 import 'rxjs/add/operator/map';
 
-import { Account } from '../mrc/common/types';
+import { Account } from './common/types';
 
 @Injectable()
 export class AccountService {

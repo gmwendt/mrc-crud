@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { User } from '../../common/types';
+import { User } from '../../../core/common/types';
+import { AccountService } from '../../../core/account.service';
+import { UserService } from '../../../core/user.service';
 
-import { UserService } from '../../../login/user.service';
-
-import { AccountService } from '../../../shared/account.service';
 import { DialogService } from '../../../shared/dialog.service';
 import { DialogAlertData, DialogAlertButton } from '../../../shared/dialog-alert/dialog-alert.component';
 

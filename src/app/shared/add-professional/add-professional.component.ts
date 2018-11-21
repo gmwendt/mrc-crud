@@ -7,7 +7,7 @@ import { DialogService } from '../dialog.service';
 
 import { DialogSelector } from '../dialog-selector/dialog-selector.component';
 
-import { ScheduleMap, ScheduleInterval } from '../../mrc/common/types';
+import { ScheduleMap, ScheduleInterval } from '../../core/common/types';
 import { DaysNameEnum, DaysName } from '../../mrc/common/constants';
 
 export class ProfessionalData {

@@ -3,7 +3,7 @@ import { Http, Headers } from '@angular/http';
 
 import 'rxjs/add/operator/map';
 
-import { User, Capabilities } from '../mrc/common/types';
+import { User, Capabilities } from './common/types';
 
 @Injectable()
 export class UserService {

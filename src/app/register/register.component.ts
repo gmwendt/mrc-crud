@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { Account, Capabilities, User } from '../core/common/types';
+import { AccountService } from '../core/account.service';
+import { SystemInfoService } from '../core/system-info.service';
+import { UserService}  from '../core/user.service';
+
 import { AuthGuardService } from '../login/auth-guard.service';
-import { UserService}  from '../login/user.service';
-import { Account, Capabilities, User } from '../mrc/common/types';
-import { AccountService } from '../shared/account.service';
-import { SystemInfoService } from '../shared/system-info.service';
 import { DialogAlertData, DialogAlertButton } from '../shared/dialog-alert/dialog-alert.component';
 import { DialogService } from '../shared/dialog.service';
 

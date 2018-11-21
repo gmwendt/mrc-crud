@@ -2,16 +2,15 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { User, Professional } from '../../common/types';
+import { User, Professional } from '../../../core/common/types';
+import { AccountService } from '../../../core/account.service';
+import { ProfessionalService } from '../../../core/professional.service';
+import { UserService } from '../../../core/user.service';
 
-import { UserService } from '../../../login/user.service';
-
-import { AccountService } from '../../../shared/account.service';
 import { ProfessionalData } from '../../../shared/add-professional/add-professional.component';
 import { DialogService } from '../../../shared/dialog.service';
 import { DialogAddUserComponent, DialogAddUserResult } from '../../../shared/dialog-add-user/dialog-add-user.component';
 import { DialogAlertButton, DialogAlertData, DialogAlertResult } from '../../../shared/dialog-alert/dialog-alert.component';
-import { ProfessionalService } from '../../../shared/professional.service';
 
 @Component({
 	selector: 'page-users',

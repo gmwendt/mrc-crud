@@ -1,14 +1,13 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
-import { User } from '../../common/types';
-
 import { MrcContentService } from '../../mrc-content/mrc-content.service';
 
 import { PageInvalidComponent } from '../../pages/page-invalid/page-invalid.component';
 import { PageProfessionalsComponent } from '../../pages/page-professionals/page-professionals.component';
 import { PageUsersComponent } from '../../pages/page-users/page-users.component';
 
-import { UserService } from '../../../login/user.service';
+import { User } from '../../../core/common/types';
+import { UserService } from '../../../core/user.service';
 
 @Component({
 	selector: 'ribbon-config',

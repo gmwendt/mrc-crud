@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 
-import { UserService } from './user.service';
+import { UserService } from '../core/user.service';
 
 var sha512 = require('js-sha512');
 

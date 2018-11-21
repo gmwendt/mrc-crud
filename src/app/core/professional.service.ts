@@ -3,7 +3,7 @@ import { Http, Headers } from '@angular/http';
 
 import 'rxjs/add/operator/map';
 
-import { Professional, ScheduleMap } from '../mrc/common/types';
+import { Professional, ScheduleMap } from './common/types';
 
 @Injectable()
 export class ProfessionalService {

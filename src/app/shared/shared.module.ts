@@ -1,6 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { AddProfessionalComponent } from './add-professional/add-professional.component';
 import { CheckListComponent } from './check-list/check-list.component';
@@ -14,11 +15,26 @@ import { TimeInputComponent } from './time-input/time-input.component';
 import { MaterialModule } from '../material.module';
 
 @NgModule({
-  imports: [ BrowserModule, FormsModule, MaterialModule ],
+  imports: [ 
+    CommonModule,
+    FormsModule, 
+    MaterialModule,
+    RouterModule,
+  ],
   declarations: [ AddProfessionalComponent, CheckListComponent, DialogAddUserComponent, DialogAlertComponent, 
     DialogCapabilitiesChecklistComponent, DialogSelector, ProgressSpinnerComponent, TimeInputComponent ],
-  exports: [ AddProfessionalComponent, CheckListComponent, DialogAddUserComponent, DialogAlertComponent, 
-    DialogCapabilitiesChecklistComponent, DialogSelector, ProgressSpinnerComponent, TimeInputComponent ],
-  entryComponents: [DialogAddUserComponent, DialogAlertComponent, DialogCapabilitiesChecklistComponent, DialogSelector]
+  exports: [ 
+    AddProfessionalComponent,
+    CheckListComponent, 
+    CommonModule,
+    DialogAddUserComponent, 
+    DialogAlertComponent, 
+    DialogCapabilitiesChecklistComponent,
+    DialogSelector, 
+    FormsModule,
+    MaterialModule,
+    ProgressSpinnerComponent, 
+    TimeInputComponent ],
+  entryComponents: [DialogAddUserComponent, DialogAlertComponent, DialogCapabilitiesChecklistComponent, DialogSelector],
 })
 export class SharedModule { }

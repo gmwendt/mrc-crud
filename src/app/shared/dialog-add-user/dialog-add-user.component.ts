@@ -6,7 +6,7 @@ import { DialogCapabilitiesChecklistComponent, DialogCapabilitiesCheckListResult
 
 import { MatDialogRef, DialogService } from '../dialog.service';
 
-import { Capabilities, User, Professional } from '../../mrc/common/types';
+import { Capabilities, User, Professional } from '../../core/common/types';
 
 export enum DialogAddUserResult {
   Cancel,

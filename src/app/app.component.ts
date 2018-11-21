@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
-import { SystemInfo } from './mrc/common/types';
-import { SystemInfoService } from './shared/system-info.service';
+import { SystemInfo } from './core/common/types';
+import { SystemInfoService } from './core/system-info.service';
 
 @Component({
   selector: 'my-app',

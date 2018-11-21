@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+//import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {
   MatExpansionModule, 
@@ -19,7 +19,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 
 @NgModule({
   imports: [
-		BrowserAnimationsModule,
+		// BrowserAnimationsModule,
 		CdkTableModule,
 		MatButtonModule,
 		MatCheckboxModule,
@@ -33,7 +33,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 		MatTabsModule,
   ],
   exports: [
-		BrowserAnimationsModule,
+		// BrowserAnimationsModule,
 		CdkTableModule,
 		MatButtonModule,
 		MatCheckboxModule,

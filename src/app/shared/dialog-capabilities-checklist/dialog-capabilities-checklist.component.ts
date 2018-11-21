@@ -2,7 +2,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 import { MatDialogRef } from '../dialog.service';
 import { CheckListItem } from '../check-list/check-list.component';
-import { Capabilities } from '../../mrc/common/types';
+
+import { Capabilities } from '../../core/common/types';
 
 export enum DialogCapabilitiesCheckListResult {
   Cancel,

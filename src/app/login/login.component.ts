@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserService} from './user.service';
+import { Account, User, Capabilities } from '../core/common/types';
+import { AccountService } from '../core/account.service';
+import { UserService} from '../core/user.service';
 
 import { LocalStorageConstants } from '../mrc/common/constants';
-import { Account, User, Capabilities } from '../mrc/common/types';
 
 import { DialogAlertButton, DialogAlertResult, DialogAlertData } from '../shared/dialog-alert/dialog-alert.component';
-import { AccountService } from '../shared/account.service';
 import { DialogService } from '../shared/dialog.service';
 
  var sha512 = require('js-sha512');
@@ -29,22 +29,22 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     //DEV MOCK
-    this.loading = true;
-    this._account.getAccountByAccountId('1009').then((acc => {
-      if (acc.length == 0)
-        return;
+    // this.loading = true;
+    // this._account.getAccountByAccountId('1009').then((acc => {
+    //   if (acc.length == 0)
+    //     return;
       
-      this._userService.getUserByUsername(acc[0].accountId, 'admin').then((user => {
-        if(user.length == 0)
-          return;
+    //   this._userService.getUserByUsername(acc[0].accountId, 'admin').then((user => {
+    //     if(user.length == 0)
+    //       return;
 
-          this._account.current = acc[0];
-          this._userService.currentUser = user[0];
-          this._userService.typedPassword = 'admin';
-          this._router.navigate(['home']);
-          this.loading = false;
-      }));
-    }));
+    //       this._account.current = acc[0];
+    //       this._userService.currentUser = user[0];
+    //       this._userService.typedPassword = 'admin';
+    //       this._router.navigate(['home']);
+    //       this.loading = false;
+    //   }));
+    // }));
   }
 
   private login(): void {

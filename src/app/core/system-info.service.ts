@@ -3,8 +3,7 @@ import { Http, Headers } from '@angular/http';
 
 import 'rxjs/add/operator/map';
 
-import { SystemInfo } from '../mrc/common/types';
-import { reject } from 'q';
+import { SystemInfo } from './common/types';
 
 @Injectable()
 export class SystemInfoService {

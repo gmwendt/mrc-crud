@@ -12,6 +12,7 @@
 [X] create/update/delete professional
 [X] dialog professional schedule
 [X] check professional data before save
-[>] cadastro clínica
+[X] cadastro clínica
+[ ] page clinics
 [ ] global loading
 [ ] user enable/disable

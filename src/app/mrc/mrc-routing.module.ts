@@ -2,20 +2,18 @@ import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuardService } from '../login/auth-guard.service';
-import { LoginComponent } from '../login/login.component';
 import { MrcHomeComponent } from './mrc-home/mrc-home.component';
 import { PageInvalidComponent } from './pages/page-invalid/page-invalid.component';
 import { PageResetPasswordComponent } from './pages/page-reset-password/page-reset-password.component';
-import { RegisterComponent } from '../register/register.component';
 
 const mrcRoutes: Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    loadChildren: 'app/login/login.module#LoginModule'
   },
   {
     path: 'register',
-    component: RegisterComponent
+    loadChildren: 'app/register/register.module#RegisterModule'
   },
   {
     path: 'home',
@@ -30,11 +28,11 @@ const mrcRoutes: Routes = [
     path: 'invalid-page',
     component: PageInvalidComponent
   },  
-  // {
-  //   path: '',
-  //   redirectTo: '',
-  //   pathMatch: 'full'
-  // }
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
   { path: '**', component: PageInvalidComponent }
 ];
 
