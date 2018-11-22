@@ -1,4 +1,21 @@
-mrc-header mrc-header-config {
+mrc-header .mrc-header-menu {
+  align-items: center;
+  display: flex;
+  margin: 4px;
+}
+
+mrc-header .mrc-header-content {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+}
+
+mrc-header .mrc-header-content mrc-header-config {
   margin: 8px;
   color: white;
+}
+
+mrc-header .icon-baseline-menu {
+  color: white;
+  font-size: 17pt;
 }

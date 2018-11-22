@@ -54,3 +54,7 @@
   .icon-schedule:before {
     content: "\e906";
   }
+
+  .icon-baseline-menu:before {
+    content: "\e907";
+  }

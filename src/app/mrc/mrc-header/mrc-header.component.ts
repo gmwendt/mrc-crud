@@ -6,4 +6,9 @@ import { Component, ViewEncapsulation } from '@angular/core';
 	styleUrls: ['./mrc-header.component.css'],
 	encapsulation: ViewEncapsulation.None
 })
-export class MrcHeaderComponent { }
+export class MrcHeaderComponent { 
+	
+	on_menu_click(): void {
+
+	}
+}
