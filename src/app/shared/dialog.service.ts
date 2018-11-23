@@ -3,7 +3,7 @@ import {
     Inject,
     Injectable,
     ChangeDetectorRef,
-    Renderer,
+    Renderer2,
     TemplateRef,
     ViewChild,
     ViewContainerRef,
@@ -48,7 +48,7 @@ import {
   @Injectable()
   export class DialogService implements IDialogService {
   
-    private _renderer: Renderer;
+    private _renderer: Renderer2;
     private _element: ElementRef;
   
     constructor(private _dialog: MatDialog) {//, @Inject(MoveService) private m_service: IMoveService, @Inject(OverlayContainer) private m_container: PortalOverlayContainer) {

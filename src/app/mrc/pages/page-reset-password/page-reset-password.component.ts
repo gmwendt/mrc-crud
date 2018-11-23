@@ -41,18 +41,18 @@ export class PageResetPasswordComponent implements OnDestroy, OnInit {
 			this._token = params['token'];
 			this._username = atob(params['userName64']);
 
-			this._userService.getUserByUsername(this._accNum, this._username).then((users: User[]) => {
-				if (users.length == 0) {
+			this._userService.getUserByUsername(this._accNum, this._username).then((user: User) => {
+				if (!user) {
 					this._router.navigate(['invalid-page']);
 					return; 
 				}
 
-				if (users[0].resetPwdToken != this._token) {
+				if (user.resetPwdToken != this._token) {
 					this._router.navigate(['invalid-page']);
 					return; 
 				}
 					
-				this._user = users[0];	
+				this._user = user;	
 				this.loading = false;
 			}, err => this.show_error_dialog(err));
 		}, err => this.show_error_dialog(err));

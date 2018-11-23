@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 
-//import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
 import {
   MatExpansionModule, 
 	MatButtonModule,
 	MatCheckboxModule,
 	MatDatepickerModule,
 	MatDialogModule,
+	MatDividerModule,
 	MatInputModule, 
 	MatMenuModule,
 	MatNativeDateModule,
@@ -19,13 +18,13 @@ import { CdkTableModule } from '@angular/cdk/table';
 
 @NgModule({
   imports: [
-		// BrowserAnimationsModule,
 		CdkTableModule,
 		MatButtonModule,
 		MatCheckboxModule,
 		MatDatepickerModule,
 		MatDialogModule,
-    MatExpansionModule, 
+		MatDividerModule,
+		MatExpansionModule, 
 		MatInputModule, 
 		MatMenuModule,
 		MatNativeDateModule,
@@ -33,14 +32,14 @@ import { CdkTableModule } from '@angular/cdk/table';
 		MatTabsModule,
   ],
   exports: [
-		// BrowserAnimationsModule,
 		CdkTableModule,
 		MatButtonModule,
 		MatCheckboxModule,
 		MatDatepickerModule,
 		MatDialogModule,
+		MatDividerModule,
 		MatExpansionModule, 
-		MatInputModule, 
+		MatInputModule,  
 		MatMenuModule,
 		MatNativeDateModule,
 		MatTableModule,

@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-
-import 'rxjs/add/operator/map';
+import { HttpClient } from '@angular/common/http';
 
 import { SystemInfo } from './common/types';
 
@@ -10,12 +8,11 @@ export class SystemInfoService {
 
   public systemInfo: SystemInfo;
   
-  constructor(private _http: Http) { }
+  constructor(private _http: HttpClient) { }
 
   addSystemInfo(data: SystemInfo) {
     return new Promise((resolve, reject) => {
         this._http.post('/sysInfo', data)
-          .map(res => res.json())
           .subscribe(res => {
             resolve(res);
           }, (err) => {
@@ -26,8 +23,7 @@ export class SystemInfoService {
   
   getSystemInfo(): Promise<SystemInfo[]> {
     return new Promise((resolve, reject) => {
-      this._http.get('/sysInfo')
-        .map(res => res.json())
+      this._http.get<SystemInfo[]>('/sysInfo')
         .subscribe(res => {
           resolve(res);
         }, (err) => {
@@ -39,8 +35,7 @@ export class SystemInfoService {
   incrementSequence(): Promise<SystemInfo> {
     this.systemInfo.nextAccountSequence++;
     return new Promise((resolve, reject) => {
-      this._http.put('/sysInfo/' + this.systemInfo._id, this.systemInfo)
-        .map(res => res.json())
+      this._http.put<SystemInfo>('/sysInfo/' + this.systemInfo._id, this.systemInfo)
         .subscribe(res => {
           resolve(res);
         }, (err) => {

@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-
-import 'rxjs/add/operator/map';
+import { HttpClient } from '@angular/common/http';
 
 import { Clinic } from './common/types';
 
 @Injectable()
 export class ClinicService {
-  constructor(private _http: Http) { }
+  constructor(private _http: HttpClient) { }
 
   addClinic(data: Clinic) {
     return new Promise((resolve, reject) => {
       this._http.post('/clinic', data)
-        .map(res => res.json())
         .subscribe(res => {
           resolve(res);
         }, (err) => {
@@ -23,8 +20,7 @@ export class ClinicService {
 
   getAllClinics(): Promise<Clinic[]> {
     return new Promise((resolve, reject) => {
-      this._http.get('/clinic')
-        .map(res => res.json())
+      this._http.get<Clinic[]>('/clinic')
         .subscribe(res => {
           resolve(res);
         }, (err) => {
@@ -35,8 +31,7 @@ export class ClinicService {
 
   listAccountClinics(accountId: number): Promise<Clinic[]> {
     return new Promise((resolve, reject) => {
-      this._http.get('/clinic/accountRefId/' + accountId)
-        .map(res => res.json())        
+      this._http.get<Clinic[]>('/clinic/accountRefId/' + accountId)
         .subscribe(res => {
           resolve(res);
         }, (err) => {
@@ -58,8 +53,7 @@ export class ClinicService {
 
   updateClinic(data: Clinic) {
     return new Promise((resolve, reject) => {
-      this._http.put('/clinic/' + data._id, data)
-        .map(res => res.json())
+      this._http.put<Clinic>('/clinic/' + data._id, data)
         .subscribe(res => {
           resolve(res);
         }, (err) => {

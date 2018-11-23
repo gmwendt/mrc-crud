@@ -84,6 +84,19 @@
   border: solid 1px #ff1919;
 }
 
+.mrc-global .mrc-menu-icon {
+  font-size: 14pt;
+  margin: 7px 6px 0 0;
+}
+
+.mrc-global .mrc-menu-title {
+  margin-bottom: -8px;
+}
+
+.mrc-global .mrc-menu-selected {
+  color: #136da5;
+}
+
 .mrc-global .mat-checkbox {
   font-size: 9pt;
 }
@@ -116,8 +129,9 @@
 
 .mrc-global .mat-menu-content .mat-menu-item {
   font-size: 9pt;
-  height: 30px;
-  line-height: 30px;
+  display: flex;
+  height: 35px;
+  line-height: 35px;
   padding: 0 8px;
 }
 
@@ -157,20 +171,20 @@
   display: none;
 }
 
-.mrc-global .mat-form-field .mat-input-wrapper {
+.mrc-global .mat-form-field .mat-form-field-wrapper {
   padding: 0;
 }
 
-.mrc-global .mat-form-field .mat-input-wrapper .mat-input-infix {
+.mrc-global .mat-form-field .mat-form-field-wrapper .mat-form-field-infix {
   border-top: none;
   padding: 0;
 }
 
-.mrc-global .mat-form-field .mat-input-underline {
+.mrc-global .mat-form-field .mat-form-field-underline {
   background-color: transparent;
 }
 
-.mrc-global .mat-form-field .mat-input-underline .mat-form-field-ripple {
+.mrc-global .mat-form-field .mat-form-field-underline .mat-form-field-ripple {
   background-color: transparent;
 }
 

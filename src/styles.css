@@ -58,3 +58,19 @@
   .icon-baseline-menu:before {
     content: "\e907";
   }
+
+  .icon-menu-place:before {
+    content: "\e908";
+  }
+
+  .icon-menu-bar-chart:before {
+    content: "\e909";
+  }
+
+  .icon-menu-calendar:before {
+    content: "\e90a";
+  }
+
+  .icon-menu-library:before {
+    content: "\e90b";
+  }

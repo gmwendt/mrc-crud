@@ -32,8 +32,9 @@
 
     .mat-menu-item {
       font-size: 9pt;
-      height: 30px;
-      line-height: 30px;
+      display: flex;
+      height: 35px;
+      line-height: 35px;
       padding: 0 8px;
     }
   }
@@ -76,16 +77,16 @@
       display: none;
     }
 
-    .mat-input-wrapper {
+    .mat-form-field-wrapper {
       padding: 0;
 
-      .mat-input-infix {
+      .mat-form-field-infix {
         border-top: none;
         padding: 0;
       }
     }
 
-    .mat-input-underline {
+    .mat-form-field-underline {
       background-color: transparent;
 
       .mat-form-field-ripple {

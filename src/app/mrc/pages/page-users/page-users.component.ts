@@ -42,11 +42,11 @@ export class PageUsersComponent implements OnInit {
 			return;
 		}
 
-		this._account.getAccountByAccountId(this._accId.toString()).then(accs => {
-			if (accs.length == 0)
+		this._account.getAccountByAccountId(this._accId.toString()).then(acc => {
+			if (!acc)
 				return;
 
-			this.listUsers(accs[0].accountId);
+			this.listUsers(acc.accountId);
 		}, err => this.show_error_dialog(err));
 	}
 
@@ -120,16 +120,16 @@ export class PageUsersComponent implements OnInit {
 	private edit_user_clicked(user: User): void {
 		if (user.isProfessional) {
 			//this.loading = true;
-			this._professionalService.getProfessionalByUserId(user._id).then(professionals => {
+			this._professionalService.getProfessionalByUserId(user._id).then(professional => {
 
 				//this.loading = false;
 				
-				if (professionals.length == 0) {
+				if (!professional) {
 					user.isProfessional = false;
 					this.editUser(user);
 				}
 				else
-					this.editUser(user, professionals[0]);
+					this.editUser(user, professional);
 			}, err => {
 				//this.loading = false;
 				this.show_error_dialog(err);

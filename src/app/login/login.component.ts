@@ -29,41 +29,41 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     //DEV MOCK
-    // this.loading = true;
-    // this._account.getAccountByAccountId('1009').then((acc => {
-    //   if (acc.length == 0)
-    //     return;
+    this.loading = true;
+    this._account.getAccountByAccountId('1009').then((acc => {
+      if (!acc)
+        return;
       
-    //   this._userService.getUserByUsername(acc[0].accountId, 'admin').then((user => {
-    //     if(user.length == 0)
-    //       return;
+      this._userService.getUserByUsername(acc.accountId, 'admin').then((user => {
+        if (!user)
+          return;
 
-    //       this._account.current = acc[0];
-    //       this._userService.currentUser = user[0];
-    //       this._userService.typedPassword = 'admin';
-    //       this._router.navigate(['home']);
-    //       this.loading = false;
-    //   }));
-    // }));
+          this._account.current = acc;
+          this._userService.currentUser = user;
+          this._userService.typedPassword = 'admin';
+          this._router.navigate(['home']);
+          this.loading = false;
+      }));
+    }));
   }
 
   private login(): void {
     this.loading = true;
-    this._account.getAccountByAccountId(this._accountId).then((acc: Account[]) => {
-      if (acc.length == 0) {
+    this._account.getAccountByAccountId(this._accountId).then((acc: Account) => {
+      if (!acc) {
         this.show_error_dialog('Conta inválida.');
         this.loading = false;
         return;
       }
 
-      this._userService.getUserByUsername(acc[0].accountId, this._userName).then((result: User[]) => {
-        if(result.length == 0) {
+      this._userService.getUserByUsername(acc.accountId, this._userName).then((result: User) => {
+        if (!result) {
           this.show_error_dialog('Nome de usuário inválido.');
           this.loading = false;
           return;
         }
 
-        var user: User = result[0];
+        var user: User = result;
         if (user.passwordHash != this.hashPassword(this._pwd, user.passwordSalt)) {
           this.show_error_dialog('Senha incorreta.');
           this.loading = false;
@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
 
         this._userService.currentUser = user;
         this._userService.typedPassword = this._pwd;
-        this._account.current = acc[0];
+        this._account.current = acc;
 
         this._router.navigate(['home']); 
         this.loading = false;

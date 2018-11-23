@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,7 +21,7 @@ import { MrcModule } from './mrc/mrc.module';
   imports: [
     BrowserModule,
     CoreModule,
-    HttpModule,
+    HttpClientModule,
     MrcModule,
     NoopAnimationsModule,
   ],

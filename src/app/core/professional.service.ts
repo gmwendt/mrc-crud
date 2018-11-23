@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-
-import 'rxjs/add/operator/map';
+import { HttpClient } from '@angular/common/http';
 
 import { Professional, ScheduleMap } from './common/types';
 
 @Injectable()
 export class ProfessionalService {
-  constructor(private _http: Http) { }
+  constructor(private _http: HttpClient) { }
 
   addProfessional(data: Professional) {
     return new Promise((resolve, reject) => {
       (<any>data).schedule = ScheduleMap.toJSON(data.schedule);
       this._http.post('/professional', data)
-        .map(res => res.json())
         .subscribe(res => {
           resolve(res);
         }, (err) => {
@@ -24,10 +21,10 @@ export class ProfessionalService {
 
   getAllProfessionals(): Promise<Professional[]> {
     return new Promise((resolve, reject) => {
-      this._http.get('/professional')
-        .map(res => res.json())
+      this._http.get<Professional[]>('/professional')
         .subscribe(res => {
-          res.map(res => res.schedule = ScheduleMap.fromJSON(res.schedule));
+          //TODO: Verificar essa gambiarra
+          res.map(res => res.schedule = ScheduleMap.fromJSON(<any>res.schedule));
           resolve(res);
         }, (err) => {
           reject(err);
@@ -35,13 +32,15 @@ export class ProfessionalService {
     });
   }
 
-  getProfessionalByUserId(userId: string): Promise<Professional[]> {
+  getProfessionalByUserId(userId: string): Promise<Professional> {
     return new Promise((resolve, reject) => {
-      this._http.get('/professional/userRefId/' + userId)
-        .map(res => res.json())
+      this._http.get<Professional[]>('/professional/userRefId/' + userId)
         .subscribe(res => {
-          res.map(res => res.schedule = ScheduleMap.fromJSON(res.schedule));
-          resolve(res);
+          if (!res || res.length == 0)
+            resolve(null);
+          //TODO: Verificar essa gambiarra
+          res.map(res => res.schedule = ScheduleMap.fromJSON(<any>res.schedule));
+          resolve(res[0]);
         }, (err) => {
           reject(err);
         });
@@ -63,7 +62,6 @@ export class ProfessionalService {
     return new Promise((resolve, reject) => {
       (<any>data).schedule = ScheduleMap.toJSON(data.schedule);
       this._http.put('/professional/' + data._id, data)
-        .map(res => res.json())
         .subscribe(res => {
           resolve(res);
         }, (err) => {

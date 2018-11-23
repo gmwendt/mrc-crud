@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-
-import 'rxjs/add/operator/map';
+import { HttpClient } from '@angular/common/http';
 
 import { User, Capabilities } from './common/types';
 
@@ -11,15 +9,14 @@ export class UserService {
   public currentUser: User;
   public typedPassword: string;
   
-  constructor(private _http: Http) { }
+  constructor(private _http: HttpClient) { }
   
   addUser(data: User): Promise<User> {
     return new Promise((resolve, reject) => {
       (<any>data).capabilities = Capabilities.toJSON(data.capabilities);
-      this._http.post('/user', data)
-        .map(res => res.json())
+      this._http.post<User>('/user', data)
         .subscribe(res => {
-          res.capabilities = Capabilities.fromJSON(res.capabilities);
+          res.capabilities = Capabilities.fromJSON(<string>res.capabilities);
           resolve(res);
         }, (err) => {
           reject(err);
@@ -29,11 +26,10 @@ export class UserService {
 
   getAllUsers(): Promise<User[]> {
     return new Promise((resolve, reject) => {
-      this._http.get('/user')
-        .map(res => res.json())
+      this._http.get<User[]>('/user')
         .subscribe(res => {
           res.map(res => {
-            res.capabilities = Capabilities.fromJSON(res.capabilities);
+            res.capabilities = Capabilities.fromJSON(<string>res.capabilities);
             res.birthDate = new Date(res.birthDate);
           });
           resolve(res);
@@ -43,16 +39,19 @@ export class UserService {
     });
   }
 
-  getUserByUsername(accountId: number, username: string): Promise<User[]> {
+  getUserByUsername(accountId: number, username: string): Promise<User> {
     return new Promise((resolve, reject) => {
-      this._http.get('/user/accountRefId/' + accountId + '/userName/' + username)
-        .map(res => res.json())
+      this._http.get<User[]>('/user/accountRefId/' + accountId + '/userName/' + username)
         .subscribe(res => {
+          if (!res || res.length == 0)
+            resolve(null);
+
           res.map(res => { 
-            res.capabilities = Capabilities.fromJSON(res.capabilities);
+            res.capabilities = Capabilities.fromJSON(<string>res.capabilities);
             res.birthDate = new Date(res.birthDate);
           });
-          resolve(res);
+
+          resolve(res[0]);
         }, (err) => {
           reject(err);
         });
@@ -61,11 +60,10 @@ export class UserService {
 
   listAccountUsers(accountId: number): Promise<User[]> {
     return new Promise((resolve, reject) => {
-      this._http.get('/user/accountRefId/' + accountId)
-        .map(res => res.json())        
+      this._http.get<User[]>('/user/accountRefId/' + accountId)
         .subscribe(res => {
           res.map(res => { 
-            res.capabilities = Capabilities.fromJSON(res.capabilities);
+            res.capabilities = Capabilities.fromJSON(<string>res.capabilities);
             res.birthDate = new Date(res.birthDate);
           });
           resolve(res);
@@ -81,10 +79,9 @@ export class UserService {
     
     return new Promise((resolve, reject) => {
         (<any>data).capabilities = Capabilities.toJSON(data.capabilities);
-        this._http.put('/user/' + data._id, data)
-          .map(res => res.json())
+        this._http.put<User>('/user/' + data._id, data)
           .subscribe(res => {
-            res.capabilities = Capabilities.fromJSON(res.capabilities);
+            res.capabilities = Capabilities.fromJSON(<string>res.capabilities);
             res.birthDate = new Date(res.birthDate);
             resolve(res);
           }, (err) => {

@@ -1,6 +1,44 @@
-<div class="mrc-header-menu" (click)="on_menu_click()">
+<div class="mrc-header-menu" *ngIf="isAuthenticated" [matMenuTriggerFor]="menu">
   <span class="icon-baseline-menu"></span>
 </div>
 <div class="mrc-header-content">
   <mrc-header-config></mrc-header-config>
 </div>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item class="mrc-menu-title" disabled>
+    <span>Menu</span>
+  </button>
+  <button mat-menu-item>
+    <span class="icon-menu-calendar mrc-menu-icon"></span>
+    <span>Agenda</span>
+  </button>
+  <button mat-menu-item>
+    <span class="icon-menu-bar-chart mrc-menu-icon"></span>
+    <span>Relatórios</span>
+  </button>
+  <mat-divider></mat-divider>
+  
+  <button mat-menu-item class="mrc-menu-title" disabled>
+    <span>Gerenciamento</span>
+  </button>
+  <button mat-menu-item>
+    <span class="icon-menu-place mrc-menu-icon"></span>
+    <span>Clínicas</span>
+  </button>
+  <button mat-menu-item>
+    <span class="icon-menu-library mrc-menu-icon"></span>
+    <span>Documentos</span>
+  </button>
+  <button mat-menu-item>
+    <span class="icon-user mrc-menu-icon"></span>
+    <span>Pacientes</span>
+  </button>
+  <button mat-menu-item>
+    <span class="icon-menu-library mrc-menu-icon"></span>
+    <span>Serviços</span>
+  </button>
+  <button mat-menu-item>
+    <span class="icon-user mrc-menu-icon"></span>
+    <span>Usuários / Profissionais</span>
+  </button>
+</mat-menu>

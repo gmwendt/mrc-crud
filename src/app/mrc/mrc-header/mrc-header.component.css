@@ -1,5 +1,6 @@
 mrc-header .mrc-header-menu {
   align-items: center;
+  cursor: pointer;
   display: flex;
   margin: 4px;
 }

@@ -82,4 +82,17 @@ input, textarea, select {
 	.mrc-textbox-error {
 		border: solid 1px #ff1919;
 	}
+
+	.mrc-menu-icon {
+		font-size: 14pt;
+		margin: 7px 6px 0 0;
+	}
+
+	.mrc-menu-title {
+		margin-bottom: -8px;
+	}
+
+	.mrc-menu-selected {
+		color: #136da5;
+	}
 }

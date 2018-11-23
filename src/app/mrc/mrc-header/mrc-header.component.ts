@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, } from '@angular/core';
+import { AuthGuardService } from '../../login/auth-guard.service';
 
 @Component({
 	selector: 'mrc-header',
@@ -7,8 +8,13 @@ import { Component, ViewEncapsulation } from '@angular/core';
 	encapsulation: ViewEncapsulation.None
 })
 export class MrcHeaderComponent { 
-	
-	on_menu_click(): void {
 
+	constructor(private _auth: AuthGuardService) {
+
+	}
+
+	get isAuthenticated(): boolean {
+		if (this._auth)
+			return this._auth.isAuthenticated();
 	}
 }
