@@ -13,7 +13,8 @@
 [X] dialog professional schedule
 [X] check professional data before save
 [X] cadastro clínica
-[>] navigation menu
-[ ] page clinics
+[X] navigation menu
+[X] page clinics
+[ ] page new/edit clinics
 [ ] global loading
 [ ] user enable/disable

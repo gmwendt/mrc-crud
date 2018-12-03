@@ -107,7 +107,6 @@
   font-size: 9pt;
   margin-left: 22px;
   text-transform: uppercase;
-  width: fit-content;
 }
 
 .mrc-global .mat-checkbox {
@@ -150,6 +149,7 @@
 
 .mrc-global .mat-table {
   box-shadow: none;
+  margin: 22px;
 }
 
 .mrc-global .mat-table .mat-cell,
@@ -170,6 +170,7 @@
 
 .mrc-global .mat-dialog-container .mat-dialog-actions {
   margin-bottom: -12px;
+  min-height: 0;
 }
 
 .mrc-global .mat-button {

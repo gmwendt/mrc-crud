@@ -1,3 +1,9 @@
 mrc-clinic {
   height: 100%;
 }
+
+mrc-clinic .icon-delete, mrc-clinic .icon-edit {
+  cursor: pointer;
+  font-size: 12pt;
+  color: #4f4f4f;
+}

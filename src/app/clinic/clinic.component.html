@@ -1,3 +1,26 @@
 <div class="mrc-page-title">Clínicas</div>
 <div class="mrc-page-commands" (click)="add_clinic_clicked()">Adicionar clínica</div>
-<!-- <button mat-button (click)="add_clinic_clicked()">Adicionar clínica</button> -->
+<progress-spinner [progress]="loading">
+  <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> NOME </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="commands">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let element"> 
+        <span>
+          <!-- <span *ngIf="(currentUser.capabilities.registerUsers || currentUser.capabilities.fullAccessAdministrativeTools)" 
+            title="Editar" class="icon-edit" (click)="edit_user_clicked(element)"></span>  -->
+          <span
+            title="Remover clínica" class="icon-delete" (click)="delete_clinic_clicked(element)"></span> 
+        </span>  
+      </mat-cell>
+    </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</progress-spinner>

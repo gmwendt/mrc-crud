@@ -22,7 +22,7 @@ router.get('/:id', function(req, res, next) {
 /*GET Clinic LIST BY ACCOUNT ID*/
 router.get('/accountRefId/:accountId', function(req, res, next) {
   var accountId = req.param("accountId");
-  User.find({"accountRefId": accountId}, function(e,docs) {
+  Clinic.find({"accountRefId": accountId}, function(e,docs) {
     res.json(docs);
   });
 });

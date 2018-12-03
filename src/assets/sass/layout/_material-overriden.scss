@@ -41,6 +41,7 @@
 
   .mat-table {
     box-shadow: none;
+    margin: 22px;
     
     .mat-cell,
     .mat-header-cell {
@@ -60,6 +61,7 @@
 
     .mat-dialog-actions {
       margin-bottom: -12px;
+      min-height: 0;
     }
   }
 
