@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation, ElementRef, OnInit } from "@angular/core";
 import { MatTableDataSource } from '@angular/material';
+import { Router } from "@angular/router";
 
 import { ClinicService } from "../core/clinic.service";
 import { UserService } from "../core/user.service";
@@ -22,7 +23,8 @@ export class ClinicComponent implements OnInit {
   private clinics: Clinic[];
   private dataSource;
   
-  constructor(private _userService: UserService, private _clinic: ClinicService, private _dialog: DialogService) {
+  constructor(private _userService: UserService, private _clinic: ClinicService, private _dialog: DialogService,
+              private _router: Router) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -80,6 +82,10 @@ export class ClinicComponent implements OnInit {
 
   private createTable(): void {
 		this.dataSource = new MatTableDataSource(this.clinics);
+  }
+  
+  private navigate(): void {
+    this._router.navigate(['clinicas/edit']);
   }
 
   private show_error_dialog(msg: string): void {

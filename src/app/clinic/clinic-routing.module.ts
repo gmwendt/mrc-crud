@@ -3,8 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ClinicComponent } from './clinic.component';
 
+import { PageClinicEditComponent } from './page-clinic-edit/page-clinic-edit.componen';
+
 const routes: Routes = [
   { path: '', component: ClinicComponent,  },
+  { path: 'edit', component: PageClinicEditComponent }
 ];
 
 @NgModule({
