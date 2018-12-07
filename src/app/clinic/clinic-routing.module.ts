@@ -7,7 +7,7 @@ import { PageClinicEditComponent } from './page-clinic-edit/page-clinic-edit.com
 
 const routes: Routes = [
   { path: '', component: ClinicComponent,  },
-  { path: 'edit', component: PageClinicEditComponent }
+  { path: 'edit/:id', component: PageClinicEditComponent }
 ];
 
 @NgModule({

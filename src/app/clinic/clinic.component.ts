@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, ElementRef, OnInit } from "@angular/core";
 import { MatTableDataSource } from '@angular/material';
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 import { ClinicService } from "../core/clinic.service";
 import { UserService } from "../core/user.service";
@@ -24,7 +24,7 @@ export class ClinicComponent implements OnInit {
   private dataSource;
   
   constructor(private _userService: UserService, private _clinic: ClinicService, private _dialog: DialogService,
-              private _router: Router) {
+              private _router: Router, private _route: ActivatedRoute) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -34,14 +34,6 @@ export class ClinicComponent implements OnInit {
     finally {
       this.loading = false;
     }
-  }
-
-  add_clinic_clicked(): void {
-    // var dialogConfig: MatDialogConfig = {
-    //   height: '100%',
-    //   width: '100%'
-    // }
-    // var dialogRef = this._dialog.open(DialogClinicEditComponent, dialogConfig);
   }
 
   private async loadClinics(): Promise<void> {
@@ -83,9 +75,18 @@ export class ClinicComponent implements OnInit {
   private createTable(): void {
 		this.dataSource = new MatTableDataSource(this.clinics);
   }
+
+  private editClinic(clinic?: Clinic): void {
+    if (!clinic) {
+      //TODO: Create Clinic;
+      return; //TODO: Remover
+    }
+    
+    this.navigate(clinic);
+  }
   
-  private navigate(): void {
-    this._router.navigate(['clinicas/edit']);
+  private navigate(clinic: Clinic): void {
+    this._router.navigate(['edit', clinic._id], { relativeTo: this._route });
   }
 
   private show_error_dialog(msg: string): void {

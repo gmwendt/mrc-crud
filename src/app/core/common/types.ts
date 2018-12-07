@@ -9,7 +9,16 @@ export class Clinic {
   public accountRefId: number;
   public name: string;
   public cnes: number;
-  public address: string;
+  public zipcode?: string;
+  public address?: string;
+  public addressNum?: string;
+  public addressComp?: string;
+  public neighborhood?: string;
+  public city?: string;
+  public state?: string;
+  public email?: string;
+  public phone1?: string;
+  public phone2?: string;
 }
 
 export class Capabilities {

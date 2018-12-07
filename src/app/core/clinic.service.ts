@@ -29,6 +29,17 @@ export class ClinicService {
     });
   }
 
+  getClinicById(id: string): Promise<Clinic>{
+    return new Promise((resolve, reject) => {
+      this._http.get<Clinic>('/clinic/' + id)
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
   listAccountClinics(accountId: number): Promise<Clinic[]> {
     return new Promise((resolve, reject) => {
       this._http.get<Clinic[]>('/clinic/accountRefId/' + accountId)

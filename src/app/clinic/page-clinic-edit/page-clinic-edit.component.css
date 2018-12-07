@@ -1,0 +1,8 @@
+page-clinic-edit #mrc-edit-page-item {
+  margin: 8px 0 0px 16px;
+  font-size: 9pt;
+}
+
+page-clinic-edit #mrc-edit-page-item > label {
+  margin-right: 4px;
+}

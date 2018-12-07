@@ -1,5 +1,5 @@
 <div class="mrc-page-title">Clínicas</div>
-<div class="mrc-page-commands" (click)="add_clinic_clicked()">Adicionar clínica</div>
+<div class="mrc-page-commands" (click)="editClinic()">Adicionar clínica</div>
 <progress-spinner [progress]="loading">
   <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -14,6 +14,8 @@
         <span>
           <!-- <span *ngIf="(currentUser.capabilities.registerUsers || currentUser.capabilities.fullAccessAdministrativeTools)" 
             title="Editar" class="icon-edit" (click)="edit_user_clicked(element)"></span>  -->
+          <span 
+            title="Editar" class="icon-edit" (click)="editClinic(element)"></span>
           <span
             title="Remover clínica" class="icon-delete" (click)="delete_clinic_clicked(element)"></span> 
         </span>  
@@ -21,6 +23,6 @@
     </ng-container>
     
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigate()"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 </progress-spinner>

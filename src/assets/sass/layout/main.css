@@ -98,11 +98,13 @@
 }
 
 .mrc-global .mrc-page-title {
+  color: rgba(0, 0, 0, 0.87);
   font-size: 19pt;
   margin: 22px 8px 8px 22px;
 }
 
 .mrc-global .mrc-page-commands {
+  color: rgba(0, 0, 0, 0.87);
   cursor: pointer;
   font-size: 9pt;
   margin-left: 22px;
@@ -217,6 +219,10 @@
 
 .mrc-global .mat-tab-body {
   margin-top: 8px;
+}
+
+.mrc-global .mat-expansion-panel {
+  box-shadow: none;
 }
 
 html {
