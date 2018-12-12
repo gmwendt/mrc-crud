@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, ViewEncapsulation } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy, Component, OnDestroy, ViewEncapsulation, } from "@angular/core";
 
 import { ActivatedRoute } from "@angular/router";
 
@@ -12,15 +12,18 @@ import { Subscription } from 'rxjs';
   selector: 'page-clinic-edit',
   templateUrl: 'page-clinic-edit.component.html',
   styleUrls: ['./page-clinic-edit.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class PageClinicEditComponent implements AfterViewInit, OnDestroy {
 
   private _paramsDisposable: Subscription;
 
+  private _dirty: boolean;
+
   private clinic: Clinic;
 
-  constructor(private _route: ActivatedRoute, private _clinic: ClinicService) {
+  constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _clinic: ClinicService) {
   }
 
   ngAfterViewInit(): void {
@@ -34,6 +37,32 @@ export class PageClinicEditComponent implements AfterViewInit, OnDestroy {
         }
         catch (error) { console.log(error); }
     });
+  }
+
+  get dirty(): boolean {
+    return this._dirty;
+  }
+
+  private setDirty(): void {
+    this._dirty = true;
+  }
+
+  private onChange(): void {
+    this.setDirty();
+    this._detector.detectChanges();
+  }
+
+  private async on_apply_clicked(): Promise<void> {
+    if (!this.dirty)
+      return;
+
+    //TODO
+    //this.loading
+    await this._clinic.updateClinic(this.clinic);
+  }
+
+  private on_cancel_clicked(): void {
+    //TODO: navigate back
   }
 
   ngOnDestroy(): void {

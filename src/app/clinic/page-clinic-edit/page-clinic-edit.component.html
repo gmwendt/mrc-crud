@@ -1,52 +1,59 @@
 <div class="mrc-page-title">{{ clinic?.name }}</div>
-<mat-expansion-panel>
-  <mat-expansion-panel-header expandedHeight="32px" collapsedHeight="32px">
-    <mat-panel-title>Dados gerais</mat-panel-title>
-  </mat-expansion-panel-header>
+<div id="mrc-edit-page-content">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header expandedHeight="32px" collapsedHeight="32px">
+      <mat-panel-title>Dados gerais</mat-panel-title>
+    </mat-expansion-panel-header>
 
-  <div id="mrc-edit-page-item">
-    <label>Nome</label>
-    <input type="text" [value]="clinic?.name" (change)="clinic.name = nameBox.value" #nameBox />
-  </div>
-  <div id="mrc-edit-page-item">
-    <label>CNES</label>
-    <input type="text" [value]="clinic?.cnes" (change)="clinic.cnes = cnesBox.value" #cnesBox />
-  </div>
+    <div id="mrc-edit-page-item">
+      <label>Nome</label>
+      <input type="text" [value]="clinic?.name" (change)="clinic.name = nameBox.value; onChange()" #nameBox />
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>CNES</label>
+      <input type="text" [value]="clinic?.cnes" (change)="clinic.cnes = cnesBox.value; onChange()" #cnesBox />
+    </div>
 
-</mat-expansion-panel>
+  </mat-expansion-panel>
 
-<mat-expansion-panel>
-  <mat-expansion-panel-header expandedHeight="32px" collapsedHeight="32px">
-    <mat-panel-title>Endereço</mat-panel-title>
-  </mat-expansion-panel-header>
-  
-  <div id="mrc-edit-page-item">
-    <label>Nome</label>
-    <input type="text" />
-  </div>
-  <div id="mrc-edit-page-item">
-    <label>CNES</label>
-    <input type="text" />
-  </div>
-  
-</mat-expansion-panel>
-
-<mat-expansion-panel>
-  <mat-expansion-panel-header expandedHeight="32px" collapsedHeight="32px">
-    <mat-panel-title>Contato</mat-panel-title>
-  </mat-expansion-panel-header>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header expandedHeight="32px" collapsedHeight="32px">
+      <mat-panel-title>Endereço</mat-panel-title>
+    </mat-expansion-panel-header>
     
-  <div id="mrc-edit-page-item">
-    <label>E-mail</label>
-    <input type="text" [value]="clinic?.email" (change)="clinic.email = emailBox.value" #emailBox />
-  </div>
-  <div id="mrc-edit-page-item">
-    <label>Telefone 1</label>
-    <input type="text" [value]="clinic?.phone1" (change)="clinic.phone1 = phone1Box.value" #phone1Box />
-  </div>
-  <div id="mrc-edit-page-item">
-    <label>Telefone 2</label>
-    <input type="text" [value]="clinic?.phone2" (change)="clinic.phone2 = phone2Box.value" #phone2Box />
-  </div>
+    <div id="mrc-edit-page-item">
+      <label>Nome</label>
+      <input type="text" />
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>CNES</label>
+      <input type="text" />
+    </div>
     
-</mat-expansion-panel>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header expandedHeight="32px" collapsedHeight="32px">
+      <mat-panel-title>Contato</mat-panel-title>
+    </mat-expansion-panel-header>
+      
+    <div id="mrc-edit-page-item">
+      <label>E-mail</label>
+      <input type="text" [value]="clinic?.email" (change)="clinic.email = emailBox.value" #emailBox />
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>Telefone 1</label>
+      <input type="text" [value]="clinic?.phone1" (change)="clinic.phone1 = phone1Box.value" #phone1Box />
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>Telefone 2</label>
+      <input type="text" [value]="clinic?.phone2" (change)="clinic.phone2 = phone2Box.value" #phone2Box />
+    </div>
+      
+  </mat-expansion-panel>
+</div>
+<div class="mrc-dialog-separator"></div>
+<div>
+  <button mat-button (click)="on_cancel_clicked()">Cancelar</button>
+  <button mat-button [disabled]="!dirty" (click)="on_apply_clicked()">Aplicar</button>
+</div>
