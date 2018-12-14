@@ -1,23 +1,24 @@
 <div class="mrc-page-title">{{ clinic?.name }}</div>
+<div class="mrc-page-subtitle">Alterar dados da clínica</div>
 <div id="mrc-edit-page-content">
-  <mat-expansion-panel>
-    <mat-expansion-panel-header expandedHeight="32px" collapsedHeight="32px">
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
       <mat-panel-title>Dados gerais</mat-panel-title>
     </mat-expansion-panel-header>
 
     <div id="mrc-edit-page-item">
       <label>Nome</label>
-      <input type="text" [value]="clinic?.name" (change)="clinic.name = nameBox.value; onChange()" #nameBox />
+      <input type="text" [ngModel]="clinic?.name" (ngModelChange)="clinic.name = nameBox.value; markAsDirty()" #nameBox />
     </div>
     <div id="mrc-edit-page-item">
       <label>CNES</label>
-      <input type="text" [value]="clinic?.cnes" (change)="clinic.cnes = cnesBox.value; onChange()" #cnesBox />
+      <input type="text" [ngModel]="clinic?.cnes" (ngModelChange)="clinic.cnes = cnesBox.value; markAsDirty()" #cnesBox />
     </div>
 
   </mat-expansion-panel>
 
-  <mat-expansion-panel>
-    <mat-expansion-panel-header expandedHeight="32px" collapsedHeight="32px">
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
       <mat-panel-title>Endereço</mat-panel-title>
     </mat-expansion-panel-header>
     
@@ -29,25 +30,65 @@
       <label>CNES</label>
       <input type="text" />
     </div>
+    <div id="mrc-edit-page-item">
+      <label>CNES</label>
+      <input type="text" />
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>CNES</label>
+      <input type="text" />
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>CNES</label>
+      <input type="text" />
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>CNES</label>
+      <input type="text" />
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>CNES</label>
+      <input type="text" />
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>CNES</label>
+      <input type="text" />
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>CNES</label>
+      <input type="text" />
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>CNES</label>
+      <input type="text" />
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>CNES</label>
+      <input type="text" />
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>CNES</label>
+      <input type="text" />
+    </div>
     
   </mat-expansion-panel>
 
-  <mat-expansion-panel>
-    <mat-expansion-panel-header expandedHeight="32px" collapsedHeight="32px">
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
       <mat-panel-title>Contato</mat-panel-title>
     </mat-expansion-panel-header>
       
     <div id="mrc-edit-page-item">
       <label>E-mail</label>
-      <input type="text" [value]="clinic?.email" (change)="clinic.email = emailBox.value" #emailBox />
+      <input type="text" [ngModel]="clinic?.email" (ngModelChange)="clinic.email = emailBox.value" #emailBox />
     </div>
     <div id="mrc-edit-page-item">
       <label>Telefone 1</label>
-      <input type="text" [value]="clinic?.phone1" (change)="clinic.phone1 = phone1Box.value" #phone1Box />
+      <input type="text" [ngModel]="clinic?.phone1" (ngModelChange)="clinic.phone1 = phone1Box.value" #phone1Box />
     </div>
     <div id="mrc-edit-page-item">
       <label>Telefone 2</label>
-      <input type="text" [value]="clinic?.phone2" (change)="clinic.phone2 = phone2Box.value" #phone2Box />
+      <input type="text" [ngModel]="clinic?.phone2" (ngModelChange)="clinic.phone2 = phone2Box.value" #phone2Box />
     </div>
       
   </mat-expansion-panel>

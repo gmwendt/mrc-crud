@@ -1,5 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy, Component, OnDestroy, ViewEncapsulation, } from "@angular/core";
 
+import { Location } from '@angular/common';
+
 import { ActivatedRoute } from "@angular/router";
 
 import { ClinicService } from "../../core/clinic.service";
@@ -23,7 +25,8 @@ export class PageClinicEditComponent implements AfterViewInit, OnDestroy {
 
   private clinic: Clinic;
 
-  constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _clinic: ClinicService) {
+  constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, 
+    private _clinic: ClinicService, private _location: Location) {
   }
 
   ngAfterViewInit(): void {
@@ -35,7 +38,12 @@ export class PageClinicEditComponent implements AfterViewInit, OnDestroy {
         try {
           this.clinic = await this._clinic.getClinicById(id);
         }
-        catch (error) { console.log(error); }
+        catch (error) { 
+          console.log(error); 
+        }
+        finally {
+          this._detector.detectChanges();
+        }
     });
   }
 
@@ -43,13 +51,12 @@ export class PageClinicEditComponent implements AfterViewInit, OnDestroy {
     return this._dirty;
   }
 
-  private setDirty(): void {
-    this._dirty = true;
-  }
+  private markAsDirty(): void {
+    if (this._dirty)
+      return;
 
-  private onChange(): void {
-    this.setDirty();
-    this._detector.detectChanges();
+    this._dirty = true;
+    this._detector.markForCheck();
   }
 
   private async on_apply_clicked(): Promise<void> {
@@ -57,12 +64,14 @@ export class PageClinicEditComponent implements AfterViewInit, OnDestroy {
       return;
 
     //TODO
-    //this.loading
+    //this.loading = true;
     await this._clinic.updateClinic(this.clinic);
+    //this.loading = false;
+    this._location.back();
   }
 
   private on_cancel_clicked(): void {
-    //TODO: navigate back
+    this._location.back();
   }
 
   ngOnDestroy(): void {

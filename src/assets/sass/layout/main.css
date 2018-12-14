@@ -103,12 +103,26 @@
   margin: 22px 8px 8px 22px;
 }
 
+.mrc-global .mrc-page-subtitle {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 9pt;
+  margin: 0 0 8px 22px;
+  text-transform: uppercase;
+}
+
 .mrc-global .mrc-page-commands {
   color: rgba(0, 0, 0, 0.87);
-  cursor: pointer;
   font-size: 9pt;
-  margin-left: 22px;
+  margin: 22px 0 0 42px;
   text-transform: uppercase;
+}
+
+.mrc-global .mrc-page-commands > label {
+  padding: 4px;
+}
+
+.mrc-global .mrc-page-commands > label:hover {
+  cursor: pointer;
 }
 
 .mrc-global .mat-checkbox {
@@ -223,6 +237,10 @@
 
 .mrc-global .mat-expansion-panel {
   box-shadow: none;
+}
+
+.mrc-global .mat-expansion-panel-header {
+  font-size: 9pt;
 }
 
 html {

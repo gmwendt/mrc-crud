@@ -120,5 +120,9 @@
 
   .mat-expansion-panel {
     box-shadow: none;
+
+    &-header {
+      font-size: 9pt;
+    }
   }
 }

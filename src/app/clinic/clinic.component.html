@@ -1,5 +1,7 @@
 <div class="mrc-page-title">Clínicas</div>
-<div class="mrc-page-commands" (click)="editClinic()">Adicionar clínica</div>
+<div class="mrc-page-commands" (click)="editClinic()">
+  <label>Adicionar clínica</label>
+</div>
 <progress-spinner [progress]="loading">
   <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
 
