@@ -1,5 +1,7 @@
-<div class="mrc-page-title">{{ clinic?.name }}</div>
-<div class="mrc-page-subtitle">Alterar dados da clínica</div>
+<div>
+  <div class="mrc-page-title">{{ clinic?.name }}</div>
+  <div class="mrc-page-subtitle">Alterar dados da clínica</div>
+</div>
 <div id="mrc-edit-page-content">
   <mat-expansion-panel expanded="true">
     <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
@@ -23,52 +25,8 @@
     </mat-expansion-panel-header>
     
     <div id="mrc-edit-page-item">
-      <label>Nome</label>
-      <input type="text" />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>CNES</label>
-      <input type="text" />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>CNES</label>
-      <input type="text" />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>CNES</label>
-      <input type="text" />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>CNES</label>
-      <input type="text" />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>CNES</label>
-      <input type="text" />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>CNES</label>
-      <input type="text" />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>CNES</label>
-      <input type="text" />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>CNES</label>
-      <input type="text" />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>CNES</label>
-      <input type="text" />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>CNES</label>
-      <input type="text" />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>CNES</label>
-      <input type="text" />
+      <label>CEP</label>
+      <input type="text" [ngModel]="clinic?.cep" (ngModelChange)="clinic.cep = cepBox.value; markAsDirty()" #cepBox />
     </div>
     
   </mat-expansion-panel>
@@ -93,8 +51,10 @@
       
   </mat-expansion-panel>
 </div>
-<div class="mrc-dialog-separator"></div>
-<div>
-  <button mat-button (click)="on_cancel_clicked()">Cancelar</button>
-  <button mat-button [disabled]="!dirty" (click)="on_apply_clicked()">Aplicar</button>
+<div id="mrc-edit-page-footer">
+  <div class="mrc-dialog-separator"></div>
+  <div id="mrc-edit-page-footer-buttons">
+    <button mat-button (click)="on_cancel_clicked()">Cancelar</button>
+    <button mat-button [disabled]="!dirty" (click)="on_apply_clicked()">Aplicar</button>
+  </div>
 </div>

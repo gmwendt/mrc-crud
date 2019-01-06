@@ -5,7 +5,9 @@ page-clinic-edit {
 }
 
 page-clinic-edit #mrc-edit-page-content {
-  height: 100%;
+  flex: 1;
+  overflow: auto;
+  margin-top: 8px;
 }
 
 page-clinic-edit #mrc-edit-page-item {
@@ -18,4 +20,13 @@ page-clinic-edit #mrc-edit-page-item > label {
   margin-right: 8px;
   text-align: end;
   width: 65px;
+}
+
+page-clinic-edit #mrc-edit-page-footer-buttons {
+  margin-left: 22px;
+}
+
+page-clinic-edit #mrc-edit-page-footer-buttons > button {
+  margin: 0 8px 8px 0;
+  width: 85px;
 }

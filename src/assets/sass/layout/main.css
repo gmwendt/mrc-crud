@@ -118,11 +118,12 @@
 }
 
 .mrc-global .mrc-page-commands > label {
+  cursor: pointer;
   padding: 4px;
 }
 
 .mrc-global .mrc-page-commands > label:hover {
-  cursor: pointer;
+  background-color: #f6f6f6;
 }
 
 .mrc-global .mat-checkbox {
@@ -165,7 +166,7 @@
 
 .mrc-global .mat-table {
   box-shadow: none;
-  margin: 22px;
+  margin: 8px 22px 8px 22px;
 }
 
 .mrc-global .mat-table .mat-cell,
