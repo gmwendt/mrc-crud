@@ -26,7 +26,7 @@
     
     <div id="mrc-edit-page-item">
       <label>CEP</label>
-      <input type="text" [ngModel]="clinic?.cep" (ngModelChange)="clinic.cep = cepBox.value; markAsDirty()" #cepBox />
+      <zipcode-input [value]="clinic?.zipcode" (valueChange)="clinic.zipcode = $event; markAsDirty()"></zipcode-input>
     </div>
     
   </mat-expansion-panel>
@@ -54,7 +54,7 @@
 <div id="mrc-edit-page-footer">
   <div class="mrc-dialog-separator"></div>
   <div id="mrc-edit-page-footer-buttons">
-    <button mat-button (click)="on_cancel_clicked()">Cancelar</button>
     <button mat-button [disabled]="!dirty" (click)="on_apply_clicked()">Aplicar</button>
+    <button mat-button (click)="on_cancel_clicked()">Cancelar</button>
   </div>
 </div>

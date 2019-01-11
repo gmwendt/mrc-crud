@@ -75,8 +75,8 @@ input, textarea, select {
 	.mrc-dialog-separator {
 		background-color: #b0b0b0;
     height: 1px;
-    width: 100%;
-    margin: 8px 0 8px 0;
+    width: calc(100% - 16px);
+    margin: 8px 0 8px 8px;
 	}
 
 	.mrc-textbox-error {

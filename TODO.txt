@@ -15,6 +15,6 @@
 [X] cadastro clínica
 [X] navigation menu
 [X] page clinics
-[>] page new/edit clinics [next: ZIPCODE formatter]
+[>] page new/edit clinics [next: ZIPCODE webservice]
 [ ] global loading
 [ ] user enable/disable

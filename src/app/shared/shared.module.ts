@@ -11,6 +11,7 @@ import { DialogCapabilitiesChecklistComponent } from './dialog-capabilities-chec
 import { DialogSelector } from './dialog-selector/dialog-selector.component';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
 import { TimeInputComponent } from './time-input/time-input.component';
+import { ZipcodeInputComponent } from './zipcode-input/zipcode-input.component';
 
 import { MaterialModule } from '../material.module';
 
@@ -22,7 +23,7 @@ import { MaterialModule } from '../material.module';
     RouterModule,
   ],
   declarations: [ AddProfessionalComponent, CheckListComponent, DialogAddUserComponent, DialogAlertComponent, 
-    DialogCapabilitiesChecklistComponent, DialogSelector, ProgressSpinnerComponent, TimeInputComponent ],
+    DialogCapabilitiesChecklistComponent, DialogSelector, ProgressSpinnerComponent, TimeInputComponent, ZipcodeInputComponent ],
   exports: [ 
     AddProfessionalComponent,
     CheckListComponent, 
@@ -34,7 +35,8 @@ import { MaterialModule } from '../material.module';
     FormsModule,
     MaterialModule,
     ProgressSpinnerComponent, 
-    TimeInputComponent ],
+    TimeInputComponent,
+    ZipcodeInputComponent ],
   entryComponents: [DialogAddUserComponent, DialogAlertComponent, DialogCapabilitiesChecklistComponent, DialogSelector],
 })
 export class SharedModule { }
