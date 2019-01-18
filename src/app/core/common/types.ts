@@ -1,7 +1,39 @@
+export interface AddressInfoJSON {
+  zipcode: string;
+  address: string;
+  addressNum?: string;
+  addressComp: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+}
+
 export class Account {
   _id?: string;
   accountId: number;
   expireDate: Date;
+}
+
+export class AddressInfo {
+  constructor(public zipcode: string, public address: string, public addressComp: string, public neighborhood: string,
+  public city: string, public state: string, public addressNum?: string) {
+  }
+
+  toJSON(): string {
+    return JSON.stringify(Object.assign({}, this));
+  }
+
+  static fromJSON(json: AddressInfoJSON | string): AddressInfo {
+    if (typeof json === 'string')
+      return JSON.parse(json, AddressInfo.reviver);
+
+    var data = Object.create(AddressInfo.prototype);
+    return Object.assign(data, json);
+  }
+
+  private static reviver(key: string, value: any): any {
+    return key === "" ? AddressInfo.fromJSON(value) : value;
+  }
 }
 
 export class Clinic {
@@ -9,13 +41,7 @@ export class Clinic {
   public accountRefId: number;
   public name: string;
   public cnes: number;
-  public zipcode?: string;
-  public address?: string;
-  public addressNum?: string;
-  public addressComp?: string;
-  public neighborhood?: string;
-  public city?: string;
-  public state?: string;
+  public address: AddressInfo;
   public email?: string;
   public phone1?: string;
   public phone2?: string;

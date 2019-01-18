@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Clinic } from './common/types';
+import { AddressInfo, Clinic } from './common/types';
 
 @Injectable()
 export class ClinicService {
   constructor(private _http: HttpClient) { }
 
-  addClinic(data: Clinic) {
+  addClinic(data: Clinic): Promise<Clinic> {
     return new Promise((resolve, reject) => {
-      this._http.post('/clinic', data)
+      (<any>data).address = data.address.toJSON();
+      this._http.post<Clinic>('/clinic', data)
         .subscribe(res => {
+          res.address = res.address ? AddressInfo.fromJSON(res.address) : null;
           resolve(res);
         }, (err) => {
           reject(err);
@@ -22,6 +24,7 @@ export class ClinicService {
     return new Promise((resolve, reject) => {
       this._http.get<Clinic[]>('/clinic')
         .subscribe(res => {
+          res.map(res => res.address = res.address ? AddressInfo.fromJSON(res.address) : null);
           resolve(res);
         }, (err) => {
           reject(err);
@@ -33,6 +36,7 @@ export class ClinicService {
     return new Promise((resolve, reject) => {
       this._http.get<Clinic>('/clinic/' + id)
         .subscribe(res => {
+          res.address = res.address ? AddressInfo.fromJSON(res.address) : null;
           resolve(res);
         }, (err) => {
           reject(err);
@@ -44,6 +48,7 @@ export class ClinicService {
     return new Promise((resolve, reject) => {
       this._http.get<Clinic[]>('/clinic/accountRefId/' + accountId)
         .subscribe(res => {
+          res.map(res => res.address = res.address ? AddressInfo.fromJSON(res.address) : null);
           resolve(res);
         }, (err) => {
           reject(err);
@@ -62,10 +67,12 @@ export class ClinicService {
     });
   }
 
-  updateClinic(data: Clinic) {
+  updateClinic(data: Clinic): Promise<Clinic> {
     return new Promise((resolve, reject) => {
+      (<any>data).address = data.address.toJSON();
       this._http.put<Clinic>('/clinic/' + data._id, data)
         .subscribe(res => {
+          res.address = res.address ? AddressInfo.fromJSON(res.address) : null;
           resolve(res);
         }, (err) => {
           reject(err);

@@ -26,7 +26,7 @@
     
     <div id="mrc-edit-page-item">
       <label>CEP</label>
-      <zipcode-input [value]="clinic?.zipcode" (valueChange)="clinic.zipcode = $event; markAsDirty()"></zipcode-input>
+      <zipcode-input [value]="clinic?.address?.zipcode" (zipcodeUpdate)="on_zipcode_update($event)"></zipcode-input>
     </div>
     
   </mat-expansion-panel>

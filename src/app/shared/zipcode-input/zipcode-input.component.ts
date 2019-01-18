@@ -1,5 +1,8 @@
 import { Component, ViewChild, ViewEncapsulation, ElementRef, EventEmitter, Input, Output } from "@angular/core";
 
+import { AddressInfo } from "../../core/common/types";
+import { ZipcodeService } from "../../core/zipcode.service";
+
 @Component({
   selector: 'zipcode-input',
   templateUrl: './zipcode-input.component.html',
@@ -12,7 +15,14 @@ export class ZipcodeInputComponent {
   @Output()
   valueChange: EventEmitter<string> = new EventEmitter<string>();
 
+  @Output()
+  zipcodeUpdate: EventEmitter<AddressInfo> = new EventEmitter<AddressInfo>();
+
   private _value: string;
+
+  constructor(private _service: ZipcodeService) {
+
+  }
   
   private on_key_press(e: KeyboardEvent): void {
     if ((e.charCode < 48 || e.charCode > 58 ) && e.keyCode != 9 && e.keyCode != 8 && !e.ctrlKey) 
@@ -30,6 +40,10 @@ export class ZipcodeInputComponent {
     var test: string = this._box.nativeElement.value;
     if (!test.includes('-') && test.length == 8) {
       this._box.nativeElement.value = test.slice(0, 5) + '-' + test.slice(5, 8);
+      this._service.getAddressInfo(test).then(result => {
+        if (result)
+          this.zipcodeUpdate.emit(result);
+      }, err => console.log(err));
     }
   }
 
@@ -41,7 +55,7 @@ export class ZipcodeInputComponent {
   
   @Input()
   set value(value: string) {
-    if (!this._box || this._value == value)
+    if (value === undefined || !this._box || this._value == value)
       return;
 
     if (this._box.nativeElement.value != value && value.length == 8)

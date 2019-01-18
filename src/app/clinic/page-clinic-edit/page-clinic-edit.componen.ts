@@ -6,7 +6,7 @@ import { ActivatedRoute } from "@angular/router";
 
 import { ClinicService } from "../../core/clinic.service";
 
-import { Clinic } from "../../core/common/types";
+import { AddressInfo, Clinic } from "../../core/common/types";
 
 import { Subscription } from 'rxjs';
 
@@ -72,6 +72,11 @@ export class PageClinicEditComponent implements AfterViewInit, OnDestroy {
 
   private on_cancel_clicked(): void {
     this._location.back();
+  }
+
+  private on_zipcode_update(address: AddressInfo): void {
+    this.clinic.address = address;
+    this.markAsDirty();
   }
 
   ngOnDestroy(): void {
