@@ -19,7 +19,7 @@ page-clinic-edit #mrc-edit-page-item {
 page-clinic-edit #mrc-edit-page-item > label {
   margin-right: 8px;
   text-align: end;
-  width: 65px;
+  width: 90px;
 }
 
 page-clinic-edit #mrc-edit-page-footer-buttons {
@@ -29,4 +29,13 @@ page-clinic-edit #mrc-edit-page-footer-buttons {
 page-clinic-edit #mrc-edit-page-footer-buttons > button {
   margin: 0 8px 8px 0;
   width: 85px;
+}
+
+page-clinic-edit .mrc-edit-page-input-2 {
+  width: 250px;
+}
+
+page-clinic-edit .mrc-edit-page-input-1 {
+  margin-right: 8px;
+  width: 60px;
 }

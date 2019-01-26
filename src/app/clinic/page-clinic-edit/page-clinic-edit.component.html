@@ -28,6 +28,30 @@
       <label>CEP</label>
       <zipcode-input [value]="clinic?.address?.zipcode" (zipcodeUpdate)="on_zipcode_update($event)"></zipcode-input>
     </div>
+    <div id="mrc-edit-page-item">
+      <label>Logradouro</label>
+      <input type="text" class="mrc-edit-page-input-2" [ngModel]="clinic?.address?.address" [disabled]="true" />
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>Número</label>
+      <input class="mrc-edit-page-input-1" type="text" [ngModel]="clinic?.address?.addressNum" 
+        (ngModelChange)="clinic.address.addressNum = addressNumBox.value; markAsDirty()" #addressNumBox />
+      <label>Complemento</label>
+      <input type="text" [ngModel]="clinic?.address?.addressComp" 
+        (ngModelChange)="clinic.address.addressComp = addressCompBox.value; markAsDirty()" #addressCompBox/>
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>Bairro</label>
+      <input type="text" class="mrc-edit-page-input-2" [ngModel]="clinic?.address?.neighborhood" [disabled]="true" />
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>Cidade</label>
+      <input type="text" [ngModel]="clinic?.address?.city" [disabled]="true" />
+    </div>
+    <div id="mrc-edit-page-item">
+      <label>Estado</label>
+      <input type="text" [ngModel]="clinic?.address?.state" [disabled]="true" />
+    </div>
     
   </mat-expansion-panel>
 

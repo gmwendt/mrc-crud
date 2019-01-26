@@ -17,7 +17,7 @@ page-clinic-edit {
     > label {
       margin-right: 8px;
       text-align: end;
-      width: 65px;
+      width: 90px;
     }
   }
 
@@ -31,5 +31,14 @@ page-clinic-edit {
         width: 85px;
       }
     }
+  }
+
+  .mrc-edit-page-input-2 {
+    width: 250px;
+  }
+
+  .mrc-edit-page-input-1 {
+    margin-right: 8px;
+    width: 60px;
   }
 }

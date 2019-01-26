@@ -25,7 +25,7 @@ export class ZipcodeService {
           if (res.erro)
             resolve(null);
             
-          var address = new AddressInfo(zipcode, res.logradouro, res.complemento, res.bairro, res.localidade, res.uf);
+          var address = new AddressInfo(zipcode, res.logradouro, '', res.bairro, res.localidade, res.uf);
           resolve(address);
         }, err => reject(err));
     });
