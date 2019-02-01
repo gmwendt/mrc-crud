@@ -1,7 +1,7 @@
 page-clinic-edit {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: calc(100% - 30px);
 }
 
 page-clinic-edit #mrc-edit-page-content {
@@ -19,11 +19,17 @@ page-clinic-edit #mrc-edit-page-item {
 page-clinic-edit #mrc-edit-page-item > label {
   margin-right: 8px;
   text-align: end;
-  width: 90px;
+  width: 97px;
 }
 
 page-clinic-edit #mrc-edit-page-footer-buttons {
-  margin-left: 22px;
+  margin: 8px 0 0 22px;
+}
+
+page-clinic-edit #mrc-edit-page-footer .mrc-edit-page-error {
+  color: #ef1508;
+  font-size: 9pt;
+  margin: 0 0 4px 22px;
 }
 
 page-clinic-edit #mrc-edit-page-footer-buttons > button {

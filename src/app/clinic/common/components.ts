@@ -1,6 +1,6 @@
 import { ClinicComponent } from "../clinic.component";
 
-import { PageClinicEditComponent } from "../page-clinic-edit/page-clinic-edit.componen";
+import { PageClinicEditComponent } from "../page-clinic-edit/page-clinic-edit.component";
 
 export const COMMON_COMPONENTS: Array<any> = [
   ClinicComponent, PageClinicEditComponent,

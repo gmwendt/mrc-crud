@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewEncapsulation, ElementRef, EventEmitter, Input, Output } from "@angular/core";
+import { Component, ViewChild, ViewEncapsulation, ElementRef, EventEmitter, Input, Output, HostBinding } from "@angular/core";
 
 import { AddressInfo } from "../../core/common/types";
 import { ZipcodeService } from "../../core/zipcode.service";
@@ -12,6 +12,8 @@ export class ZipcodeInputComponent {
 
   @ViewChild('box') _box: ElementRef;
 
+  @Input() isRequired: boolean;
+
   @Output()
   valueChange: EventEmitter<string> = new EventEmitter<string>();
 
@@ -19,6 +21,8 @@ export class ZipcodeInputComponent {
   zipcodeUpdate: EventEmitter<AddressInfo> = new EventEmitter<AddressInfo>();
 
   private _value: string;
+  private _showErrors: boolean;
+  private _invalid: boolean;
 
   constructor(private _service: ZipcodeService) {
 
@@ -41,9 +45,14 @@ export class ZipcodeInputComponent {
     if (!test.includes('-') && test.length == 8) {
       this._box.nativeElement.value = test.slice(0, 5) + '-' + test.slice(5, 8);
       this._service.getAddressInfo(test).then(result => {
-        if (result)
-          this.zipcodeUpdate.emit(result);
+        this._invalid = result ? false : true;
+        this.zipcodeUpdate.emit(result);
+        this.updateBorderColor();
       }, err => console.log(err));
+    }
+    else {
+      this._invalid = true;
+      this.zipcodeUpdate.emit();
     }
   }
 
@@ -52,10 +61,15 @@ export class ZipcodeInputComponent {
     if (test.includes('-') && test.length == 9) 
     this._box.nativeElement.value = test.replace('-', '');
   }
+
+  private get isNullOrEmpty(): boolean {
+    var content = this._box.nativeElement.value;
+    return content == null || content.length < 1;
+  }
   
   @Input()
   set value(value: string) {
-    if (value === undefined || !this._box || this._value == value)
+    if (value === undefined || value === null || !this._box || this._value == value)
       return;
 
     if (this._box.nativeElement.value != value && value.length == 8)
@@ -64,4 +78,36 @@ export class ZipcodeInputComponent {
     this._value = value;
     this.valueChange.emit(value);
   }
+
+  get value(): string {
+    return this._value;
+  }
+
+  get showErrors(): boolean {
+    return this._showErrors;
+  }
+
+  set showErrors(value: boolean) {
+    if (value == this._showErrors)
+      return;
+
+    this._showErrors = value;
+    this.updateBorderColor();
+  }
+
+  updateBorderColor(): void {
+    this._box.nativeElement.style.borderColor = (this.showErrors && this.error) ? '#ef1508' : '#b0b0b0';
+  }
+
+  get error(): string {
+    if (this.isNullOrEmpty && this.isRequired)
+      return 'O campo CEP deve ser preenchido.';
+    else if (this._invalid) 
+      return 'CEP inválido.'
+    else 
+      return null;
+  }
+
+  @HostBinding('style.border-color')
+  private borderColor: string;
 }

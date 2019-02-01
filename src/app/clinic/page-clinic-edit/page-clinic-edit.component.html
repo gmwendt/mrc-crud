@@ -9,8 +9,8 @@
     </mat-expansion-panel-header>
 
     <div id="mrc-edit-page-item">
-      <label>Nome</label>
-      <input type="text" [ngModel]="clinic?.name" (ngModelChange)="clinic.name = nameBox.value; markAsDirty()" #nameBox />
+      <label>Nome da Clínica</label>
+      <input mrc-input-required="Nome da Clínica" type="text" [ngModel]="clinic?.name" (ngModelChange)="clinic.name = nameBox.value; markAsDirty()" #nameBox />
     </div>
     <div id="mrc-edit-page-item">
       <label>CNES</label>
@@ -26,7 +26,7 @@
     
     <div id="mrc-edit-page-item">
       <label>CEP</label>
-      <zipcode-input [value]="clinic?.address?.zipcode" (zipcodeUpdate)="on_zipcode_update($event)"></zipcode-input>
+      <zipcode-input [value]="clinic?.address?.zipcode" [isRequired]="true" (zipcodeUpdate)="on_zipcode_update($event)"></zipcode-input>
     </div>
     <div id="mrc-edit-page-item">
       <label>Logradouro</label>
@@ -34,7 +34,7 @@
     </div>
     <div id="mrc-edit-page-item">
       <label>Número</label>
-      <input class="mrc-edit-page-input-1" type="text" [ngModel]="clinic?.address?.addressNum" 
+      <input mrc-input-required="Número do logradouro" class="mrc-edit-page-input-1" type="text" [ngModel]="clinic?.address?.addressNum" 
         (ngModelChange)="clinic.address.addressNum = addressNumBox.value; markAsDirty()" #addressNumBox />
       <label>Complemento</label>
       <input type="text" [ngModel]="clinic?.address?.addressComp" 
@@ -62,21 +62,23 @@
       
     <div id="mrc-edit-page-item">
       <label>E-mail</label>
-      <input type="text" [ngModel]="clinic?.email" (ngModelChange)="clinic.email = emailBox.value" #emailBox />
+      <input mrc-input-required="E-mail" type="text" [ngModel]="clinic?.email" (ngModelChange)="clinic.email = emailBox.value" #emailBox />
     </div>
     <div id="mrc-edit-page-item">
       <label>Telefone 1</label>
-      <input type="text" [ngModel]="clinic?.phone1" (ngModelChange)="clinic.phone1 = phone1Box.value" #phone1Box />
+      <input mrc-phone-mask [value]="clinic?.phone1" [isRequired]="true" (valueChange)="clinic.phone1 = $event; markAsDirty()" />
     </div>
     <div id="mrc-edit-page-item">
       <label>Telefone 2</label>
-      <input type="text" [ngModel]="clinic?.phone2" (ngModelChange)="clinic.phone2 = phone2Box.value" #phone2Box />
+      <!-- <input type="text" [ngModel]="clinic?.phone2" (ngModelChange)="clinic.phone2 = phone2Box.value" #phone2Box /> -->
+      <input mrc-phone-mask [value]="clinic?.phone2" (valueChange)="clinic.phone2 = $event; markAsDirty()" />
     </div>
       
   </mat-expansion-panel>
 </div>
 <div id="mrc-edit-page-footer">
   <div class="mrc-dialog-separator"></div>
+  <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div>
   <div id="mrc-edit-page-footer-buttons">
     <button mat-button [disabled]="!dirty" (click)="on_apply_clicked()">Aplicar</button>
     <button mat-button (click)="on_cancel_clicked()">Cancelar</button>

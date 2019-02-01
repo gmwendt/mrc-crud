@@ -1,12 +1,15 @@
-import { AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy, Component, OnDestroy, ViewEncapsulation, } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy, Component, OnDestroy, QueryList, ViewChildren, ViewEncapsulation, ViewChild } from "@angular/core";
 
 import { Location } from '@angular/common';
 
 import { ActivatedRoute } from "@angular/router";
 
 import { ClinicService } from "../../core/clinic.service";
-
 import { AddressInfo, Clinic } from "../../core/common/types";
+
+import { MrcInputPhoneMaskDirective } from "../../shared/input-phone-mask.directive";
+import { MrcInputRequiredDirective } from "../../shared/input-required.directive";
+import { ZipcodeInputComponent } from "../../shared/zipcode-input/zipcode-input.component";
 
 import { Subscription } from 'rxjs';
 
@@ -20,10 +23,14 @@ import { Subscription } from 'rxjs';
 export class PageClinicEditComponent implements AfterViewInit, OnDestroy {
 
   private _paramsDisposable: Subscription;
-
   private _dirty: boolean;
 
   private clinic: Clinic;
+  private errorList: string[] = [];
+
+  @ViewChild(ZipcodeInputComponent) zipcodeInput: ZipcodeInputComponent;
+  @ViewChildren(MrcInputRequiredDirective) genericRequiredInputs: QueryList<MrcInputRequiredDirective>;
+  @ViewChildren(MrcInputPhoneMaskDirective) phoneInputs: QueryList<MrcInputPhoneMaskDirective>;
 
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, 
     private _clinic: ClinicService, private _location: Location) {
@@ -59,8 +66,48 @@ export class PageClinicEditComponent implements AfterViewInit, OnDestroy {
     this._detector.markForCheck();
   }
 
+  private checkErrors(): void {
+    this.errorList = [];
+
+    //check zipcode input
+    if (this.zipcodeInput.showErrors)
+      this.zipcodeInput.updateBorderColor();
+    else
+      this.zipcodeInput.showErrors = true;
+
+    if (this.zipcodeInput.error)
+      this.errorList.push(this.zipcodeInput.error);
+      
+    //check generic inputs
+    this.genericRequiredInputs.forEach(input => {
+      if (input.showErrors)
+        input.updateBorderColor();
+      else
+        input.showErrors = true;
+
+      if (input.isNullOrEmpty)
+        this.errorList.push(input.emptyError);
+    });
+
+    //check phone1 errors
+    this.phoneInputs.forEach(input => {
+      if (input.showErrors)
+        input.updateBorderColor();
+      else
+        input.showErrors = true;
+
+      if (input.error)
+        this.errorList.push(input.error);
+    })
+  }
+
   private async on_apply_clicked(): Promise<void> {
     if (!this.dirty)
+      return;
+
+    this.checkErrors();
+
+    if (this.errorList.length > 0)
       return;
 
     //TODO

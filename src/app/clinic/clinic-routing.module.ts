@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ClinicComponent } from './clinic.component';
 
-import { PageClinicEditComponent } from './page-clinic-edit/page-clinic-edit.componen';
+import { PageClinicEditComponent } from './page-clinic-edit/page-clinic-edit.component';
 
 const routes: Routes = [
   { path: '', component: ClinicComponent,  },

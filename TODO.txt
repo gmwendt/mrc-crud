@@ -15,6 +15,6 @@
 [X] cadastro clínica
 [X] navigation menu
 [X] page clinics
-[>] page new/edit clinics
+[>] page new/edit clinics [TODO: email validator, add new clinic]
 [ ] global loading
 [ ] user enable/disable

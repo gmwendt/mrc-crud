@@ -1,7 +1,7 @@
 page-clinic-edit {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: calc(100% - 30px);
 
   #mrc-edit-page-content {
     flex: 1;
@@ -17,14 +17,20 @@ page-clinic-edit {
     > label {
       margin-right: 8px;
       text-align: end;
-      width: 90px;
+      width: 97px;
     }
   }
 
   #mrc-edit-page-footer {
 
+    .mrc-edit-page-error {
+      color: #ef1508;
+      font-size: 9pt;
+      margin: 0 0 4px 22px;
+    }
+
     &-buttons {
-      margin-left: 22px;
+      margin: 8px 0 0 22px;
       
       > button {
         margin: 0 8px 8px 0;
