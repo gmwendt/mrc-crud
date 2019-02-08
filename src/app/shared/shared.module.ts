@@ -9,6 +9,7 @@ import { DialogAddUserComponent } from './dialog-add-user/dialog-add-user.compon
 import { DialogAlertComponent } from './dialog-alert/dialog-alert.component';
 import { DialogCapabilitiesChecklistComponent } from './dialog-capabilities-checklist/dialog-capabilities-checklist.component';
 import { DialogSelector } from './dialog-selector/dialog-selector.component';
+import { MrcInputEmailValidatorDirective } from './input-email-validator.directive';
 import { MrcInputPhoneMaskDirective } from './input-phone-mask.directive';
 import { MrcInputRequiredDirective } from './input-required.directive';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
@@ -25,7 +26,7 @@ import { MaterialModule } from '../material.module';
     RouterModule,
   ],
   declarations: [ AddProfessionalComponent, CheckListComponent, DialogAddUserComponent, DialogAlertComponent, 
-    DialogCapabilitiesChecklistComponent, DialogSelector, MrcInputPhoneMaskDirective, MrcInputRequiredDirective, ProgressSpinnerComponent, 
+    DialogCapabilitiesChecklistComponent, DialogSelector, MrcInputEmailValidatorDirective, MrcInputPhoneMaskDirective, MrcInputRequiredDirective, ProgressSpinnerComponent, 
     TimeInputComponent, ZipcodeInputComponent ],
   exports: [ 
     AddProfessionalComponent,
@@ -37,6 +38,7 @@ import { MaterialModule } from '../material.module';
     DialogSelector, 
     FormsModule,
     MaterialModule,
+    MrcInputEmailValidatorDirective,
     MrcInputPhoneMaskDirective,
     MrcInputRequiredDirective,
     ProgressSpinnerComponent, 

@@ -45,6 +45,15 @@ export class Clinic {
   public email?: string;
   public phone1?: string;
   public phone2?: string;
+
+  constructor(accountRefId: number) {
+    this.accountRefId = accountRefId;
+    this.name = '';
+    this.cnes = null;
+    this.address = new AddressInfo('', '', '', '', '', '');
+    this.phone1 = '';
+    this.phone2 = '';
+  }
 }
 
 export class Capabilities {

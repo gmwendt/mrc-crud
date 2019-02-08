@@ -47,7 +47,6 @@ export class ClinicComponent implements OnInit {
   }
 
   private async delete_clinic_clicked(clinic: Clinic): Promise<void> {
-    //TODO: Testar se está removendo do server
     var dialogData: DialogAlertData = {
 			text: 'Deseja remover ' + clinic.name + '?',
 			button: DialogAlertButton.YesNo,
@@ -61,32 +60,46 @@ export class ClinicComponent implements OnInit {
     this.loading = true;
     var index = this.clinics.indexOf(clinic);
 
-    var deleteResponse = await this._clinic.deleteClinic(clinic._id);
-    if (!deleteResponse["ok"]) {
-      this.on_error(deleteResponse["statusText"]);
-			return;
-    }
+    try {
+      await this._clinic.deleteClinic(clinic._id);
 
-    this.clinics.splice(index, 1);
-    this.dataSource.data = this.clinics;
-    this.loading = false;
+      this.clinics.splice(index, 1);
+      this.dataSource.data = this.clinics;
+    }
+    catch (error) {
+      this.on_error(error["statusText"]);
+    }
+    finally {
+      this.loading = false;
+    }
   }
 
   private createTable(): void {
 		this.dataSource = new MatTableDataSource(this.clinics);
   }
 
-  private editClinic(clinic?: Clinic): void {
+  private async editClinic(clinic?: Clinic): Promise<void> {
     if (!clinic) {
-      //TODO: Create Clinic;
-      return; //TODO: Remover
+      try {
+        var newClinic = await this._clinic.addClinic(new Clinic(this._userService.currentUser.accountRefId));
+        if (!newClinic)
+          return;
+
+        this.clinics.push(newClinic);
+        this.dataSource.data = this.clinics;
+
+        this.navigate(newClinic, { NewClinic: true });
+      }
+      catch (error) {
+        this.on_error(error["statusText"]);
+      }
     }
-    
-    this.navigate(clinic);
+    else
+      this.navigate(clinic);
   }
   
-  private navigate(clinic: Clinic): void {
-    this._router.navigate(['edit', clinic._id], { relativeTo: this._route });
+  private navigate(clinic: Clinic, queryParams?: Object): void {
+    this._router.navigate(['edit', clinic._id], { relativeTo: this._route, queryParams: queryParams });
   }
 
   private show_error_dialog(msg: string): void {

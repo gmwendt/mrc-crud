@@ -25,26 +25,56 @@ export class ZipcodeInputComponent {
   private _invalid: boolean;
 
   constructor(private _service: ZipcodeService) {
+  }
 
+  private formatValue(value: string): string {
+    var output = '';
+    this._invalid = false;
+
+    if (value.length < 8)
+      this._invalid = true;
+
+    for (var i = 0; i < value.length; i++) {
+      if (i == 5)
+        output += '-';
+
+      output += value[i];      
+    }
+
+    return output;
   }
   
   private on_key_press(e: KeyboardEvent): void {
-    if ((e.charCode < 48 || e.charCode > 58 ) && e.keyCode != 9 && e.keyCode != 8 && !e.ctrlKey) 
+    if ((e.charCode < 48 || e.charCode > 58 ) && e.keyCode != 9 && e.keyCode != 8 && !e.ctrlKey) {
       e.preventDefault();
+      return;
+    }
 
-    if (this._box.nativeElement.value.length >= 8)
+    if (this.value.length >= 8)
       e.preventDefault();
   }
   
   private on_key_up(e: KeyboardEvent): void {
-      this.value = this._box.nativeElement.value;
+    var value: string = this._box.nativeElement.value;
+   
+    var zipcode = this.formatValue(this.cleanContent);
+    this._box.nativeElement.value = zipcode;
+
+    this.valueChange.emit(this.cleanContent);
+
+    if (this.cleanContent.length == 8)
+      this.updateZipcode();
+
+    this.updateBorderColor();
   }
 
   private on_blur(): void {
-    var test: string = this._box.nativeElement.value;
-    if (!test.includes('-') && test.length == 8) {
-      this._box.nativeElement.value = test.slice(0, 5) + '-' + test.slice(5, 8);
-      this._service.getAddressInfo(test).then(result => {
+    this.updateZipcode();
+  }
+
+  private updateZipcode(): void {
+    if (this.cleanContent.length == 8) {
+      this._service.getAddressInfo(this.value).then(result => {
         this._invalid = result ? false : true;
         this.zipcodeUpdate.emit(result);
         this.updateBorderColor();
@@ -52,31 +82,29 @@ export class ZipcodeInputComponent {
     }
     else {
       this._invalid = true;
-      this.zipcodeUpdate.emit();
+      this.zipcodeUpdate.emit(new AddressInfo(this.cleanContent, '', '', '', '', '', ''));
     }
-  }
-
-  private on_focus(): void {
-    var test: string = this._box.nativeElement.value;
-    if (test.includes('-') && test.length == 9) 
-    this._box.nativeElement.value = test.replace('-', '');
   }
 
   private get isNullOrEmpty(): boolean {
     var content = this._box.nativeElement.value;
     return content == null || content.length < 1;
   }
+
+  private get cleanContent(): string {
+    var value: string = this._box.nativeElement.value;
+    return value.replace('-', '');
+  }
   
   @Input()
   set value(value: string) {
     if (value === undefined || value === null || !this._box || this._value == value)
       return;
-
-    if (this._box.nativeElement.value != value && value.length == 8)
-      this._box.nativeElement.value = value.slice(0, 5) + '-' + value.slice(5, 8);
-
+      
     this._value = value;
-    this.valueChange.emit(value);
+   
+    var zipcode = this.formatValue(value);
+    this._box.nativeElement.value = zipcode;
   }
 
   get value(): string {

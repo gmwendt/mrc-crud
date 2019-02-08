@@ -26,6 +26,11 @@ const mrcRoutes: Routes = [
     loadChildren: 'app/clinic/clinic.module#ClinicModule'
   },
   {
+    path: 'usuarios',
+    canActivate: [AuthGuardService],
+    loadChildren: 'app/users/users.module#UsersModule'
+  },
+  {
     path: 'reset-pass/:accNum/:userName64/:token',
     component: PageResetPasswordComponent
   },

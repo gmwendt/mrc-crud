@@ -1,80 +1,85 @@
 <div>
   <div class="mrc-page-title">{{ clinic?.name }}</div>
-  <div class="mrc-page-subtitle">Alterar dados da clínica</div>
+  <div class="mrc-page-subtitle" *ngIf="isNew; else elseBlock">Dados da clínica</div>
+  <ng-template #elseBlock>
+    <div class="mrc-page-subtitle">Alterar dados da clínica</div>
+  </ng-template>
 </div>
 <div id="mrc-edit-page-content">
-  <mat-expansion-panel expanded="true">
-    <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
-      <mat-panel-title>Dados gerais</mat-panel-title>
-    </mat-expansion-panel-header>
+  <progress-spinner [progress]="loading">
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+        <mat-panel-title>Dados gerais</mat-panel-title>
+      </mat-expansion-panel-header>
 
-    <div id="mrc-edit-page-item">
-      <label>Nome da Clínica</label>
-      <input mrc-input-required="Nome da Clínica" type="text" [ngModel]="clinic?.name" (ngModelChange)="clinic.name = nameBox.value; markAsDirty()" #nameBox />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>CNES</label>
-      <input type="text" [ngModel]="clinic?.cnes" (ngModelChange)="clinic.cnes = cnesBox.value; markAsDirty()" #cnesBox />
-    </div>
+      <div id="mrc-edit-page-item">
+        <label>Nome da Clínica</label>
+        <input mrc-input-required="Nome da Clínica" type="text" [ngModel]="clinic?.name" (ngModelChange)="clinic.name = nameBox.value; markAsDirty()" #nameBox />
+      </div>
+      <div id="mrc-edit-page-item">
+        <label>CNES</label>
+        <input type="text" [ngModel]="clinic?.cnes" (ngModelChange)="clinic.cnes = cnesBox.value; markAsDirty()" #cnesBox />
+      </div>
 
-  </mat-expansion-panel>
+    </mat-expansion-panel>
 
-  <mat-expansion-panel expanded="true">
-    <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
-      <mat-panel-title>Endereço</mat-panel-title>
-    </mat-expansion-panel-header>
-    
-    <div id="mrc-edit-page-item">
-      <label>CEP</label>
-      <zipcode-input [value]="clinic?.address?.zipcode" [isRequired]="true" (zipcodeUpdate)="on_zipcode_update($event)"></zipcode-input>
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>Logradouro</label>
-      <input type="text" class="mrc-edit-page-input-2" [ngModel]="clinic?.address?.address" [disabled]="true" />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>Número</label>
-      <input mrc-input-required="Número do logradouro" class="mrc-edit-page-input-1" type="text" [ngModel]="clinic?.address?.addressNum" 
-        (ngModelChange)="clinic.address.addressNum = addressNumBox.value; markAsDirty()" #addressNumBox />
-      <label>Complemento</label>
-      <input type="text" [ngModel]="clinic?.address?.addressComp" 
-        (ngModelChange)="clinic.address.addressComp = addressCompBox.value; markAsDirty()" #addressCompBox/>
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>Bairro</label>
-      <input type="text" class="mrc-edit-page-input-2" [ngModel]="clinic?.address?.neighborhood" [disabled]="true" />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>Cidade</label>
-      <input type="text" [ngModel]="clinic?.address?.city" [disabled]="true" />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>Estado</label>
-      <input type="text" [ngModel]="clinic?.address?.state" [disabled]="true" />
-    </div>
-    
-  </mat-expansion-panel>
-
-  <mat-expansion-panel expanded="true">
-    <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
-      <mat-panel-title>Contato</mat-panel-title>
-    </mat-expansion-panel-header>
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+        <mat-panel-title>Endereço</mat-panel-title>
+      </mat-expansion-panel-header>
       
-    <div id="mrc-edit-page-item">
-      <label>E-mail</label>
-      <input mrc-input-required="E-mail" type="text" [ngModel]="clinic?.email" (ngModelChange)="clinic.email = emailBox.value" #emailBox />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>Telefone 1</label>
-      <input mrc-phone-mask [value]="clinic?.phone1" [isRequired]="true" (valueChange)="clinic.phone1 = $event; markAsDirty()" />
-    </div>
-    <div id="mrc-edit-page-item">
-      <label>Telefone 2</label>
-      <!-- <input type="text" [ngModel]="clinic?.phone2" (ngModelChange)="clinic.phone2 = phone2Box.value" #phone2Box /> -->
-      <input mrc-phone-mask [value]="clinic?.phone2" (valueChange)="clinic.phone2 = $event; markAsDirty()" />
-    </div>
+      <div id="mrc-edit-page-item">
+        <label>CEP</label>
+        <zipcode-input [value]="clinic?.address?.zipcode" [isRequired]="true" 
+                      (valueChange)="clinic.address.zipcode = $event; markAsDirty()" 
+                      (zipcodeUpdate)="on_zipcode_update($event)"></zipcode-input>
+      </div>
+      <div id="mrc-edit-page-item">
+        <label>Logradouro</label>
+        <input type="text" class="mrc-edit-page-input-2" [ngModel]="clinic?.address?.address" [disabled]="true" />
+      </div>
+      <div id="mrc-edit-page-item">
+        <label>Número</label>
+        <input mrc-input-required="Número do logradouro" class="mrc-edit-page-input-1" type="text" [ngModel]="clinic?.address?.addressNum" 
+          (ngModelChange)="clinic.address.addressNum = addressNumBox.value; markAsDirty()" #addressNumBox />
+        <label>Complemento</label>
+        <input type="text" [ngModel]="clinic?.address?.addressComp" 
+          (ngModelChange)="clinic.address.addressComp = addressCompBox.value; markAsDirty()" #addressCompBox/>
+      </div>
+      <div id="mrc-edit-page-item">
+        <label>Bairro</label>
+        <input type="text" class="mrc-edit-page-input-2" [ngModel]="clinic?.address?.neighborhood" [disabled]="true" />
+      </div>
+      <div id="mrc-edit-page-item">
+        <label>Cidade</label>
+        <input type="text" [ngModel]="clinic?.address?.city" [disabled]="true" />
+      </div>
+      <div id="mrc-edit-page-item">
+        <label>Estado</label>
+        <input type="text" [ngModel]="clinic?.address?.state" [disabled]="true" />
+      </div>
       
-  </mat-expansion-panel>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+        <mat-panel-title>Contato</mat-panel-title>
+      </mat-expansion-panel-header>
+        
+      <div id="mrc-edit-page-item">
+        <label>E-mail</label>
+        <input mrc-email-validator [isRequired]="true" [ngModel]="clinic?.email" (ngModelChange)="clinic.email = emailBox.value; markAsDirty()" #emailBox />
+      </div>
+      <div id="mrc-edit-page-item">
+        <label>Telefone 1</label>
+        <input mrc-phone-mask [value]="clinic?.phone1" [isRequired]="true" (valueChange)="clinic.phone1 = $event; markAsDirty()" />
+      </div>
+      <div id="mrc-edit-page-item">
+        <label>Telefone 2</label>
+        <input mrc-phone-mask [value]="clinic?.phone2" (valueChange)="clinic.phone2 = $event; markAsDirty()" />
+      </div>
+    </mat-expansion-panel>
+  </progress-spinner>
 </div>
 <div id="mrc-edit-page-footer">
   <div class="mrc-dialog-separator"></div>
