@@ -26,6 +26,11 @@ const mrcRoutes: Routes = [
     loadChildren: 'app/clinic/clinic.module#ClinicModule'
   },
   {
+    path: 'pacientes',
+    canActivate: [AuthGuardService],
+    loadChildren: 'app/pacient/pacient.module#PacientModule'
+  },
+  {
     path: 'usuarios',
     canActivate: [AuthGuardService],
     loadChildren: 'app/users/users.module#UsersModule'

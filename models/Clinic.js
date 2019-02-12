@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var User = require('./User');
 
 var ClinicSchema = new mongoose.Schema({
   accountRefId: Number,

@@ -56,6 +56,21 @@ export class Clinic {
   }
 }
 
+export class Pacient {
+  public _id?: string;
+  public accountRefId: number;
+  public name: string;
+  public address: AddressInfo;
+  public email: string;
+  public phone: string;
+  public cellphone: string;
+  public gender: string;
+  public cpf: string;
+  public maritalState: string;
+  public birthDate: string;
+  public ocupation: string;
+}
+
 export class Capabilities {
   constructor(public scheduleAndRegisterPatient?: boolean | undefined, public accessGlobalFinances?: boolean | undefined, 
     public fullAccessAdministrativeTools?: boolean | undefined, public registerUsers?: boolean | undefined,
