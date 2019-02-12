@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var PacientSchema = new mongoose.Schema({
+var PatientSchema = new mongoose.Schema({
   accountRefId: Number,
   name: String,
   address: String,
@@ -14,4 +14,4 @@ var PacientSchema = new mongoose.Schema({
   ocupation: String
 });
 
-module.exports = mongoose.model('Clinic', ClinicSchema);
+module.exports = mongoose.model('Patient', PatientSchema);

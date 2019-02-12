@@ -16,6 +16,6 @@
 [X] navigation menu
 [X] page clinics
 [X] page new/edit clinics
-[>] page pacients
+[>] page patients
 [ ] global loading
 [ ] user enable/disable

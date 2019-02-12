@@ -29,7 +29,7 @@ export class PageClinicEditComponent implements AfterViewInit, OnDestroy {
   private _queryParamsDisposable: Subscription;
   private _dirty: boolean;
   
-  private isNew: boolean
+  private isNew: boolean;
   private clinic: Clinic;
   private errorList: string[] = [];
   private loading = true;
@@ -63,7 +63,7 @@ export class PageClinicEditComponent implements AfterViewInit, OnDestroy {
 
     this._queryParamsDisposable = this._route.queryParams.subscribe(params => {
       this.isNew = params['NewClinic'] ? true : false;
-    })
+    });
   }
 
   get dirty(): boolean {

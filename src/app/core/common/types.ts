@@ -56,7 +56,7 @@ export class Clinic {
   }
 }
 
-export class Pacient {
+export class Patient {
   public _id?: string;
   public accountRefId: number;
   public name: string;
@@ -66,9 +66,21 @@ export class Pacient {
   public cellphone: string;
   public gender: string;
   public cpf: string;
-  public maritalState: string;
   public birthDate: string;
-  public ocupation: string;
+  public maritalState?: string;
+  public ocupation?: string;
+
+  constructor(accountRefId: number) {
+    this.accountRefId = accountRefId;
+    this.name = '';
+    this.address = new AddressInfo('', '', '', '', '', '');
+    this.email = '';
+    this.phone = '';
+    this.cellphone = '';
+    this.gender = '';
+    this.cpf = '';
+    this.birthDate = '';
+  }
 }
 
 export class Capabilities {

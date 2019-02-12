@@ -1,51 +1,51 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Pacient = require('../models/Pacient.js');
+var Patient = require('../models/Patient.js');
 
-/* GET ALL PACIENTS */
+/* GET ALL PATIENTS */
 router.get('/', function(req, res, next) {
-  Pacient.find(function (err, products) {
+  Patient.find(function (err, products) {
     if (err) return next(err);
     res.json(products);
   });
 });
 
-/* GET SINGLE PACIENT BY ID */
+/* GET SINGLE PATIENT BY ID */
 router.get('/:id', function(req, res, next) {
-  Pacient.findById(req.params.id, function (err, post) {
+  Patient.findById(req.params.id, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
 });
 
-/*GET PACIENTS LIST BY ACCOUNT ID*/
+/*GET PATIENTS LIST BY ACCOUNT ID*/
 router.get('/accountRefId/:accountId', function(req, res, next) {
   var accountId = req.param("accountId");
-  Pacient.find({"accountRefId": accountId}, function(e,docs) {
+  Patient.find({"accountRefId": accountId}, function(e,docs) {
     res.json(docs);
   });
 });
 
-/* SAVE PACIENT */
+/* SAVE PATIENT */
 router.post('/', function(req, res, next) {
-  Pacient.create(req.body, function (err, post) {
+  Patient.create(req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
 });
 
-/* UPDATE PACIENT */
+/* UPDATE PATIENT */
 router.put('/:id', function(req, res, next) {
-  Pacient.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
+  Patient.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
 });
 
-/* DELETE PACIENT */
+/* DELETE PATIENT */
 router.delete('/:id', function(req, res, next) {
-  Pacient.findByIdAndRemove(req.params.id, req.body, function (err, post) {
+  Patient.findByIdAndRemove(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
