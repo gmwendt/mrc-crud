@@ -36,6 +36,11 @@ export class AddressInfo {
   }
 }
 
+export class Anamseses {
+  constructor(public clinicCase: string, public date: string) {
+  }
+}
+
 export class Clinic {
   public _id?: string;
   public accountRefId: number;

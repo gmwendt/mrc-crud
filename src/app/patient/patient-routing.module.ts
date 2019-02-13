@@ -3,11 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PatientComponent } from './patient.component';
 
-import { PagePatientEditComponent } from './page-patient-edit/page-patient-edit.component';
+import { PagePatientConsultComponent } from './page-patient-consult/page-patient-consult.component';
 
 const routes: Routes = [
   { path: '', component: PatientComponent,  },
-  { path: 'edit/:id', component: PagePatientEditComponent }
+  { path: 'consulta/:id', component: PagePatientConsultComponent }
 ];
 
 @NgModule({

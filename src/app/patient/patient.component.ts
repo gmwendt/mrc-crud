@@ -13,7 +13,7 @@ import { DialogService } from "../shared/dialog.service";
 @Component({
   selector: 'mrc-patients',
   templateUrl: './patient.component.html',
-  //styleUrls: ['./patient.component.css'],
+  styleUrls: ['./patient.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class PatientComponent implements OnInit {
@@ -100,7 +100,7 @@ export class PatientComponent implements OnInit {
   }
 
   private navigate(patient: Patient, queryParams?: Object): void {
-    this._router.navigate(['edit', patient._id], { relativeTo: this._route, queryParams: queryParams });
+    this._router.navigate(['consulta', patient._id], { relativeTo: this._route, queryParams: queryParams });
   }
 
   private show_error_dialog(msg: string): void {

@@ -22,14 +22,14 @@ page-clinic-edit #mrc-edit-page-item > label {
   width: 97px;
 }
 
-page-clinic-edit #mrc-edit-page-footer-buttons {
-  margin: 8px 0 0 22px;
-}
-
 page-clinic-edit #mrc-edit-page-footer .mrc-edit-page-error {
   color: #ef1508;
   font-size: 9pt;
   margin: 0 0 4px 22px;
+}
+
+page-clinic-edit #mrc-edit-page-footer-buttons {
+  margin: 8px 0 0 22px;
 }
 
 page-clinic-edit #mrc-edit-page-footer-buttons > button {

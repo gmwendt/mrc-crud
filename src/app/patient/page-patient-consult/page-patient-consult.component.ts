@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ChangeDetectorRef, OnDestroy } from "@angular/core";
+import { AfterViewInit, Component, ChangeDetectorRef, OnDestroy, ViewEncapsulation } from "@angular/core";
 import { Location } from '@angular/common';
 import { ActivatedRoute } from "@angular/router";
 
@@ -11,17 +11,16 @@ import { DialogService } from "../../shared/dialog.service";
 import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'page-patient-edit',
-  templateUrl: './page-patient-edit.component.html',
-  // styleUrls: ['./page-patient-edit.component.css']
+  selector: 'page-patient-consult',
+  templateUrl: './page-patient-consult.component.html',
+  styleUrls: ['./page-patient-consult.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
-export class PagePatientEditComponent implements AfterViewInit, OnDestroy {
+export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 
   private _paramsDisposable: Subscription;
-  private _queryParamsDisposable: Subscription;
   private _dirty: boolean;
 
-  private isNew: boolean;
   private patient: Patient;
   private loading = true;
   
@@ -45,10 +44,6 @@ export class PagePatientEditComponent implements AfterViewInit, OnDestroy {
         this.loading = false;
         this._detector.detectChanges();
       }
-    });
-
-    this._queryParamsDisposable = this._route.queryParams.subscribe(params => {
-      this.isNew = params['NewPatient'] ? true : false;
     });
   }
 
@@ -76,17 +71,7 @@ export class PagePatientEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private async on_cancel_clicked(): Promise<void> {
-    if (this.isNew) {
-      try {
-        await this._patient.deletePatient(this.patient._id);
-        this._location.back();
-      }
-      catch (error) {
-        this.on_error(error["statusText"]);
-      }
-    }
-    else  
-      this._location.back();
+    //TODO
   }
 
   private show_error_dialog(msg: string): void {
@@ -106,10 +91,6 @@ export class PagePatientEditComponent implements AfterViewInit, OnDestroy {
     if (this._paramsDisposable != null) {
       this._paramsDisposable.unsubscribe();
       this._paramsDisposable = null;
-    }
-    if (this._queryParamsDisposable != null) {
-      this._queryParamsDisposable.unsubscribe();
-      this._queryParamsDisposable = null;
     }
   }
 }

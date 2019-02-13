@@ -1,0 +1,19 @@
+page-patient-consult {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 30px);
+}
+
+page-patient-consult .mrc-page-subtitle {
+  display: flex;
+}
+
+page-patient-consult .mrc-page-subtitle > div {
+  margin-right: 16px;
+}
+
+page-patient-consult #page-patient-consult-content {
+  flex: 1;
+  overflow: auto;
+  margin-top: 8px;
+}

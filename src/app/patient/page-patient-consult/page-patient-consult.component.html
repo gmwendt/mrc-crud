@@ -1,0 +1,23 @@
+<div>
+  <div class="mrc-page-title">{{ patient?.name }}</div>
+  <div class="mrc-page-subtitle">
+    <div>99 anos</div>
+    <div>0,00 m</div>
+    <div>0,00 kg</div>
+  </div>
+</div>
+<div id="page-patient-consult-content">
+  <progress-spinner [progress]="loading">
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+        <mat-panel-title>
+          <label>Anamneses</label>
+          <div>[0]</div>
+          <button>Adicionar</button>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+
+    </mat-expansion-panel>
+  </progress-spinner>
+</div>
