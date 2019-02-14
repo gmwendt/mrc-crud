@@ -36,8 +36,82 @@ export class AddressInfo {
   }
 }
 
-export class Anamseses {
-  constructor(public clinicCase: string, public date: string) {
+export class Anamneses {
+  constructor(public clinicCase: string, public date: string, public objective?: string, public lifeHabits?: LifeHabits, public pathologies?: Pathologies, 
+    public clinicalEvaluation?: ClinicalEvaluation) {
+  }
+
+  //TODO
+}
+
+export class LifeHabits {
+  constructor(public mealsOutsideTheHouse?: boolean, public whichMeals?: string,
+    public alcohol?: boolean, public alcoholFrequency?: string, public alcoholWhichAndHowMuch?: string, public smoke?: boolean, public smokeFrequency?: string, public smokeWhichAndHowMuch?: string,
+    public sleep?: string, public sleepTime?: string, public physicalExercises?: string, public liveWithHowManyPeople?: string, public hoDoesTheHousePurchases?: string,
+    public observations?: string) {}
+
+  toJSON(): string {
+    return JSON.stringify(Object.assign({}, this));
+  }
+  
+  static fromJSON(json: LifeHabits | string): LifeHabits {
+    if (typeof json === 'string')
+      return JSON.parse(json, LifeHabits.reviver);
+  
+    var data = Object.create(LifeHabits.prototype);
+    return Object.assign(data, json);
+  }
+  
+  private static reviver(key: string, value: any): any {
+    return key === "" ? LifeHabits.fromJSON(value) : value;
+  }
+}
+
+export class Pathologies {
+  constructor(public anxiety?: boolean, public cancer?: boolean, public cardiac?: boolean, public circulatory?: boolean, public colitis?: boolean, public depression?: boolean,
+    public diabetes?: boolean, public dyslipidemia?: boolean, public headache?: boolean, public endocrine?: boolean, public gastritis?: boolean, public hepatitis?: boolean,
+    public herpes?: boolean, public hypertension?: boolean, public hyperthyroidism?: boolean, public hypoglycemia?: boolean, public hypothyroidism?: boolean, public irritability?: boolean,
+    public osteoporosis?: boolean, public renal?: boolean, public rge?: boolean, public rhinitisSinusitis?: boolean, public otherPathologies?: boolean, public medicines?: boolean,
+    public familyHistory?: boolean, public observations?: string) {}
+
+  toJSON(): string {
+    return JSON.stringify(Object.assign({}, this));
+  }
+    
+  static fromJSON(json: Pathologies | string): Pathologies {
+    if (typeof json === 'string')
+      return JSON.parse(json, Pathologies.reviver);
+    
+    var data = Object.create(Pathologies.prototype);
+    return Object.assign(data, json);
+  }
+    
+  private static reviver(key: string, value: any): any {
+    return key === "" ? Pathologies.fromJSON(value) : value;
+  }
+}
+
+export class ClinicalEvaluation {
+  constructor(public appetite?: string, public chew?: string, public waterIntake?: string, public urinaryHabit?: string, public intestinalHabit?: string,
+    public laxative?: boolean, public laxativeWhichAnFrequency?: string, public pirose?: boolean, public polydipsia?: boolean, public dysphagia?: boolean,
+    public abdominalDistension?: boolean, public flatulence?: boolean, public nauseaVomiting?: boolean, public otherGastrointestinalSymptoms?: string,
+    public brittleHair?: boolean, public fingernails?: boolean, public edema?: boolean, public pallor?: boolean, public otherGeralSymptoms?: string,
+    public observations?: string) {}
+
+  toJSON(): string {
+    return JSON.stringify(Object.assign({}, this));
+  }
+      
+  static fromJSON(json: ClinicalEvaluation | string): ClinicalEvaluation {
+    if (typeof json === 'string')
+      return JSON.parse(json, ClinicalEvaluation.reviver);
+      
+    var data = Object.create(ClinicalEvaluation.prototype);
+    return Object.assign(data, json);
+  }
+      
+  private static reviver(key: string, value: any): any {
+    return key === "" ? ClinicalEvaluation.fromJSON(value) : value;
   }
 }
 

@@ -17,5 +17,6 @@
 [X] page clinics
 [X] page new/edit clinics
 [>] page patients
+[>] page anamnases
 [ ] global loading
 [ ] user enable/disable
