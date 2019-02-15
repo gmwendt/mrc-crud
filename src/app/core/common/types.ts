@@ -38,10 +38,25 @@ export class AddressInfo {
 
 export class Anamneses {
   constructor(public clinicCase: string, public date: string, public objective?: string, public lifeHabits?: LifeHabits, public pathologies?: Pathologies, 
-    public clinicalEvaluation?: ClinicalEvaluation) {
+    public clinicalEvaluation?: ClinicalEvaluation, public nutrientAnalysis?: NutrientAnalysis, public metabolicTracking?: MetabolicTracking,
+    public eatingHabits?: EatingHabits, public generalObservations?: string) {
   }
 
-  //TODO
+  toJSON(): string {
+    return JSON.stringify(Object.assign({}, this));
+  }
+          
+  static fromJSON(json: Anamneses | string): Anamneses {
+    if (typeof json === 'string')
+      return JSON.parse(json, Anamneses.reviver);
+          
+    var data = Object.create(Anamneses.prototype);
+    return Object.assign(data, json);
+  }
+          
+  private static reviver(key: string, value: any): any {
+    return key === "" ? Anamneses.fromJSON(value) : value;
+  }
 }
 
 export class LifeHabits {
@@ -112,6 +127,84 @@ export class ClinicalEvaluation {
       
   private static reviver(key: string, value: any): any {
     return key === "" ? ClinicalEvaluation.fromJSON(value) : value;
+  }
+}
+
+export class NutrientAnalysis {
+  constructor(public symptoms?: string[], public antecedent?: string, 
+    public triggers?: string, public observations?: string) {}
+
+  toJSON(): string {
+    return JSON.stringify(Object.assign({}, this));
+  }
+      
+  static fromJSON(json: NutrientAnalysis | string): NutrientAnalysis {
+    if (typeof json === 'string')
+      return JSON.parse(json, NutrientAnalysis.reviver);
+      
+    var data = Object.create(NutrientAnalysis.prototype);
+    return Object.assign(data, json);
+  }
+      
+  private static reviver(key: string, value: any): any {
+    return key === "" ? NutrientAnalysis.fromJSON(value) : value;
+  }
+}
+
+export class MetabolicTracking {
+  constructor(public headache: number, public feelingOfFainting: number, public dizziness: number, public insomnia: number, public wateryOrItchy: number,
+    public swollenOrRedOrEyelashesGluing: number, public bagsOrDarkCirclesUnderTheEyes: number, public blurredOrTunnelVisionWithoutMyopiaAstigmatism: number,
+    public itch: number, public earachesOrInfections: number, public purulentFluid: number, public buzzingOrHearingLoss: number, public stuffyNose: number,
+    public sinusitis: number, public runnyNoseAndNeezingAndItchyEyes: number, public sneezingAttacks: number, public excessiveMucusFormation: number,
+    public chronicCough: number, public frequentNeedToClearThroat: number, public soreThroatOrHoarsenessOrLossOfVoice: number, 
+    public swollenOrDiscoloredGumsOrLips: number, public cankerSores: number, public acne: number, public itchyWoundsOrRashesOrDrySkin: number,
+    public hairLoss: number, public rednessOrHeat: number, public excessiveSweating: number, public irregularOrFailingBeats: number, public tooFastBeats: number,
+    public chestPain: number, public chestCongestion: number, public asthmaOrBronchitis: number, public littleBreath: number, public difficultyBreathing: number,
+    public nauseaOrVomiting: number, public diarrhea: number, public constipation: number, public feelsSwollenOrDistendedAbdomen: number, public bowelOrIntestinalGas: number,
+    public heartburn: number, public stomachOrIntestinalPain: number, public jointPain: number, public arthritis: number, public rigidityOrLimitationOfMovement: number,
+    public muscleAches: number, public feelingWeakOrTired: number, public fatigue: number, public apathyOrLethargy: number, public hyperactivity: number, 
+    public difficultyInRestingOrRelaxing: number, public badMemory: number, public mentalConfusionOrPoorUnderstanding: number, public badConcentration: number,
+    public poorMotorConcentration: number, public difficultyInMakingDecisions: number, public wordRepetitionsWithInvoluntaryPauses: number, 
+    public pronounceWordsIndistinctlyOrConfused: number, public learningProblems: number, public changeOfMood: number, public anxietyFearNervousness: number,
+    public angerIrritabilityAggressiveness: number, public depression: number, public oftenSick: number, public frequentOrUrgentUrgeToUrinate: number,
+    public genitalItchingOrDischarge: number, public totalScore: number) {}
+    
+  toJSON(): string {
+    return JSON.stringify(Object.assign({}, this));
+  }
+        
+  static fromJSON(json: MetabolicTracking | string): MetabolicTracking {
+    if (typeof json === 'string')
+      return JSON.parse(json, MetabolicTracking.reviver);
+        
+    var data = Object.create(MetabolicTracking.prototype);
+    return Object.assign(data, json);
+  }
+        
+  private static reviver(key: string, value: any): any {
+    return key === "" ? MetabolicTracking.fromJSON(value) : value;
+  }
+}
+
+export class EatingHabits {
+  //TODO
+  constructor(public supplements?: string, public foodAllergy?: string, public foodIntolerance?: string, 
+    public foodAversions?: string, public observations?: string) { }
+
+  toJSON(): string {
+    return JSON.stringify(Object.assign({}, this));
+  }
+          
+  static fromJSON(json: EatingHabits | string): EatingHabits {
+    if (typeof json === 'string')
+      return JSON.parse(json, EatingHabits.reviver);
+          
+    var data = Object.create(EatingHabits.prototype);
+    return Object.assign(data, json);
+  }
+          
+  private static reviver(key: string, value: any): any {
+    return key === "" ? EatingHabits.fromJSON(value) : value;
   }
 }
 
