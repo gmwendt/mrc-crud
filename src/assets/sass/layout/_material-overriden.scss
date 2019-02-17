@@ -73,29 +73,29 @@
     line-height: 30px;
   }
 
-  .mat-form-field {
+  // .mat-form-field {
 
-    &-label {
-      display: none;
-    }
+  //   &-label {
+  //     display: none;
+  //   }
 
-    .mat-form-field-wrapper {
-      padding: 0;
+  //   .mat-form-field-wrapper {
+  //     padding: 0;
 
-      .mat-form-field-infix {
-        border-top: none;
-        padding: 0;
-      }
-    }
+  //     .mat-form-field-infix {
+  //       border-top: none;
+  //       padding: 0;
+  //     }
+  //   }
 
-    .mat-form-field-underline {
-      background-color: transparent;
+  //   .mat-form-field-underline {
+  //     background-color: transparent;
 
-      .mat-form-field-ripple {
-        background-color: transparent;
-      }
-    }
-  }
+  //     .mat-form-field-ripple {
+  //       background-color: transparent;
+  //     }
+  //   }
+  // }
 
   .mat-tab-header {
     .mat-tab-label {

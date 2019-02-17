@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ChangeDetectorRef, OnDestroy, ViewEncapsulation } from "@angular/core";
 import { Location } from '@angular/common';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
-import { Patient } from "../../core/common/types";
+import { FileSystemCommands, Patient } from "../../core/common/types";
 import { PatientService } from "../../core/patient.service";
 
 import { DialogAlertData, DialogAlertButton } from "../../shared/dialog-alert/dialog-alert.component";
@@ -23,8 +23,10 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 
   private patient: Patient;
   private loading = true;
+
+  private anamnesesRoute: string = 'anamneses';
   
-  constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, 
+  constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _router: Router,
     private _patient: PatientService, private _location: Location , private _dialog: DialogService) {
   }
 
@@ -72,6 +74,15 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 
   private async on_cancel_clicked(): Promise<void> {
     //TODO
+  }
+
+  private on_anamneses_edit(anamnesesId?: string): void {
+    var id = anamnesesId ? anamnesesId : FileSystemCommands.Add;
+    this.navigate(this.anamnesesRoute, id);
+  }
+
+  private navigate(route: string, id: string | FileSystemCommands, queryParams?: Object): void {
+    this._router.navigate([route, id], { relativeTo: this._route, queryParams: queryParams });
   }
 
   private show_error_dialog(msg: string): void {

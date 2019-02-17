@@ -1,3 +1,8 @@
+export enum FileSystemCommands {
+  Remove,
+  Add
+}
+
 export interface AddressInfoJSON {
   zipcode: string;
   address: string;

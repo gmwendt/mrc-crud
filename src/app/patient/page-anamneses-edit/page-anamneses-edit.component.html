@@ -1,0 +1,24 @@
+<div>
+  <div class="mrc-page-title">Anamneses</div>
+  <div class="mrc-page-subtitle" *ngIf="isNew; else elseBlock">Adicionar anamnese</div>
+  <ng-template #elseBlock>
+    <div class="mrc-page-subtitle">Editar anamnese</div>
+  </ng-template>
+</div>
+<div id="page-anamneses-edit-content">
+  <progress-spinner [progress]="loading">
+
+  <textarea [value]="anamnase?.clinicCase" (change)="anamnase.clinicCase = boxClinicCase.value" #boxClinicCase></textarea>
+
+  </progress-spinner>
+</div>
+<div id="mrc-edit-page-footer">
+  <div class="mrc-dialog-separator"></div>
+  <!-- TODO -->
+  <!-- <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div> -->
+  <!-- END TODO -->
+  <div id="mrc-edit-page-footer-buttons">
+    <button mat-button [disabled]="!dirty" (click)="on_apply_clicked()">Aplicar</button>
+    <button mat-button (click)="on_cancel_clicked()">Cancelar</button>
+  </div>
+</div>

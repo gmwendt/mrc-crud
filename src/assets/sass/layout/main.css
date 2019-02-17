@@ -199,27 +199,6 @@
   line-height: 30px;
 }
 
-.mrc-global .mat-form-field-label {
-  display: none;
-}
-
-.mrc-global .mat-form-field .mat-form-field-wrapper {
-  padding: 0;
-}
-
-.mrc-global .mat-form-field .mat-form-field-wrapper .mat-form-field-infix {
-  border-top: none;
-  padding: 0;
-}
-
-.mrc-global .mat-form-field .mat-form-field-underline {
-  background-color: transparent;
-}
-
-.mrc-global .mat-form-field .mat-form-field-underline .mat-form-field-ripple {
-  background-color: transparent;
-}
-
 .mrc-global .mat-tab-header .mat-tab-label {
   font-size: 9pt;
   font-weight: 400;
