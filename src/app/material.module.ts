@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import {
   MatExpansionModule, 
 	MatButtonModule,
+	MatButtonToggleModule,
 	MatCheckboxModule,
 	MatDatepickerModule,
 	MatDialogModule,
@@ -20,6 +21,7 @@ import { CdkTableModule } from '@angular/cdk/table';
   imports: [
 		CdkTableModule,
 		MatButtonModule,
+		MatButtonToggleModule,
 		MatCheckboxModule,
 		MatDatepickerModule,
 		MatDialogModule,
@@ -34,6 +36,7 @@ import { CdkTableModule } from '@angular/cdk/table';
   exports: [
 		CdkTableModule,
 		MatButtonModule,
+		MatButtonToggleModule,
 		MatCheckboxModule,
 		MatDatepickerModule,
 		MatDialogModule,

@@ -8,7 +8,34 @@
 <div id="page-anamneses-edit-content">
   <progress-spinner [progress]="loading">
 
-  <textarea [value]="anamnase?.clinicCase" (change)="anamnase.clinicCase = boxClinicCase.value" #boxClinicCase></textarea>
+    <div id="page-anamneses-edit-content-column">
+      <div id="page-anamneses-edit-content-item">
+        <label>Caso clínico</label>
+        <textarea [value]="anamnase?.clinicCase" (change)="anamnase.clinicCase = boxClinicCase.value" #boxClinicCase></textarea>
+      </div>
+      <div id="page-anamneses-edit-content-item">
+        <label>Data</label>
+        <input>
+      </div>
+    </div>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+        <mat-panel-title>Hábitos de Vida</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div id="page-anamneses-edit-content-item">
+        <label>Restrição alimentar</label>
+        <mat-button-toggle-group #group="matButtonToggleGroup">
+          <mat-button-toggle value="no">Não</mat-button-toggle>
+          <mat-button-toggle value="vegetarian">Vegetariano</mat-button-toggle>
+          <mat-button-toggle value="vegan">Vegano</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div id="page-anamneses-edit-content-item">
+        <mat-checkbox disableRipple="true">Refeições fora de casa</mat-checkbox>
+      </div>
+  
+    </mat-expansion-panel>
+  
 
   </progress-spinner>
 </div>

@@ -1,4 +1,13 @@
 .mrc-global {
+  .mat-button-toggle {
+    height: 30px;
+
+    .mat-button-toggle-label-content {
+      font-size: 9pt;
+      line-height: 30px;
+    }
+  }
+
   .mat-checkbox {
     font-size: 9pt;
 

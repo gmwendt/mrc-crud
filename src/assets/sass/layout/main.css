@@ -127,6 +127,15 @@
   background-color: #f6f6f6;
 }
 
+.mrc-global .mat-button-toggle {
+  height: 30px;
+}
+
+.mrc-global .mat-button-toggle .mat-button-toggle-label-content {
+  font-size: 9pt;
+  line-height: 30px;
+}
+
 .mrc-global .mat-checkbox {
   font-size: 9pt;
 }
