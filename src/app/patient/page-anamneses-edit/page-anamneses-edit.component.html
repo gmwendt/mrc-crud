@@ -30,10 +30,47 @@
           <mat-button-toggle value="vegan">Vegano</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
-      <div id="page-anamneses-edit-content-item">
-        <mat-checkbox disableRipple="true">Refeições fora de casa</mat-checkbox>
+      <div id="page-anamneses-edit-content-column">
+        <div id="page-anamneses-edit-content-item">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.mealsOutsideTheHouse" disableRipple="true">Refeições fora de casa</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.mealsOutsideTheHouse">
+          <label>Quais</label>
+          <input>
+        </div>
       </div>
-  
+      <div id="page-anamneses-edit-content-column">
+        <div id="page-anamneses-edit-content-item">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.alcohol" disableRipple="true">Ingere bebida alcoólica</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.alcohol">
+          <mat-button-toggle-group #group="matButtonToggleGroup" style="width: 334px">
+            <mat-button-toggle value="everyday">Todos os dias</mat-button-toggle>
+            <mat-button-toggle value="weekends">Finais de semana</mat-button-toggle>
+            <mat-button-toggle value="socially">Socialmente</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.alcohol">
+          <label>Qual e quanto</label>
+          <input>
+        </div>
+        
+        <div id="page-anamneses-edit-content-item">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.smoke" disableRipple="true">Fumante</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.smoke">
+          <mat-button-toggle-group #group="matButtonToggleGroup" style="width: 334px">
+            <mat-button-toggle value="everyday">Todos os dias</mat-button-toggle>
+            <mat-button-toggle value="weekends">Finais de semana</mat-button-toggle>
+            <mat-button-toggle value="socially">Socialmente</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.smoke">
+          <label>Quantidade</label>
+          <input>
+        </div>
+      </div>
+
     </mat-expansion-panel>
   
 

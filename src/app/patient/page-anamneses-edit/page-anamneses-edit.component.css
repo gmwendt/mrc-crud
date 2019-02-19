@@ -25,7 +25,7 @@ page-anamneses-edit #page-anamneses-edit-content-column {
 page-anamneses-edit #page-anamneses-edit-content-item {
   display: flex;
   flex-direction: column;
-  margin: 0 0 4px 22px;
+  margin: 0 0 8px 22px;
 }
 
 page-anamneses-edit #page-anamneses-edit-content-item > label {

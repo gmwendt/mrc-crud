@@ -160,6 +160,7 @@
 
 .mrc-global .mat-checkbox .mat-checkbox-label {
   line-height: 20px;
+  height: 19px;
 }
 
 .mrc-global .mat-menu-content {
