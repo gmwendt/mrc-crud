@@ -21,6 +21,19 @@ page-anamneses-edit {
     display: flex;
   }
 
+  #page-anamneses-edit-content-column-item {
+    width: 334px;
+  }
+
+  #page-anamneses-edit-content-group {
+    margin-left: 22px;
+    font-size: 9pt;
+
+    > div {
+      background-color: #e9f3f9;
+    }
+  }
+
   #page-anamneses-edit-content-item {
     display: flex;
     flex-direction: column;
@@ -37,7 +50,7 @@ page-anamneses-edit {
     }
 
     > .mat-button-toggle-group {
-      width: 215px;
+      width: 201px;
     }
   }
 
