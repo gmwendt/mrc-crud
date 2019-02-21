@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
-import { Anamneses, FileSystemCommands } from "../../core/common/types";
+import { Anamneses, FileSystemCommands, AlimentarRestrictionEnum, LifeHabits, FrequencyEnum, SleepEnum } from "../../core/common/types";
 
 @Component({
   selector: 'page-anamneses-edit',
@@ -19,6 +19,10 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   private isNew: boolean;
   private anamnase: Anamneses;
 
+  private alimentarRestritionEnum = AlimentarRestrictionEnum;
+  private frequencyEnum = FrequencyEnum;
+  private sleepEnum = SleepEnum;
+
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef) {
   }
 
@@ -31,7 +35,7 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
       this._detector.detectChanges();
 
       if (this.isNew)
-        this.anamnase = new Anamneses('', '', '');
+        this.anamnase = new Anamneses('', '', '', new LifeHabits());
       //TODO
       // else
       //   this.anamnase = await this.load_anamnase();
@@ -55,7 +59,11 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private on_cancel_clicked(): void {
-    console.log(this.anamnase.clinicCase);
+    console.log(this.anamnase);
+    if (this.anamnase.lifeHabits)
+      console.log(this.anamnase.lifeHabits.alimentarRestriction);
+    else
+      console.log("no lifeHabits");
   }
 
   ngOnDestroy(): void {

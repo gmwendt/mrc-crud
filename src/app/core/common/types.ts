@@ -64,11 +64,28 @@ export class Anamneses {
   }
 }
 
+export enum AlimentarRestrictionEnum {
+  No,
+  Vegetarian,
+  Vegan
+}
+
+export enum FrequencyEnum {
+  Everyday,
+  Weekends,
+  Socially
+}
+
+export enum SleepEnum {
+  SleepTight,
+  SleepBad
+}
+
 export class LifeHabits {
-  constructor(public mealsOutsideTheHouse?: boolean, public whichMeals?: string,
-    public alcohol?: boolean, public alcoholFrequency?: string, public alcoholWhichAndHowMuch?: string, public smoke?: boolean, public smokeFrequency?: string, public smokeWhichAndHowMuch?: string,
-    public sleep?: string, public sleepTime?: string, public physicalExercises?: string, public liveWithHowManyPeople?: string, public hoDoesTheHousePurchases?: string,
-    public observations?: string) {}
+  constructor(public mealsOutsideTheHouse?: boolean, public whichMeals?: string, public alimentarRestriction?: AlimentarRestrictionEnum,
+    public alcohol?: boolean, public alcoholFrequency?: FrequencyEnum, public alcoholWhichAndHowMuch?: string, public smoke?: boolean, public smokeFrequency?: string, public smokeWhichAndHowMuch?: string,
+    public sleep?: SleepEnum, public sleepTime?: string, public physicalExercises?: string, public liveWithHowManyPeople?: string, public hoDoesTheHousePurchases?: string,
+    public howManyTimesPerMonth?: number, public wherePurchase?: string, public observations?: string) {}
 
   toJSON(): string {
     return JSON.stringify(Object.assign({}, this));

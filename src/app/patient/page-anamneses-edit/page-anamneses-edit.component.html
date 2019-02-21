@@ -15,7 +15,7 @@
       </div>
       <div id="page-anamneses-edit-content-item">
         <label>Data</label>
-        <input>
+        <input><!-- TODO -->
       </div>
     </div>
     <mat-expansion-panel>
@@ -24,105 +24,114 @@
       </mat-expansion-panel-header>
       <div id="page-anamneses-edit-content-item">
         <label>Restrição alimentar</label>
-        <mat-button-toggle-group #group="matButtonToggleGroup">
-          <mat-button-toggle value="no">Não</mat-button-toggle>
-          <mat-button-toggle value="vegetarian">Vegetariano</mat-button-toggle>
-          <mat-button-toggle value="vegan">Vegano</mat-button-toggle>
+        <mat-button-toggle-group #group="matButtonToggleGroup" (change)="anamnase.lifeHabits.alimentarRestriction = $event.value">
+          <mat-button-toggle [value]="alimentarRestritionEnum.No">Não</mat-button-toggle>
+          <mat-button-toggle [value]="alimentarRestritionEnum.Vegetarian">Vegetariano</mat-button-toggle>
+          <mat-button-toggle [value]="alimentarRestritionEnum.Vegan">Vegano</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
-      <div id="page-anamneses-edit-content-column">
-        <div id="page-anamneses-edit-content-item">
-          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.mealsOutsideTheHouse" disableRipple="true">Refeições fora de casa</mat-checkbox>
-        </div>
-        <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.mealsOutsideTheHouse">
+
+      <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.lifeHabits">
+        <label>Exercícios físicos</label>
+        <textarea [(ngModel)]="anamnase.lifeHabits.physicalExercises"></textarea>
+      </div>
+
+      <div id="page-anamneses-edit-content-group">
+        <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.lifeHabits.mealsOutsideTheHouse" disableRipple="true">Refeições fora de casa</mat-checkbox>
+        <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.lifeHabits?.mealsOutsideTheHouse">
           <label>Quais</label>
-          <input>
+          <input [(ngModel)]="anamnase.lifeHabits.whichMeals">
         </div>
       </div>
+
       <div id="page-anamneses-edit-content-column">
-        <div id="page-anamneses-edit-content-column-item">
-          <div id="page-anamneses-edit-content-item">
-            <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.alcohol" disableRipple="true">Ingere bebida alcoólica</mat-checkbox>
-          </div>
-          <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.alcohol">
-            <mat-button-toggle-group #group="matButtonToggleGroup" style="width: 308px">
-              <mat-button-toggle value="everyday">Todos os dias</mat-button-toggle>
-              <mat-button-toggle value="weekends">Finais de semana</mat-button-toggle>
-              <mat-button-toggle value="socially">Socialmente</mat-button-toggle>
-            </mat-button-toggle-group>
-          </div>
-          <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.alcohol">
-            <label>Qual e quanto</label>
-            <input>
+        <div id="page-anamneses-edit-content-group">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.lifeHabits.alcohol" disableRipple="true">Ingere bebida alcoólica</mat-checkbox>
+          <div id="page-anamneses-edit-content-column-item" *ngIf="anamnase?.lifeHabits?.alcohol">
+            <div id="page-anamneses-edit-content-item">
+              <mat-button-toggle-group #group="matButtonToggleGroup" (change)="anamnase.lifeHabits.alcoholFrequency = $event.value" style="width: 308px">
+                <mat-button-toggle [value]="frequencyEnum.Everyday">Todos os dias</mat-button-toggle>
+                <mat-button-toggle [value]="frequencyEnum.Weekends">Finais de semana</mat-button-toggle>
+                <mat-button-toggle [value]="frequencyEnum.Socially">Socialmente</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+            <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.lifeHabits?.alcohol">
+              <label>Qual e quanto</label>
+              <input [(ngModel)]="anamnase.lifeHabits.alcoholWhichAndHowMuch">
+            </div>
           </div>
         </div>
-        <div id="page-anamneses-edit-content-column-item">
-          <div id="page-anamneses-edit-content-item">
-            <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.smoke" disableRipple="true">Fumante</mat-checkbox>
-          </div>
-          <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.smoke">
-            <mat-button-toggle-group #group="matButtonToggleGroup" style="width: 308px">
-              <mat-button-toggle value="everyday">Todos os dias</mat-button-toggle>
-              <mat-button-toggle value="weekends">Finais de semana</mat-button-toggle>
-              <mat-button-toggle value="socially">Socialmente</mat-button-toggle>
-            </mat-button-toggle-group>
-          </div>
-          <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.smoke">
-            <label>Quantidade</label>
-            <input>
+
+        <div id="page-anamneses-edit-content-group">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.lifeHabits.smoke" disableRipple="true">Fumante</mat-checkbox>
+          <div id="page-anamneses-edit-content-column-item" *ngIf="anamnase?.lifeHabits?.smoke">
+            <div id="page-anamneses-edit-content-item">
+              <mat-button-toggle-group #group="matButtonToggleGroup" (change)="anamnase.lifeHabits.smokeFrequency = $event.value" style="width: 308px">
+                <mat-button-toggle [value]="frequencyEnum.Everyday">Todos os dias</mat-button-toggle>
+                <mat-button-toggle [value]="frequencyEnum.Weekends">Finais de semana</mat-button-toggle>
+                <mat-button-toggle [value]="frequencyEnum.Socially">Socialmente</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+            <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.lifeHabits?.smoke">
+              <label>Quantidade</label>
+              <input [(ngModel)]="anamnase.lifeHabits.smokeWhichAndHowMuch">
+            </div>
           </div>
         </div>
       </div>
       
-      <div id="page-anamneses-edit-content-column">
-        <div id="page-anamneses-edit-content-item">
-          <label>Sono</label>
-          <mat-button-toggle-group #group="matButtonToggleGroup" style="width: 170px">
-            <mat-button-toggle value="sleepTight">Dorme bem</mat-button-toggle>
-            <mat-button-toggle value="sleepBad">Dorme mal</mat-button-toggle>
-          </mat-button-toggle-group>
-        </div>
-        <div id="page-anamneses-edit-content-item">
-          <label>Quantas horas</label>
-          <input>
-        </div>
-      </div>
-
-      <div id="page-anamneses-edit-content-item">
-        <label>Exercícios físicos</label>
-        <textarea></textarea>
-      </div>
-
       <div id="page-anamneses-edit-content-group">
+        <label>Hábitos de sono</label>
+        <div id="page-anamneses-edit-content-column">
+          <div id="page-anamneses-edit-content-item">
+            <mat-button-toggle-group #group="matButtonToggleGroup" (change)="anamnase.lifeHabits.sleep = $event.value" style="width: 170px">
+              <mat-button-toggle [value]="sleepEnum.SleepTight">Dorme bem</mat-button-toggle>
+              <mat-button-toggle [value]="sleepEnum.SleepBad">Dorme mal</mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+          <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.lifeHabits">
+            <label>Quantas horas</label>
+            <input [(ngModel)]="anamnase.lifeHabits.sleepTime"><!-- TODO -->
+          </div>
+        </div>
+      </div>
+      
+      <div id="page-anamneses-edit-content-group" *ngIf="anamnase?.lifeHabits">
         <label>Hábitos de compra</label>
         <div>
           <div id="page-anamneses-edit-content-column">
             <div id="page-anamneses-edit-content-item">
               <label>Mora com quantas pessoas</label>
-              <input type="number">
+              <input type="number" [(ngModel)]="anamnase.lifeHabits.liveWithHowManyPeople">
             </div>
             <div id="page-anamneses-edit-content-item">
               <label>Quem realiza as compras da casa</label>
-              <textarea></textarea>
+              <textarea [(ngModel)]="anamnase.lifeHabits.hoDoesTheHousePurchases"></textarea>
             </div>
           </div>
           <div id="page-anamneses-edit-content-column">
             <div id="page-anamneses-edit-content-item">
               <label>Quantas vezes por mês</label>
-              <input type="number">
+              <input type="number" [(ngModel)]="anamnase.lifeHabits.howManyTimesPerMonth">
             </div>
             <div id="page-anamneses-edit-content-item">
               <label>Onde realiza as compras</label>
-              <textarea></textarea>
+              <textarea [(ngModel)]="anamnase.lifeHabits.wherePurchase"></textarea>
             </div>
           </div>
         </div>
       </div>
 
-      <div id="page-anamneses-edit-content-item">
+      <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.lifeHabits">
         <label>Observações</label>
-        <textarea></textarea>
+        <textarea [(ngModel)]="anamnase.lifeHabits.observations"></textarea>
       </div>
+
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+        <mat-panel-title>Pathologies</mat-panel-title>
+      </mat-expansion-panel-header>
 
     </mat-expansion-panel>
   
@@ -135,7 +144,7 @@
   <!-- <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div> -->
   <!-- END TODO -->
   <div id="mrc-edit-page-footer-buttons">
-    <button mat-button [disabled]="!dirty" (click)="on_apply_clicked()">Aplicar</button>
+    <button mat-button [disabled]="!dirty || !isNew" (click)="on_apply_clicked()">Aplicar</button>
     <button mat-button (click)="on_cancel_clicked()">Cancelar</button>
   </div>
 </div>
