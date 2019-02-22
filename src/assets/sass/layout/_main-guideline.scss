@@ -3,7 +3,7 @@ input, textarea, select {
     padding: 0px 4px;     
     box-sizing: border-box;
     height: 20px;
-    font-family: 'Arial', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', sans-serif, 'Arial', Tahoma, Geneva, Verdana;
     font-size: 9pt;
     border: solid 1px;
     overflow: hidden;
@@ -111,7 +111,8 @@ input, textarea, select {
 	}
 
 	.mrc-page-commands {
-		color: rgba(0,0,0,.87);
+		//color: rgba(0,0,0,.87);
+		color: #298dca;
 		font-size: 9pt;
 		margin: 22px 0 0 42px;
 		text-transform: uppercase;

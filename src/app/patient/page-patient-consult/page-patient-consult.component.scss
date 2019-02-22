@@ -11,9 +11,31 @@ page-patient-consult {
     }
   }
 
+  .mat-expansion-panel {
+    max-width: 800px;
+    
+    .mat-expansion-panel-header-title {
+      > div {
+        margin: 0 16px;
+      }
+    }
+  }
+
   #page-patient-consult-content {
     flex: 1;
     overflow: auto;
     margin-top: 8px;
+
+    .mat-cell {
+      > span {
+        line-height: 0;
+
+        .icon-delete, .icon-edit {
+          color: #4f4f4f;		
+          cursor: pointer;
+          font-size: 12pt;
+        }
+      }
+    }
   }
 }

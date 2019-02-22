@@ -56,13 +56,18 @@
     .mat-cell,
     .mat-header-cell {
       font-size: 9pt;      
-      font-family: sans-serif;
+      font-family: 'Segoe UI';
     }
 
     .mat-row, 
     .mat-header-row {
       height: 28px;
       min-height: 28px;
+    }
+
+    .mat-row:hover {
+      background-color: #f7f7f7;
+      cursor: pointer;
     }
   }
 
@@ -76,7 +81,7 @@
   }
 
   .mat-button {
-    font-family: sans-serif;
+    font-family: 'Segoe UI';
     font-size: 9pt;
     background-color: #e5e5e5;
     height: 30px;

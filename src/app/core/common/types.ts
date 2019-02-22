@@ -42,7 +42,7 @@ export class AddressInfo {
 }
 
 export class Anamneses {
-  constructor(public clinicCase: string, public date: string, public objective?: string, public lifeHabits?: LifeHabits, public pathologies?: Pathologies, 
+  constructor(public id: string, public clinicCase: string, public date: string, public objective?: string, public lifeHabits?: LifeHabits, public pathologies?: Pathologies, 
     public clinicalEvaluation?: ClinicalEvaluation, public nutrientAnalysis?: NutrientAnalysis, public metabolicTracking?: MetabolicTracking,
     public eatingHabits?: EatingHabits, public generalObservations?: string) {
   }
@@ -52,8 +52,12 @@ export class Anamneses {
   }
           
   static fromJSON(json: Anamneses | string): Anamneses {
-    if (typeof json === 'string')
-      return JSON.parse(json, Anamneses.reviver);
+    if (typeof json === 'string') {
+      var obj: Anamneses = JSON.parse(json, Anamneses.reviver);
+      obj.lifeHabits = typeof obj.lifeHabits === 'string' ? LifeHabits.fromJSON(obj.lifeHabits) : obj.lifeHabits;
+      //TODO: other properties
+      return obj;
+    }
           
     var data = Object.create(Anamneses.prototype);
     return Object.assign(data, json);
@@ -263,6 +267,7 @@ export class Patient {
   public birthDate: string;
   public maritalState?: string;
   public ocupation?: string;
+  public anamneses?: Anamneses[];
 
   constructor(accountRefId: number) {
     this.accountRefId = accountRefId;

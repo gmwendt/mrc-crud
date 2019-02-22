@@ -12,8 +12,27 @@ page-patient-consult .mrc-page-subtitle > div {
   margin-right: 16px;
 }
 
+page-patient-consult .mat-expansion-panel {
+  max-width: 800px;
+}
+
+page-patient-consult .mat-expansion-panel .mat-expansion-panel-header-title > div {
+  margin: 0 16px;
+}
+
 page-patient-consult #page-patient-consult-content {
   flex: 1;
   overflow: auto;
   margin-top: 8px;
+}
+
+page-patient-consult #page-patient-consult-content .mat-cell > span {
+  line-height: 0;
+}
+
+page-patient-consult #page-patient-consult-content .mat-cell > span .icon-delete,
+page-patient-consult #page-patient-consult-content .mat-cell > span .icon-edit {
+  cursor: pointer;
+  font-size: 12pt;
+  color: #4f4f4f;		
 }

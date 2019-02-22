@@ -12,11 +12,30 @@
       <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
         <mat-panel-title>
           <label>Anamneses</label>
-          <div>[0]</div>
+          <div>[{{anamneses?.data?.length}}]</div>
           <button (click)="on_anamneses_edit()">Adicionar</button>
         </mat-panel-title>
       </mat-expansion-panel-header>
+      <mat-table #table [dataSource]="anamneses" class="mat-elevation-z8">
 
+        <ng-container matColumnDef="clinicCase">
+          <mat-header-cell *matHeaderCellDef> Caso clínico </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.clinicCase }}</mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="commands">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let element"> 
+            <span>
+              <span title="Editar" class="icon-edit"></span>
+              <span title="Remover" class="icon-delete" (click)="on_remove_anamneses_click($event, element)"></span> 
+            </span>  
+          </mat-cell>
+        </ng-container>
+        
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="on_anamneses_edit(row.id)"></mat-row>
+      </mat-table>
 
     </mat-expansion-panel>
   </progress-spinner>

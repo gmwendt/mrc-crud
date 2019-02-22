@@ -2,7 +2,7 @@
   padding: 0px 4px;
   box-sizing: border-box;
   height: 20px;
-  font-family: 'Arial', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', sans-serif,'Arial', Tahoma, Geneva, Verdana;
   font-size: 9pt;
   border: solid 1px;
   overflow: hidden;
@@ -112,7 +112,7 @@
 }
 
 .mrc-global .mrc-page-commands {
-  color: rgba(0, 0, 0, 0.87);
+  color: #298dca;
   font-size: 9pt;
   margin: 22px 0 0 42px;
   text-transform: uppercase;
@@ -183,13 +183,18 @@
 .mrc-global .mat-table .mat-cell,
 .mrc-global .mat-table .mat-header-cell {
   font-size: 9pt;
-  font-family: sans-serif;
+  font-family: 'Segoe UI';
 }
 
 .mrc-global .mat-table .mat-row,
 .mrc-global .mat-table .mat-header-row {
   height: 28px;
   min-height: 28px;
+}
+
+.mrc-global .mat-table .mat-row:hover {
+  background-color: #f7f7f7;
+  cursor: pointer;
 }
 
 .mrc-global .mat-dialog-container {
@@ -202,7 +207,7 @@
 }
 
 .mrc-global .mat-button {
-  font-family: sans-serif;
+  font-family: 'Segoe UI';
   font-size: 9pt;
   background-color: #e5e5e5;
   height: 30px;
@@ -241,6 +246,6 @@ html {
 body {
   height: 100%;
   margin: 0;
-  font-family: sans-serif;
+  font-family: 'Segoe UI';
   letter-spacing: 0.5px;
 }
