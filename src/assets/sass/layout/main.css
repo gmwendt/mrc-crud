@@ -2,7 +2,7 @@
   padding: 0px 4px;
   box-sizing: border-box;
   height: 20px;
-  font-family: 'Segoe UI', sans-serif,'Arial', Tahoma, Geneva, Verdana;
+  font-family: 'Segoe UI', sans-serif, 'Arial', Tahoma, Geneva, Verdana;
   font-size: 9pt;
   border: solid 1px;
   overflow: hidden;
@@ -112,19 +112,21 @@
 }
 
 .mrc-global .mrc-page-commands {
-  color: #298dca;
   font-size: 9pt;
   margin: 22px 0 0 42px;
   text-transform: uppercase;
 }
 
 .mrc-global .mrc-page-commands > label {
+  background-color: #29ca96;
+  border-radius: 8px;
+  color: white;
   cursor: pointer;
   padding: 4px;
 }
 
 .mrc-global .mrc-page-commands > label:hover {
-  background-color: #f6f6f6;
+  background-color: #69d9b5;
 }
 
 .mrc-global .mat-button-toggle {
@@ -193,7 +195,7 @@
 }
 
 .mrc-global .mat-table .mat-row:hover {
-  background-color: #f7f7f7;
+  background-color: #efefef;
   cursor: pointer;
 }
 
@@ -237,6 +239,10 @@
 
 .mrc-global .mat-expansion-panel-header {
   font-size: 9pt;
+}
+
+.mrc-global .mat-expansion-panel .mat-header-cell {
+  color: #9e9e9e;
 }
 
 html {

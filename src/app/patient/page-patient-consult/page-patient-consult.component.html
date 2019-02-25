@@ -13,7 +13,9 @@
         <mat-panel-title>
           <label>Anamneses</label>
           <div>[{{anamneses?.data?.length}}]</div>
-          <button (click)="on_anamneses_edit()">Adicionar</button>
+          <div class="mrc-page-commands" (click)="on_anamneses_edit()">
+            <label>Adicionar</label>
+          </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <mat-table #table [dataSource]="anamneses" class="mat-elevation-z8">
@@ -27,7 +29,6 @@
           <mat-header-cell *matHeaderCellDef> </mat-header-cell>
           <mat-cell *matCellDef="let element"> 
             <span>
-              <span title="Editar" class="icon-edit"></span>
               <span title="Remover" class="icon-delete" (click)="on_remove_anamneses_click($event, element)"></span> 
             </span>  
           </mat-cell>

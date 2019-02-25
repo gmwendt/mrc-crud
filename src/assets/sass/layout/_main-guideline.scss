@@ -111,19 +111,20 @@ input, textarea, select {
 	}
 
 	.mrc-page-commands {
-		//color: rgba(0,0,0,.87);
-		color: #298dca;
 		font-size: 9pt;
 		margin: 22px 0 0 42px;
 		text-transform: uppercase;
 
 		> label {
+			background-color: #29ca96;
+			border-radius: 8px;
+    	color: white;
 			cursor: pointer;
 			padding: 4px;
 		}
 		
 		> label:hover {
-			background-color: #f6f6f6;
+			background-color: #69d9b5;
 		}
 	}
 }

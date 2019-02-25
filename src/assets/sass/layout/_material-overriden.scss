@@ -66,7 +66,7 @@
     }
 
     .mat-row:hover {
-      background-color: #f7f7f7;
+      background-color: #efefef;
       cursor: pointer;
     }
   }
@@ -138,6 +138,10 @@
 
     &-header {
       font-size: 9pt;
+    }
+
+    .mat-header-cell {
+      color: #9e9e9e;
     }
   }
 }

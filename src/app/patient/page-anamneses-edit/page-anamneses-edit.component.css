@@ -19,35 +19,25 @@ page-anamneses-edit #page-anamneses-edit-content {
 }
 
 page-anamneses-edit #page-anamneses-edit-content .mat-expansion-panel {
-  max-width: 800px;
+  max-width: 860px;
 }
 
 page-anamneses-edit #page-anamneses-edit-content-column {
-  display: flex;
+  display: inline-block;
+  vertical-align: top;
 }
 
 page-anamneses-edit #page-anamneses-edit-content-column-item {
-  width: 334px;
+  display: inline;
+  margin: 0;
 }
 
-page-anamneses-edit #page-anamneses-edit-content-item {
-  display: flex;
-  flex-direction: column;
-  margin: 0 0 16px 22px;
+page-anamneses-edit #page-anamneses-edit-content-column-item > #page-anamneses-edit-content-item {
+  margin-left: 0;
 }
 
-page-anamneses-edit #page-anamneses-edit-content-item > label {
-  font-size: 9pt;
-  margin-bottom: 4px;
-}
-
-page-anamneses-edit #page-anamneses-edit-content-item > textarea {
-  height: 80px;
-  width: 300px;
-}
-
-page-anamneses-edit #page-anamneses-edit-content-item > .mat-button-toggle-group {
-  width: 201px;
+page-anamneses-edit #page-anamneses-edit-content-column-item > .page-anamneses-edit-content-item-last-child {
+  margin-bottom: 0;
 }
 
 page-anamneses-edit #page-anamneses-edit-content-group {
@@ -62,7 +52,23 @@ page-anamneses-edit #page-anamneses-edit-content-group > div {
 }
 
 page-anamneses-edit #page-anamneses-edit-content-group > div > div {
-  margin: 0 22px 0 0;
+  margin: 0 8px 8px 0;
+}
+
+page-anamneses-edit #page-anamneses-edit-content-item {
+  display: flex;
+  flex-direction: column;
+  margin: 0 16px 16px 22px;
+}
+
+page-anamneses-edit #page-anamneses-edit-content-item > label {
+  font-size: 9pt;
+  margin-bottom: 4px;
+}
+
+page-anamneses-edit #page-anamneses-edit-content-item > textarea {
+  height: 80px;
+  width: 300px;
 }
 
 page-anamneses-edit #mrc-edit-page-footer .mrc-edit-page-error {

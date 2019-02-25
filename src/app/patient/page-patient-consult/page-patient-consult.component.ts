@@ -77,7 +77,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     event.stopPropagation();
 
     var dialogData: DialogAlertData = {
-			text: 'Deseja remover ' + anamnese.clinicCase + '?',
+			text: 'Deseja remover este registro de Anamneses?',
 			button: DialogAlertButton.YesNo,
 			textAlign: 'center',
     }

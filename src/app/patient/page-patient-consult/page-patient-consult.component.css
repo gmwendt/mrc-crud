@@ -17,7 +17,8 @@ page-patient-consult .mat-expansion-panel {
 }
 
 page-patient-consult .mat-expansion-panel .mat-expansion-panel-header-title > div {
-  margin: 0 16px;
+  margin: 0 38px 0 4px;
+  color: #9e9e9e;
 }
 
 page-patient-consult #page-patient-consult-content {
@@ -30,9 +31,8 @@ page-patient-consult #page-patient-consult-content .mat-cell > span {
   line-height: 0;
 }
 
-page-patient-consult #page-patient-consult-content .mat-cell > span .icon-delete,
-page-patient-consult #page-patient-consult-content .mat-cell > span .icon-edit {
+page-patient-consult #page-patient-consult-content .mat-cell > span .icon-delete, page-patient-consult #page-patient-consult-content .mat-cell > span .icon-edit {
+  color: #4f4f4f;
   cursor: pointer;
   font-size: 12pt;
-  color: #4f4f4f;		
 }

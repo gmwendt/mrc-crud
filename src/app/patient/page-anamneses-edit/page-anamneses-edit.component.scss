@@ -17,16 +17,26 @@ page-anamneses-edit {
     margin-top: 8px;
 
     .mat-expansion-panel {
-      max-width: 800px;
+      max-width: 860px;
     }
   }
 
   #page-anamneses-edit-content-column {
-    display: flex;
-  }
+    display: inline-block;
+    vertical-align: top;
 
-  #page-anamneses-edit-content-column-item {
-    width: 334px;
+    &-item {
+      display: inline;
+      margin: 0;
+
+      > #page-anamneses-edit-content-item {
+        margin-left: 0;
+      }
+
+      > .page-anamneses-edit-content-item-last-child {
+        margin-bottom: 0;
+      }
+    }
   }
 
   #page-anamneses-edit-content-group {
@@ -39,7 +49,7 @@ page-anamneses-edit {
       padding: 8px;
 
       > div {
-        margin: 0 22px 0 0;
+        margin: 0 8px 8px 0;
       }
     }
   }
@@ -47,7 +57,7 @@ page-anamneses-edit {
   #page-anamneses-edit-content-item {
     display: flex;
     flex-direction: column;
-    margin: 0 0 16px 22px;
+    margin: 0 16px 16px 22px;
 
     > label {
       font-size: 9pt;
@@ -57,10 +67,6 @@ page-anamneses-edit {
     > textarea {
       height: 80px;
       width: 300px;
-    }
-
-    > .mat-button-toggle-group {
-      width: 201px;
     }
   }
 
