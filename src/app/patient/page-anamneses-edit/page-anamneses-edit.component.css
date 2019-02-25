@@ -29,7 +29,6 @@ page-anamneses-edit #page-anamneses-edit-content-column {
 
 page-anamneses-edit #page-anamneses-edit-content-column-item {
   display: inline;
-  margin: 0;
 }
 
 page-anamneses-edit #page-anamneses-edit-content-column-item > #page-anamneses-edit-content-item {
@@ -38,6 +37,14 @@ page-anamneses-edit #page-anamneses-edit-content-column-item > #page-anamneses-e
 
 page-anamneses-edit #page-anamneses-edit-content-column-item > .page-anamneses-edit-content-item-last-child {
   margin-bottom: 0;
+}
+
+page-anamneses-edit #page-anamneses-edit-content-column .column-item-spacing {
+  margin-right: 16px;
+}
+
+page-anamneses-edit .column-margin {
+  margin-left: 22px;
 }
 
 page-anamneses-edit #page-anamneses-edit-content-group {

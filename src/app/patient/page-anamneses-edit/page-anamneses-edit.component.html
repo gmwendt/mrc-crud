@@ -170,22 +170,81 @@
         <mat-panel-title>Patologias</mat-panel-title>
       </mat-expansion-panel-header>
 
-      <div id="page-anamneses-edit-content-column">
-        <div id="page-anamneses-edit-content-column-item">
+      <div id="page-anamneses-edit-content-column" class="column-margin">
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
           <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.anxiety" (change)="markAsDirty()" disableRipple="true">Ansiedade</mat-checkbox>
         </div>
-        <div id="page-anamneses-edit-content-column-item">
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
           <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.cancer" (change)="markAsDirty()" disableRipple="true">Câncer</mat-checkbox>
         </div>
-        <div id="page-anamneses-edit-content-column-item">
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
           <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.cardiac" (change)="markAsDirty()" disableRipple="true">Cardíaco</mat-checkbox>
         </div>
-        <div id="page-anamneses-edit-content-column-item">
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
           <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.circulatory" (change)="markAsDirty()" disableRipple="true">Circulatório</mat-checkbox>
         </div>
-        <div id="page-anamneses-edit-content-column-item">
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
           <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.colitis" (change)="markAsDirty()" disableRipple="true">Colite</mat-checkbox>
         </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.depression" (change)="markAsDirty()" disableRipple="true">Depressão</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.diabetes" (change)="markAsDirty()" disableRipple="true">Diabetes</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.dyslipidemia" (change)="markAsDirty()" disableRipple="true">Dislipidemia</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.headache" (change)="markAsDirty()" disableRipple="true">Dor de cabeça</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.endocrine" (change)="markAsDirty()" disableRipple="true">Endócrino</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.gastritis" (change)="markAsDirty()" disableRipple="true">Gastrite</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.hepatitis" (change)="markAsDirty()" disableRipple="true">Hepatite</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.herpes" (change)="markAsDirty()" disableRipple="true">Herpes</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.hypertension" (change)="markAsDirty()" disableRipple="true">Hipertensão</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.hyperthyroidism" (change)="markAsDirty()" disableRipple="true">Hipertiroidismo</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.hypoglycemia" (change)="markAsDirty()" disableRipple="true">Hipoglicemia</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.hypothyroidism" (change)="markAsDirty()" disableRipple="true">Hipotireoidismo</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.irritability" (change)="markAsDirty()" disableRipple="true">Irritabilidade</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.osteoporosis" (change)="markAsDirty()" disableRipple="true">Osteoporose</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.renal" (change)="markAsDirty()" disableRipple="true">Renal</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.rge" (change)="markAsDirty()" disableRipple="true">RGE</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.rhinitisSinusitis" (change)="markAsDirty()" disableRipple="true">Rinite/Sinusite</mat-checkbox>
+        </div>
+        <div id="page-anamneses-edit-content-column-item" class="column-item-spacing">
+          <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.pathologies.rge" (change)="markAsDirty()" disableRipple="true">RGE</mat-checkbox>
+        </div>
+      </div>
+
+      <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.pathologies">
+        <label>Outras patologias</label>
+        <textarea [(ngModel)]="anamnase.pathologies.otherPathologies" (keypress)="markAsDirty()"></textarea>
       </div>
 
     </mat-expansion-panel>

@@ -27,7 +27,7 @@ page-anamneses-edit {
 
     &-item {
       display: inline;
-      margin: 0;
+      // margin: 0;
 
       > #page-anamneses-edit-content-item {
         margin-left: 0;
@@ -37,6 +37,14 @@ page-anamneses-edit {
         margin-bottom: 0;
       }
     }
+
+    .column-item-spacing {
+      margin-right: 16px;
+    }
+  }
+
+  .column-margin {
+    margin-left: 22px;
   }
 
   #page-anamneses-edit-content-group {
