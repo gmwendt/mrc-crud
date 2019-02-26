@@ -247,8 +247,69 @@
         <textarea [(ngModel)]="anamnase.pathologies.otherPathologies" (keypress)="markAsDirty()"></textarea>
       </div>
 
+      <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.pathologies">
+        <label>Medicamentos</label>
+        <textarea [(ngModel)]="anamnase.pathologies.medicines" (keypress)="markAsDirty()"></textarea>
+      </div>
+
+      <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.pathologies">
+        <label>Histórico familiar</label>
+        <textarea [(ngModel)]="anamnase.pathologies.familyHistory" (keypress)="markAsDirty()"></textarea>
+      </div>
+
+      <div id="page-anamneses-edit-content-item" *ngIf="anamnase?.pathologies">
+        <label>Observações</label>
+        <textarea [(ngModel)]="anamnase.pathologies.observations" (keypress)="markAsDirty()"></textarea>
+      </div>
+
     </mat-expansion-panel>
-  
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+        <mat-panel-title>Avaliação clínica</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div>
+        <div id="page-anamneses-edit-content-column">
+            <div id="page-anamneses-edit-content-column-item">
+              <div id="page-anamneses-edit-content-group">
+                <label>Apetite</label>
+                <div>
+                  <div id="page-anamneses-edit-content-item">
+                    <div>
+                      <mat-button-toggle-group #group="matButtonToggleGroup" [value]="anamnase?.clinicalEvaluation?.appetite" (change)="anamnase.clinicalEvaluation.appetite = $event.value; markAsDirty()">
+                        <mat-button-toggle [value]="appetiteEnum.Normal">Normal</mat-button-toggle>
+                        <mat-button-toggle [value]="appetiteEnum.Increased">Aumentado</mat-button-toggle>
+                        <mat-button-toggle [value]="appetiteEnum.Decreased">Diminuído</mat-button-toggle>
+                      </mat-button-toggle-group>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div id="page-anamneses-edit-content-column">
+          <div id="page-anamneses-edit-content-column-item">
+            <div id="page-anamneses-edit-content-group">
+              <label>Mastigação</label>
+              <div>
+                <div id="page-anamneses-edit-content-item">
+                  <div>
+                    <mat-button-toggle-group #group="matButtonToggleGroup" [value]="anamnase?.clinicalEvaluation?.chew" (change)="anamnase.clinicalEvaluation.chew = $event.value; markAsDirty()">
+                      <mat-button-toggle [value]="chewEnum.Normal">Normal</mat-button-toggle>
+                      <mat-button-toggle [value]="chewEnum.Fast">Rápida</mat-button-toggle>
+                      <mat-button-toggle [value]="chewEnum.Slow">Lenta</mat-button-toggle>
+                    </mat-button-toggle-group>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </mat-expansion-panel>
 
   </progress-spinner>
 </div>

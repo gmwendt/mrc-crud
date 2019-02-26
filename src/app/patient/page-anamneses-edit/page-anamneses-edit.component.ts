@@ -2,7 +2,19 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { Location } from '@angular/common';
 import { ActivatedRoute } from "@angular/router";
 
-import { Anamneses, FileSystemCommands, AlimentarRestrictionEnum, LifeHabits, FrequencyEnum, SleepEnum, Patient, Pathologies } from "../../core/common/types";
+import { 
+  AlimentarRestrictionEnum, 
+  Anamneses, 
+  ChewEnum,
+  ClinicalEvaluation, 
+  FileSystemCommands, 
+  FrequencyEnum, 
+  LifeHabits, 
+  Pathologies, 
+  Patient, 
+  SleepEnum,
+  AppetiteEnum, 
+} from "../../core/common/types";
 import { PatientService } from "../../core/patient.service";
 
 import { DialogAlertButton, DialogAlertData } from "../../shared/dialog-alert/dialog-alert.component";
@@ -33,6 +45,8 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   private alimentarRestritionEnum = AlimentarRestrictionEnum;
   private frequencyEnum = FrequencyEnum;
   private sleepEnum = SleepEnum;
+  private appetiteEnum = AppetiteEnum;
+  private chewEnum = ChewEnum;
 
   @ViewChildren(MrcInputRequiredDirective) genericRequiredInputs: QueryList<MrcInputRequiredDirective>;
 
@@ -52,7 +66,7 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
         this._patient = await this._patientService.getPatientById(patientId);
 
         if (this.isNew)
-          this.anamnase = new Anamneses(this.guid(), '', '', undefined, new LifeHabits(), new Pathologies());
+          this.anamnase = new Anamneses(this.guid(), '', '', undefined, new LifeHabits(), new Pathologies(), new ClinicalEvaluation());
         else {
           this.anamnase = this._patient.anamneses.find(a => a.id == anamnesesId);
           if (!this.anamnase) 

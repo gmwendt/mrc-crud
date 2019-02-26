@@ -55,6 +55,7 @@ export class Anamneses {
     if (typeof json === 'string') {
       var obj: Anamneses = JSON.parse(json, Anamneses.reviver);
       obj.lifeHabits = typeof obj.lifeHabits === 'string' ? LifeHabits.fromJSON(obj.lifeHabits) : obj.lifeHabits;
+      obj.pathologies = typeof obj.pathologies === 'string' ? Pathologies.fromJSON(obj.pathologies) : obj.pathologies;
       //TODO: other properties
       return obj;
     }
@@ -132,8 +133,20 @@ export class Pathologies {
   }
 }
 
+export enum AppetiteEnum {
+  Normal,
+  Increased,
+  Decreased
+}
+
+export enum ChewEnum {
+  Normal,
+  Fast,
+  Slow
+}
+
 export class ClinicalEvaluation {
-  constructor(public appetite?: string, public chew?: string, public waterIntake?: string, public urinaryHabit?: string, public intestinalHabit?: string,
+  constructor(public appetite?: AppetiteEnum, public chew?: ChewEnum, public waterIntake?: string, public urinaryHabit?: string, public intestinalHabit?: string,
     public laxative?: boolean, public laxativeWhichAnFrequency?: string, public pirose?: boolean, public polydipsia?: boolean, public dysphagia?: boolean,
     public abdominalDistension?: boolean, public flatulence?: boolean, public nauseaVomiting?: boolean, public otherGastrointestinalSymptoms?: string,
     public brittleHair?: boolean, public fingernails?: boolean, public edema?: boolean, public pallor?: boolean, public otherGeralSymptoms?: string,

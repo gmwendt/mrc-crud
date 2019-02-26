@@ -44,7 +44,7 @@ page-anamneses-edit #page-anamneses-edit-content-column .column-item-spacing {
 }
 
 page-anamneses-edit .column-margin {
-  margin-left: 22px;
+  margin: 0 0 22px 22px;
 }
 
 page-anamneses-edit #page-anamneses-edit-content-group {
