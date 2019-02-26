@@ -309,6 +309,32 @@
         </div>
       </div>
 
+      <div id="page-anamneses-edit-content-group" *ngIf="anamnase?.clinicalEvaluation">
+        <label>Hábito intestinal</label>
+        <div>
+          <div id="page-anamneses-edit-content-item">
+            <div>
+              <mat-button-toggle-group #group="matButtonToggleGroup" [value]="anamnase?.clinicalEvaluation?.intestinalHabit" (change)="anamnase.clinicalEvaluation.intestinalHabit = $event.value; markAsDirty()">
+                <mat-button-toggle [value]="intestinalHabitEnum.Normal">Normal</mat-button-toggle>
+                <mat-button-toggle [value]="intestinalHabitEnum.Constipating">Constipante</mat-button-toggle>
+                <mat-button-toggle [value]="intestinalHabitEnum.Diarrhea">Diarréico</mat-button-toggle>
+                <mat-button-toggle [value]="intestinalHabitEnum.Varied">Variado</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+          </div>
+          <div id="page-anamneses-edit-content-item">
+            <label>Frequencia de evacuação</label>
+            <div id="page-anamneses-edit-content-column" class="mrc-toggle-unit">
+              <input type="number" [(ngModel)]="anamnase.clinicalEvaluation.evacuationFrequency" (keypress)="markAsDirty()" (change)="markAsDirty()">
+              <mat-button-toggle-group #group="matButtonToggleGroup" [value]="anamnase?.clinicalEvaluation?.evacuationFrequencyUnit" (change)="anamnase.clinicalEvaluation.evacuationFrequencyUnit = $event.value; markAsDirty()">
+                <mat-button-toggle [value]="frequencyEnum.PerDay">Por dia</mat-button-toggle>
+                <mat-button-toggle [value]="frequencyEnum.PerWeek">Por semana</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </mat-expansion-panel>
 
   </progress-spinner>

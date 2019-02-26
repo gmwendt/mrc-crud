@@ -11,6 +11,17 @@ page-anamneses-edit {
     }
   }
 
+  //TODO: mover para mrc-global
+  .mrc-toggle-unit {
+    .mat-button-toggle {
+      height: 20px;
+
+      .mat-button-toggle-label-content {
+        line-height: 22px;
+      }
+    }
+  }
+
   #page-anamneses-edit-content {
     flex: 1;
     overflow: auto;

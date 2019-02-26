@@ -78,7 +78,9 @@ export enum AlimentarRestrictionEnum {
 export enum FrequencyEnum {
   Everyday,
   Weekends,
-  Socially
+  Socially,
+  PerDay,
+  PerWeek
 }
 
 export enum SleepEnum {
@@ -145,9 +147,17 @@ export enum ChewEnum {
   Slow
 }
 
+export enum IntestinalHabitEnum {
+  Normal,
+  Constipating,
+  Diarrhea,
+  Varied
+}
+
 export class ClinicalEvaluation {
-  constructor(public appetite?: AppetiteEnum, public chew?: ChewEnum, public waterIntake?: string, public urinaryHabit?: string, public intestinalHabit?: string,
-    public laxative?: boolean, public laxativeWhichAnFrequency?: string, public pirose?: boolean, public polydipsia?: boolean, public dysphagia?: boolean,
+  constructor(public appetite?: AppetiteEnum, public chew?: ChewEnum, public waterIntake?: string, public urinaryHabit?: string, public intestinalHabit?: IntestinalHabitEnum,
+    public evacuationFrequency?: number, public evacuationFrequencyUnit?: FrequencyEnum, public laxative?: boolean, public laxativeWhichAnFrequency?: string, 
+    public pirose?: boolean, public polydipsia?: boolean, public dysphagia?: boolean,
     public abdominalDistension?: boolean, public flatulence?: boolean, public nauseaVomiting?: boolean, public otherGastrointestinalSymptoms?: string,
     public brittleHair?: boolean, public fingernails?: boolean, public edema?: boolean, public pallor?: boolean, public otherGeralSymptoms?: string,
     public observations?: string) {}

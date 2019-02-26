@@ -12,6 +12,14 @@ page-anamneses-edit .mrc-page-subtitle > div {
   margin-right: 16px;
 }
 
+page-anamneses-edit .mrc-toggle-unit .mat-button-toggle {
+  height: 20px;
+}
+
+page-anamneses-edit .mrc-toggle-unit .mat-button-toggle .mat-button-toggle-label-content {
+  line-height: 22px;
+}
+
 page-anamneses-edit #page-anamneses-edit-content {
   flex: 1;
   overflow: auto;

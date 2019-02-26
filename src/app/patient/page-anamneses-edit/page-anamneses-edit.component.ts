@@ -9,11 +9,12 @@ import {
   ClinicalEvaluation, 
   FileSystemCommands, 
   FrequencyEnum, 
+  IntestinalHabitEnum, 
   LifeHabits, 
   Pathologies, 
   Patient, 
   SleepEnum,
-  AppetiteEnum, 
+  AppetiteEnum,
 } from "../../core/common/types";
 import { PatientService } from "../../core/patient.service";
 
@@ -47,6 +48,7 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   private sleepEnum = SleepEnum;
   private appetiteEnum = AppetiteEnum;
   private chewEnum = ChewEnum;
+  private intestinalHabitEnum = IntestinalHabitEnum;
 
   @ViewChildren(MrcInputRequiredDirective) genericRequiredInputs: QueryList<MrcInputRequiredDirective>;
 
