@@ -11,6 +11,7 @@ import {
 	MatInputModule, 
 	MatMenuModule,
 	MatNativeDateModule,
+	MatSelectModule,
 	MatTableModule,
 	MatTabsModule,
 } from '@angular/material';
@@ -30,6 +31,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 		MatInputModule, 
 		MatMenuModule,
 		MatNativeDateModule,
+		MatSelectModule,
 		MatTableModule,
 		MatTabsModule,
   ],
@@ -45,6 +47,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 		MatInputModule,  
 		MatMenuModule,
 		MatNativeDateModule,
+		MatSelectModule,
 		MatTableModule,
 		MatTabsModule,
   ]
