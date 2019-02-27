@@ -5,8 +5,10 @@ import { ActivatedRoute } from "@angular/router";
 import { 
   AlimentarRestrictionEnum, 
   Anamneses, 
+  AppetiteEnum,
   ChewEnum,
   ClinicalEvaluation, 
+  FecesFormatEnum,
   FileSystemCommands, 
   FrequencyEnum, 
   IntestinalHabitEnum, 
@@ -14,7 +16,6 @@ import {
   Pathologies, 
   Patient, 
   SleepEnum,
-  AppetiteEnum,
 } from "../../core/common/types";
 import { PatientService } from "../../core/patient.service";
 
@@ -49,6 +50,7 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   private appetiteEnum = AppetiteEnum;
   private chewEnum = ChewEnum;
   private intestinalHabitEnum = IntestinalHabitEnum;
+  private fecesFormat = FecesFormatEnum;
 
   @ViewChildren(MrcInputRequiredDirective) genericRequiredInputs: QueryList<MrcInputRequiredDirective>;
 

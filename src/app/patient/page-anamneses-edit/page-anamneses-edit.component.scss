@@ -11,6 +11,10 @@ page-anamneses-edit {
     }
   }
 
+  .mrc-input {
+    width: 400px
+  }
+
   //TODO: mover para mrc-global
   .mrc-toggle-unit {
     .mat-button-toggle {
@@ -105,5 +109,11 @@ page-anamneses-edit {
         width: 85px;
       }
     }
+  }
+
+  //Material overriden
+  .mat-select-panel .mat-option {
+    line-height: 54px;
+    height: 54px;
   }
 }

@@ -154,10 +154,20 @@ export enum IntestinalHabitEnum {
   Varied
 }
 
+export enum FecesFormatEnum {
+  Type1,
+  Type2,
+  Type3,
+  Type4,
+  Type5,
+  Type6,
+  Type7
+}
+
 export class ClinicalEvaluation {
   constructor(public appetite?: AppetiteEnum, public chew?: ChewEnum, public waterIntake?: string, public urinaryHabit?: string, public intestinalHabit?: IntestinalHabitEnum,
-    public evacuationFrequency?: number, public evacuationFrequencyUnit?: FrequencyEnum, public laxative?: boolean, public laxativeWhichAnFrequency?: string, 
-    public pirose?: boolean, public polydipsia?: boolean, public dysphagia?: boolean,
+    public evacuationFrequency?: number, public evacuationFrequencyUnit?: FrequencyEnum, public fecesFormat?: FecesFormatEnum, public useLaxative?: boolean, 
+    public laxativeWhichAnFrequency?: string, public pirose?: boolean, public polydipsia?: boolean, public dysphagia?: boolean,
     public abdominalDistension?: boolean, public flatulence?: boolean, public nauseaVomiting?: boolean, public otherGastrointestinalSymptoms?: string,
     public brittleHair?: boolean, public fingernails?: boolean, public edema?: boolean, public pallor?: boolean, public otherGeralSymptoms?: string,
     public observations?: string) {}

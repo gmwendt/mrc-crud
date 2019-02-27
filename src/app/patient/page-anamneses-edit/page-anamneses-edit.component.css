@@ -8,6 +8,10 @@ page-anamneses-edit .mrc-page-subtitle {
   display: flex;
 }
 
+page-anamneses-edit .mrc-input {
+  width: 400px;
+}
+
 page-anamneses-edit .mrc-page-subtitle > div {
   margin-right: 16px;
 }
