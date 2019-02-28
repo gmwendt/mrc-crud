@@ -275,7 +275,7 @@
               <div id="page-anamneses-edit-content-group">
                 <label>Apetite</label>
                 <div>
-                  <div id="page-anamneses-edit-content-item">
+                  <div id="page-anamneses-edit-content-item" class="page-anamneses-edit-content-item-last-child">
                     <div>
                       <mat-button-toggle-group #group="matButtonToggleGroup" [value]="anamnase?.clinicalEvaluation?.appetite" (change)="anamnase.clinicalEvaluation.appetite = $event.value; markAsDirty()">
                         <mat-button-toggle [value]="appetiteEnum.Normal">Normal</mat-button-toggle>
@@ -294,7 +294,7 @@
             <div id="page-anamneses-edit-content-group">
               <label>Mastigação</label>
               <div>
-                <div id="page-anamneses-edit-content-item">
+                <div id="page-anamneses-edit-content-item" class="page-anamneses-edit-content-item-last-child">
                   <div>
                     <mat-button-toggle-group #group="matButtonToggleGroup" [value]="anamnase?.clinicalEvaluation?.chew" (change)="anamnase.clinicalEvaluation.chew = $event.value; markAsDirty()">
                       <mat-button-toggle [value]="chewEnum.Normal">Normal</mat-button-toggle>
@@ -332,65 +332,77 @@
               </mat-button-toggle-group>
             </div>
           </div>
-          <div id="page-anamneses-edit-content-item">
+          <div id="page-anamneses-edit-content-item" *ngIf="anamnase">
             <label>Formato das fezes (Escala de Bristol)</label>
-            <div class="mrc-input" *ngIf="anamnase">
-              <mat-select [value]="anamnase.clinicalEvaluation?.fecesFormat" (change)="on_select_feces_format_change()" placeholder="Selecione">
-                <mat-select-trigger>
+            <div class="mrc-input">
+              <mat-select [value]="anamnase.clinicalEvaluation?.fecesFormat" (selectionChange)="anamnase.clinicalEvaluation.fecesFormat = $event.value; markAsDirty()" placeholder="Selecione">
+                <mat-select-trigger id="mrc-face-format-select-option">
                   <img [src]="getFecesFormatImage(anamnase.clinicalEvaluation.fecesFormat)">
-                  <span>todo</span>
+                  <label>{{ getFecesFormatText(anamnase.clinicalEvaluation.fecesFormat) }}</label>
                 </mat-select-trigger>
                 <mat-option [value]="fecesFormat.Type1">
-                  <div style="display: flex">
+                  <div id="mrc-face-format-select-option">
                     <img [src]="getFecesFormatImage(fecesFormat.Type1)">
-                    <label>Caroços duros e separados, como nozes (difícil de passar)</label>
+                    <label>{{ getFecesFormatText(fecesFormat.Type1) }}</label>
                   </div>
                 </mat-option>
                 <mat-option [value]="fecesFormat.Type2">
-                  <div style="display: flex">
+                  <div id="mrc-face-format-select-option">
                     <img [src]="getFecesFormatImage(fecesFormat.Type2)">
-                    <label>Forma de salsicha, mas granuloso</label>  
+                    <label>{{ getFecesFormatText(fecesFormat.Type2) }}</label>  
                   </div>
                 </mat-option>
                 <mat-option [value]="fecesFormat.Type3">
-                  <div style="display: flex">
+                  <div id="mrc-face-format-select-option">
                     <img [src]="getFecesFormatImage(fecesFormat.Type3)">
-                    <label>Como uma salsicha, mas com fissuras em sua superfície</label>
+                    <label>{{ getFecesFormatText(fecesFormat.Type3) }}</label>
                   </div>
                 </mat-option>
                 <mat-option [value]="fecesFormat.Type4">
-                  <div style="display: flex">
+                  <div id="mrc-face-format-select-option">
                     <img [src]="getFecesFormatImage(fecesFormat.Type4)">
-                    <label>Como uma salsicha ou serpente, suave e macio</label>
+                    <label>{{ getFecesFormatText(fecesFormat.Type4) }}</label>
                   </div>
                 </mat-option>
                 <mat-option [value]="fecesFormat.Type5">
-                  <div style="display: flex">
+                  <div id="mrc-face-format-select-option">
                     <img [src]="getFecesFormatImage(fecesFormat.Type5)">
-                    <label>Bolhas suaves com bordas nítidas (que passa facilmente)</label>
+                    <label>{{ getFecesFormatText(fecesFormat.Type5) }}</label>
                   </div>
                 </mat-option>
                 <mat-option [value]="fecesFormat.Type6">
-                  <div style="display: flex">
+                  <div id="mrc-face-format-select-option">
                     <img [src]="getFecesFormatImage(fecesFormat.Type6)">
-                    <label>Peças fofas com bordas em pedaços</label>
+                    <label>{{ getFecesFormatText(fecesFormat.Type6) }}</label>
                   </div>
                 </mat-option>
                 <mat-option [value]="fecesFormat.Type7">
-                  <div style="display: flex">
+                  <div id="mrc-face-format-select-option">
                     <img [src]="getFecesFormatImage(fecesFormat.Type7)">
-                    <label>Aquoso, sem partes sólidas, inteiramente líquido</label>
+                    <label>{{ getFecesFormatText(fecesFormat.Type7) }}</label>
                   </div>
                 </mat-option>
               </mat-select>
             </div>
+            <span id="page-anamneses-edit-content-item-description" *ngIf="bristolIndicator">Indicador Bristol: {{ bristolIndicator }}</span>
           </div>
-
-          <!-- TODO: Cor das partes -->
 
           <div id="page-anamneses-edit-content-item">
             <mat-checkbox *ngIf="anamnase" [(ngModel)]="anamnase.clinicalEvaluation.useLaxative" (change)="markAsDirty()" disableRipple="true">Usa laxante</mat-checkbox>
           </div>
+
+          <div id="page-anamneses-edit-content-item" *ngIf="anamnase">
+            <label>Cor das fezes</label>
+            <div id="mrc-chips-list">
+              <label *ngFor="let option of poopShadeList" 
+                     [style.background-color]="option.color" 
+                     [style.color]="option.textColor ? option.textColor : ''" 
+                     [ngClass]="{'mrc-chip-selected': option.selected}"
+                     (click)="on_mrc_chip_option_clicked(option)">{{ option.name }}</label>
+            </div>
+            <span id="page-anamneses-edit-content-item-description">{{anamnase.clinicalEvaluation.poopShade}}</span>
+          </div>
+
         </div>
       </div>
 

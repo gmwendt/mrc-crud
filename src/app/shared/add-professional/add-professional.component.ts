@@ -7,8 +7,8 @@ import { DialogService } from '../dialog.service';
 
 import { DialogSelector } from '../dialog-selector/dialog-selector.component';
 
+import { DaysNameEnum, DaysName } from '../../core/common/constants';
 import { ScheduleMap, ScheduleInterval } from '../../core/common/types';
-import { DaysNameEnum, DaysName } from '../../mrc/common/constants';
 
 export class ProfessionalData {
   public active: boolean;

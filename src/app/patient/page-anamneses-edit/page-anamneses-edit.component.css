@@ -71,7 +71,7 @@ page-anamneses-edit #page-anamneses-edit-content-group > div {
 }
 
 page-anamneses-edit #page-anamneses-edit-content-group > div > div {
-  margin: 0 8px 8px 0;
+  margin: 0 8px 16px 0;
 }
 
 page-anamneses-edit #page-anamneses-edit-content-item {
@@ -88,6 +88,10 @@ page-anamneses-edit #page-anamneses-edit-content-item > label {
 page-anamneses-edit #page-anamneses-edit-content-item > textarea {
   height: 80px;
   width: 300px;
+}
+
+page-anamneses-edit #page-anamneses-edit-content-item > #page-anamneses-edit-content-item-description {
+  font-size: 8pt;
 }
 
 page-anamneses-edit #mrc-edit-page-footer .mrc-edit-page-error {
@@ -108,4 +112,39 @@ page-anamneses-edit #mrc-edit-page-footer-buttons > button {
 page-anamneses-edit .mat-select-panel .mat-option {
   line-height: 54px;
   height: 54px;
+}
+
+#mrc-face-format-select-option {
+  display: flex;
+}
+
+#mrc-face-format-select-option > img {
+  height: 39px;
+  width: 64px;
+  margin-right: 4px;
+}
+
+#mrc-face-format-select-option > label {
+  align-items: center;
+  line-height: 39px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#mrc-chips-list {
+  margin-top: 4px;
+}
+
+#mrc-chips-list > label {
+  border-radius: 17px;
+  cursor: pointer;
+  margin-right: 8px;
+  padding: 8px;
+  text-align: center;
+}
+
+#mrc-chips-list .mrc-chip-selected {
+  -webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
 }

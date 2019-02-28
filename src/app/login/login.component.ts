@@ -5,7 +5,7 @@ import { Account, User, Capabilities } from '../core/common/types';
 import { AccountService } from '../core/account.service';
 import { UserService} from '../core/user.service';
 
-import { LocalStorageConstants } from '../mrc/common/constants';
+import { LocalStorageConstants } from '../core/common/constants';
 
 import { DialogAlertButton, DialogAlertResult, DialogAlertData } from '../shared/dialog-alert/dialog-alert.component';
 import { DialogService } from '../shared/dialog.service';

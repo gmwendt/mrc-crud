@@ -2,6 +2,8 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { Location } from '@angular/common';
 import { ActivatedRoute } from "@angular/router";
 
+import { FecesFormat, PoopShadeList, IPoopShadeOption } from "../../core/common/constants";
+
 import { 
   AlimentarRestrictionEnum, 
   Anamneses, 
@@ -15,8 +17,10 @@ import {
   LifeHabits, 
   Pathologies, 
   Patient, 
+  PoopShadesEnum,
   SleepEnum,
 } from "../../core/common/types";
+
 import { PatientService } from "../../core/patient.service";
 
 import { DialogAlertButton, DialogAlertData } from "../../shared/dialog-alert/dialog-alert.component";
@@ -24,7 +28,6 @@ import { DialogService } from "../../shared/dialog.service";
 
 import { Subscription } from "rxjs";
 import { MrcInputRequiredDirective } from "../../shared/input-required.directive";
-import { SELECT_ITEM_HEIGHT_EM } from "@angular/material";
 
 @Component({
   selector: 'page-anamneses-edit',
@@ -44,6 +47,7 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   private isNew: boolean;
   private anamnase: Anamneses;
   private errorList: string[] = [];
+  private poopShadeList = PoopShadeList;
 
   private alimentarRestritionEnum = AlimentarRestrictionEnum;
   private frequencyEnum = FrequencyEnum;
@@ -52,6 +56,7 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   private chewEnum = ChewEnum;
   private intestinalHabitEnum = IntestinalHabitEnum;
   private fecesFormat = FecesFormatEnum;
+  private poopShadesEnum = PoopShadesEnum;
 
   @ViewChildren(MrcInputRequiredDirective) genericRequiredInputs: QueryList<MrcInputRequiredDirective>;
 
@@ -76,8 +81,8 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
           this.anamnase = this._patient.anamneses.find(a => a.id == anamnesesId);
           if (!this.anamnase) 
             throw Error("Cound not find Anamneses content on server.");
-          //else
-          //  this.normalize_anamnase();
+          else
+            this.normalizeAnamnase();
         }
       }
       catch (error) {
@@ -88,6 +93,30 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
       this._detector.detectChanges();
       }
     });
+  }
+
+  private get bristolIndicator(): string {
+    if (!this.anamnase || !this.anamnase.clinicalEvaluation)
+      return;
+
+    switch (this.anamnase.clinicalEvaluation.fecesFormat) {
+      case FecesFormatEnum.Type1:
+        return 'Constipação';
+      case FecesFormatEnum.Type2:
+        return 'Constipação';
+      case FecesFormatEnum.Type3:
+        return 'Bom';
+      case FecesFormatEnum.Type4:
+        return 'Ótimo';
+      case FecesFormatEnum.Type5:
+        return 'Tendência a diarréia';
+      case FecesFormatEnum.Type6:
+        return 'Diarréia leve';
+      case FecesFormatEnum.Type7:
+        return 'Diarréia';
+      default:
+        return null;
+    }
   }
 
   get dirty(): boolean {
@@ -115,6 +144,24 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
       if (input.isNullOrEmpty)
         this.errorList.push(input.emptyError);
     });
+  }
+
+  private normalizeAnamnase(): void {
+    if (!this.anamnase.lifeHabits)
+      this.anamnase.lifeHabits = new LifeHabits();
+
+    if (!this.anamnase.pathologies)
+      this.anamnase.pathologies = new Pathologies();
+
+    if (!this.anamnase.clinicalEvaluation)
+      this.anamnase.clinicalEvaluation = new ClinicalEvaluation();
+
+    if (typeof(this.anamnase.clinicalEvaluation.poopShade) === "number" ||
+        typeof(this.anamnase.clinicalEvaluation.poopShade) === "string")
+      this.poopShadeList.forEach(p => {
+        if (p.value == this.anamnase.clinicalEvaluation.poopShade)
+          p.selected = true;
+      });
   }
 
   private async on_apply_clicked(): Promise<void> {
@@ -149,13 +196,39 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
     this._location.back();
   }
 
-  private on_select_feces_format_change(event: any): void {
-    //anamnase.clinicalEvaluation.fecesFormat = $event.value; markAsDirty()
-    console.log(event);
+  private on_mrc_chip_option_clicked(option: IPoopShadeOption): void {
+    if (option.selected)
+      return;
+
+    this.poopShadeList.forEach(p => p.selected = false);
+
+    option.selected = true;
+    this.anamnase.clinicalEvaluation.poopShade = option.value;
+
+    this.markAsDirty();
+  }
+
+  private getFecesFormatText(type:FecesFormatEnum): string {
+    switch (type) {
+      case FecesFormatEnum.Type1:
+        return FecesFormat.Type1;
+      case FecesFormatEnum.Type2:
+        return FecesFormat.Type2;
+      case FecesFormatEnum.Type3:
+        return FecesFormat.Type3;
+      case FecesFormatEnum.Type4:
+        return FecesFormat.Type4;
+      case FecesFormatEnum.Type5:
+        return FecesFormat.Type5;
+      case FecesFormatEnum.Type6:
+        return FecesFormat.Type6;
+      case FecesFormatEnum.Type7:
+        return FecesFormat.Type7;
+    }
   }
 
   private getFecesFormatImage(type: FecesFormatEnum): string {
-    switch(type) {
+    switch (type) {
       case FecesFormatEnum.Type1:
         return '../../../assets/images/bristol/type1.png';
       case FecesFormatEnum.Type2:
