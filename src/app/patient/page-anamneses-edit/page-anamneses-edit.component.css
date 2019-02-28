@@ -8,12 +8,12 @@ page-anamneses-edit .mrc-page-subtitle {
   display: flex;
 }
 
-page-anamneses-edit .mrc-input {
-  width: 400px;
-}
-
 page-anamneses-edit .mrc-page-subtitle > div {
   margin-right: 16px;
+}
+
+page-anamneses-edit .mrc-input {
+  width: 400px;
 }
 
 page-anamneses-edit .mrc-toggle-unit .mat-button-toggle {
@@ -103,4 +103,9 @@ page-anamneses-edit #mrc-edit-page-footer-buttons {
 page-anamneses-edit #mrc-edit-page-footer-buttons > button {
   margin: 0 8px 8px 0;
   width: 85px;
+}
+
+page-anamneses-edit .mat-select-panel .mat-option {
+  line-height: 54px;
+  height: 54px;
 }

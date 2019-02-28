@@ -24,6 +24,7 @@ import { DialogService } from "../../shared/dialog.service";
 
 import { Subscription } from "rxjs";
 import { MrcInputRequiredDirective } from "../../shared/input-required.directive";
+import { SELECT_ITEM_HEIGHT_EM } from "@angular/material";
 
 @Component({
   selector: 'page-anamneses-edit',
@@ -59,10 +60,10 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    
     this._paramsDisposable = this._route.params.subscribe(async (params) => {
       var patientId = params['id'];
       var anamnesesId = params['anamnesesId'];
-
       this.loading = true;
       try {
         this.isNew = parseInt(anamnesesId) == FileSystemCommands.Add; 
@@ -146,6 +147,32 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
 
   private on_cancel_clicked(): void {
     this._location.back();
+  }
+
+  private on_select_feces_format_change(event: any): void {
+    //anamnase.clinicalEvaluation.fecesFormat = $event.value; markAsDirty()
+    console.log(event);
+  }
+
+  private getFecesFormatImage(type: FecesFormatEnum): string {
+    switch(type) {
+      case FecesFormatEnum.Type1:
+        return '../../../assets/images/bristol/type1.png';
+      case FecesFormatEnum.Type2:
+        return '../../../assets/images/bristol/type2.png';
+      case FecesFormatEnum.Type3:
+        return '../../../assets/images/bristol/type3.png';
+      case FecesFormatEnum.Type4:
+        return '../../../assets/images/bristol/type4.png';
+      case FecesFormatEnum.Type5:
+        return '../../../assets/images/bristol/type5.png';
+      case FecesFormatEnum.Type6:
+        return '../../../assets/images/bristol/type6.png';
+      case FecesFormatEnum.Type7:
+        return '../../../assets/images/bristol/type7.png';
+      default:
+        return ''; //todo: no-image
+    }
   }
 
   private show_error_dialog(msg: string): void {

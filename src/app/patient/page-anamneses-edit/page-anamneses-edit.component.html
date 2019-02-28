@@ -334,47 +334,51 @@
           </div>
           <div id="page-anamneses-edit-content-item">
             <label>Formato das fezes (Escala de Bristol)</label>
-            <div class="mrc-input">
-              <mat-select [value]="anamnase?.clinicalEvaluation?.fecesFormat" (change)="anamnase.clinicalEvaluation.fecesFormat = $event.value; markAsDirty()">
+            <div class="mrc-input" *ngIf="anamnase">
+              <mat-select [value]="anamnase.clinicalEvaluation?.fecesFormat" (change)="on_select_feces_format_change()" placeholder="Selecione">
+                <mat-select-trigger>
+                  <img [src]="getFecesFormatImage(anamnase.clinicalEvaluation.fecesFormat)">
+                  <span>todo</span>
+                </mat-select-trigger>
                 <mat-option [value]="fecesFormat.Type1">
                   <div style="display: flex">
-                    <img src="../../../assets/images/bristol/type1.png">
+                    <img [src]="getFecesFormatImage(fecesFormat.Type1)">
                     <label>Caroços duros e separados, como nozes (difícil de passar)</label>
                   </div>
                 </mat-option>
                 <mat-option [value]="fecesFormat.Type2">
                   <div style="display: flex">
-                    <img src="../../../assets/images/bristol/type2.png">
+                    <img [src]="getFecesFormatImage(fecesFormat.Type2)">
                     <label>Forma de salsicha, mas granuloso</label>  
                   </div>
                 </mat-option>
                 <mat-option [value]="fecesFormat.Type3">
                   <div style="display: flex">
-                    <img src="../../../assets/images/bristol/type3.png">
+                    <img [src]="getFecesFormatImage(fecesFormat.Type3)">
                     <label>Como uma salsicha, mas com fissuras em sua superfície</label>
                   </div>
                 </mat-option>
                 <mat-option [value]="fecesFormat.Type4">
                   <div style="display: flex">
-                    <img src="../../../assets/images/bristol/type4.png">
+                    <img [src]="getFecesFormatImage(fecesFormat.Type4)">
                     <label>Como uma salsicha ou serpente, suave e macio</label>
                   </div>
                 </mat-option>
                 <mat-option [value]="fecesFormat.Type5">
                   <div style="display: flex">
-                    <img src="../../../assets/images/bristol/type5.png">
+                    <img [src]="getFecesFormatImage(fecesFormat.Type5)">
                     <label>Bolhas suaves com bordas nítidas (que passa facilmente)</label>
                   </div>
                 </mat-option>
                 <mat-option [value]="fecesFormat.Type6">
                   <div style="display: flex">
-                    <img src="../../../assets/images/bristol/type6.png">
+                    <img [src]="getFecesFormatImage(fecesFormat.Type6)">
                     <label>Peças fofas com bordas em pedaços</label>
                   </div>
                 </mat-option>
                 <mat-option [value]="fecesFormat.Type7">
                   <div style="display: flex">
-                    <img src="../../../assets/images/bristol/type7.png">
+                    <img [src]="getFecesFormatImage(fecesFormat.Type7)">
                     <label>Aquoso, sem partes sólidas, inteiramente líquido</label>
                   </div>
                 </mat-option>
