@@ -13,15 +13,11 @@ page-anamneses-edit .mrc-page-subtitle > div {
 }
 
 page-anamneses-edit .mrc-input {
-  width: 400px;
+  max-width: 400px;
 }
 
-page-anamneses-edit .mrc-toggle-unit .mat-button-toggle {
-  height: 20px;
-}
-
-page-anamneses-edit .mrc-toggle-unit .mat-button-toggle .mat-button-toggle-label-content {
-  line-height: 22px;
+page-anamneses-edit .mrc-input-2 {
+  max-width: 300px;
 }
 
 page-anamneses-edit #page-anamneses-edit-content {
@@ -90,8 +86,9 @@ page-anamneses-edit #page-anamneses-edit-content-item > textarea {
   width: 300px;
 }
 
-page-anamneses-edit #page-anamneses-edit-content-item > #page-anamneses-edit-content-item-description {
+page-anamneses-edit #page-anamneses-edit-content-item-description {
   font-size: 8pt;
+  margin-top: 8px;
 }
 
 page-anamneses-edit #mrc-edit-page-footer .mrc-edit-page-error {
@@ -109,11 +106,6 @@ page-anamneses-edit #mrc-edit-page-footer-buttons > button {
   width: 85px;
 }
 
-page-anamneses-edit .mat-select-panel .mat-option {
-  line-height: 54px;
-  height: 54px;
-}
-
 #mrc-face-format-select-option {
   display: flex;
 }
@@ -129,22 +121,4 @@ page-anamneses-edit .mat-select-panel .mat-option {
   line-height: 39px;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-#mrc-chips-list {
-  margin-top: 4px;
-}
-
-#mrc-chips-list > label {
-  border-radius: 17px;
-  cursor: pointer;
-  margin-right: 8px;
-  padding: 8px;
-  text-align: center;
-}
-
-#mrc-chips-list .mrc-chip-selected {
-  -webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
-  box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
 }

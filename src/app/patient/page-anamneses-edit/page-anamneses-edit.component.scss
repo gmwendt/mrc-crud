@@ -12,18 +12,11 @@ page-anamneses-edit {
   }
 
   .mrc-input {
-    width: 400px
+    max-width: 400px
   }
 
-  //TODO: mover para mrc-global
-  .mrc-toggle-unit {
-    .mat-button-toggle {
-      height: 20px;
-
-      .mat-button-toggle-label-content {
-        line-height: 22px;
-      }
-    }
+  .mrc-input-2 {
+    max-width: 300px;
   }
 
   #page-anamneses-edit-content {
@@ -94,6 +87,7 @@ page-anamneses-edit {
 
     &-description {
       font-size: 8pt;
+      margin-top: 8px;
     }
   }
 
@@ -130,24 +124,5 @@ page-anamneses-edit {
     line-height: 39px;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-}
-
-//TODO: move to global
-#mrc-chips-list {
-  margin-top: 4px;
-  
-  > label {
-    border-radius: 17px;
-    cursor: pointer;
-    margin-right: 8px;
-    padding: 8px;
-    text-align: center;
-  }
-
-  .mrc-chip-selected {
-    -webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
   }
 }

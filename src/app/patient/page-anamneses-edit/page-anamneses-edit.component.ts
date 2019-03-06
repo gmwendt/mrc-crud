@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { Location } from '@angular/common';
 import { ActivatedRoute } from "@angular/router";
 
-import { FecesFormat, PoopShadeList, IPoopShadeOption } from "../../core/common/constants";
+import { FecesFormat, PoopShadeList, IPoopShadeOption, UrineColorList, IUrineColorOption, UrineColorValueEquivalence } from "../../core/common/constants";
 
 import { 
   AlimentarRestrictionEnum, 
@@ -45,9 +45,10 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   
   private loading: boolean;
   private isNew: boolean;
-  private anamnase: Anamneses;
+  private anamnese: Anamneses;
   private errorList: string[] = [];
   private poopShadeList = PoopShadeList;
+  private urineColorList = UrineColorList;
 
   private alimentarRestritionEnum = AlimentarRestrictionEnum;
   private frequencyEnum = FrequencyEnum;
@@ -56,7 +57,7 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   private chewEnum = ChewEnum;
   private intestinalHabitEnum = IntestinalHabitEnum;
   private fecesFormat = FecesFormatEnum;
-  private poopShadesEnum = PoopShadesEnum;
+  private urinecolorValur = UrineColorValueEquivalence;
 
   @ViewChildren(MrcInputRequiredDirective) genericRequiredInputs: QueryList<MrcInputRequiredDirective>;
 
@@ -76,10 +77,10 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
         this._patient = await this._patientService.getPatientById(patientId);
 
         if (this.isNew)
-          this.anamnase = new Anamneses(this.guid(), '', '', undefined, new LifeHabits(), new Pathologies(), new ClinicalEvaluation());
+          this.anamnese = new Anamneses(this.guid(), '', '', undefined, new LifeHabits(), new Pathologies(), new ClinicalEvaluation());
         else {
-          this.anamnase = this._patient.anamneses.find(a => a.id == anamnesesId);
-          if (!this.anamnase) 
+          this.anamnese = this._patient.anamneses.find(a => a.id == anamnesesId);
+          if (!this.anamnese) 
             throw Error("Cound not find Anamneses content on server.");
           else
             this.normalizeAnamnase();
@@ -96,10 +97,10 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private get bristolIndicator(): string {
-    if (!this.anamnase || !this.anamnase.clinicalEvaluation)
+    if (!this.anamnese || !this.anamnese.clinicalEvaluation)
       return;
 
-    switch (this.anamnase.clinicalEvaluation.fecesFormat) {
+    switch (this.anamnese.clinicalEvaluation.fecesFormat) {
       case FecesFormatEnum.Type1:
         return 'Constipação';
       case FecesFormatEnum.Type2:
@@ -147,19 +148,19 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private normalizeAnamnase(): void {
-    if (!this.anamnase.lifeHabits)
-      this.anamnase.lifeHabits = new LifeHabits();
+    if (!this.anamnese.lifeHabits)
+      this.anamnese.lifeHabits = new LifeHabits();
 
-    if (!this.anamnase.pathologies)
-      this.anamnase.pathologies = new Pathologies();
+    if (!this.anamnese.pathologies)
+      this.anamnese.pathologies = new Pathologies();
 
-    if (!this.anamnase.clinicalEvaluation)
-      this.anamnase.clinicalEvaluation = new ClinicalEvaluation();
+    if (!this.anamnese.clinicalEvaluation)
+      this.anamnese.clinicalEvaluation = new ClinicalEvaluation();
 
-    if (typeof(this.anamnase.clinicalEvaluation.poopShade) === "number" ||
-        typeof(this.anamnase.clinicalEvaluation.poopShade) === "string")
+    if (typeof(this.anamnese.clinicalEvaluation.poopShade) === "number" ||
+        typeof(this.anamnese.clinicalEvaluation.poopShade) === "string")
       this.poopShadeList.forEach(p => {
-        if (p.value == this.anamnase.clinicalEvaluation.poopShade)
+        if (p.value == this.anamnese.clinicalEvaluation.poopShade)
           p.selected = true;
       });
   }
@@ -177,7 +178,7 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
       this._patient.anamneses = [];
 
     if (this.isNew)
-      this._patient.anamneses.push(this.anamnase);
+      this._patient.anamneses.push(this.anamnese);
 
     this.loading = true;
     try {
@@ -196,16 +197,34 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
     this._location.back();
   }
 
-  private on_mrc_chip_option_clicked(option: IPoopShadeOption): void {
-    if (option.selected)
+  private on_poop_shade_option_clicked(option: IPoopShadeOption): void {
+    this.markAsDirty();
+
+    if (option.selected) {
+      this.anamnese.clinicalEvaluation.poopShade = undefined;
+      option.selected = false;
       return;
+    }
 
     this.poopShadeList.forEach(p => p.selected = false);
 
     option.selected = true;
-    this.anamnase.clinicalEvaluation.poopShade = option.value;
+    this.anamnese.clinicalEvaluation.poopShade = option.value;
+  }
 
+  private on_urine_color_option_clicked(option: IUrineColorOption): void {
     this.markAsDirty();
+
+    if (option.selected) {
+      this.anamnese.clinicalEvaluation.urineColor = undefined;
+      option.selected = false;
+      return;
+    }
+
+    this.urineColorList.forEach(p => p.selected = false);
+
+    option.selected = true;
+    this.anamnese.clinicalEvaluation.urineColor = option.value;
   }
 
   private getFecesFormatText(type:FecesFormatEnum): string {

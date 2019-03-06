@@ -129,6 +129,32 @@
   background-color: #69d9b5;
 }
 
+.mrc-global .mrc-toggle-unit .mat-button-toggle {
+  height: 20px;
+}
+
+.mrc-global .mrc-toggle-unit .mat-button-toggle .mat-button-toggle-label-content {
+  line-height: 20px;
+}
+
+.mrc-global #mrc-chips-list {
+  margin-top: 4px;
+}
+
+.mrc-global #mrc-chips-list > label {
+  border-radius: 17px;
+  cursor: pointer;
+  margin-right: 8px;
+  padding: 8px;
+  text-align: center;
+}
+
+.mrc-global #mrc-chips-list .mrc-chip-selected {
+  -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.75);
+}
+
 .mrc-global .mat-button-toggle {
   height: 30px;
 }

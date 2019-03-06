@@ -127,4 +127,32 @@ input, textarea, select {
 			background-color: #69d9b5;
 		}
 	}
+
+	.mrc-toggle-unit {
+    .mat-button-toggle {
+      height: 20px;
+
+      .mat-button-toggle-label-content {
+        line-height: 20px;
+      }
+    }
+	}
+	
+	#mrc-chips-list {
+		margin-top: 4px;
+		
+		> label {
+			border-radius: 17px;
+			cursor: pointer;
+			margin-right: 8px;
+			padding: 8px;
+			text-align: center;
+		}
+	
+		.mrc-chip-selected {
+			-webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
+			-moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
+			box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
+		}
+	}
 }
