@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { Location } from '@angular/common';
 import { ActivatedRoute } from "@angular/router";
 
-import { FecesFormat, PoopShadeList, IPoopShadeOption, UrineColorList, IUrineColorOption, UrineColorValueEquivalence } from "../../core/common/constants";
+import { FecesFormatDescription, PoopShadeList, IPoopShadeOption, UrineColorList, IUrineColorOption, UrineColorValueDescription as UrineColorDescription, PoopShadeDescription, SymptomsList } from "../../core/common/constants";
 
 import { 
   AlimentarRestrictionEnum, 
@@ -24,6 +24,7 @@ import {
 import { PatientService } from "../../core/patient.service";
 
 import { DialogAlertButton, DialogAlertData } from "../../shared/dialog-alert/dialog-alert.component";
+import { DialogSelector } from "../../shared/dialog-selector/dialog-selector.component";
 import { DialogService } from "../../shared/dialog.service";
 
 import { Subscription } from "rxjs";
@@ -57,7 +58,8 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   private chewEnum = ChewEnum;
   private intestinalHabitEnum = IntestinalHabitEnum;
   private fecesFormat = FecesFormatEnum;
-  private urinecolorValur = UrineColorValueEquivalence;
+  private urineColorDesc = UrineColorDescription;
+  private poopShadeDesc = PoopShadeDescription;
 
   @ViewChildren(MrcInputRequiredDirective) genericRequiredInputs: QueryList<MrcInputRequiredDirective>;
 
@@ -227,22 +229,28 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
     this.anamnese.clinicalEvaluation.urineColor = option.value;
   }
 
+  private on_select_symptoms_click(): void {
+    var dialogRef = this._dialog.open(DialogSelector, { height: '600px' });
+    dialogRef.componentInstance.columns.push({ key: 'name' });
+    dialogRef.componentInstance.data = SymptomsList;
+  }
+
   private getFecesFormatText(type:FecesFormatEnum): string {
     switch (type) {
       case FecesFormatEnum.Type1:
-        return FecesFormat.Type1;
+        return FecesFormatDescription.Type1;
       case FecesFormatEnum.Type2:
-        return FecesFormat.Type2;
+        return FecesFormatDescription.Type2;
       case FecesFormatEnum.Type3:
-        return FecesFormat.Type3;
+        return FecesFormatDescription.Type3;
       case FecesFormatEnum.Type4:
-        return FecesFormat.Type4;
+        return FecesFormatDescription.Type4;
       case FecesFormatEnum.Type5:
-        return FecesFormat.Type5;
+        return FecesFormatDescription.Type5;
       case FecesFormatEnum.Type6:
-        return FecesFormat.Type6;
+        return FecesFormatDescription.Type6;
       case FecesFormatEnum.Type7:
-        return FecesFormat.Type7;
+        return FecesFormatDescription.Type7;
     }
   }
 

@@ -326,7 +326,7 @@
                      (click)="on_urine_color_option_clicked(option)"></label>
             </div>
             <span id="page-anamneses-edit-content-item-description">
-              {{ this.urinecolorValur.getValueEquivalence(anamnese.clinicalEvaluation.urineColor) }}
+              {{ urineColorDesc.getValueDescription(anamnese.clinicalEvaluation.urineColor) }}
             </span>
           </div>
           <div id="page-anamneses-edit-content-item">
@@ -433,7 +433,9 @@
                      [ngClass]="{'mrc-chip-selected': option.selected}"
                      (click)="on_poop_shade_option_clicked(option)">{{ option.name }}</label>
             </div>
-            <span id="page-anamneses-edit-content-item-description">{{anamnese.clinicalEvaluation.poopShade}}</span>
+            <span id="page-anamneses-edit-content-item-description">
+              {{ poopShadeDesc.getValueDescription(anamnese.clinicalEvaluation.poopShade) }}
+            </span>
           </div>
 
         </div>
@@ -450,9 +452,9 @@
       <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
         <mat-panel-title>Sintomas (Análise de Nutrientes e Teia de Inter-relações Metabólica)</mat-panel-title>
       </mat-expansion-panel-header>
-      <div>
-
-      </div>
+      <button mat-button (click)="on_select_symptoms_click()">
+        Selecionar sintomas
+      </button>
     </mat-expansion-panel>
 
   </progress-spinner>

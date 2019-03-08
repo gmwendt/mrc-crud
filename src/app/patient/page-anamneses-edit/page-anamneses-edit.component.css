@@ -88,6 +88,7 @@ page-anamneses-edit #page-anamneses-edit-content-item > textarea {
 
 page-anamneses-edit #page-anamneses-edit-content-item-description {
   font-size: 8pt;
+  line-height: 14px;
   margin-top: 8px;
 }
 
