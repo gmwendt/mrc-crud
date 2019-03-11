@@ -231,7 +231,7 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
 
   private on_select_symptoms_click(): void {
     var dialogRef = this._dialog.open(DialogSelector, { height: '600px' });
-    dialogRef.componentInstance.columns.push({ key: 'name' });
+    dialogRef.componentInstance.columns.push({ key: 'name', title: 'Sintomas' });
     dialogRef.componentInstance.data = SymptomsList;
   }
 

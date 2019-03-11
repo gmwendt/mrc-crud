@@ -1,7 +1,8 @@
-import { Component, EventEmitter, OnDestroy, Output, ViewEncapsulation } from '@angular/core';
-import { MatDialogRef, MatTableDataSource } from '@angular/material';
+import { Component, EventEmitter, OnDestroy, Output, ViewChild, ViewEncapsulation, ChangeDetectorRef, ChangeDetectionStrategy, } from '@angular/core';
+import { MatDialogRef, MatTableDataSource, MatList } from '@angular/material';
 
 import { SelectionModel } from '@angular/cdk/collections';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 export class DialogSelectorColumn {
   public key: string;
@@ -13,6 +14,7 @@ export class DialogSelectorColumn {
   templateUrl: './dialog-selector.component.html',
   styleUrls: ['./dialog-selector.component.css'],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DialogSelector implements OnDestroy {
   public dataSource: MatTableDataSource<any>;
@@ -23,9 +25,11 @@ export class DialogSelector implements OnDestroy {
   
   private _data: any[];
 
+  @ViewChild('selectedList') _selectedList: MatList;
+
   @Output() addItemClicked: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private _dialogRef: MatDialogRef<DialogSelector>) {
+  constructor(private _dialogRef: MatDialogRef<DialogSelector>, private _detector: ChangeDetectorRef, private _sanitizer: DomSanitizer) {
   }
 
   isAllSelected() {
@@ -62,6 +66,10 @@ export class DialogSelector implements OnDestroy {
     this.addItemClicked.emit();
   }
 
+  private detect_changes(): void {
+    this._detector.detectChanges();
+  }
+
   private get displayedColumns(): string[] {
     var columns: string[] = [];
 
@@ -69,6 +77,19 @@ export class DialogSelector implements OnDestroy {
     this.columns.forEach(c => columns.push(c.key));
 
     return columns;
+  }
+
+  private get tableHeight(): SafeStyle {
+    if (!this.selection || !this._selectedList)
+      return '';
+
+    if (this.selection.selected.length == 0)
+      return '';
+
+    var listHeight = (<any>this._selectedList)._elementRef.nativeElement.clientHeight + 'px';
+    var heightToSanitize: string = `calc(100% - ${listHeight})`;
+    
+    return this._sanitizer.bypassSecurityTrustStyle(heightToSanitize);
   }
 
   get data(): any[] {

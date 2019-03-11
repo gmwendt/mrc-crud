@@ -2,9 +2,45 @@ dialog-selector .cdk-column-select {
   max-width: 30px;
 }
 
-dialog-selector .dialog-selector-filter {
-  margin: 4px;
-  width: calc(100% - 4px);
+dialog-selector .dialog-selector-filter-group {
+  align-items: center;
+  display: flex;
+  font-size: 9pt;
+  margin: 8px;
+  width: 300px;
+}
+
+dialog-selector .dialog-selector-filter-group > label {
+  margin-right: 8px;
+  text-align: end;
+  width: 60px;
+}
+
+dialog-selector .dialog-selector-filter-group > input {
+  width: calc(100% - 112px);
+}
+
+dialog-selector .dialog-selector-filter-group > .mat-select {
+  width: calc(100% - 112px);
+}
+
+dialog-selector #dialog-selector-workspace {
+  overflow: auto;
+}
+
+dialog-selector #dialog-selector-workspace > .mat-table {
+  height: 100%;
+  overflow: hidden;
+}
+
+dialog-selector #dialog-selector-workspace > .mat-table > .mat-row {
+  min-height: 36px;
+  height: 36px;
+}
+
+dialog-selector .dialog-selector-table-cell {
+  line-height: 18px;
+  max-height: 36px;
 }
 
 dialog-selector .mat-button {
@@ -23,10 +59,6 @@ dialog-selector .dialog-selector-notfound-link {
   font-size: 9pt;
   margin: 4px;
   text-decoration: underline;
-}
-
-dialog-selector mat-table {
-  overflow: auto;
 }
 
 dialog-selector mat-header-row {

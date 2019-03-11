@@ -4,9 +4,45 @@ dialog-selector {
     max-width: 30px;
   }
 
-  .dialog-selector-filter {
-    margin: 4px;
-    width: calc(100% - 4px);
+  .dialog-selector-filter-group {
+    align-items: center;
+    display: flex;
+    font-size: 9pt;
+    margin: 8px;
+    width: 300px;
+
+    > label {
+      margin-right: 8px;
+      text-align: end;
+      width: 60px;
+    }
+
+    > input {
+      width: calc(100% - 112px);
+    }
+
+    > .mat-select {
+      width: calc(100% - 112px);
+    }
+  }
+
+  #dialog-selector-workspace {
+    overflow: auto;
+
+    > .mat-table {
+      height: 100%;
+      overflow: hidden;
+  
+      > .mat-row {
+        min-height: 36px;
+        height: 36px;
+      }
+    }
+  }
+
+  .dialog-selector-table-cell {
+    line-height: 18px;
+    max-height: 36px;
   }
 
   .mat-button {
@@ -25,11 +61,6 @@ dialog-selector {
     font-size: 9pt;
     margin: 4px;
     text-decoration: underline;
-  }
-
-  mat-table {
-    //height: calc(100% - 142px);
-    overflow: auto;
   }
 
   mat-header-row {

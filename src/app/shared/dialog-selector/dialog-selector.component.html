@@ -1,32 +1,53 @@
-<div class="mrc-dialog-title">Selecione as especialidades abaixo</div>
+<div class="mrc-dialog-title">Selecione as especialidades abaixo</div><!--  TODO -->
 <div class="mrc-dialog-separator"></div>
-<input class="dialog-selector-filter" (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
-<mat-table #table [dataSource]="dataSource" class="mat-elevation-z8" [style.height]="isNullOrEmpty(this.notfoundMsg || this.notfoundLinkMsg) ? 'calc(100% - 106px)' : 'calc(100% - 142px)'">
 
-  <!-- Checkbox Column -->
-  <ng-container matColumnDef="select">
-    <mat-header-cell *matHeaderCellDef>
-      <!-- <mat-checkbox (change)="$event ? masterToggle() : null"
-                    [checked]="selection.hasValue() && isAllSelected()"
-                    [indeterminate]="selection.hasValue() && !isAllSelected()" disableRipple="true">
-      </mat-checkbox> -->
-    </mat-header-cell>
-    <mat-cell *matCellDef="let row">
-      <mat-checkbox (click)="$event.stopPropagation()"
-                    (change)="$event ? selection.toggle(row) : null"
-                    [checked]="selection.isSelected(row)" disableRipple="true">
-      </mat-checkbox>
-    </mat-cell>
-  </ng-container>
-  
-  <ng-container *ngFor="let column of columns" [matColumnDef]="column.key">
-    <mat-header-cell *matHeaderCellDef>{{ column.title }}</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element[column.key] }}</mat-cell>
-  </ng-container>
+<div class="dialog-selector-filter-group">
+  <label>Grupo:</label>
+  <mat-select>
+    <mat-option value="food.value"><!--  TODO -->
+      Todos
+    </mat-option>
+  </mat-select>
+</div>
+<div class="dialog-selector-filter-group">
+  <label>Filtro:</label>
+  <input (keyup)="applyFilter($event.target.value)">
+</div>
+<div id="dialog-selector-workspace" [style.height]="isNullOrEmpty(this.notfoundMsg || this.notfoundLinkMsg) ? 'calc(100% - 128px)' : 'calc(100% - 164px)'">
+  <div [style.height]="tableHeight">
+    <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</mat-table>
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()" disableRipple="true">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null; detect_changes()"
+                        [checked]="selection.isSelected(row)" disableRipple="true">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+      
+      <ng-container *ngFor="let column of columns" [matColumnDef]="column.key">
+        <mat-header-cell *matHeaderCellDef>{{ column.title }}</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="dialog-selector-table-cell">{{ element[column.key] }}</div>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+  <mat-list #selectedList>
+    <mat-list-item *ngFor="let item of selection.selected">{{ item.name }}</mat-list-item>
+  </mat-list>
+</div>
 <div class="dialog-selector-notfound-msg">{{ notfoundMsg }}</div>
 <div class="dialog-selector-notfound-link" (click)="add_item_clicked()">{{ notfoundLinkMsg }}</div>
 <div class="mrc-dialog-separator"></div>

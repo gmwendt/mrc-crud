@@ -271,6 +271,11 @@
   color: #9e9e9e;
 }
 
+.mrc-global .mat-list .mat-list-item {
+  height: 28px;
+  font-size: 9pt;
+}
+
 /**
  * Applies styles for users in high contrast mode. Note that this only applies
  * to Microsoft browsers. Chrome can be included by checking for the `html[hc]`
