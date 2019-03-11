@@ -167,6 +167,21 @@ export class Nutrients {
   public static Zinco = 'Zinco';
 }
 
+export interface SymptomOption {
+  name: string;
+  selected?: boolean;
+}
+
+export const SymptomsGroups: SymptomOption[] = [
+  { name: 'Todos', selected: true },
+  { name: 'Articulações' }, { name: 'Boca / Garganta' }, { name: 'Cabelos' },
+  { name: 'Cardio-pulmonar' }, { name: 'Gastrointestinal' }, { name: 'Gengivas' },
+  { name: 'Gerais' }, { name: 'Ginecológico' }, { name: 'Humor' }, { name: 'Intestino' },
+  { name: 'Lábios' }, { name: 'Língua' }, { name: 'Nariz' }, { name: 'Neuro-muscular' },
+  { name: 'Olhos' }, { name: 'Ossos' }, { name: 'Ouvidos' }, { name: 'Pele' }, 
+  { name: 'Rins' }, { name: 'SNC' }
+]
+
 export const SymptomsList: ISymptom[] = [
   //Articulações
   { id: 0, name: 'Dores', group: 'Articulações', locationOnWeb: 'Estrutura',

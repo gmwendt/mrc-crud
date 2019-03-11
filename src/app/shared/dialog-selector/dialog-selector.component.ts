@@ -1,12 +1,20 @@
-import { Component, EventEmitter, OnDestroy, Output, ViewChild, ViewEncapsulation, ChangeDetectorRef, ChangeDetectionStrategy, } from '@angular/core';
-import { MatDialogRef, MatTableDataSource, MatList } from '@angular/material';
+import { Component, EventEmitter, OnDestroy, Output, ViewEncapsulation, Inject, } from '@angular/core';
+import { MatDialogRef, MatTableDataSource, MAT_DIALOG_DATA, MatSelectChange } from '@angular/material';
 
 import { SelectionModel } from '@angular/cdk/collections';
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+
+import { SymptomOption } from '../../core/common/constants';
 
 export class DialogSelectorColumn {
   public key: string;
   public title?: string;
+}
+
+export interface DialogSelectorData {
+  source: any[];
+  columns: DialogSelectorColumn[];
+  title: string;
+  groups?: SymptomOption[];
 }
 
 @Component({
@@ -14,22 +22,28 @@ export class DialogSelectorColumn {
   templateUrl: './dialog-selector.component.html',
   styleUrls: ['./dialog-selector.component.css'],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DialogSelector implements OnDestroy {
+  //TODO: make private
   public dataSource: MatTableDataSource<any>;
   public columns: DialogSelectorColumn[] = [];
   public selection = new SelectionModel<any>(true, []);
   public notfoundMsg: string;
   public notfoundLinkMsg: string;
+
+  private title: string;
+  private groups: SymptomOption[];
   
   private _data: any[];
 
-  @ViewChild('selectedList') _selectedList: MatList;
-
   @Output() addItemClicked: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private _dialogRef: MatDialogRef<DialogSelector>, private _detector: ChangeDetectorRef, private _sanitizer: DomSanitizer) {
+  constructor(private _dialogRef: MatDialogRef<DialogSelector>, @Inject(MAT_DIALOG_DATA) data: DialogSelectorData) {
+
+      this.columns = data.columns;
+      this.data = data.source;
+      this.title = data.title;
+      this.groups = data.groups;
   }
 
   isAllSelected() {
@@ -66,8 +80,15 @@ export class DialogSelector implements OnDestroy {
     this.addItemClicked.emit();
   }
 
-  private detect_changes(): void {
-    this._detector.detectChanges();
+  private on_group_selection_change(event: MatSelectChange): void {
+
+    var filterd = event.value == 'Todos' ? 
+                  this.data : this.data.filter(i => {
+                    if (i.group == event.value)
+                      return i;
+                  });
+    
+    this.dataSource = new MatTableDataSource(filterd);
   }
 
   private get displayedColumns(): string[] {
@@ -79,19 +100,27 @@ export class DialogSelector implements OnDestroy {
     return columns;
   }
 
-  private get tableHeight(): SafeStyle {
-    if (!this.selection || !this._selectedList)
-      return '';
+  private get selectionText(): string {
+    var num = 0;
+    if (this.selection)
+      num = this.selection.selected.length;
 
-    if (this.selection.selected.length == 0)
-      return '';
-
-    var listHeight = (<any>this._selectedList)._elementRef.nativeElement.clientHeight + 'px';
-    var heightToSanitize: string = `calc(100% - ${listHeight})`;
-    
-    return this._sanitizer.bypassSecurityTrustStyle(heightToSanitize);
+    if (num == 0)
+      return 'Nenhum sintoma selecionado.';
+    else if (num == 1)
+      return '1 sintoma selecionado.';
+    else
+      return `${num} sintomas selecionados.`;
   }
 
+  private get selectedGroup(): string {
+    if (!this.groups)
+      return;
+
+    return this.groups.find(i => i.selected).name;
+  }
+
+  //TODO: make private
   get data(): any[] {
     return this._data;
   }

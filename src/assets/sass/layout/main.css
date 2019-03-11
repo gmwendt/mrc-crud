@@ -274,6 +274,8 @@
 .mrc-global .mat-list .mat-list-item {
   height: 28px;
   font-size: 9pt;
+  line-height: 12px;
+      max-height: 28px;
 }
 
 /**

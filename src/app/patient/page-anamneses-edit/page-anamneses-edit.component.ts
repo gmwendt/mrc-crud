@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { Location } from '@angular/common';
 import { ActivatedRoute } from "@angular/router";
 
-import { FecesFormatDescription, PoopShadeList, IPoopShadeOption, UrineColorList, IUrineColorOption, UrineColorValueDescription as UrineColorDescription, PoopShadeDescription, SymptomsList } from "../../core/common/constants";
+import { FecesFormatDescription, PoopShadeList, IPoopShadeOption, UrineColorList, IUrineColorOption, UrineColorValueDescription as UrineColorDescription, PoopShadeDescription, SymptomsList, SymptomsGroups } from "../../core/common/constants";
 
 import { 
   AlimentarRestrictionEnum, 
@@ -24,7 +24,7 @@ import {
 import { PatientService } from "../../core/patient.service";
 
 import { DialogAlertButton, DialogAlertData } from "../../shared/dialog-alert/dialog-alert.component";
-import { DialogSelector } from "../../shared/dialog-selector/dialog-selector.component";
+import { DialogSelector, DialogSelectorData } from "../../shared/dialog-selector/dialog-selector.component";
 import { DialogService } from "../../shared/dialog.service";
 
 import { Subscription } from "rxjs";
@@ -230,9 +230,14 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private on_select_symptoms_click(): void {
-    var dialogRef = this._dialog.open(DialogSelector, { height: '600px' });
-    dialogRef.componentInstance.columns.push({ key: 'name', title: 'Sintomas' });
-    dialogRef.componentInstance.data = SymptomsList;
+    var dialogData: DialogSelectorData = {
+      columns: [{ key: 'name', title: 'Sintomas' }],
+      source: SymptomsList,
+      title: 'Selecione os sintomas abaixo',
+      groups: SymptomsGroups
+    };
+
+    var dialogRef = this._dialog.open(DialogSelector, { height: '600px', width: '450px', data: dialogData });
   }
 
   private getFecesFormatText(type:FecesFormatEnum): string {

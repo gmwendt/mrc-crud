@@ -14,7 +14,7 @@ dialog-selector {
     > label {
       margin-right: 8px;
       text-align: end;
-      width: 60px;
+      width: 42px;
     }
 
     > input {
@@ -27,15 +27,36 @@ dialog-selector {
   }
 
   #dialog-selector-workspace {
-    overflow: auto;
+    overflow: hidden;
 
-    > .mat-table {
-      height: 100%;
-      overflow: hidden;
+    &-table {
+      height: calc(100% - 140px);
+      overflow: auto;
+
+      .mat-table {
   
-      > .mat-row {
-        min-height: 36px;
-        height: 36px;
+        > .mat-row {
+          min-height: 36px;
+          height: 36px;
+        }
+      }
+    }
+
+    &-list {
+      height: 140px;
+      overflow: auto;
+
+      &-text {
+        align-items: center;
+        background-color: white;
+        display: flex;
+        font-size: 9pt;
+        font-style: italic;
+        height: 25px;
+        margin-left: 16px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
       }
     }
   }
