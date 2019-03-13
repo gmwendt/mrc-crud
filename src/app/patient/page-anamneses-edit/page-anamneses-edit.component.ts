@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import { Location } from '@angular/common';
 import { ActivatedRoute } from "@angular/router";
 
-import { FecesFormatDescription, PoopShadeList, IPoopShadeOption, UrineColorList, IUrineColorOption, UrineColorValueDescription as UrineColorDescription, PoopShadeDescription, SymptomsList, SymptomsGroups } from "../../core/common/constants";
+import { FecesFormatDescription, PoopShadeList, IPoopShadeOption, UrineColorList, IUrineColorOption, UrineColorDescription, PoopShadeDescription, MetabolicTrackingList, MetabolicTrackingGroup } from "../../core/common/constants";
 
 import { 
   AlimentarRestrictionEnum, 
@@ -17,14 +17,15 @@ import {
   LifeHabits, 
   Pathologies, 
   Patient, 
-  PoopShadesEnum,
   SleepEnum,
+  MetabolicTracking,
+  IMetabolicTrackingItem,
 } from "../../core/common/types";
 
 import { PatientService } from "../../core/patient.service";
 
 import { DialogAlertButton, DialogAlertData } from "../../shared/dialog-alert/dialog-alert.component";
-import { DialogSelector, DialogSelectorData } from "../../shared/dialog-selector/dialog-selector.component";
+
 import { DialogService } from "../../shared/dialog.service";
 
 import { Subscription } from "rxjs";
@@ -50,6 +51,8 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   private errorList: string[] = [];
   private poopShadeList = PoopShadeList;
   private urineColorList = UrineColorList;
+  private metabolicTrackingList: IMetabolicTrackingItem[];
+  private metabolicTrackingGroups = MetabolicTrackingGroup;
 
   private alimentarRestritionEnum = AlimentarRestrictionEnum;
   private frequencyEnum = FrequencyEnum;
@@ -65,6 +68,7 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
 
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _location: Location,
     private _patientService: PatientService, private _dialog: DialogService) {
+      this.metabolicTrackingList = Object.assign({}, MetabolicTrackingList);
   }
 
   ngAfterViewInit(): void {
@@ -79,7 +83,13 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
         this._patient = await this._patientService.getPatientById(patientId);
 
         if (this.isNew)
-          this.anamnese = new Anamneses(this.guid(), '', '', undefined, new LifeHabits(), new Pathologies(), new ClinicalEvaluation());
+          this.anamnese = new Anamneses(
+                                    this.guid(), 
+                                    '', '', undefined, 
+                                    new LifeHabits(), 
+                                    new Pathologies(), 
+                                    new ClinicalEvaluation(),
+                                    new MetabolicTracking([]));
         else {
           this.anamnese = this._patient.anamneses.find(a => a.id == anamnesesId);
           if (!this.anamnese) 
@@ -159,12 +169,40 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
     if (!this.anamnese.clinicalEvaluation)
       this.anamnese.clinicalEvaluation = new ClinicalEvaluation();
 
+    debugger;
+    if (!this.anamnese.metabolicTracking)
+      this.anamnese.metabolicTracking = new MetabolicTracking([]);
+    else {
+      //TODO
+    }
+
     if (typeof(this.anamnese.clinicalEvaluation.poopShade) === "number" ||
         typeof(this.anamnese.clinicalEvaluation.poopShade) === "string")
       this.poopShadeList.forEach(p => {
         if (p.value == this.anamnese.clinicalEvaluation.poopShade)
           p.selected = true;
       });
+  }
+
+  private getMetabolicTrackingList(group: string): IMetabolicTrackingItem[] {
+    return this.metabolicTrackingList.filter(i => i.group === group);
+  }
+
+  private on_metabolic_item_change(item: IMetabolicTrackingItem, score: number): void {
+    var patientItem = this.anamnese.metabolicTracking.metabolicTrackingList.find(i => i.id == item.id);
+    
+    if (!patientItem && score > 0) 
+      this.anamnese.metabolicTracking.metabolicTrackingList.push({
+        id: item.id,
+        group: item.group,
+        description: item.description,
+        score: score
+      });
+    else {
+      
+    }
+
+    this.markAsDirty();
   }
 
   private async on_apply_clicked(): Promise<void> {
@@ -227,17 +265,6 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
 
     option.selected = true;
     this.anamnese.clinicalEvaluation.urineColor = option.value;
-  }
-
-  private on_select_symptoms_click(): void {
-    var dialogData: DialogSelectorData = {
-      columns: [{ key: 'name', title: 'Sintomas' }],
-      source: SymptomsList,
-      title: 'Selecione os sintomas abaixo',
-      groups: SymptomsGroups
-    };
-
-    var dialogRef = this._dialog.open(DialogSelector, { height: '600px', width: '450px', data: dialogData });
   }
 
   private getFecesFormatText(type:FecesFormatEnum): string {

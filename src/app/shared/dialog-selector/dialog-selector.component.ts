@@ -3,7 +3,7 @@ import { MatDialogRef, MatTableDataSource, MAT_DIALOG_DATA, MatSelectChange } fr
 
 import { SelectionModel } from '@angular/cdk/collections';
 
-import { SymptomOption } from '../../core/common/constants';
+// import { SymptomOption } from '../../core/common/constants';
 
 export class DialogSelectorColumn {
   public key: string;
@@ -14,7 +14,7 @@ export interface DialogSelectorData {
   source: any[];
   columns: DialogSelectorColumn[];
   title: string;
-  groups?: SymptomOption[];
+  // groups?: SymptomOption[];
 }
 
 @Component({
@@ -32,7 +32,7 @@ export class DialogSelector implements OnDestroy {
   public notfoundLinkMsg: string;
 
   private title: string;
-  private groups: SymptomOption[];
+  // private groups: SymptomOption[];
   
   private _data: any[];
 
@@ -43,7 +43,7 @@ export class DialogSelector implements OnDestroy {
       this.columns = data.columns;
       this.data = data.source;
       this.title = data.title;
-      this.groups = data.groups;
+      // this.groups = data.groups;
   }
 
   isAllSelected() {
@@ -113,12 +113,12 @@ export class DialogSelector implements OnDestroy {
       return `${num} sintomas selecionados.`;
   }
 
-  private get selectedGroup(): string {
-    if (!this.groups)
-      return;
+  //private get selectedGroup(): string {
+    // if (!this.groups)
+    //   return;
 
-    return this.groups.find(i => i.selected).name;
-  }
+    // return this.groups.find(i => i.selected).name;
+  //}
 
   //TODO: make private
   get data(): any[] {

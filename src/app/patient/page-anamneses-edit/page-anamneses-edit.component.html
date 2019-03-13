@@ -448,13 +448,54 @@
 
     </mat-expansion-panel>
 
-    <mat-expansion-panel>
+    <!-- <mat-expansion-panel>
       <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
         <mat-panel-title>Sintomas (Análise de Nutrientes e Teia de Inter-relações Metabólica)</mat-panel-title>
       </mat-expansion-panel-header>
       <button mat-button (click)="on_select_symptoms_click()">
         Selecionar sintomas
       </button>
+    </mat-expansion-panel> -->
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+        <mat-panel-title>Rastreamento metabólico</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div id="page-anamneses-edit-content-group">
+        <label>Avalie cada sintoma baseado em seu perfil de saúde típica nos últimos 30 dias de acordo com a escala de pontos abaixo:</label>
+        <div>
+          <div id="page-anamneses-edit-content-item" class="page-anamneses-edit-content-item-last-child">
+            <div>0 - ­Nunca ou quase nunca teve o sintoma</div>
+            <div>1 - ­Ocasionalmente teve, efeito não foi severo</div>
+            <div>2 - ­Ocasionalmente teve, efeito foi severo</div>
+            <div>3 - ­Frequentemente teve, efeito não foi severo</div>
+            <div>4 - ­Frequentemente teve, efeito foi severo </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="page-anamneses-edit-content-group" *ngFor="let group of metabolicTrackingGroups.keys">
+        <label>{{ metabolicTrackingGroups.getGroupNamePTBR(group) }}</label>
+        <div>
+          <div id="page-anamneses-edit-content-column" *ngFor="let item of getMetabolicTrackingList(group)">
+            <div id="page-anamneses-edit-content-column-item">
+              <div id="page-anamneses-edit-content-item">
+                <label>{{ item.description }}</label>
+                <mat-button-toggle-group [value]="item.score" #group="matButtonToggleGroup" 
+                                        (change)="on_metabolic_item_change(item, $event.value)">
+                  <mat-button-toggle [value]="0">0</mat-button-toggle>
+                  <mat-button-toggle [value]="1">1</mat-button-toggle>
+                  <mat-button-toggle [value]="2">2</mat-button-toggle>
+                  <mat-button-toggle [value]="3">3</mat-button-toggle>
+                  <mat-button-toggle [value]="4">4</mat-button-toggle>
+                </mat-button-toggle-group>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </mat-expansion-panel>
 
   </progress-spinner>

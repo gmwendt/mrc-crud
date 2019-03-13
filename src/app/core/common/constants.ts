@@ -1,4 +1,4 @@
-import { PoopShadesEnum, UrineColorEnum, ISymptom } from "./types";
+import { PoopShadesEnum, UrineColorEnum, IMetabolicTrackingItem } from "./types";
 
 export class LocalStorageConstants {
   public static MRC_USER = '_MRC_USER';
@@ -91,7 +91,7 @@ export const PoopShadeList: IPoopShadeOption[] = [
   { color: '#ff7817', name: 'Avermelhada', value: PoopShadesEnum.Red }
 ];
 
-export class UrineColorValueDescription {
+export class UrineColorDescription {
   public static Hydrated = 'Hidratado';
   public static Dehydrated = 'Desidratado';
   public static SeverelyDehydrated = 'Severamente desidratado';
@@ -135,6 +135,29 @@ export const UrineColorList: IUrineColorOption[] = [
   { color: '#daa735', value: UrineColorEnum.SeverelyDehydrated2 },
 ];
 
+export class MetabolicTrackingGroup {
+  public static Head = 'head';
+  public static Eyes = 'eyes';
+  public static keys = [MetabolicTrackingGroup.Head, MetabolicTrackingGroup.Eyes];
+
+  public static getGroupNamePTBR(group: string): string {
+    switch (group) {
+      case MetabolicTrackingGroup.Head:
+        return 'Cabeça';
+      case MetabolicTrackingGroup.Eyes:
+        return 'Olhos';
+    }
+  }
+}
+
+export const MetabolicTrackingList: IMetabolicTrackingItem[] = [
+  { id: 'headache', group: MetabolicTrackingGroup.Head, description: 'Dor de cabeça', score: 0 },
+  { id: 'feelingOfFainting', group: MetabolicTrackingGroup.Head, description: 'Sensação de desmaio', score: 0 },
+  { id: 'dizziness', group: MetabolicTrackingGroup.Head, description: 'Tonturas', score: 0 },
+  { id: 'insomnia', group: MetabolicTrackingGroup.Head, description: 'Insônia', score: 0 },
+  { id: 'wateryOrItchy', group: MetabolicTrackingGroup.Eyes, description: 'Lacrimejantes ou coçando', score: 0 },
+];
+/*
 export class Nutrients {
   public static AcidoGraxoOmega6 = 'Ácido Graxo Ômega-6';
   public static AcidoLinoleico = 'Ácido Linoleico';
@@ -384,4 +407,4 @@ export const SymptomsList: ISymptom[] = [
   { id: 96, name: 'Desorientação', group: 'SNC', locationOnWeb: 'Hormônios e Neurotransmissores', 
     nutrientDeficiency: [Nutrients.VitaminaB1, Nutrients.VitaminaB3] },
 
-];
+];*/

@@ -138,6 +138,26 @@
 
     &-header {
       font-size: 9pt;
+      // font-weight: 400;
+      // flex-direction: row-reverse; // this will set the pointer on the front
+
+      // &.mat-expanded {
+      //   .mat-expansion-indicator::after {
+      //     transform: rotate(-90deg);
+      //   }
+      // }
+
+      // .mat-expansion-indicator::after {
+      //   // unset material default arrow
+      //   border-style: none;
+      //   border-width: unset;
+      //   padding: 0px;
+      //   transform: none;
+      //   vertical-align: unset;
+
+      //   font-size: 9pt;
+      //   font-weight: 600;
+      // }
     }
 
     .mat-header-cell {

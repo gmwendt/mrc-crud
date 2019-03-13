@@ -43,8 +43,7 @@ export class AddressInfo {
 
 export class Anamneses {
   constructor(public id: string, public clinicCase: string, public date: string, public objective?: string, public lifeHabits?: LifeHabits, public pathologies?: Pathologies, 
-    public clinicalEvaluation?: ClinicalEvaluation, public nutrientAnalysis?: NutrientAnalysis, public metabolicTracking?: MetabolicTracking,
-    public eatingHabits?: EatingHabits, public generalObservations?: string) {
+    public clinicalEvaluation?: ClinicalEvaluation, public metabolicTracking?: MetabolicTracking, public eatingHabits?: EatingHabits, public generalObservations?: string) {
   }
 
   toJSON(): string {
@@ -57,6 +56,7 @@ export class Anamneses {
       obj.lifeHabits = typeof obj.lifeHabits === 'string' ? LifeHabits.fromJSON(obj.lifeHabits) : obj.lifeHabits;
       obj.pathologies = typeof obj.pathologies === 'string' ? Pathologies.fromJSON(obj.pathologies) : obj.pathologies;
       obj.clinicalEvaluation = typeof obj.clinicalEvaluation === 'string' ? ClinicalEvaluation.fromJSON(obj.clinicalEvaluation) : obj.clinicalEvaluation;
+      obj.metabolicTracking = typeof obj.metabolicTracking === 'string' ? MetabolicTracking.fromJSON(obj.metabolicTracking) : obj.metabolicTracking;
       //TODO: other properties
       return obj;
     }
@@ -207,53 +207,30 @@ export class ClinicalEvaluation {
   }
 }
 
-export interface ISymptom {
-  id: number;
-  name: string;
+export interface IMetabolicTrackingItem {
+  id: string;
+  description: string;
   group: string;
-  locationOnWeb?: string;
-  nutrientsExcess?: string[];
-  nutrientDeficiency?: string[];
-}
-
-export class NutrientAnalysis {
-  constructor(public symptoms?: string[], public antecedent?: string, 
-    public triggers?: string, public observations?: string) {}
-
-  toJSON(): string {
-    return JSON.stringify(Object.assign({}, this));
-  }
-      
-  static fromJSON(json: NutrientAnalysis | string): NutrientAnalysis {
-    if (typeof json === 'string')
-      return JSON.parse(json, NutrientAnalysis.reviver);
-      
-    var data = Object.create(NutrientAnalysis.prototype);
-    return Object.assign(data, json);
-  }
-      
-  private static reviver(key: string, value: any): any {
-    return key === "" ? NutrientAnalysis.fromJSON(value) : value;
-  }
+  score: number;
 }
 
 export class MetabolicTracking {
-  constructor(public headache: number, public feelingOfFainting: number, public dizziness: number, public insomnia: number, public wateryOrItchy: number,
-    public swollenOrRedOrEyelashesGluing: number, public bagsOrDarkCirclesUnderTheEyes: number, public blurredOrTunnelVisionWithoutMyopiaAstigmatism: number,
-    public itch: number, public earachesOrInfections: number, public purulentFluid: number, public buzzingOrHearingLoss: number, public stuffyNose: number,
-    public sinusitis: number, public runnyNoseAndNeezingAndItchyEyes: number, public sneezingAttacks: number, public excessiveMucusFormation: number,
-    public chronicCough: number, public frequentNeedToClearThroat: number, public soreThroatOrHoarsenessOrLossOfVoice: number, 
-    public swollenOrDiscoloredGumsOrLips: number, public cankerSores: number, public acne: number, public itchyWoundsOrRashesOrDrySkin: number,
-    public hairLoss: number, public rednessOrHeat: number, public excessiveSweating: number, public irregularOrFailingBeats: number, public tooFastBeats: number,
-    public chestPain: number, public chestCongestion: number, public asthmaOrBronchitis: number, public littleBreath: number, public difficultyBreathing: number,
-    public nauseaOrVomiting: number, public diarrhea: number, public constipation: number, public feelsSwollenOrDistendedAbdomen: number, public bowelOrIntestinalGas: number,
-    public heartburn: number, public stomachOrIntestinalPain: number, public jointPain: number, public arthritis: number, public rigidityOrLimitationOfMovement: number,
-    public muscleAches: number, public feelingWeakOrTired: number, public fatigue: number, public apathyOrLethargy: number, public hyperactivity: number, 
-    public difficultyInRestingOrRelaxing: number, public badMemory: number, public mentalConfusionOrPoorUnderstanding: number, public badConcentration: number,
-    public poorMotorConcentration: number, public difficultyInMakingDecisions: number, public wordRepetitionsWithInvoluntaryPauses: number, 
-    public pronounceWordsIndistinctlyOrConfused: number, public learningProblems: number, public changeOfMood: number, public anxietyFearNervousness: number,
-    public angerIrritabilityAggressiveness: number, public depression: number, public oftenSick: number, public frequentOrUrgentUrgeToUrinate: number,
-    public genitalItchingOrDischarge: number, public totalScore: number) {}
+  constructor(public metabolicTrackingList?: IMetabolicTrackingItem[], public wateryOrItchy?: number,
+    public swollenOrRedOrEyelashesGluing?: number, public bagsOrDarkCirclesUnderTheEyes?: number, public blurredOrTunnelVisionWithoutMyopiaAstigmatism?: number,
+    public itch?: number, public earachesOrInfections?: number, public purulentFluid?: number, public buzzingOrHearingLoss?: number, public stuffyNose?: number,
+    public sinusitis?: number, public runnyNoseAndNeezingAndItchyEyes?: number, public sneezingAttacks?: number, public excessiveMucusFormation?: number,
+    public chronicCough?: number, public frequentNeedToClearThroat?: number, public soreThroatOrHoarsenessOrLossOfVoice?: number, 
+    public swollenOrDiscoloredGumsOrLips?: number, public cankerSores?: number, public acne?: number, public itchyWoundsOrRashesOrDrySkin?: number,
+    public hairLoss?: number, public rednessOrHeat?: number, public excessiveSweating?: number, public irregularOrFailingBeats?: number, public tooFastBeats?: number,
+    public chestPain?: number, public chestCongestion?: number, public asthmaOrBronchitis?: number, public littleBreath?: number, public difficultyBreathing?: number,
+    public nauseaOrVomiting?: number, public diarrhea?: number, public constipation?: number, public feelsSwollenOrDistendedAbdomen?: number, public bowelOrIntestinalGas?: number,
+    public heartburn?: number, public stomachOrIntestinalPain?: number, public jointPain?: number, public arthritis?: number, public rigidityOrLimitationOfMovement?: number,
+    public muscleAches?: number, public feelingWeakOrTired?: number, public fatigue?: number, public apathyOrLethargy?: number, public hyperactivity?: number, 
+    public difficultyInRestingOrRelaxing?: number, public badMemory?: number, public mentalConfusionOrPoorUnderstanding?: number, public badConcentration?: number,
+    public poorMotorConcentration?: number, public difficultyInMakingDecisions?: number, public wordRepetitionsWithInvoluntaryPauses?: number, 
+    public pronounceWordsIndistinctlyOrConfused?: number, public learningProblems?: number, public changeOfMood?: number, public anxietyFearNervousness?: number,
+    public angerIrritabilityAggressiveness?: number, public depression?: number, public oftenSick?: number, public frequentOrUrgentUrgeToUrinate?: number,
+    public genitalItchingOrDischarge?: number, public totalScore?: number) {}
     
   toJSON(): string {
     return JSON.stringify(Object.assign({}, this));
