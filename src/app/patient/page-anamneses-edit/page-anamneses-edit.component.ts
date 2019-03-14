@@ -20,6 +20,7 @@ import {
   SleepEnum,
   MetabolicTracking,
   IMetabolicTrackingItem,
+  EatingHabits,
 } from "../../core/common/types";
 
 import { PatientService } from "../../core/patient.service";
@@ -68,7 +69,8 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
 
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _location: Location,
     private _patientService: PatientService, private _dialog: DialogService) {
-      this.metabolicTrackingList = Object.assign({}, MetabolicTrackingList);
+      this.metabolicTrackingList = MetabolicTrackingList.slice();
+      this.metabolicTrackingList.forEach(i => i.score = 0);
   }
 
   ngAfterViewInit(): void {
@@ -89,7 +91,8 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
                                     new LifeHabits(), 
                                     new Pathologies(), 
                                     new ClinicalEvaluation(),
-                                    new MetabolicTracking([]));
+                                    new MetabolicTracking([]),
+                                    new EatingHabits());
         else {
           this.anamnese = this._patient.anamneses.find(a => a.id == anamnesesId);
           if (!this.anamnese) 
@@ -132,6 +135,15 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  private get metabolicTrackingScore(): number {
+    var score = 0;
+
+    if (this.anamnese && this.anamnese.metabolicTracking.metabolicTrackingList)
+      this.anamnese.metabolicTracking.metabolicTrackingList.forEach(i => score += i.score);
+
+    return score;
+  }
+
   get dirty(): boolean {
     return this._dirty;
   }
@@ -169,12 +181,18 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
     if (!this.anamnese.clinicalEvaluation)
       this.anamnese.clinicalEvaluation = new ClinicalEvaluation();
 
-    debugger;
     if (!this.anamnese.metabolicTracking)
       this.anamnese.metabolicTracking = new MetabolicTracking([]);
     else {
-      //TODO
+      this.anamnese.metabolicTracking.metabolicTrackingList.forEach(item => {
+        var find = this.metabolicTrackingList.find(i => i.id == item.id);
+        if (find)
+          find.score = item.score;
+      });
     }
+
+    if (!this.anamnese.eatingHabits)
+      this.anamnese.eatingHabits = new EatingHabits();
 
     if (typeof(this.anamnese.clinicalEvaluation.poopShade) === "number" ||
         typeof(this.anamnese.clinicalEvaluation.poopShade) === "string")
@@ -185,11 +203,15 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private getMetabolicTrackingList(group: string): IMetabolicTrackingItem[] {
+    if (!this.metabolicTrackingList)
+      return;
+      
     return this.metabolicTrackingList.filter(i => i.group === group);
   }
 
   private on_metabolic_item_change(item: IMetabolicTrackingItem, score: number): void {
     var patientItem = this.anamnese.metabolicTracking.metabolicTrackingList.find(i => i.id == item.id);
+    var index = this.anamnese.metabolicTracking.metabolicTrackingList.indexOf(patientItem);
     
     if (!patientItem && score > 0) 
       this.anamnese.metabolicTracking.metabolicTrackingList.push({
@@ -199,7 +221,10 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
         score: score
       });
     else {
-      
+      if (!score)
+        this.anamnese.metabolicTracking.metabolicTrackingList.splice(index, 1);
+      else
+        patientItem.score = score;
     }
 
     this.markAsDirty();

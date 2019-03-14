@@ -482,22 +482,52 @@
             <div id="page-anamneses-edit-content-column-item">
               <div id="page-anamneses-edit-content-item">
                 <label>{{ item.description }}</label>
-                <mat-button-toggle-group [value]="item.score" #group="matButtonToggleGroup" 
-                                        (change)="on_metabolic_item_change(item, $event.value)">
-                  <mat-button-toggle [value]="0">0</mat-button-toggle>
-                  <mat-button-toggle [value]="1">1</mat-button-toggle>
-                  <mat-button-toggle [value]="2">2</mat-button-toggle>
-                  <mat-button-toggle [value]="3">3</mat-button-toggle>
-                  <mat-button-toggle [value]="4">4</mat-button-toggle>
-                </mat-button-toggle-group>
+                <div>
+                  <mat-button-toggle-group [value]="item.score" #group="matButtonToggleGroup" 
+                                          (change)="on_metabolic_item_change(item, $event.value)">
+                    <mat-button-toggle [value]="0">0</mat-button-toggle>
+                    <mat-button-toggle [value]="1">1</mat-button-toggle>
+                    <mat-button-toggle [value]="2">2</mat-button-toggle>
+                    <mat-button-toggle [value]="3">3</mat-button-toggle>
+                    <mat-button-toggle [value]="4">4</mat-button-toggle>
+                  </mat-button-toggle-group>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
+      <div id="page-anamneses-edit-content-group">
+        <label>Resultado do rastreamento metabólico</label>
+        <div>
+          <div id="page-anamneses-edit-content-item">
+            <div>
+              <label>Total:</label>
+              <label class="metabolic-tracking-score">{{ metabolicTrackingScore }}</label>
+              <label class="metabolic-tracking-score">pontos</label>
+            </div>
+            <label 
+              [style.color]="metabolicTrackingGroups.getColor(metabolicTrackingScore)"
+              [style.background-color]="metabolicTrackingGroups.getBGColor(metabolicTrackingScore)"
+              class="metabolic-tracking-score-description">{{ metabolicTrackingGroups.getScoreDesc(metabolicTrackingScore) }}</label>
+          </div>
+        </div>
+      </div>
+
     </mat-expansion-panel>
 
+    <mat-expansion-panel>
+      <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+        <mat-panel-title>Hábitos alimentares</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div id="page-anamneses-edit-content-item" *ngIf="anamnese?.eatingHabits">
+        <label>Suplementos</label>
+        <textarea [(ngModel)]="anamnese.eatingHabits.supplements" (keypress)="markAsDirty()"></textarea>
+      </div>
+
+    </mat-expansion-panel>
   </progress-spinner>
 </div>
 <div id="mrc-edit-page-footer">

@@ -55,6 +55,15 @@ page-anamneses-edit .column-margin {
   margin: 0 0 22px 22px;
 }
 
+page-anamneses-edit .metabolic-tracking-score {
+  font-weight: bold;
+  margin-left: 4px;
+}
+
+page-anamneses-edit .metabolic-tracking-score-description {
+  padding: 4px;
+}
+
 page-anamneses-edit #page-anamneses-edit-content-group {
   margin: 0 0 16px 22px;
   font-size: 9pt;

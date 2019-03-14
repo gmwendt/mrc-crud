@@ -138,7 +138,24 @@ export const UrineColorList: IUrineColorOption[] = [
 export class MetabolicTrackingGroup {
   public static Head = 'head';
   public static Eyes = 'eyes';
-  public static keys = [MetabolicTrackingGroup.Head, MetabolicTrackingGroup.Eyes];
+  public static Ears = 'ears';
+  public static Nose = 'nose';
+  public static MouthAndThroat = 'mouth_and_throat';
+  public static Skin = 'skin';
+  public static Heart = 'heart';
+  public static Lungs = 'lungs';
+  public static DisgestiveTreatment = 'disgestive_treatment';
+  public static JointsAndMuscles = 'joints_and_muscles';
+  public static EnergyActivity = 'energy_activity';
+  public static Mind = 'mind';
+  public static Emotions = 'emotions';
+  public static Others = 'others';
+  public static keys = [
+    MetabolicTrackingGroup.Head, MetabolicTrackingGroup.Eyes, MetabolicTrackingGroup.Ears, MetabolicTrackingGroup.Nose,
+    MetabolicTrackingGroup.MouthAndThroat, MetabolicTrackingGroup.Skin, MetabolicTrackingGroup.Heart, MetabolicTrackingGroup.Lungs, 
+    MetabolicTrackingGroup.DisgestiveTreatment, MetabolicTrackingGroup.JointsAndMuscles, MetabolicTrackingGroup.EnergyActivity,
+    MetabolicTrackingGroup.Mind, MetabolicTrackingGroup.Emotions, MetabolicTrackingGroup.Others
+  ];
 
   public static getGroupNamePTBR(group: string): string {
     switch (group) {
@@ -146,7 +163,64 @@ export class MetabolicTrackingGroup {
         return 'Cabeça';
       case MetabolicTrackingGroup.Eyes:
         return 'Olhos';
+      case MetabolicTrackingGroup.Ears:
+        return 'Ouvidos';
+      case MetabolicTrackingGroup.Nose:
+        return 'Nariz';
+      case MetabolicTrackingGroup.MouthAndThroat:
+        return 'Boca / Garganta';
+      case MetabolicTrackingGroup.Skin:
+        return 'Pele';
+      case MetabolicTrackingGroup.Heart:
+        return 'Coração';
+      case MetabolicTrackingGroup.Lungs:
+        return 'Pulmões';
+      case MetabolicTrackingGroup.DisgestiveTreatment:
+        return 'Trato digestivo';
+      case MetabolicTrackingGroup.JointsAndMuscles:
+        return 'Articulações / Músculos';
+      case MetabolicTrackingGroup.EnergyActivity:
+        return 'Energia / Atividade';
+      case MetabolicTrackingGroup.Mind:
+        return 'Mente';
+      case MetabolicTrackingGroup.Emotions:
+        return 'Emoções';
+      case MetabolicTrackingGroup.Others:
+        return 'Outros';
     }
+  }
+
+  public static getScoreDesc(score: number): string {
+    if (score <= 30)
+      return 'Saudável, baixa chance de hipersensibilidades.';
+    else if (score <= 40)
+      return 'Indicativo de existência de hipersensibilidades.';
+    else if (score <= 100)
+      return 'Absoluta certeza de existência de hipersensibilidades.';
+    else
+      return 'Saúde muito ruim. Alta dificuldade para executar tarefas diárias, pode estar associado à presença de doenças crônicas.';
+  }
+
+  public static getBGColor(score: number): string {
+    if (score <= 30)
+      return '#d2f8d2';
+    else if (score <= 40)
+      return '#faebd7';
+    else if (score <= 100)
+      return '#f08080';
+    else
+      return '#212121';
+  }
+
+  public static getColor(score: number): string {
+    if (score <= 30)
+      return '#568e56';
+    else if (score <= 40)
+      return '#4b4640';
+    else if (score <= 100)
+      return '#180c0c';
+    else
+      return '#a9a9a9';
   }
 }
 
@@ -155,7 +229,80 @@ export const MetabolicTrackingList: IMetabolicTrackingItem[] = [
   { id: 'feelingOfFainting', group: MetabolicTrackingGroup.Head, description: 'Sensação de desmaio', score: 0 },
   { id: 'dizziness', group: MetabolicTrackingGroup.Head, description: 'Tonturas', score: 0 },
   { id: 'insomnia', group: MetabolicTrackingGroup.Head, description: 'Insônia', score: 0 },
+
   { id: 'wateryOrItchy', group: MetabolicTrackingGroup.Eyes, description: 'Lacrimejantes ou coçando', score: 0 },
+  { id: 'swollenOrRedOrEyelashesGluing', group: MetabolicTrackingGroup.Eyes, description: 'Inchados, vermelhos ou com cílios colando', score: 0 },
+  { id: 'bagsOrDarkCirclesUnderTheEyes', group: MetabolicTrackingGroup.Eyes, description: 'Bolsas ou olheiras abaixo dos olhos', score: 0 },
+  { id: 'blurredOrTunnelVisionWithoutMyopiaAstigmatism', group: MetabolicTrackingGroup.Eyes, description: 'Visão borrada ou em túnel (sem miopia/astigmatismo)', score: 0 },
+
+  { id: 'itch', group: MetabolicTrackingGroup.Ears, description: 'Coceira', score: 0 },
+  { id: 'earachesOrInfections', group: MetabolicTrackingGroup.Ears, description: 'Dores de ouvido, infecções auditivas', score: 0 },
+  { id: 'purulentFluid', group: MetabolicTrackingGroup.Ears, description: 'Retirada de fluido purulento do ouvido', score: 0 },
+  { id: 'buzzingOrHearingLoss', group: MetabolicTrackingGroup.Ears, description: 'Zunido, perda da audição', score: 0 },
+
+  { id: 'stuffyNose', group: MetabolicTrackingGroup.Nose, description: 'Entupido', score: 0 },
+  { id: 'sinusitis', group: MetabolicTrackingGroup.Nose, description: 'Problemas de seios nasais (sinusite)', score: 0 },
+  { id: 'runnyNoseAndNeezingAndItchyEyes', group: MetabolicTrackingGroup.Nose, description: 'Corrimento nasal, espirros e coceira dos olhos', score: 0 },
+  { id: 'sneezingAttacks', group: MetabolicTrackingGroup.Nose, description: 'Ataques de espirros', score: 0 },
+  { id: 'excessiveMucusFormation', group: MetabolicTrackingGroup.Nose, description: 'Excessiva formação de muco', score: 0 },
+
+  { id: 'chronicCough', group: MetabolicTrackingGroup.MouthAndThroat, description: 'Tosse crônica', score: 0 },
+  { id: 'frequentNeedToClearThroat', group: MetabolicTrackingGroup.MouthAndThroat, description: 'Frequente necessidade de limpar a garganta', score: 0 },
+  { id: 'soreThroatOrHoarsenessOrLossOfVoice', group: MetabolicTrackingGroup.MouthAndThroat, description: 'Dor de garganta, rouquidão ou perda da voz', score: 0 },
+  { id: 'swollenOrDiscoloredGumsOrLips', group: MetabolicTrackingGroup.MouthAndThroat, description: 'Língua gengivas ou lábios inchados / descoloridos', score: 0 },
+  { id: 'cankerSores', group: MetabolicTrackingGroup.MouthAndThroat, description: 'Aftas', score: 0 },
+
+  { id: 'acne', group: MetabolicTrackingGroup.Skin, description: 'Acne', score: 0 },
+  { id: 'itchyWoundsOrRashesOrDrySkin', group: MetabolicTrackingGroup.Skin, description: 'Feridas que coçam, erupções ou pele seca', score: 0 },
+  { id: 'hairLoss', group: MetabolicTrackingGroup.Skin, description: 'Perda de cabelo', score: 0 },
+  { id: 'rednessOrHeat', group: MetabolicTrackingGroup.Skin, description: 'Vermelhidão, calorões', score: 0 },
+  { id: 'excessiveSweating', group: MetabolicTrackingGroup.Skin, description: 'Suor excessivo', score: 0 },
+
+  { id: 'irregularOrFailingBeats', group: MetabolicTrackingGroup.Heart, description: 'Batidas irregulares ou falhando', score: 0 },
+  { id: 'tooFastBeats', group: MetabolicTrackingGroup.Heart, description: 'Batidas rápidas demais', score: 0 },
+  { id: 'chestPain', group: MetabolicTrackingGroup.Heart, description: 'Dor no peito', score: 0 },
+
+  { id: 'chestCongestion', group: MetabolicTrackingGroup.Lungs, description: 'Congestão no peito', score: 0 },
+  { id: 'asthmaOrBronchitis', group: MetabolicTrackingGroup.Lungs, description: 'Asma, bronquite', score: 0 },
+  { id: 'littleBreath', group: MetabolicTrackingGroup.Lungs, description: 'Pouco fôlego', score: 0 },
+  { id: 'difficultyBreathing', group: MetabolicTrackingGroup.Lungs, description: 'Dificuldade para respirar', score: 0 },
+
+  { id: 'nauseaOrVomiting', group: MetabolicTrackingGroup.DisgestiveTreatment, description: 'Náuseas, vômito', score: 0 },
+  { id: 'diarrhea', group: MetabolicTrackingGroup.DisgestiveTreatment, description: 'Diarréia', score: 0 },
+  { id: 'constipation', group: MetabolicTrackingGroup.DisgestiveTreatment, description: 'Constipação, prisão de ventre', score: 0 },
+  { id: 'feelsSwollenOrDistendedAbdomen', group: MetabolicTrackingGroup.DisgestiveTreatment, description: 'Sente-se inchado, abdômen distendido', score: 0 },
+  { id: 'bowelOrIntestinalGas', group: MetabolicTrackingGroup.DisgestiveTreatment, description: 'Arrotos e/ ou gases intestinais', score: 0 },
+  { id: 'heartburn', group: MetabolicTrackingGroup.DisgestiveTreatment, description: 'Azia', score: 0 },
+  { id: 'stomachOrIntestinalPain', group: MetabolicTrackingGroup.DisgestiveTreatment, description: 'Dor estomacal / intestinal', score: 0 },
+
+  { id: 'jointPain', group: MetabolicTrackingGroup.JointsAndMuscles, description: 'Dores articulares', score: 0 },
+  { id: 'arthritis', group: MetabolicTrackingGroup.JointsAndMuscles, description: 'Artrite / artrose', score: 0 },
+  { id: 'rigidityOrLimitationOfMovement', group: MetabolicTrackingGroup.JointsAndMuscles, description: 'Rigidez ou limitação dos movimentos', score: 0 },
+  { id: 'muscleAches', group: MetabolicTrackingGroup.JointsAndMuscles, description: 'Dores musculares', score: 0 },
+  { id: 'feelingWeakOrTired', group: MetabolicTrackingGroup.JointsAndMuscles, description: 'Sensação de fraqueza ou cansaço', score: 0 },
+
+  { id: 'fatigue', group: MetabolicTrackingGroup.EnergyActivity, description: 'Fadiga, moleza', score: 0 },
+  { id: 'apathyOrLethargy', group: MetabolicTrackingGroup.EnergyActivity, description: 'Apatia, letargia', score: 0 },
+  { id: 'hyperactivity', group: MetabolicTrackingGroup.EnergyActivity, description: 'Hiperatividade', score: 0 },
+  { id: 'difficultyInRestingOrRelaxing', group: MetabolicTrackingGroup.EnergyActivity, description: 'Dificuldade em descansar, relaxar', score: 0 },
+
+  { id: 'badMemory', group: MetabolicTrackingGroup.Mind, description: 'Memória ruim', score: 0 },
+  { id: 'mentalConfusionOrPoorUnderstanding', group: MetabolicTrackingGroup.Mind, description: 'Confusão mental, compreensão ruim', score: 0 },
+  { id: 'badConcentration', group: MetabolicTrackingGroup.Mind, description: 'Concentração ruim', score: 0 },
+  { id: 'poorMotorConcentration', group: MetabolicTrackingGroup.Mind, description: 'Fraca concentração motora', score: 0 },
+  { id: 'difficultyInMakingDecisions', group: MetabolicTrackingGroup.Mind, description: 'Dificuldade em tomar decisões', score: 0 },
+  { id: 'wordRepetitionsWithInvoluntaryPauses', group: MetabolicTrackingGroup.Mind, description: 'Repetições de palavras, com pausas involuntárias', score: 0 },
+  { id: 'pronounceWordsIndistinctlyOrConfused', group: MetabolicTrackingGroup.Mind, description: 'Pronuncia palavras de forma indistinta, confusa', score: 0 },
+  { id: 'learningProblems', group: MetabolicTrackingGroup.Mind, description: 'Problemas de aprendizagem', score: 0 },
+
+  { id: 'changeOfMood', group: MetabolicTrackingGroup.Emotions, description: 'Mudanças de humor', score: 0 },
+  { id: 'anxietyFearNervousness', group: MetabolicTrackingGroup.Emotions, description: 'Ansiedade, medo, nervosismo', score: 0 },
+  { id: 'angerIrritabilityAggressiveness', group: MetabolicTrackingGroup.Emotions, description: 'Raiva, irritabilidade, agressividade', score: 0 },
+  { id: 'depression', group: MetabolicTrackingGroup.Emotions, description: 'Depressão', score: 0 },
+
+  { id: 'oftenSick', group: MetabolicTrackingGroup.Others, description: 'Frequentemente doente', score: 0 },
+  { id: 'frequentOrUrgentUrgeToUrinate', group: MetabolicTrackingGroup.Others, description: 'Frequente ou urgente vontade de urinar', score: 0 },
+  { id: 'genitalItchingOrDischarge', group: MetabolicTrackingGroup.Others, description: 'Coceira genital ou corrimento', score: 0 },
 ];
 /*
 export class Nutrients {
