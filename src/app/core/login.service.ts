@@ -11,7 +11,7 @@ export class LoginService {
 
   constructor(private _http: HttpClient, private _userService: UserService) { }
 
-  async login(email: string, password: string): Promise<User> {
+  async login(email: string, password: string): Promise<boolean> {
     try {
       var user = await this._userService.getUserByEmail(email);
     }
@@ -23,14 +23,24 @@ export class LoginService {
       return Promise.reject('E-mail ou senha inválido.');
     }
 
+    var saltedPwd = this.hashPassword(password, user.passwordSalt);
     if (user.passwordHash != this.hashPassword(password, user.passwordSalt)) {
       return Promise.reject('E-mail ou senha inválido.');
     }
 
-    this._userService.currentUser = user;
-    this._userService.typedPassword = password;
+    try {
+      var auth = await this._userService.authenticate(email, saltedPwd);
 
-    return Promise.resolve(user);
+      if (auth['ok']) {
+        this._userService.currentUser = user;
+        this._userService.typedPassword = password;
+        
+        return Promise.resolve(true);
+      }
+    }
+    catch (error) {
+      return Promise.reject(error);
+    }
   }
 
   private hashPassword(pwd: string, salt: string): string {

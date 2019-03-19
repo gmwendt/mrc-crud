@@ -24,6 +24,13 @@ export class UserService {
     });
   }
 
+  authenticate(email: string, pwd: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._http.get('/user/authenticate/' + email + '/' + pwd) 
+        .subscribe(res => resolve(res), err => reject(err))
+    });
+  }
+
   getAllUsers(): Promise<User[]> {
     return new Promise((resolve, reject) => {
       this._http.get<User[]>('/user')
@@ -117,7 +124,15 @@ export class UserService {
         }, (err) => {
           reject(err);
         });
-  });
+    });
+  }
+
+  logout() {
+   return new Promise((resolve, reject) => {
+     this._http.get('/user/logout/1')
+      .subscribe(res => { resolve(res); }, 
+                 err => { reject(err); });
+   });
   }
 
   generateSalt(): string {

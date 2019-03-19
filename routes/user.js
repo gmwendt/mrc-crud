@@ -39,6 +39,31 @@ router.get('/email/:email', function(req, res, next) {
   });
 });
 
+// REQUEST LOGIN
+router.get('/authenticate/:email/:pwd', function(req, res, next) {
+  var email = req.param("email");
+  var pwd = req.param("pwd");
+  User.find({"email": email}, function(e, docs) {
+    if (docs && docs.length <= 0) {
+      res.send(401);
+      return;
+    }
+    
+    var user = docs[0];
+    
+    if (user.passwordHash == pwd) {
+      mongoose.connect('mongodb+srv://sa:Abcd1234@cluster0-rewhk.mongodb.net/' + user.accountRefId + '?retryWrites=true')
+        .then(() =>  {
+          console.log('connection to ' + user.accountRefId + ' successful');
+          res.status(200).json({ ok: true });
+        })
+        .catch((err) => { console.error(err); res.send(500); });
+    }
+    else 
+      res.send(401);
+  });
+});
+
 /*GEL USERS LIST BY ACCOUNT ID*/
 router.get('/accountRefId/:accountId', function(req, res, next) {
   var accountId = req.param("accountId");
@@ -69,6 +94,20 @@ router.delete('/:id', function(req, res, next) {
     if (err) return next(err);
     res.json(post);
   });
+});
+
+//LOGOUT
+router.get('/logout/:id', function(req, res) {
+  if (mongoose.connection.name != 'mean-app') {
+    mongoose.connect('mongodb+srv://sa:Abcd1234@cluster0-rewhk.mongodb.net/mean-app?retryWrites=true')
+    .then(() =>  {
+      console.log('connection to mean-app successful');
+      res.status(200).json({ ok: true });
+    })
+    .catch((err) => { console.error(err); res.send(500); });
+  }
+  else
+    res.status(200).json({ ok: true });
 });
 
 module.exports = router;

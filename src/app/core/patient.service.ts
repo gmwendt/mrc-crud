@@ -52,21 +52,6 @@ export class PatientService {
     });
   }
 
-  listAccountPatients(accountId: number): Promise<Patient[]> {
-    return new Promise((resolve, reject) => {
-      this._http.get<Patient[]>('/patient/accountRefId/' + accountId)
-        .subscribe(res => {
-          res.map(res => res.address = res.address ? AddressInfo.fromJSON(res.address) : null);
-          res.map(res => {
-            res.anamneses = res.anamneses ? JSON.parse(<any>res.anamneses).map(a => Anamneses.fromJSON(a)) : undefined;
-          });
-          resolve(res);
-        }, (err) => {
-          reject(err);
-        });
-    });
-  }
-
   deletePatient(id: string) {
     return new Promise((resolve, reject) => {
         this._http.delete('/patient/' + id)

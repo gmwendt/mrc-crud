@@ -42,7 +42,7 @@ export class PatientComponent implements OnInit {
       return;
 
     var accId = this._userService.currentUser.accountRefId;
-    this.patients = await this._patient.listAccountPatients(accId);
+    this.patients = await this._patient.getAllPatients();
 
     this.createTable();
   }

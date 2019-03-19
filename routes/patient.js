@@ -19,14 +19,6 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
-/*GET PATIENTS LIST BY ACCOUNT ID*/
-router.get('/accountRefId/:accountId', function(req, res, next) {
-  var accountId = req.param("accountId");
-  Patient.find({"accountRefId": accountId}, function(e,docs) {
-    res.json(docs);
-  });
-});
-
 /* SAVE PATIENT */
 router.post('/', function(req, res, next) {
   Patient.create(req.body, function (err, post) {
