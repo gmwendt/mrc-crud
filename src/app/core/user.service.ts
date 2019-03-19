@@ -58,6 +58,25 @@ export class UserService {
     });
   }
 
+  getUserByEmail(email: string): Promise<User> {
+    return new Promise((resolve, reject) => {
+      this._http.get<User[]>('/user/email/' + email)
+        .subscribe(res => {
+          if (!res || res.length == 0)
+            resolve(null);
+
+          res.map(res => { 
+            res.capabilities = Capabilities.fromJSON(<string>res.capabilities);
+            res.birthDate = new Date(res.birthDate);
+          });
+
+          resolve(res[0]);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
+
   listAccountUsers(accountId: number): Promise<User[]> {
     return new Promise((resolve, reject) => {
       this._http.get<User[]>('/user/accountRefId/' + accountId)

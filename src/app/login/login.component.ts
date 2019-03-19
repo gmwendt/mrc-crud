@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Account, User, Capabilities } from '../core/common/types';
 import { AccountService } from '../core/account.service';
 import { UserService} from '../core/user.service';
+import { LoginService } from '../core/login.service';
 
 import { LocalStorageConstants } from '../core/common/constants';
 
@@ -24,27 +25,35 @@ export class LoginComponent implements OnInit {
   
   private loading = false;
 
-  constructor(private _account: AccountService, private _userService: UserService, private _router: Router, 
-    private _dialog: DialogService) { }
+  constructor(private _account: AccountService, private _userService: UserService, private _loginService: LoginService, 
+    private _router: Router, private _dialog: DialogService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     //DEV MOCK
-    this.loading = true;
-    this._account.getAccountByAccountId('1009').then((acc => {
-      if (!acc)
-        return;
+    // this.loading = true;
+    // this._account.getAccountByAccountId('1009').then((acc => {
+    //   if (!acc)
+    //     return;
       
-      this._userService.getUserByUsername(acc.accountId, 'admin').then((user => {
-        if (!user)
-          return;
+    //   this._userService.getUserByUsername(acc.accountId, 'admin').then((user => {
+    //     if (!user)
+    //       return;
 
-          this._account.current = acc;
-          this._userService.currentUser = user;
-          this._userService.typedPassword = 'admin';
-          this._router.navigate(['home']);
-          this.loading = false;
-      }));
-    }));
+    //       this._account.current = acc;
+    //       this._userService.currentUser = user;
+    //       this._userService.typedPassword = 'admin';
+    //       this._router.navigate(['home']);
+    //       this.loading = false;
+    //   }));
+    // }));
+    try {
+      var user = await this._loginService.login('admin@mrc.com', 'admin');
+      console.log(user);
+    }
+    catch (error) {
+      this.show_error_dialog(error);
+    }
+
   }
 
   private login(): void {
