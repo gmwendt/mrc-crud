@@ -28,32 +28,32 @@ dialog-selector #dialog-selector-workspace {
   overflow: hidden;
 }
 
-dialog-selector #dialog-selector-workspace #dialog-selector-workspace-table {
+dialog-selector #dialog-selector-workspace-table {
   height: calc(100% - 140px);
   overflow: auto;
 }
 
-dialog-selector #dialog-selector-workspace #dialog-selector-workspace-list {
+dialog-selector #dialog-selector-workspace-table .mat-table > .mat-row {
+  min-height: 36px;
+  height: 36px;
+}
+
+dialog-selector #dialog-selector-workspace-list {
   height: 140px;
   overflow: auto;
 }
 
-dialog-selector #dialog-selector-workspace #dialog-selector-workspace-list #dialog-selector-workspace-list-text {
+dialog-selector #dialog-selector-workspace-list-text {
   align-items: center;
-        background-color: white;
-        display: flex;
-        font-size: 9pt;
-        font-style: italic;
-        height: 25px;
-        margin-left: 16px;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-}
-
-dialog-selector #dialog-selector-workspace #dialog-selector-workspace-table .mat-table > .mat-row {
-  min-height: 36px;
-  height: 36px;
+  background-color: white;
+  display: flex;
+  font-size: 9pt;
+  font-style: italic;
+  height: 25px;
+  margin-left: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 dialog-selector .dialog-selector-table-cell {

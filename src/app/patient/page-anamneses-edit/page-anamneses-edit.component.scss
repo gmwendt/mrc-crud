@@ -24,6 +24,28 @@ page-anamneses-edit {
     overflow: auto;
     margin-top: 8px;
 
+    .page-anamneses-edit-content-item {
+      display: flex;
+      flex-direction: column;
+      margin: 0 16px 16px 22px;
+  
+      > label {
+        font-size: 9pt;
+        margin-bottom: 4px;
+      }  
+  
+      > textarea {
+        height: 80px;
+        width: 300px;
+      }
+  
+      &-description {
+        font-size: 8pt;
+        line-height: 14px;
+        margin-top: 8px;
+      }
+    }
+
     .mat-expansion-panel {
       max-width: 860px;
     }
@@ -76,28 +98,10 @@ page-anamneses-edit {
       > div {
         margin: 0 8px 16px 0;
       }
-    }
-  }
 
-  #page-anamneses-edit-content-item {
-    display: flex;
-    flex-direction: column;
-    margin: 0 16px 16px 22px;
-
-    > label {
-      font-size: 9pt;
-      margin-bottom: 4px;
-    }  
-
-    > textarea {
-      height: 80px;
-      width: 300px;
-    }
-
-    &-description {
-      font-size: 8pt;
-      line-height: 14px;
-      margin-top: 8px;
+      > .mrc-bottom-0 {
+        margin-bottom: 0;
+      }
     }
   }
 

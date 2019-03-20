@@ -57,6 +57,7 @@ export class Anamneses {
       obj.pathologies = typeof obj.pathologies === 'string' ? Pathologies.fromJSON(obj.pathologies) : obj.pathologies;
       obj.clinicalEvaluation = typeof obj.clinicalEvaluation === 'string' ? ClinicalEvaluation.fromJSON(obj.clinicalEvaluation) : obj.clinicalEvaluation;
       obj.metabolicTracking = typeof obj.metabolicTracking === 'string' ? MetabolicTracking.fromJSON(obj.metabolicTracking) : obj.metabolicTracking;
+      obj.eatingHabits = typeof obj.eatingHabits === 'string' ? EatingHabits.fromJSON(obj.eatingHabits) : obj.eatingHabits;
       //TODO: other properties
       return obj;
     }

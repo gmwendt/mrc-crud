@@ -26,6 +26,32 @@ page-anamneses-edit #page-anamneses-edit-content {
   margin-top: 8px;
 }
 
+page-anamneses-edit #page-anamneses-edit-content .mrc-margin-top-4 {
+  margin-top: 4px;
+}
+
+page-anamneses-edit #page-anamneses-edit-content .page-anamneses-edit-content-item {
+  display: flex;
+  flex-direction: column;
+  margin: 0 16px 16px 22px;
+}
+
+page-anamneses-edit #page-anamneses-edit-content .page-anamneses-edit-content-item > label {
+  font-size: 9pt;
+  margin-bottom: 4px;
+}
+
+page-anamneses-edit #page-anamneses-edit-content .page-anamneses-edit-content-item > textarea {
+  height: 80px;
+  width: 300px;
+}
+
+page-anamneses-edit #page-anamneses-edit-content .page-anamneses-edit-content-item-description {
+  font-size: 8pt;
+  line-height: 14px;
+  margin-top: 8px;
+}
+
 page-anamneses-edit #page-anamneses-edit-content .mat-expansion-panel {
   max-width: 860px;
 }
@@ -79,26 +105,8 @@ page-anamneses-edit #page-anamneses-edit-content-group > div > div {
   margin: 0 8px 16px 0;
 }
 
-page-anamneses-edit #page-anamneses-edit-content-item {
-  display: flex;
-  flex-direction: column;
-  margin: 0 16px 16px 22px;
-}
-
-page-anamneses-edit #page-anamneses-edit-content-item > label {
-  font-size: 9pt;
-  margin-bottom: 4px;
-}
-
-page-anamneses-edit #page-anamneses-edit-content-item > textarea {
-  height: 80px;
-  width: 300px;
-}
-
-page-anamneses-edit #page-anamneses-edit-content-item-description {
-  font-size: 8pt;
-  line-height: 14px;
-  margin-top: 8px;
+page-anamneses-edit #page-anamneses-edit-content-group > div > .mrc-bottom-0 {
+  margin-bottom: 0;
 }
 
 page-anamneses-edit #mrc-edit-page-footer .mrc-edit-page-error {

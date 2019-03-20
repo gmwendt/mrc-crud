@@ -9,12 +9,12 @@
   <progress-spinner [progress]="loading">
 
     <div id="page-anamneses-edit-content-column">
-      <div id="page-anamneses-edit-content-item">
+      <div class="page-anamneses-edit-content-item">
         <label>Caso Clínico</label>
         <textarea mrc-input-required="Caso clínico" [value]="anamnese?.clinicCase" #boxClinicCase
                   (change)="anamnese.clinicCase = boxClinicCase.value" (keypress)="markAsDirty()"></textarea>
       </div>
-      <div id="page-anamneses-edit-content-item">
+      <div class="page-anamneses-edit-content-item">
         <label>Data</label>
         <input (keypress)="markAsDirty()"><!-- TODO -->
       </div>
@@ -23,7 +23,7 @@
       <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
         <mat-panel-title>Hábitos de Vida</mat-panel-title>
       </mat-expansion-panel-header>
-      <div id="page-anamneses-edit-content-item">
+      <div class="page-anamneses-edit-content-item">
         <label>Restrição alimentar</label>
         <div>
           <mat-button-toggle-group #group="matButtonToggleGroup" [value]="anamnese?.lifeHabits?.alimentarRestriction" (change)="anamnese.lifeHabits.alimentarRestriction = $event.value; markAsDirty()">
@@ -34,14 +34,14 @@
         </div>
       </div>
 
-      <div id="page-anamneses-edit-content-item" *ngIf="anamnese?.lifeHabits">
+      <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.lifeHabits">
         <label>Exercícios físicos</label>
         <textarea [(ngModel)]="anamnese.lifeHabits.physicalExercises" (keypress)="markAsDirty()"></textarea>
       </div>
 
       <div id="page-anamneses-edit-content-group">
         <mat-checkbox *ngIf="anamnese" [(ngModel)]="anamnese.lifeHabits.mealsOutsideTheHouse" (change)="markAsDirty()" disableRipple="true">Refeições fora de casa</mat-checkbox>
-        <div id="page-anamneses-edit-content-item" *ngIf="anamnese?.lifeHabits?.mealsOutsideTheHouse">
+        <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.lifeHabits?.mealsOutsideTheHouse">
           <label>Quais</label>
           <input [(ngModel)]="anamnese.lifeHabits.whichMeals" (keypress)="markAsDirty()">
         </div>
@@ -53,7 +53,7 @@
             <div id="page-anamneses-edit-content-group">
               <mat-checkbox *ngIf="anamnese" [(ngModel)]="anamnese.lifeHabits.alcohol" disableRipple="true" (change)="markAsDirty()">Ingere bebida alcoólica</mat-checkbox>
               <div *ngIf="anamnese?.lifeHabits?.alcohol">
-                <div id="page-anamneses-edit-content-item">
+                <div class="page-anamneses-edit-content-item">
                   <div>
                     <mat-button-toggle-group #group="matButtonToggleGroup" [value]="anamnese?.lifeHabits?.alcoholFrequency" (change)="anamnese.lifeHabits.alcoholFrequency = $event.value; markAsDirty()">
                       <mat-button-toggle [value]="frequencyEnum.Everyday">Todos os dias</mat-button-toggle>
@@ -62,7 +62,7 @@
                     </mat-button-toggle-group>
                   </div>
                 </div>
-                <div id="page-anamneses-edit-content-item" class="page-anamneses-edit-content-item-last-child" *ngIf="anamnese?.lifeHabits?.alcohol">
+                <div class="page-anamneses-edit-content-item page-anamneses-edit-content-item-last-child" *ngIf="anamnese?.lifeHabits?.alcohol">
                   <label>Qual e quanto</label>
                   <input [(ngModel)]="anamnese.lifeHabits.alcoholWhichAndHowMuch" (keypress)="markAsDirty()">
                 </div>
@@ -76,7 +76,7 @@
             <div id="page-anamneses-edit-content-group">
               <mat-checkbox *ngIf="anamnese" [(ngModel)]="anamnese.lifeHabits.smoke" disableRipple="true" (change)="markAsDirty()">Fumante</mat-checkbox>
               <div *ngIf="anamnese?.lifeHabits?.smoke">
-                <div id="page-anamneses-edit-content-item">
+                <div class="page-anamneses-edit-content-item">
                   <div>
                     <mat-button-toggle-group #group="matButtonToggleGroup" [value]="anamnese?.lifeHabits?.smokeFrequency" (change)="anamnese.lifeHabits.smokeFrequency = $event.value; markAsDirty()">
                       <mat-button-toggle [value]="frequencyEnum.Everyday">Todos os dias</mat-button-toggle>
@@ -85,7 +85,7 @@
                     </mat-button-toggle-group>
                   </div>
                 </div>
-                <div id="page-anamneses-edit-content-item" class="page-anamneses-edit-content-item-last-child" *ngIf="anamnese?.lifeHabits?.smoke">
+                <div class="page-anamneses-edit-content-item page-anamneses-edit-content-item-last-child" *ngIf="anamnese?.lifeHabits?.smoke">
                   <label>Quantidade</label>
                   <input [(ngModel)]="anamnese.lifeHabits.smokeWhichAndHowMuch" (keypress)="markAsDirty()">
                 </div>
@@ -98,10 +98,10 @@
       <div id="page-anamneses-edit-content-group">
         <label>Hábitos de sono</label>
         <div>
-          <div id="page-anamneses-edit-content-column">
+          <div id="page-anamneses-edit-content-column" class="mrc-bottom-0">
 
             <div id="page-anamneses-edit-content-column-item">
-              <div id="page-anamneses-edit-content-item">
+              <div class="page-anamneses-edit-content-item">
                 <div>
                   <mat-button-toggle-group #group="matButtonToggleGroup" [value]="anamnese?.lifeHabits?.sleep" (change)="anamnese.lifeHabits.sleep = $event.value; markAsDirty()">
                     <mat-button-toggle [value]="sleepEnum.SleepTight">Dorme bem</mat-button-toggle>
@@ -112,10 +112,10 @@
             </div>
 
           </div>
-          <div id="page-anamneses-edit-content-column">
+          <div id="page-anamneses-edit-content-column" class="mrc-bottom-0">
             
             <div id="page-anamneses-edit-content-column-item">
-              <div id="page-anamneses-edit-content-item" class="page-anamneses-edit-content-item-last-child" *ngIf="anamnese?.lifeHabits">
+              <div class="page-anamneses-edit-content-item page-anamneses-edit-content-item-last-child" *ngIf="anamnese?.lifeHabits">
                 <label>Quantas horas</label>
                 <input [(ngModel)]="anamnese.lifeHabits.sleepTime" (keypress)="markAsDirty()"><!-- TODO -->
               </div>
@@ -130,13 +130,13 @@
         <div>
           <div id="page-anamneses-edit-content-column">
             <div id="page-anamneses-edit-content-column-item">
-              <div id="page-anamneses-edit-content-item">
+              <div class="page-anamneses-edit-content-item">
                 <label>Mora com quantas pessoas</label>
                 <input type="number" [(ngModel)]="anamnese.lifeHabits.liveWithHowManyPeople" (keypress)="markAsDirty()" (change)="markAsDirty()">
               </div>
             </div>
             <div id="page-anamneses-edit-content-column-item">
-              <div id="page-anamneses-edit-content-item" class="page-anamneses-edit-content-item-last-child">
+              <div class="page-anamneses-edit-content-item page-anamneses-edit-content-item-last-child">
                 <label>Quem realiza as compras da casa</label>
                 <textarea [(ngModel)]="anamnese.lifeHabits.hoDoesTheHousePurchases" (keypress)="markAsDirty()"></textarea>
               </div>
@@ -144,13 +144,13 @@
           </div>
           <div id="page-anamneses-edit-content-column">
             <div id="page-anamneses-edit-content-column-item">
-              <div id="page-anamneses-edit-content-item">
+              <div class="page-anamneses-edit-content-item">
                 <label>Quantas vezes por mês</label>
                 <input type="number" [(ngModel)]="anamnese.lifeHabits.howManyTimesPerMonth" (keypress)="markAsDirty()" (change)="markAsDirty()">
               </div>
             </div>
             <div id="page-anamneses-edit-content-column-item">
-              <div id="page-anamneses-edit-content-item" class="page-anamneses-edit-content-item-last-child">
+              <div class="page-anamneses-edit-content-item page-anamneses-edit-content-item-last-child">
                 <label>Onde realiza as compras</label>
                 <textarea [(ngModel)]="anamnese.lifeHabits.wherePurchase" (keypress)="markAsDirty()"></textarea>
               </div>
@@ -159,7 +159,7 @@
         </div>
       </div>
 
-      <div id="page-anamneses-edit-content-item" *ngIf="anamnese?.lifeHabits">
+      <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.lifeHabits">
         <label>Observações</label>
         <textarea [(ngModel)]="anamnese.lifeHabits.observations" (keypress)="markAsDirty()"></textarea>
       </div>
@@ -242,22 +242,22 @@
         </div>
       </div>
 
-      <div id="page-anamneses-edit-content-item" *ngIf="anamnese?.pathologies">
+      <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.pathologies">
         <label>Outras patologias</label>
         <textarea [(ngModel)]="anamnese.pathologies.otherPathologies" (keypress)="markAsDirty()"></textarea>
       </div>
 
-      <div id="page-anamneses-edit-content-item" *ngIf="anamnese?.pathologies">
+      <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.pathologies">
         <label>Medicamentos</label>
         <textarea [(ngModel)]="anamnese.pathologies.medicines" (keypress)="markAsDirty()"></textarea>
       </div>
 
-      <div id="page-anamneses-edit-content-item" *ngIf="anamnese?.pathologies">
+      <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.pathologies">
         <label>Histórico familiar</label>
         <textarea [(ngModel)]="anamnese.pathologies.familyHistory" (keypress)="markAsDirty()"></textarea>
       </div>
 
-      <div id="page-anamneses-edit-content-item" *ngIf="anamnese?.pathologies">
+      <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.pathologies">
         <label>Observações</label>
         <textarea [(ngModel)]="anamnese.pathologies.observations" (keypress)="markAsDirty()"></textarea>
       </div>
@@ -275,7 +275,7 @@
               <div id="page-anamneses-edit-content-group">
                 <label>Apetite</label>
                 <div>
-                  <div id="page-anamneses-edit-content-item" class="page-anamneses-edit-content-item-last-child">
+                  <div class="page-anamneses-edit-content-item mrc-bottom-0">
                     <div>
                       <mat-button-toggle-group #group="matButtonToggleGroup" [value]="anamnese?.clinicalEvaluation?.appetite" (change)="anamnese.clinicalEvaluation.appetite = $event.value; markAsDirty()">
                         <mat-button-toggle [value]="appetiteEnum.Normal">Normal</mat-button-toggle>
@@ -294,7 +294,7 @@
             <div id="page-anamneses-edit-content-group">
               <label>Mastigação</label>
               <div>
-                <div id="page-anamneses-edit-content-item" class="page-anamneses-edit-content-item-last-child">
+                <div class="page-anamneses-edit-content-item mrc-bottom-0">
                   <div>
                     <mat-button-toggle-group #group="matButtonToggleGroup" [value]="anamnese?.clinicalEvaluation?.chew" (change)="anamnese.clinicalEvaluation.chew = $event.value; markAsDirty()">
                       <mat-button-toggle [value]="chewEnum.Normal">Normal</mat-button-toggle>
@@ -312,11 +312,11 @@
       <div id="page-anamneses-edit-content-group" *ngIf="anamnese?.clinicalEvaluation">
         <label>Hábito urinário</label>
         <div>
-          <div id="page-anamneses-edit-content-item">
+          <div class="page-anamneses-edit-content-item">
             <label>Descrição</label>
             <textarea [(ngModel)]="anamnese.clinicalEvaluation.urinaryHabit" (keypress)="markAsDirty()"></textarea>
           </div>
-          <div id="page-anamneses-edit-content-item">
+          <div class="page-anamneses-edit-content-item">
             <label>Cor da urina</label>
             <div id="mrc-chips-list">
               <label *ngFor="let option of urineColorList" 
@@ -325,14 +325,14 @@
                      [ngClass]="{'mrc-chip-selected': option.selected}"
                      (click)="on_urine_color_option_clicked(option)"></label>
             </div>
-            <span id="page-anamneses-edit-content-item-description">
+            <span class="page-anamneses-edit-content-item-description">
               {{ urineColorDesc.getValueDescription(anamnese.clinicalEvaluation.urineColor) }}
             </span>
           </div>
-          <div id="page-anamneses-edit-content-item">
+          <div class="page-anamneses-edit-content-item mrc-bottom-0">
             <div>
               <label>Ingestão hídrica</label>
-              <label id="page-anamneses-edit-content-item-description" style="margin-left: 4px">(em litros)</label>
+              <label class="page-anamneses-edit-content-item-description" style="margin-left: 4px">(em litros)</label>
             </div>
             <input class="mrc-input-2" type="number" [(ngModel)]="anamnese.clinicalEvaluation.waterIntake" (keypress)="markAsDirty()" (change)="markAsDirty()">
           </div>
@@ -342,7 +342,7 @@
       <div id="page-anamneses-edit-content-group" *ngIf="anamnese?.clinicalEvaluation">
         <label>Hábito intestinal</label>
         <div>
-          <div id="page-anamneses-edit-content-item">
+          <div class="page-anamneses-edit-content-item">
             <div>
               <mat-button-toggle-group #group="matButtonToggleGroup" [value]="anamnese?.clinicalEvaluation?.intestinalHabit" (change)="anamnese.clinicalEvaluation.intestinalHabit = $event.value; markAsDirty()">
                 <mat-button-toggle [value]="intestinalHabitEnum.Normal">Normal</mat-button-toggle>
@@ -352,7 +352,7 @@
               </mat-button-toggle-group>
             </div>
           </div>
-          <div id="page-anamneses-edit-content-item">
+          <div class="page-anamneses-edit-content-item">
             <label>Frequencia de evacuação</label>
             <div id="page-anamneses-edit-content-column" class="mrc-toggle-unit">
               <input type="number" [(ngModel)]="anamnese.clinicalEvaluation.evacuationFrequency" (keypress)="markAsDirty()" (change)="markAsDirty()">
@@ -362,10 +362,10 @@
               </mat-button-toggle-group>
             </div>
           </div>
-          <div id="page-anamneses-edit-content-item" *ngIf="anamnese">
+          <div class="page-anamneses-edit-content-item" *ngIf="anamnese">
             <div>
               <label>Formato das fezes</label>
-              <label id="page-anamneses-edit-content-item-description" style="margin-left: 4px">(Escala de Bristol)</label>
+              <label class="page-anamneses-edit-content-item-description" style="margin-left: 4px">(Escala de Bristol)</label>
             </div>
             <div class="mrc-input">
               <mat-select [value]="anamnese.clinicalEvaluation?.fecesFormat" (selectionChange)="anamnese.clinicalEvaluation.fecesFormat = $event.value; markAsDirty()" placeholder="Selecione">
@@ -417,14 +417,14 @@
                 </mat-option>
               </mat-select>
             </div>
-            <span id="page-anamneses-edit-content-item-description" *ngIf="bristolIndicator">Indicador Bristol: {{ bristolIndicator }}</span>
+            <span class="page-anamneses-edit-content-item-description" *ngIf="bristolIndicator">Indicador Bristol: {{ bristolIndicator }}</span>
           </div>
 
-          <div id="page-anamneses-edit-content-item">
+          <div class="page-anamneses-edit-content-item">
             <mat-checkbox *ngIf="anamnese" [(ngModel)]="anamnese.clinicalEvaluation.useLaxative" (change)="markAsDirty()" disableRipple="true">Usa laxante</mat-checkbox>
           </div>
 
-          <div id="page-anamneses-edit-content-item" *ngIf="anamnese">
+          <div class="page-anamneses-edit-content-item mrc-bottom-0" *ngIf="anamnese">
             <label>Cor das fezes</label>
             <div id="mrc-chips-list">
               <label *ngFor="let option of poopShadeList" 
@@ -433,7 +433,7 @@
                      [ngClass]="{'mrc-chip-selected': option.selected}"
                      (click)="on_poop_shade_option_clicked(option)">{{ option.name }}</label>
             </div>
-            <span id="page-anamneses-edit-content-item-description">
+            <span class="page-anamneses-edit-content-item-description">
               {{ poopShadeDesc.getValueDescription(anamnese.clinicalEvaluation.poopShade) }}
             </span>
           </div>
@@ -441,7 +441,7 @@
         </div>
       </div>
 
-      <div id="page-anamneses-edit-content-item" *ngIf="anamnese?.clinicalEvaluation">
+      <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.clinicalEvaluation">
         <label>Observações</label>
         <textarea [(ngModel)]="anamnese.clinicalEvaluation.observations" (keypress)="markAsDirty()"></textarea>
       </div>
@@ -518,7 +518,32 @@
         <textarea [(ngModel)]="anamnese.eatingHabits.supplements" (keypress)="markAsDirty()"></textarea>
       </div>
 
+      <div id="page-anamneses-edit-content-item" *ngIf="anamnese?.eatingHabits">
+        <label>Alergia alimentar</label>
+        <textarea [(ngModel)]="anamnese.eatingHabits.foodAllergy" (keypress)="markAsDirty()"></textarea>
+      </div>
+
+      <div id="page-anamneses-edit-content-item" *ngIf="anamnese?.eatingHabits">
+        <label>Intolerância alimentar</label>
+        <textarea [(ngModel)]="anamnese.eatingHabits.foodIntolerance" (keypress)="markAsDirty()"></textarea>
+      </div>
+
+      <div id="page-anamneses-edit-content-item" *ngIf="anamnese?.eatingHabits">
+        <label>Aversão alimentar</label>
+        <textarea [(ngModel)]="anamnese.eatingHabits.foodAversions" (keypress)="markAsDirty()"></textarea>
+      </div>
+
+      <div id="page-anamneses-edit-content-item" *ngIf="anamnese?.eatingHabits">
+        <label>Observações</label>
+        <textarea [(ngModel)]="anamnese.eatingHabits.observations" (keypress)="markAsDirty()"></textarea>
+      </div>
+
     </mat-expansion-panel>
+
+    <div class="page-anamneses-edit-content-item" style="margin-top: 4px" *ngIf="anamnese">
+      <label>Observações gerais</label>
+      <textarea [(ngModel)]="anamnese.generalObservations" (keypress)="markAsDirty()"></textarea>
+    </div>
   </progress-spinner>
 </div>
 <div id="mrc-edit-page-footer">
