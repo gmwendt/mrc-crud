@@ -27,9 +27,11 @@
     "core-js": "^2.4.1",
     "express": "^4.16.3",
     "js-sha512": "^0.7.1",
+    "moment": "^2.24.0",
     "mongoose": "^5.0.14",
     "morgan": "^1.9.0",
     "natives": "^1.1.6",
+    "ng2-date-picker": "^2.11.0",
     "rxjs": "^6.3.3",
     "serve-favicon": "^2.5.0",
     "zone.js": "^0.8.26"

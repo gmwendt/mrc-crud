@@ -109,6 +109,10 @@ page-anamneses-edit #page-anamneses-edit-content-group > div > .mrc-bottom-0 {
   margin-bottom: 0;
 }
 
+page-anamneses-edit #page-anamneses-edit-content-group > div .mrc-left-0 {
+  margin-left: 0;
+}
+
 page-anamneses-edit #mrc-edit-page-footer .mrc-edit-page-error {
   color: #ef1508;
   font-size: 9pt;

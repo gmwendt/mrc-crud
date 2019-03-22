@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+import { DpDatePickerModule } from 'ng2-date-picker';
+
 import { AddProfessionalComponent } from './add-professional/add-professional.component';
 import { CheckListComponent } from './check-list/check-list.component';
 import { DialogAddUserComponent } from './dialog-add-user/dialog-add-user.component';
@@ -21,6 +23,7 @@ import { MaterialModule } from '../material.module';
 @NgModule({
   imports: [ 
     CommonModule,
+    DpDatePickerModule,
     FormsModule, 
     MaterialModule,
     RouterModule,
@@ -36,6 +39,7 @@ import { MaterialModule } from '../material.module';
     DialogAlertComponent, 
     DialogCapabilitiesChecklistComponent,
     DialogSelector, 
+    DpDatePickerModule,
     FormsModule,
     MaterialModule,
     MrcInputEmailValidatorDirective,

@@ -1,6 +1,12 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, QueryList, ViewChildren, ViewEncapsulation } from "@angular/core";
+
 import { Location } from '@angular/common';
+
+import { HttpErrorResponse } from "@angular/common/http";
+
 import { ActivatedRoute } from "@angular/router";
+
+import { IDatePickerConfig, ECalendarValue } from 'ng2-date-picker';
 
 import { FecesFormatDescription, PoopShadeList, IPoopShadeOption, UrineColorList, IUrineColorOption, UrineColorDescription, PoopShadeDescription, MetabolicTrackingList, MetabolicTrackingGroup } from "../../core/common/constants";
 
@@ -29,8 +35,13 @@ import { DialogAlertButton, DialogAlertData } from "../../shared/dialog-alert/di
 
 import { DialogService } from "../../shared/dialog.service";
 
-import { Subscription } from "rxjs";
 import { MrcInputRequiredDirective } from "../../shared/input-required.directive";
+
+import { Subscription } from "rxjs";
+
+import { Moment } from 'moment';
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'page-anamneses-edit',
@@ -65,6 +76,9 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   private urineColorDesc = UrineColorDescription;
   private poopShadeDesc = PoopShadeDescription;
 
+  private dpConfig: IDatePickerConfig;
+  private _dpModel: Moment;
+
   @ViewChildren(MrcInputRequiredDirective) genericRequiredInputs: QueryList<MrcInputRequiredDirective>;
 
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _location: Location,
@@ -74,41 +88,78 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    
+
     this._paramsDisposable = this._route.params.subscribe(async (params) => {
       var patientId = params['id'];
       var anamnesesId = params['anamnesesId'];
       this.loading = true;
+
       try {
-        this.isNew = parseInt(anamnesesId) == FileSystemCommands.Add; 
-
-        this._patient = await this._patientService.getPatientById(patientId);
-
-        if (this.isNew)
-          this.anamnese = new Anamneses(
-                                    this.guid(), 
-                                    '', '', undefined, 
-                                    new LifeHabits(), 
-                                    new Pathologies(), 
-                                    new ClinicalEvaluation(),
-                                    new MetabolicTracking([]),
-                                    new EatingHabits());
-        else {
-          this.anamnese = this._patient.anamneses.find(a => a.id == anamnesesId);
-          if (!this.anamnese) 
-            throw Error("Cound not find Anamneses content on server.");
-          else
-            this.normalizeAnamnase();
-        }
+        await this.loadAnamneses(patientId, anamnesesId);
       }
       catch (error) {
         this.on_error(error);
       }
       finally {
-      this.loading = false;
-      this._detector.detectChanges();
+        this.initializeDatePicker();
+
+        this.loading = false;
+        this._detector.detectChanges();
       }
     });
+  }
+
+  private async loadAnamneses(patientId: string, anamnesesId: string): Promise<void> {
+    this.isNew = parseInt(anamnesesId) == FileSystemCommands.Add; 
+
+    this._patient = await this._patientService.getPatientById(patientId);
+
+    if (this.isNew)
+      this.anamnese = new Anamneses(
+                                this.guid(), 
+                                '', moment(new Date(Date.now())).format(), undefined, 
+                                new LifeHabits(), 
+                                new Pathologies(), 
+                                new ClinicalEvaluation(),
+                                new MetabolicTracking([]),
+                                new EatingHabits());
+    else {
+      this.anamnese = this._patient.anamneses.find(a => a.id == anamnesesId);
+      if (!this.anamnese) 
+        throw Error("Cound not find Anamneses content on server.");
+      else
+        this.normalizeAnamnase();
+    }
+  }
+
+  private initializeDatePicker(): void {
+    if (this.anamnese.date)
+      this._dpModel = moment(this.anamnese.date).locale(this.browserLocale);
+
+    this.dpConfig = {
+      format: 'L', 
+      locale: this.browserLocale,
+      openOnClick: false,
+      openOnFocus: false
+    };
+  }
+
+  private get dpModel(): Moment {
+    return this._dpModel;
+  }
+
+  private set dpModel(value: Moment) {
+    if (this._dpModel == value)
+        return;
+
+    if (value instanceof moment) {
+      this._dpModel = value;
+      this.markAsDirty();
+    }
+  }
+
+  private get browserLocale(): string {
+    return navigator.language || (<any>navigator).userLanguage;
   }
 
   private get bristolIndicator(): string {
@@ -332,7 +383,9 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  private show_error_dialog(msg: string): void {
+  private show_error_dialog(error: any): void {
+    var msg = error instanceof HttpErrorResponse ? (error.error ? error.error["error"] : error["message"]) : error;
+
     var dialogData: DialogAlertData = {
       text: msg,
       caption: 'Erro',
@@ -342,9 +395,8 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
 	}
 
 	private on_error(error: any): void {
-    var msg = error["statusText"] ? error["statusText"] : error;
     console.log(error);
-		this.show_error_dialog(msg);
+		this.show_error_dialog(error);
   }
 
   private guidS4(): string {

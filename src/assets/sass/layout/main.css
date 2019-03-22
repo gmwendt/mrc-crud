@@ -138,13 +138,14 @@
 }
 
 .mrc-global #mrc-chips-list {
-  margin-top: 4px;
+  display: inline;
 }
 
 .mrc-global #mrc-chips-list > label {
   border-radius: 17px;
   cursor: pointer;
-  margin-right: 8px;
+  display: inline-flex;
+  margin: 4px 8px 0 0;
   padding: 8px;
   text-align: center;
 }

@@ -16,7 +16,9 @@
 [X] navigation menu
 [X] page clinics
 [X] page new/edit clinics
+[X] page anamneses
+[ ] date input validator
+[ ] mat-icon support
 [>] page patients
-[>] page anamnases
 [ ] global loading
 [ ] user enable/disable
