@@ -17,7 +17,7 @@
 [X] page clinics
 [X] page new/edit clinics
 [X] page anamneses
-[>] date input validator
+[X] date input validator
 [ ] mat-icon support
 [>] page patients
 [ ] global loading
