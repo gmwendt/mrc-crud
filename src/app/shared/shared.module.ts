@@ -12,6 +12,7 @@ import { DialogAlertComponent } from './dialog-alert/dialog-alert.component';
 import { DialogCapabilitiesChecklistComponent } from './dialog-capabilities-checklist/dialog-capabilities-checklist.component';
 import { DialogSelector } from './dialog-selector/dialog-selector.component';
 import { MrcInputEmailValidatorDirective } from './input-email-validator.directive';
+import { MrcInputDateValidator } from './input-mrc-date-validator.directive';
 import { MrcInputPhoneMaskDirective } from './input-phone-mask.directive';
 import { MrcInputRequiredDirective } from './input-required.directive';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
@@ -29,8 +30,8 @@ import { MaterialModule } from '../material.module';
     RouterModule,
   ],
   declarations: [ AddProfessionalComponent, CheckListComponent, DialogAddUserComponent, DialogAlertComponent, 
-    DialogCapabilitiesChecklistComponent, DialogSelector, MrcInputEmailValidatorDirective, MrcInputPhoneMaskDirective, MrcInputRequiredDirective, ProgressSpinnerComponent, 
-    TimeInputComponent, ZipcodeInputComponent ],
+    DialogCapabilitiesChecklistComponent, DialogSelector, MrcInputEmailValidatorDirective, MrcInputDateValidator, MrcInputPhoneMaskDirective, 
+    MrcInputRequiredDirective, ProgressSpinnerComponent, TimeInputComponent, ZipcodeInputComponent ],
   exports: [ 
     AddProfessionalComponent,
     CheckListComponent, 
@@ -43,6 +44,7 @@ import { MaterialModule } from '../material.module';
     FormsModule,
     MaterialModule,
     MrcInputEmailValidatorDirective,
+    MrcInputDateValidator,
     MrcInputPhoneMaskDirective,
     MrcInputRequiredDirective,
     ProgressSpinnerComponent, 

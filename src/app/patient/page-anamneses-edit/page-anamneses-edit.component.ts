@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, QueryList, ViewChildren, ViewEncapsulation } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, QueryList, ViewChild, ViewChildren, ViewEncapsulation } from "@angular/core";
 
 import { Location } from '@angular/common';
 
@@ -32,15 +32,13 @@ import {
 import { PatientService } from "../../core/patient.service";
 
 import { DialogAlertButton, DialogAlertData } from "../../shared/dialog-alert/dialog-alert.component";
-
 import { DialogService } from "../../shared/dialog.service";
-
+import { MrcInputDateValidator } from "../../shared/input-mrc-date-validator.directive";
 import { MrcInputRequiredDirective } from "../../shared/input-required.directive";
 
 import { Subscription } from "rxjs";
 
 import { Moment } from 'moment';
-
 import * as moment from 'moment';
 
 @Component({
@@ -80,6 +78,7 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   private _dpModel: Moment;
 
   @ViewChildren(MrcInputRequiredDirective) genericRequiredInputs: QueryList<MrcInputRequiredDirective>;
+  @ViewChild(MrcInputDateValidator) dateInput: MrcInputDateValidator;
 
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _location: Location,
     private _patientService: PatientService, private _dialog: DialogService) {
@@ -220,6 +219,14 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
       if (input.isNullOrEmpty)
         this.errorList.push(input.emptyError);
     });
+
+    if (this.dateInput.showErrors) 
+      this.dateInput.updateBorderColor();
+    else 
+      this.dateInput.showErrors = true;
+
+    if (this.dateInput.error) 
+      this.errorList.push(this.dateInput.error)
   }
 
   private normalizeAnamnase(): void {
