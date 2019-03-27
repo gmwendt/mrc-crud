@@ -19,6 +19,8 @@
 [X] page anamneses
 [X] date input validator
 [ ] mat-icon support
+[ ] date icons
 [>] page patients
+[ ] page clinics
 [ ] global loading
 [ ] user enable/disable

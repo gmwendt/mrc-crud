@@ -1,0 +1,41 @@
+page-patient-edit {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 30px);
+
+  #mrc-edit-page-content {
+    flex: 1;
+    overflow: auto;
+    margin-top: 8px;
+
+    .mrc-edit-page-item {
+      display: flex;
+      font-size: 9pt;
+      margin: 4px 0 0px 16px;
+  
+      > label {
+        margin-right: 8px;
+        text-align: end;
+        width: 97px;
+      }
+    }
+  }
+
+  #mrc-edit-page-footer {
+
+    .mrc-edit-page-error {
+      color: #ef1508;
+      font-size: 9pt;
+      margin: 0 0 4px 22px;
+    }
+
+    &-buttons {
+      margin: 8px 0 0 22px;
+      
+      > button {
+        margin: 0 8px 8px 0;
+        width: 85px;
+      }
+    }
+  }
+}

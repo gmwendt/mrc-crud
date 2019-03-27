@@ -54,7 +54,6 @@ export class MrcInputDateValidator {
   }
 
   updateBorderColor(): void {
-    // this.borderColor = (this.showErrors && this.isNullOrEmpty) ? '#ef1508' : '#b0b0b0';
     let children: HTMLCollectionOf<HTMLInputElement> = this._target.nativeElement.getElementsByTagName("input");
     if (children.length == 0)
       return;

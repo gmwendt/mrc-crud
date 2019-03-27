@@ -26,10 +26,6 @@ page-anamneses-edit #page-anamneses-edit-content {
   margin-top: 8px;
 }
 
-page-anamneses-edit #page-anamneses-edit-content .mrc-margin-top-4 {
-  margin-top: 4px;
-}
-
 page-anamneses-edit #page-anamneses-edit-content .page-anamneses-edit-content-item {
   display: flex;
   flex-direction: column;

@@ -1,8 +1,9 @@
+import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { Patient } from "../core/common/types";
+import { Patient, FileSystemCommands } from "../core/common/types";
 
 import { PatientService } from "../core/patient.service";
 import { UserService } from "../core/user.service";
@@ -47,7 +48,9 @@ export class PatientComponent implements OnInit {
     this.createTable();
   }
 
-  private async delete_patient_clicked(patient: Patient): Promise<void> {
+  private async on_remove_patient_click(event: MouseEvent, patient: Patient): Promise<void> {
+    event.stopPropagation();
+
     var dialogData: DialogAlertData = {
 			text: 'Deseja remover ' + patient.name + '?',
 			button: DialogAlertButton.YesNo,
@@ -68,7 +71,7 @@ export class PatientComponent implements OnInit {
       this.dataSource.data = this.patients;
     }
     catch (error) {
-      this.on_error(error["statusText"]);
+      this.on_error(error);
     }
     finally {
       this.loading = false;
@@ -76,34 +79,21 @@ export class PatientComponent implements OnInit {
   }
 
   private async editPatient(patient?: Patient): Promise<void> {
-    if (!patient) {
-      try {
-        var newPatient = await this._patient.addPatient(new Patient(this._userService.currentUser.accountRefId));
-        if (!newPatient)
-          return;
-
-        this.patients.push(newPatient);
-        this.dataSource.data = this.patients;
-
-        this.navigate(newPatient, { NewPatient: true });
-      }
-      catch (error) {
-        this.on_error(error["statusText"]);
-      }
-    }
-    else 
-      this.navigate(patient);
+    var id = patient ? patient._id : FileSystemCommands.Add; 
+    this.navigate('edit', id);
   }
 
   private createTable(): void {
 		this.dataSource = new MatTableDataSource(this.patients);
   }
 
-  private navigate(patient: Patient, queryParams?: Object): void {
-    this._router.navigate(['consulta', patient._id], { relativeTo: this._route, queryParams: queryParams });
+  private navigate(routeId: string, patientId: string | FileSystemCommands, queryParams?: Object): void {
+    this._router.navigate([routeId, patientId], { relativeTo: this._route, queryParams: queryParams });
   }
 
-  private show_error_dialog(msg: string): void {
+  private show_error_dialog(error: any): void {
+    var msg = error instanceof HttpErrorResponse ? (error.error ? error.error["error"] : error["message"]) : error;
+
     var dialogData: DialogAlertData = {
       text: msg,
       caption: 'Erro',
@@ -113,7 +103,7 @@ export class PatientComponent implements OnInit {
 	}
 
 	private on_error(error: any): void {
-		this.loading = false;
+    console.log(error);
 		this.show_error_dialog(error);
-	}
+  }
 }

@@ -17,12 +17,12 @@
           <span 
             title="Editar" class="icon-edit" (click)="editPatient(element)"></span>
           <span
-            title="Remover clínica" class="icon-delete" (click)="delete_patient_clicked(element)"></span> 
+            title="Remover clínica" class="icon-delete" (click)="on_remove_patient_click($event, element)"></span> 
         </span>  
       </mat-cell>
     </ng-container>
     
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigate('consulta', row._id)"></mat-row>
   </mat-table>
 </progress-spinner>
