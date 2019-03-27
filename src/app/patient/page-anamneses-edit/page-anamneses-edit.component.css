@@ -52,6 +52,13 @@ page-anamneses-edit #page-anamneses-edit-content .mat-expansion-panel {
   max-width: 860px;
 }
 
+page-anamneses-edit #page-anamneses-edit-content .icon-calendar-picker {
+  background-color: white;
+  cursor: pointer;
+  margin-left: -22px;
+  position: relative;
+}
+
 page-anamneses-edit #page-anamneses-edit-content-column {
   display: inline-block;
   vertical-align: top;
@@ -116,7 +123,7 @@ page-anamneses-edit #mrc-edit-page-footer .mrc-edit-page-error {
 }
 
 page-anamneses-edit #mrc-edit-page-footer-buttons {
-  margin: 8px 0 0 22px;
+  margin: 8px 0 8px 22px;
 }
 
 page-anamneses-edit #mrc-edit-page-footer-buttons > button {

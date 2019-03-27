@@ -1,7 +1,6 @@
-import { Directive, ElementRef, HostBinding, HostListener, Input, ContentChild  } from '@angular/core';
+import { Directive, ElementRef, HostBinding, HostListener, Input  } from '@angular/core';
 
 import * as moment from 'moment';
-//import { Moment } from 'moment';
 
 @Directive({
   selector: '[mrc-date-validator]',
@@ -11,7 +10,6 @@ export class MrcInputDateValidator {
   private _showErrors: boolean;
 
   @Input('mrc-date-validator') fieldName: string;
-  @ContentChild(HTMLInputElement) dpInput: HTMLInputElement;
 
   constructor(private _target: ElementRef) {
   }
@@ -32,7 +30,7 @@ export class MrcInputDateValidator {
   set showErrors(value: boolean) {
     if (value == this._showErrors)
       return;
-    console.log(this.dpInput);
+    
     this._showErrors = value;
     this.updateBorderColor();
   }

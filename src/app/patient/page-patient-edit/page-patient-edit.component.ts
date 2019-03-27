@@ -68,6 +68,7 @@ export class PagePatientEdit implements AfterViewInit, OnDestroy {
     this.isNew = parseInt(patientId) == FileSystemCommands.Add; 
 
     if (this.isNew) {
+      this._dirty = true;
       //TODO
     }
     else

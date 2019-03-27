@@ -113,15 +113,18 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
 
     this._patient = await this._patientService.getPatientById(patientId);
 
-    if (this.isNew)
+    if (this.isNew) {
+      this._dirty = true;
       this.anamnese = new Anamneses(
                                 this.guid(), 
-                                '', moment(new Date(Date.now())).format(), undefined, 
+                                '', moment(new Date(Date.now())).format(), 
+                                undefined, 
                                 new LifeHabits(), 
                                 new Pathologies(), 
                                 new ClinicalEvaluation(),
                                 new MetabolicTracking([]),
                                 new EatingHabits());
+      }
     else {
       this.anamnese = this._patient.anamneses.find(a => a.id == anamnesesId);
       if (!this.anamnese) 
@@ -148,13 +151,15 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private set dpModel(value: Moment) {
-    if (this._dpModel == value)
-        return;
+    if (!(value instanceof moment))
+      return;
 
-    if (value instanceof moment) {
-      this._dpModel = value;
-      this.markAsDirty();
-    }
+    if (this._dpModel && this._dpModel.format() == value.format())
+      return;
+
+    this._dpModel = moment(value.format()).locale(this.browserLocale);
+    this.anamnese.date = value.format();
+    this.markAsDirty();
   }
 
   private get browserLocale(): string {

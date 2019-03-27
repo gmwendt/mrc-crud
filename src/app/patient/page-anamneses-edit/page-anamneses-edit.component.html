@@ -16,7 +16,10 @@
       </div>
       <div class="page-anamneses-edit-content-item">
         <label>Data</label>
-        <dp-date-picker mrc-date-validator="Data" [(ngModel)]="dpModel" theme="dp-material" [config]="dpConfig"></dp-date-picker>
+        <div>
+          <dp-date-picker mrc-date-validator="Data" [(ngModel)]="dpModel" theme="dp-material" [config]="dpConfig" #dp></dp-date-picker>
+          <span class="icon-calendar-picker" (click)="dp.api.open()"></span>
+        </div>
       </div>
     </div>
     <mat-expansion-panel>
