@@ -55,7 +55,8 @@ page-anamneses-edit #page-anamneses-edit-content .mat-expansion-panel {
 page-anamneses-edit #page-anamneses-edit-content .icon-calendar-picker {
   background-color: white;
   cursor: pointer;
-  margin-left: -22px;
+  font-size: 10pt;
+  margin-left: -16px;
   position: relative;
 }
 
@@ -127,7 +128,7 @@ page-anamneses-edit #mrc-edit-page-footer-buttons {
 }
 
 page-anamneses-edit #mrc-edit-page-footer-buttons > button {
-  margin: 0 8px 8px 0;
+  margin: 0 8px 0 0;
   width: 85px;
 }
 

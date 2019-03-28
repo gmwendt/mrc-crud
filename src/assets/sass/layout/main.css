@@ -284,6 +284,11 @@
   max-height: 28px;
 }
 
+.mrc-global dp-date-picker.dp-material .dp-picker-input {
+  font-size: 9pt;
+  height: 20px;
+}
+
 /**
  * Applies styles for users in high contrast mode. Note that this only applies
  * to Microsoft browsers. Chrome can be included by checking for the `html[hc]`

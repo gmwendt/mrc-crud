@@ -53,7 +53,8 @@ page-anamneses-edit {
     .icon-calendar-picker {
       background-color: white;
       cursor: pointer;
-      margin-left: -22px;
+      font-size: 10pt;
+      margin-left: -16px;
       position: relative;
     }
   }
@@ -128,7 +129,7 @@ page-anamneses-edit {
       margin: 8px 0 8px 22px;
       
       > button {
-        margin: 0 8px 8px 0;
+        margin: 0 8px 0 0;
         width: 85px;
       }
     }

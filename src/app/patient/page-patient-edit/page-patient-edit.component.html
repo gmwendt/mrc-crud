@@ -11,6 +11,13 @@
       <label>Nome</label>
       <input mrc-input-required="Nome" type="text" [ngModel]="patient?.name" (ngModelChange)="patient.name = nameBox.value; markAsDirty()" #nameBox />
     </div>
+    <div class="mrc-edit-page-item">
+      <label>Nascimento</label>
+      <div>
+         <dp-date-picker mrc-date-validator="Data" theme="dp-material" #dp></dp-date-picker> <!--[(ngModel)]="dpModel" [config]="dpConfig" -->
+        <span class="icon-calendar-picker"></span> <!--  (click)="dp.api.open()" -->
+      </div>
+    </div>
   </progress-spinner>
 </div>
 <div id="mrc-edit-page-footer">

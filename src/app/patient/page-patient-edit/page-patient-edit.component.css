@@ -33,6 +33,6 @@ page-patient-edit #mrc-edit-page-footer-buttons {
 }
 
 page-patient-edit #mrc-edit-page-footer-buttons > button {
-  margin: 0 8px 8px 0;
+  margin: 0 8px 0 0;
   width: 85px;
 }
