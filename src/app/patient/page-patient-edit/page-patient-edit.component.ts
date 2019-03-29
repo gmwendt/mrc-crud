@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 })
 export class PagePatientEdit implements AfterViewInit, OnDestroy {
 
-  private loading: boolean;
+  private loading: boolean = true;
   private isNew: boolean;
   private patient: Patient;
   private errorList: string[] = [];
@@ -28,17 +28,18 @@ export class PagePatientEdit implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this._paramsDisposable = this._route.params.subscribe(async (params) => {
-      this.loading = true;
       var patientId = params['id'];
+      var isNew = parseInt(patientId) == FileSystemCommands.Add; 
 
       try {
-        await this.loadPatient(patientId);
+        await this.loadPatient(patientId, isNew);
       }
       catch (error) {
 
       }
       finally {
         this.loading = false;
+        this.isNew = isNew;
       }
     });
 
@@ -64,10 +65,8 @@ export class PagePatientEdit implements AfterViewInit, OnDestroy {
   private async on_cancel_clicked(): Promise<void> {
   }
 
-  private async loadPatient(patientId?: string): Promise<void> {
-    this.isNew = parseInt(patientId) == FileSystemCommands.Add; 
-
-    if (this.isNew) {
+  private async loadPatient(patientId: string, isNew: boolean): Promise<void> {
+    if (isNew) {
       this._dirty = true;
       //TODO
     }
