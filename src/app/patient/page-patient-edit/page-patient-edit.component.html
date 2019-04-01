@@ -12,16 +12,103 @@
         <mat-panel-title>Dados gerais</mat-panel-title>
       </mat-expansion-panel-header>
 
-      <div class="mrc-edit-page-item">
+      <div class="mrc-edit-page-item" *ngIf="patient">
         <label>Nome</label>
-        <input mrc-input-required="Nome" type="text" [ngModel]="patient?.name" (ngModelChange)="patient.name = nameBox.value; markAsDirty()" #nameBox />
+        <input mrc-input-required="Nome" type="text" [(ngModel)]="patient.name" (ngModelChange)="markAsDirty()" />
       </div>
       <div class="mrc-edit-page-item">
         <label>Nascimento</label>
-        <div>
-          <dp-date-picker mrc-date-validator="Data" theme="dp-material" #dp></dp-date-picker> <!--[(ngModel)]="dpModel" [config]="dpConfig" -->
-          <span class="icon-calendar-picker"></span> <!--  (click)="dp.api.open()" -->
+        <div id="dp-container">
+          <dp-date-picker mrc-date-validator="Data" theme="dp-material" [(ngModel)]="dpModel" [config]="dpConfig"
+                          [style.position]="dpIsOpen ? 'absolute' : 'relative'" 
+                          (open)="dpIsOpen = true" (close)="dpIsOpen = false" #dp></dp-date-picker>
+          <span class="icon-calendar-picker" (click)="dp.api.open()"
+                [style.margin]="dpIsOpen ? '4px 198px' : '-16px 0'" [style.position]="dpIsOpen ? 'absolute' : 'relative'"></span>
         </div>
+      </div>
+      <div class="mrc-edit-page-item">
+        <label>Sexo</label>
+        <div>
+          <mat-button-toggle-group #group="matButtonToggleGroup" [value]="patient?.gender" (change)="patient.gender = $event.value; markAsDirty()">
+            <mat-button-toggle [value]="genderEnum.Male">Masculino</mat-button-toggle>
+            <mat-button-toggle [value]="genderEnum.Female">Feminino</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </div>
+      <div class="mrc-edit-page-item" *ngIf="patient">
+        <label>Profissão</label>
+        <input type="text" [(ngModel)]="patient.ocupation" (ngModelChange)="markAsDirty()" />
+      </div>
+      <div class="mrc-edit-page-item">
+        <label>Local das consultas</label>
+        <mat-select placeholder="Selecione" *ngIf="patient" [(value)]="patient.placeOfCare" (selectionChange)="markAsDirty()">
+          <mat-option *ngFor="let clinic of clinics" [value]="clinic._id">
+            {{ clinic.name }}
+          </mat-option>
+          <mat-option *ngIf="!clinics || clinics.length == 0" disabled>
+            Não existem clínicas cadastradas
+          </mat-option>
+        </mat-select>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+        <mat-panel-title>Endereço</mat-panel-title>
+      </mat-expansion-panel-header>
+      
+      <div class="mrc-edit-page-item">
+        <label>CEP</label>
+        <zipcode-input [value]="patient?.address?.zipcode" 
+                      (valueChange)="patient.address.zipcode = $event; markAsDirty()" 
+                      (zipcodeUpdate)="on_zipcode_update($event)"></zipcode-input>
+      </div>
+      <div class="mrc-edit-page-column">
+        <div class="mrc-edit-page-column-item" style="margin-right: 8px; width: 100%;">
+          <label>Logradouro</label>
+          <input type="text" class="mrc-edit-page-input-2" [ngModel]="patient?.address?.address" [disabled]="true" />
+        </div>
+        <div class="mrc-edit-page-column-item" style="width: 52px">
+          <label>Número</label>
+          <input class="mrc-edit-page-input-1" type="text" [ngModel]="patient?.address?.addressNum" 
+            (ngModelChange)="patient.address.addressNum = addressNumBox.value; markAsDirty()" #addressNumBox />
+        </div>
+      </div>
+      <div class="mrc-edit-page-item">
+        <label>Complemento</label>
+        <input type="text" [ngModel]="patient?.address?.addressComp" 
+          (ngModelChange)="patient.address.addressComp = addressCompBox.value; markAsDirty()" #addressCompBox/>
+      </div>
+      <div class="mrc-edit-page-item">
+        <label>Bairro</label>
+        <input type="text" class="mrc-edit-page-input-2" [ngModel]="patient?.address?.neighborhood" [disabled]="true" />
+      </div>
+      <div class="mrc-edit-page-item">
+        <label>Cidade</label>
+        <input type="text" [ngModel]="patient?.address?.city" [disabled]="true" />
+      </div>
+      <div class="mrc-edit-page-item">
+        <label>Estado</label>
+        <input type="text" [ngModel]="patient?.address?.state" [disabled]="true" />
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+        <mat-panel-title>Contato</mat-panel-title>
+      </mat-expansion-panel-header>
+        
+      <div class="mrc-edit-page-item">
+        <label>E-mail</label>
+        <input mrc-email-validator [ngModel]="patient?.email" (ngModelChange)="patient.email = emailBox.value; markAsDirty()" #emailBox />
+      </div>
+      <div class="mrc-edit-page-item">
+        <label>Telefone</label>
+        <input mrc-phone-mask [value]="patient?.phone" (valueChange)="patient.phone = $event; markAsDirty()" />
+      </div>
+      <div class="mrc-edit-page-item">
+        <label>Celular</label>
+        <input mrc-phone-mask [value]="patient?.cellphone" (valueChange)="patient.cellphone = $event; markAsDirty()" />
       </div>
     </mat-expansion-panel>
   </progress-spinner>

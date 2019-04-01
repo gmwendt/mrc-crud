@@ -67,7 +67,9 @@ export class MrcInputPhoneMaskDirective {
   }
 
   get error(): string {
-    if (this.isNullOrEmpty && this.isRequired)
+    if (this.isNullOrEmpty && !this.isRequired)
+      return null;
+    else if (this.isNullOrEmpty && this.isRequired)
       return 'O campo Telefone deve ser preenchido.';
     else if (this._invalid && !this.isNullOrEmpty) 
       return 'Telefone inválido.'

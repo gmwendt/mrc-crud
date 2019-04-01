@@ -20,7 +20,8 @@
 [X] date input validator
 [X] mat-icon support
 [X] date icons
-[>] page patients
+[X] page patients
+[ ] bug keypress page anamneses
 [ ] page clinics
 [ ] global loading
 [ ] user enable/disable

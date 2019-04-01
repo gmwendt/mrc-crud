@@ -7,12 +7,13 @@ var PatientSchema = new mongoose.Schema({
   email: String,
   phone: String,
   cellphone: String,
-  gender: String,
+  gender: Number,
   cpf: String,
   maritalState: String,
   birthDate: String,
   ocupation: String,
-  anamneses: String
+  anamneses: String,
+  placeOfCare: String
 });
 
 module.exports = mongoose.model('Patient', PatientSchema);

@@ -128,7 +128,9 @@ export class ZipcodeInputComponent {
   }
 
   get error(): string {
-    if (this.isNullOrEmpty && this.isRequired)
+    if (this.isNullOrEmpty && !this.isRequired)
+      return null;
+    else if (this.isNullOrEmpty && this.isRequired)
       return 'O campo CEP deve ser preenchido.';
     else if (this._invalid) 
       return 'CEP inválido.'

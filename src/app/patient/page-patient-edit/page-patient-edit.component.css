@@ -12,14 +12,33 @@ page-patient-edit #mrc-edit-page-content {
 
 page-patient-edit #mrc-edit-page-content .mrc-edit-page-item {
   display: flex;
+  flex-direction: column;
   font-size: 9pt;
-  margin: 4px 0 0px 16px;
+  margin: 8px 0 0px 32px;
+  max-width: 350px;
+  width: calc(100% - 70px);
 }
 
-page-patient-edit #mrc-edit-page-content .mrc-edit-page-item > label {
-  margin-right: 8px;
-  text-align: end;
-  width: 97px;
+page-patient-edit #mrc-edit-page-content .mrc-edit-page-column {
+  font-size: 9pt;
+  display: flex;
+  margin: 8px 0 0 32px;
+  max-width: 350px;
+  width: calc(100% - 70px);
+}
+
+page-patient-edit #mrc-edit-page-content .mrc-edit-page-column-item {
+  display: flex;
+  flex-direction: column;
+}
+
+page-patient-edit #dp-container {
+  width: 210px;
+}
+
+page-patient-edit #dp-container .icon-calendar-picker {
+  float: right;
+  position: relative;
 }
 
 page-patient-edit #mrc-edit-page-footer .mrc-edit-page-error {

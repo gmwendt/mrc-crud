@@ -277,6 +277,11 @@ export class Clinic {
   }
 }
 
+export enum GenderEnum {
+  Female,
+  Male
+}
+
 export class Patient {
   public _id?: string;
   public accountRefId: number;
@@ -285,12 +290,13 @@ export class Patient {
   public email: string;
   public phone: string;
   public cellphone: string;
-  public gender: string;
+  public gender: GenderEnum;
   public cpf: string;
   public birthDate: string;
   public maritalState?: string;
   public ocupation?: string;
   public anamneses?: Anamneses[];
+  public placeOfCare: string;
 
   constructor(accountRefId: number) {
     this.accountRefId = accountRefId;
@@ -299,7 +305,7 @@ export class Patient {
     this.email = '';
     this.phone = '';
     this.cellphone = '';
-    this.gender = '';
+    this.gender = GenderEnum.Male;
     this.cpf = '';
     this.birthDate = '';
   }
