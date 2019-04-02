@@ -11,8 +11,7 @@
     <div id="page-anamneses-edit-content-column">
       <div class="page-anamneses-edit-content-item">
         <label>Caso Clínico</label>
-        <textarea mrc-input-required="Caso clínico" [value]="anamnese?.clinicCase" #boxClinicCase
-                  (change)="anamnese.clinicCase = boxClinicCase.value" (keypress)="markAsDirty()"></textarea>
+        <textarea mrc-input-required="Caso clínico" *ngIf="anamnese" [(ngModel)]="anamnese.clinicCase" (ngModelChange)="markAsDirty()"></textarea>
       </div>
       <div class="page-anamneses-edit-content-item">
         <label>Data</label>
@@ -39,14 +38,14 @@
 
       <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.lifeHabits">
         <label>Exercícios físicos</label>
-        <textarea [(ngModel)]="anamnese.lifeHabits.physicalExercises" (keypress)="markAsDirty()"></textarea>
+        <textarea [(ngModel)]="anamnese.lifeHabits.physicalExercises" (ngModelChange)="markAsDirty()"></textarea>
       </div>
 
       <div id="page-anamneses-edit-content-group">
         <mat-checkbox *ngIf="anamnese" [(ngModel)]="anamnese.lifeHabits.mealsOutsideTheHouse" (change)="markAsDirty()" disableRipple="true">Refeições fora de casa</mat-checkbox>
         <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.lifeHabits?.mealsOutsideTheHouse">
           <label>Quais</label>
-          <input [(ngModel)]="anamnese.lifeHabits.whichMeals" (keypress)="markAsDirty()">
+          <input [(ngModel)]="anamnese.lifeHabits.whichMeals" (ngModelChange)="markAsDirty()">
         </div>
       </div>
 
@@ -67,7 +66,7 @@
                 </div>
                 <div class="page-anamneses-edit-content-item page-anamneses-edit-content-item-last-child" *ngIf="anamnese?.lifeHabits?.alcohol">
                   <label>Qual e quanto</label>
-                  <input [(ngModel)]="anamnese.lifeHabits.alcoholWhichAndHowMuch" (keypress)="markAsDirty()">
+                  <input [(ngModel)]="anamnese.lifeHabits.alcoholWhichAndHowMuch" (ngModelChange)="markAsDirty()">
                 </div>
               </div>
             </div>
@@ -90,7 +89,7 @@
                 </div>
                 <div class="page-anamneses-edit-content-item page-anamneses-edit-content-item-last-child" *ngIf="anamnese?.lifeHabits?.smoke">
                   <label>Quantidade</label>
-                  <input [(ngModel)]="anamnese.lifeHabits.smokeWhichAndHowMuch" (keypress)="markAsDirty()">
+                  <input [(ngModel)]="anamnese.lifeHabits.smokeWhichAndHowMuch" (ngModelChange)="markAsDirty()">
                 </div>
               </div>
             </div>
@@ -120,7 +119,7 @@
             <div id="page-anamneses-edit-content-column-item">
               <div class="page-anamneses-edit-content-item page-anamneses-edit-content-item-last-child mrc-left-0" *ngIf="anamnese?.lifeHabits">
                 <label>Quantas horas</label>
-                <input [(ngModel)]="anamnese.lifeHabits.sleepTime" (keypress)="markAsDirty()"><!-- TODO -->
+                <input [(ngModel)]="anamnese.lifeHabits.sleepTime" (ngModelChange)="markAsDirty()">
               </div>
             </div>
 
@@ -135,13 +134,13 @@
             <div id="page-anamneses-edit-content-column-item">
               <div class="page-anamneses-edit-content-item mrc-left-0">
                 <label>Mora com quantas pessoas</label>
-                <input type="number" [(ngModel)]="anamnese.lifeHabits.liveWithHowManyPeople" (keypress)="markAsDirty()" (change)="markAsDirty()">
+                <input type="number" [(ngModel)]="anamnese.lifeHabits.liveWithHowManyPeople" (ngModelChange)="markAsDirty()">
               </div>
             </div>
             <div id="page-anamneses-edit-content-column-item">
               <div class="page-anamneses-edit-content-item page-anamneses-edit-content-item-last-child mrc-left-0">
                 <label>Quem realiza as compras da casa</label>
-                <textarea [(ngModel)]="anamnese.lifeHabits.hoDoesTheHousePurchases" (keypress)="markAsDirty()"></textarea>
+                <textarea [(ngModel)]="anamnese.lifeHabits.hoDoesTheHousePurchases" (ngModelChange)="markAsDirty()"></textarea>
               </div>
             </div>
           </div>
@@ -149,13 +148,13 @@
             <div id="page-anamneses-edit-content-column-item">
               <div class="page-anamneses-edit-content-item mrc-left-0">
                 <label>Quantas vezes por mês</label>
-                <input type="number" [(ngModel)]="anamnese.lifeHabits.howManyTimesPerMonth" (keypress)="markAsDirty()" (change)="markAsDirty()">
+                <input type="number" [(ngModel)]="anamnese.lifeHabits.howManyTimesPerMonth" (ngModelChange)="markAsDirty()">
               </div>
             </div>
             <div id="page-anamneses-edit-content-column-item">
               <div class="page-anamneses-edit-content-item page-anamneses-edit-content-item-last-child mrc-left-0">
                 <label>Onde realiza as compras</label>
-                <textarea [(ngModel)]="anamnese.lifeHabits.wherePurchase" (keypress)="markAsDirty()"></textarea>
+                <textarea [(ngModel)]="anamnese.lifeHabits.wherePurchase" (ngModelChange)="markAsDirty()"></textarea>
               </div>
             </div>
           </div>
@@ -164,7 +163,7 @@
 
       <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.lifeHabits">
         <label>Observações</label>
-        <textarea [(ngModel)]="anamnese.lifeHabits.observations" (keypress)="markAsDirty()"></textarea>
+        <textarea [(ngModel)]="anamnese.lifeHabits.observations" (ngModelChange)="markAsDirty()"></textarea>
       </div>
 
     </mat-expansion-panel>
@@ -247,22 +246,22 @@
 
       <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.pathologies">
         <label>Outras patologias</label>
-        <textarea [(ngModel)]="anamnese.pathologies.otherPathologies" (keypress)="markAsDirty()"></textarea>
+        <textarea [(ngModel)]="anamnese.pathologies.otherPathologies" (ngModelChange)="markAsDirty()"></textarea>
       </div>
 
       <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.pathologies">
         <label>Medicamentos</label>
-        <textarea [(ngModel)]="anamnese.pathologies.medicines" (keypress)="markAsDirty()"></textarea>
+        <textarea [(ngModel)]="anamnese.pathologies.medicines" (ngModelChange)="markAsDirty()"></textarea>
       </div>
 
       <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.pathologies">
         <label>Histórico familiar</label>
-        <textarea [(ngModel)]="anamnese.pathologies.familyHistory" (keypress)="markAsDirty()"></textarea>
+        <textarea [(ngModel)]="anamnese.pathologies.familyHistory" (ngModelChange)="markAsDirty()"></textarea>
       </div>
 
       <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.pathologies">
         <label>Observações</label>
-        <textarea [(ngModel)]="anamnese.pathologies.observations" (keypress)="markAsDirty()"></textarea>
+        <textarea [(ngModel)]="anamnese.pathologies.observations" (ngModelChange)="markAsDirty()"></textarea>
       </div>
 
     </mat-expansion-panel>
@@ -317,7 +316,7 @@
         <div>
           <div class="page-anamneses-edit-content-item">
             <label>Descrição</label>
-            <textarea [(ngModel)]="anamnese.clinicalEvaluation.urinaryHabit" (keypress)="markAsDirty()"></textarea>
+            <textarea [(ngModel)]="anamnese.clinicalEvaluation.urinaryHabit" (ngModelChange)="markAsDirty()"></textarea>
           </div>
           <div class="page-anamneses-edit-content-item">
             <label>Cor da urina</label>
@@ -337,7 +336,7 @@
               <label>Ingestão hídrica</label>
               <label class="page-anamneses-edit-content-item-description" style="margin-left: 4px">(em litros)</label>
             </div>
-            <input class="mrc-input-2" type="number" [(ngModel)]="anamnese.clinicalEvaluation.waterIntake" (keypress)="markAsDirty()" (change)="markAsDirty()">
+            <input class="mrc-input-2" type="number" [(ngModel)]="anamnese.clinicalEvaluation.waterIntake" (ngModelChange)="markAsDirty()">
           </div>
         </div>
       </div>
@@ -358,7 +357,7 @@
           <div class="page-anamneses-edit-content-item">
             <label>Frequencia de evacuação</label>
             <div id="page-anamneses-edit-content-column" class="mrc-toggle-unit">
-              <input type="number" [(ngModel)]="anamnese.clinicalEvaluation.evacuationFrequency" (keypress)="markAsDirty()" (change)="markAsDirty()">
+              <input type="number" [(ngModel)]="anamnese.clinicalEvaluation.evacuationFrequency" (ngModelChange)="markAsDirty()">
               <mat-button-toggle-group #group="matButtonToggleGroup" [value]="anamnese?.clinicalEvaluation?.evacuationFrequencyUnit" (change)="anamnese.clinicalEvaluation.evacuationFrequencyUnit = $event.value; markAsDirty()">
                 <mat-button-toggle [value]="frequencyEnum.PerDay">Por dia</mat-button-toggle>
                 <mat-button-toggle [value]="frequencyEnum.PerWeek">Por semana</mat-button-toggle>
@@ -446,7 +445,7 @@
 
       <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.clinicalEvaluation">
         <label>Observações</label>
-        <textarea [(ngModel)]="anamnese.clinicalEvaluation.observations" (keypress)="markAsDirty()"></textarea>
+        <textarea [(ngModel)]="anamnese.clinicalEvaluation.observations" (ngModelChange)="markAsDirty()"></textarea>
       </div>
 
     </mat-expansion-panel>
@@ -518,34 +517,34 @@
 
       <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.eatingHabits">
         <label>Suplementos</label>
-        <textarea [(ngModel)]="anamnese.eatingHabits.supplements" (keypress)="markAsDirty()"></textarea>
+        <textarea [(ngModel)]="anamnese.eatingHabits.supplements" (ngModelChange)="markAsDirty()"></textarea>
       </div>
 
       <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.eatingHabits">
         <label>Alergia alimentar</label>
-        <textarea [(ngModel)]="anamnese.eatingHabits.foodAllergy" (keypress)="markAsDirty()"></textarea>
+        <textarea [(ngModel)]="anamnese.eatingHabits.foodAllergy" (ngModelChange)="markAsDirty()"></textarea>
       </div>
 
       <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.eatingHabits">
         <label>Intolerância alimentar</label>
-        <textarea [(ngModel)]="anamnese.eatingHabits.foodIntolerance" (keypress)="markAsDirty()"></textarea>
+        <textarea [(ngModel)]="anamnese.eatingHabits.foodIntolerance" (ngModelChange)="markAsDirty()"></textarea>
       </div>
 
       <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.eatingHabits">
         <label>Aversão alimentar</label>
-        <textarea [(ngModel)]="anamnese.eatingHabits.foodAversions" (keypress)="markAsDirty()"></textarea>
+        <textarea [(ngModel)]="anamnese.eatingHabits.foodAversions" (ngModelChange)="markAsDirty()"></textarea>
       </div>
 
       <div class="page-anamneses-edit-content-item" *ngIf="anamnese?.eatingHabits">
         <label>Observações</label>
-        <textarea [(ngModel)]="anamnese.eatingHabits.observations" (keypress)="markAsDirty()"></textarea>
+        <textarea [(ngModel)]="anamnese.eatingHabits.observations" (ngModelChange)="markAsDirty()"></textarea>
       </div>
 
     </mat-expansion-panel>
 
     <div class="page-anamneses-edit-content-item" style="margin-top: 4px" *ngIf="anamnese">
       <label>Observações gerais</label>
-      <textarea [(ngModel)]="anamnese.generalObservations" (keypress)="markAsDirty()"></textarea>
+      <textarea [(ngModel)]="anamnese.generalObservations" (ngModelChange)="markAsDirty()"></textarea>
     </div>
   </progress-spinner>
 </div>

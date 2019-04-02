@@ -8,7 +8,7 @@
 </div>
 <div id="page-patient-consult-content">
   <progress-spinner [progress]="loading">
-    <mat-expansion-panel expanded="true">
+    <!-- <mat-expansion-panel expanded="true">
       <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
         <mat-panel-title>
           <label>Anamneses</label>
@@ -39,5 +39,39 @@
       </mat-table>
 
     </mat-expansion-panel>
+
+    <mat-expansion-panel expanded="true">
+      <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+        <mat-panel-title>
+          <label>Medidas</label>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <button mat-button>Visualizar/Editar medidas</button>
+    </mat-expansion-panel> -->
+    <mat-tab-group>
+      <mat-tab label="Anamneses">
+        <mat-table #table [dataSource]="anamneses" class="mat-elevation-z8">
+
+          <ng-container matColumnDef="clinicCase">
+            <mat-header-cell *matHeaderCellDef> Caso clínico </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ element.clinicCase }}</mat-cell>
+          </ng-container>
+          
+          <ng-container matColumnDef="commands">
+            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-cell *matCellDef="let element"> 
+              <span>
+                <span title="Remover" class="icon-delete" (click)="on_remove_anamneses_click($event, element)"></span> 
+              </span>  
+            </mat-cell>
+          </ng-container>
+          
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="on_anamneses_edit(row.id)"></mat-row>
+        </mat-table>
+      </mat-tab>
+      <mat-tab label="Medidas"> Content 2 </mat-tab>
+      <mat-tab label="Third"> Content 3 </mat-tab>
+    </mat-tab-group>
   </progress-spinner>
 </div>

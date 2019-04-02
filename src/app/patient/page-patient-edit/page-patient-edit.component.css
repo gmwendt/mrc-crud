@@ -37,8 +37,9 @@ page-patient-edit #dp-container {
 }
 
 page-patient-edit #dp-container .icon-calendar-picker {
+  background-color: white;
+  cursor: pointer;
   float: right;
-  position: relative;
 }
 
 page-patient-edit #mrc-edit-page-footer .mrc-edit-page-error {
