@@ -311,6 +311,12 @@ export class Patient {
   }
 }
 
+export class Measurements {
+  constructor(weigth?: number[], height?: number[]) {
+
+  }
+}
+
 export class Capabilities {
   constructor(public scheduleAndRegisterPatient?: boolean | undefined, public accessGlobalFinances?: boolean | undefined, 
     public fullAccessAdministrativeTools?: boolean | undefined, public registerUsers?: boolean | undefined,

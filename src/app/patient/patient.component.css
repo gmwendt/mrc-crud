@@ -7,3 +7,7 @@ mrc-patients .icon-delete, mrc-patients .icon-edit {
   font-size: 12pt;
   color: #4f4f4f;
 }
+
+mrc-patients .mat-table {
+  margin: 8px 22px;
+}

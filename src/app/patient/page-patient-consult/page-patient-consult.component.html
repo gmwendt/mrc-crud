@@ -48,7 +48,7 @@
       </mat-expansion-panel-header>
       <button mat-button>Visualizar/Editar medidas</button>
     </mat-expansion-panel> -->
-    <mat-tab-group>
+    <mat-tab-group [(selectedIndex)]="selectedTabIndex">
       <mat-tab label="Anamneses">
         <mat-table #table [dataSource]="anamneses" class="mat-elevation-z8">
 

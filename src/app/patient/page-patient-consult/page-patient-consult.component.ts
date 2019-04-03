@@ -27,6 +27,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private displayedColumns = ['clinicCase', 'commands'];
   private loading = true;
   private patient: Patient;
+  private selectedTabIndex: number = 0;
   
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _router: Router,
     private _patient: PatientService, private _location: Location , private _dialog: DialogService) {
