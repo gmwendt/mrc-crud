@@ -1,0 +1,11 @@
+<button mat-button (click)="on_edit_measurement_value_clicked()" style="margin: 8px 0 0 22px">Nova medida</button>
+<mat-table [dataSource]="dataSource" style="max-width: 350px; margin: 8px 0 0 22px">
+  <ng-container matColumnDef="timestamp">
+    <mat-cell *matCellDef="let element">{{ element.timestamp }}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="value">
+    <mat-cell *matCellDef="let element">{{ element.value }}</mat-cell>
+  </ng-container>
+  
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

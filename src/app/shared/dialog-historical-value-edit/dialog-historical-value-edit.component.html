@@ -1,0 +1,26 @@
+<div class="mrc-dialog-title" *ngIf="caption">{{ caption }}</div>
+<div class="mrc-dialog-separator" *ngIf="caption"></div>
+
+<div id="mrc-dialog-historical-value-container">
+  <mat-form-field floatLabel="always">
+    <mat-label>Data</mat-label>
+    <input matInput [matDatepicker]="myDatepicker" [formControl]="dateFormControl">
+    <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+    <mat-datepicker #myDatepicker></mat-datepicker>
+    <mat-error *ngIf="dateFormControl.hasError('required')">
+      Informe uma data válida
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field floatLabel="always">
+    <mat-label>{{ valueLabel }}<p class="mrc-dialog-historical-value-unit">{{ unit }}</p></mat-label>
+    <input matInput type="number" [formControl]="valueFormControl">
+    <mat-error>Campo <strong>obrigatório</strong></mat-error>
+  </mat-form-field>
+</div>
+
+<div class="mrc-dialog-separator"></div>
+<div id="mrc-dialog-commands">
+  <button mat-button (click)="on_close(dialogResult.Cancel)">Cancelar</button>
+  <button mat-button (click)="on_close(dialogResult.OK)">OK</button>
+</div>

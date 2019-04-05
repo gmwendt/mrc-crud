@@ -1,0 +1,22 @@
+dialog-historical-value-edit {
+
+  #mrc-dialog-historical-value-container {
+    margin: 8px 0 0 22px;
+
+    .mat-form-field {
+      margin-right: 8px;
+    }
+
+    .mrc-dialog-historical-value-unit {
+      display: inline;
+      margin-left: 8px;
+    }
+  }
+
+  #mrc-dialog-commands {
+    .mat-button {
+      float: right;
+      margin-left: 8px;
+    }
+  }
+}

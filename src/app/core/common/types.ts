@@ -282,6 +282,12 @@ export enum GenderEnum {
   Male
 }
 
+export interface IHistoricalValue {
+  timestamp: string;
+  value: any;
+  unit: string;
+}
+
 export class Patient {
   public _id?: string;
   public accountRefId: number;
@@ -297,6 +303,7 @@ export class Patient {
   public ocupation?: string;
   public anamneses?: Anamneses[];
   public placeOfCare: string;
+  public measurements?: Measurements;
 
   constructor(accountRefId: number) {
     this.accountRefId = accountRefId;
@@ -312,8 +319,24 @@ export class Patient {
 }
 
 export class Measurements {
-  constructor(weigth?: number[], height?: number[]) {
+  constructor(public weigth?: IHistoricalValue[], public height?: IHistoricalValue[]) {
 
+  }
+
+  toJSON(): string {
+    return JSON.stringify(Object.assign({}, this));
+  }
+
+  static fromJSON(json: Measurements | string): Measurements {
+    if (typeof json === 'string')
+      return JSON.parse(json, Measurements.reviver);
+  
+    var data = Object.create(Measurements.prototype);
+    return Object.assign(data, json);
+  }
+
+  private static reviver(key: string, value: any): any {
+    return key === "" ? Measurements.fromJSON(value) : value;
   }
 }
 

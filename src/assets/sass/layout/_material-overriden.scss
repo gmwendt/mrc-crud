@@ -49,6 +49,26 @@
     }
   }
 
+  .mat-form-field {
+    input {
+      border: none
+    }
+
+    .mat-focused .mat-form-field-label {
+      color: #298dca !important;
+    }
+      
+    .mat-form-field-ripple {
+      background-color: #298dca !important;
+    }
+  }
+
+  .mat-form-field-invalid {
+    .mat-form-field-ripple {
+      background-color: #f44366 !important;
+    }
+  }
+
   .mat-table {
     box-shadow: none;
     

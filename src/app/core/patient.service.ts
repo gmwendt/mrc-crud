@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { AddressInfo, Patient, Anamneses } from './common/types';
+import { AddressInfo, Patient, Anamneses, Measurements } from './common/types';
 
 @Injectable()
 export class PatientService {
@@ -12,10 +12,12 @@ export class PatientService {
     return new Promise((resolve, reject) => {
       (<any>obj).address = data.address ? data.address.toJSON() : '';
       (<any>obj).anamneses = data.anamneses ? JSON.stringify(data.anamneses.map(a => a.toJSON())) : undefined;
+      (<any>obj).measurements = data.measurements ? data.measurements.toJSON() : undefined;
       this._http.post<Patient>('/patient', obj)
         .subscribe(res => {
           res.address = res.address ? AddressInfo.fromJSON(res.address) : null;
           res.anamneses = res.anamneses ? JSON.parse(<any>res.anamneses).map(a => Anamneses.fromJSON(a)) : undefined;
+          res.measurements = res.measurements ? Measurements.fromJSON(res.measurements) : null;
           resolve(res);
         }, (err) => {
           reject(err);
@@ -28,6 +30,7 @@ export class PatientService {
       this._http.get<Patient[]>('/patient')
         .subscribe(res => {
           res.map(res => res.address = res.address ? AddressInfo.fromJSON(res.address) : null);
+          res.map(res => res.measurements = res.measurements ? Measurements.fromJSON(res.measurements) : null);
           res.map(res => {
             res.anamneses = res.anamneses ? JSON.parse(<any>res.anamneses).map(a => Anamneses.fromJSON(a)) : undefined;
           });
@@ -45,6 +48,7 @@ export class PatientService {
         .subscribe(res => {
           res.address = res.address ? AddressInfo.fromJSON(res.address) : null;
           res.anamneses = res.anamneses ? JSON.parse(<any>res.anamneses).map(a => Anamneses.fromJSON(a)) : undefined;
+          res.measurements = res.measurements ? Measurements.fromJSON(res.measurements) : null;
           resolve(res);
         }, (err) => {
           reject(err);
@@ -68,10 +72,12 @@ export class PatientService {
     return new Promise((resolve, reject) => {
       (<any>obj).address = data.address ? data.address.toJSON() : '';
       (<any>obj).anamneses = data.anamneses ? JSON.stringify(data.anamneses.map(a => a.toJSON())) : undefined;
+      (<any>obj).measurements = data.measurements ? data.measurements.toJSON() : undefined;
       this._http.put<Patient>('/patient/' + data._id, obj)
         .subscribe(res => {
           res.address = res.address ? AddressInfo.fromJSON(res.address) : null;
           res.anamneses = res.anamneses ? JSON.parse(<any>res.anamneses).map(a => Anamneses.fromJSON(a)) : undefined;
+          res.measurements = res.measurements ? Measurements.fromJSON(res.measurements) : null;
           resolve(res);
         }, (err) => {
           reject(err);

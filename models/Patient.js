@@ -13,7 +13,8 @@ var PatientSchema = new mongoose.Schema({
   birthDate: String,
   ocupation: String,
   anamneses: String,
-  placeOfCare: String
+  placeOfCare: String,
+  measurements: String
 });
 
 module.exports = mongoose.model('Patient', PatientSchema);

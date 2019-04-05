@@ -209,6 +209,22 @@
   padding: 0 8px;
 }
 
+.mrc-global .mat-form-field .mat-focused .mat-form-field-label {
+  color: #298dca !important;
+}
+  
+.mrc-global .mat-form-field .mat-form-field-ripple {
+  background-color: #298dca !important;
+}
+
+.mrc-global .mat-form-field-invalid .mat-form-field-ripple {
+  background-color: #f44366 !important;
+}
+
+.mrc-global .mat-form-field input {
+  border: none;
+}
+
 .mrc-global .mat-table {
   box-shadow: none;
 }

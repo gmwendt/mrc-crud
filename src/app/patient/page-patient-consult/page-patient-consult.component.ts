@@ -3,13 +3,14 @@ import { Location } from '@angular/common';
 import { MatTableDataSource } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { Anamneses, FileSystemCommands, Patient } from "../../core/common/types";
+import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue } from "../../core/common/types";
 import { PatientService } from "../../core/patient.service";
 
 import { DialogAlertData, DialogAlertButton, DialogAlertResult } from "../../shared/dialog-alert/dialog-alert.component";
 import { DialogService } from "../../shared/dialog.service";
 
 import { Subscription } from "rxjs";
+import { DialogHistoricalValueEditComponent, DialogHistoricalValueEditData } from "app/shared/dialog-historical-value-edit/dialog-historical-value-edit.component";
 
 @Component({
   selector: 'page-patient-consult',
@@ -27,7 +28,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private displayedColumns = ['clinicCase', 'commands'];
   private loading = true;
   private patient: Patient;
-  private selectedTabIndex: number = 0;
+  private selectedTabIndex: number = 2;
   
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _router: Router,
     private _patient: PatientService, private _location: Location , private _dialog: DialogService) {
@@ -47,6 +48,9 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
         console.log(error);
       }
       finally {
+        //mock
+        this.patient.measurements = new Measurements([{ timestamp: '04/04/2017', value: 70, unit: 'kg' }, { timestamp: '04/04/2018', value: 75, unit: 'kg' }]);
+        this.selectedTabIndex = 0;
         this.loading = false;
         this._detector.detectChanges();
       }
@@ -101,6 +105,10 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     finally {
       this.loading = false;
     }
+  }
+
+  private on_measurement_edited(histValue: IHistoricalValue): void {
+    this.markAsDirty();
   }
 
   private createAnamnasesTable(): void {
