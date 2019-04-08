@@ -1,11 +1,24 @@
-<button mat-button (click)="on_edit_measurement_value_clicked()" style="margin: 8px 0 0 22px">Nova medida</button>
-<mat-table [dataSource]="dataSource" style="max-width: 350px; margin: 8px 0 0 22px">
+<button mat-button (click)="on_edit_measurement_value_clicked()" class="measurement-item-add-button">Nova medida</button>
+<mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="timestamp">
-    <mat-cell *matCellDef="let element">{{ element.timestamp }}</mat-cell>
+    <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ format_timestamp(element.timestamp) }}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="value">
-    <mat-cell *matCellDef="let element">{{ element.value }}</mat-cell>
+    <mat-header-cell *matHeaderCellDef>{{ valueLabel }}</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.value }} <p class="measurement-unit">{{ element.unit }}</p></mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="commands">
+    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+    <mat-cell *matCellDef="let element; let i = index;"> 
+      <span (click)="on_edit_measurement_value_clicked(element)"
+        title="Editar" class="icon-edit"></span>
+      <span (click)="on_remove_clicked(i)"
+          title="Remover" class="icon-delete"></span> 
+    </mat-cell>
   </ng-container>
   
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>

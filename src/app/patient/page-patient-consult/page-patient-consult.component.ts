@@ -48,8 +48,9 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
         console.log(error);
       }
       finally {
-        //mock
-        this.patient.measurements = new Measurements([{ timestamp: '04/04/2017', value: 70, unit: 'kg' }, { timestamp: '04/04/2018', value: 75, unit: 'kg' }]);
+        if (this.patient && !this.patient.measurements)
+          this.patient.measurements = new Measurements();
+          
         this.selectedTabIndex = 0;
         this.loading = false;
         this._detector.detectChanges();
@@ -107,7 +108,8 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  private on_measurement_edited(histValue: IHistoricalValue): void {
+  private on_measurement_edited(histValue?: IHistoricalValue): void {
+    console.log(this.patient);
     this.markAsDirty();
   }
 

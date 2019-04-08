@@ -1,0 +1,19 @@
+measurement-item .measurement-item-add-button {
+  margin: 8px 0 0 36px;
+}
+
+measurement-item > .mat-table {
+  margin: 8px 0 0 22px;
+  max-width: 350px;
+}
+
+measurement-item .measurement-unit {
+  margin-left: 4px;
+}
+
+measurement-item .icon-delete, measurement-item .icon-edit {
+  color: #4f4f4f;
+  cursor: pointer;
+  font-size: 12pt;
+  margin-right: 8px;
+}

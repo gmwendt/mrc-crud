@@ -13,7 +13,7 @@
   </mat-form-field>
 
   <mat-form-field floatLabel="always">
-    <mat-label>{{ valueLabel }}<p class="mrc-dialog-historical-value-unit">{{ unit }}</p></mat-label>
+    <mat-label>{{ valueLabel }}<p class="mrc-dialog-historical-value-unit">[{{ unit }}]</p></mat-label>
     <input matInput type="number" [formControl]="valueFormControl">
     <mat-error>Campo <strong>obrigatório</strong></mat-error>
   </mat-form-field>

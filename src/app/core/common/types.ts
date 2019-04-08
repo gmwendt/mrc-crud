@@ -320,7 +320,11 @@ export class Patient {
 
 export class Measurements {
   constructor(public weigth?: IHistoricalValue[], public height?: IHistoricalValue[]) {
+    if (!weigth)
+      this.weigth = [];
 
+    if (!height)
+      this.height = [];
   }
 
   toJSON(): string {
