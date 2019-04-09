@@ -40,9 +40,9 @@
               <mat-panel-description>78 kg</mat-panel-description>
             </mat-expansion-panel-header>
 
-            <measurement-item *ngIf="patient && patient.measurements" [data]="patient.measurements.weigth"
-                                        valueLabel="Peso" unit="kg"
-                                        (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            <measurement-item *ngIf="patient && patient.measurements" 
+                              [data]="patient.measurements.weigth" [goalData]="patient.measurements.weigthGoals"
+                              valueLabel="Peso" unit="kg" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
 
           </mat-expansion-panel>
           <mat-expansion-panel>

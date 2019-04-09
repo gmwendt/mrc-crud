@@ -17,10 +17,14 @@ import * as moment from 'moment';
 export class MeasurementItemComponent implements AfterViewInit {
   
   private displayedColumns = ['timestamp', 'value', 'commands'];
-  private dataSource: MatTableDataSource<IHistoricalValue>
+  private dataSource: MatTableDataSource<IHistoricalValue>;
+  private goalDataSource: MatTableDataSource<IHistoricalValue>;
 
   @Input()
   data: IHistoricalValue[];
+
+  @Input()
+  goalData: IHistoricalValue[];
 
   @Input()
   valueLabel: string;
@@ -35,20 +39,27 @@ export class MeasurementItemComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.updateTable();
+    this.updateTable(this.data);
+    this.updateTable(this.goalData, true);
   }
 
-  private updateTable(): void {
-    if (!this.data)
+  private updateTable(data: IHistoricalValue[], isGoal?: boolean): void {
+    if (!data)
       return;
       
-    this.sortTable();
-    this.dataSource = new MatTableDataSource(this.data);
+    this.sortData(data);
+
+    if (isGoal)
+      this.goalDataSource = new MatTableDataSource(data);
+    else
+      this.dataSource = new MatTableDataSource(data);
   }
 
-  private on_edit_measurement_value_clicked(histValue?: IHistoricalValue): void {
+  private on_edit_measurement_value_clicked(data: IHistoricalValue[], histValue?: IHistoricalValue, isGoal?: boolean): void {
+    var caption = isGoal ? (histValue ? 'Editar meta' : 'Nova meta') : (histValue ? 'Editar medida' : 'Nova medida');
+
     var dialogData: DialogHistoricalValueEditData = {
-      caption: histValue ? 'Editar medida' : 'Nova medida',
+      caption: caption,
       valueLabel: this.valueLabel,
       unit: this.unit,
       value: histValue ? histValue : null
@@ -63,21 +74,21 @@ export class MeasurementItemComponent implements AfterViewInit {
         histValue.timestamp = result.timestamp;
         histValue.value = result.value;
       }
-      else
-        this.data.push({
-          timestamp: result.timestamp,
-          unit: result.unit,
-          value: result.value
+      else 
+        data.push({
+              timestamp: result.timestamp,
+              unit: result.unit,
+              value: result.value
         });
-      
-      this.updateTable();
+
+      this.updateTable(data, isGoal);
       this.measurementEdited.emit(result);
     });
   }
 
-  private on_remove_clicked(index: number): void {
-    this.data.splice(index, 1);
-    this.updateTable();
+  private on_remove_clicked(index: number, data: IHistoricalValue[], isGoal?: boolean): void {
+    data.splice(index, 1);
+    this.updateTable(data, isGoal);
     this.measurementEdited.emit();
   }
 
@@ -86,8 +97,8 @@ export class MeasurementItemComponent implements AfterViewInit {
     return timestamp;
   }
 
-  private sortTable(): void {
-    this.data.sort((a, b) => {
+  private sortData(data: IHistoricalValue[]): void {
+    data.sort((a, b) => {
       return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
     });
   }

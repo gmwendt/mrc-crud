@@ -319,9 +319,12 @@ export class Patient {
 }
 
 export class Measurements {
-  constructor(public weigth?: IHistoricalValue[], public height?: IHistoricalValue[]) {
+  constructor(public weigth?: IHistoricalValue[], public weigthGoals?: IHistoricalValue[], public height?: IHistoricalValue[]) {
     if (!weigth)
       this.weigth = [];
+
+    if (!weigthGoals)
+      this.weigthGoals = [];
 
     if (!height)
       this.height = [];
