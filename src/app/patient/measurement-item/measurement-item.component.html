@@ -23,10 +23,10 @@
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
 <ng-template #noMeasurementsBlock>
-  <div>Nenhuma medida adicionada</div>
+  <div class="measurement-item-table-no-item">Nenhuma medida adicionada</div>
 </ng-template>
 
-<label style="font-size: 9pt; display: flex; margin: 16px 0 0 38px;">Metas</label>
+<label class="measurement-item-label">Metas</label>
 <button mat-button (click)="on_edit_measurement_value_clicked(goalData, null, true)" class="measurement-item-add-button">Nova meta</button>
 <mat-table [dataSource]="goalDataSource" *ngIf="goalData.length > 0; else noGoalsBlock">
   <ng-container matColumnDef="timestamp">
@@ -52,6 +52,10 @@
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
 <ng-template #noGoalsBlock>
-  <div>Nenhuma meta adicionada</div>
+  <div class="measurement-item-table-no-item">Nenhuma meta adicionada</div>
 </ng-template>
-<mrc-chart></mrc-chart>
+
+<div style="margin-top: 8px; width: 350px; height: 200px;">
+  <label class="measurement-item-label">Gráfico evolutivo</label>
+  <mrc-chart></mrc-chart>
+</div>

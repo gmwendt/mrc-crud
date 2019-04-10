@@ -1,6 +1,20 @@
 measurement-item {
+  .measurement-item-label {
+    display: flex; 
+    font-size: 9pt; 
+    margin: 16px 0 0 38px;
+  }
+
   .measurement-item-add-button {
     margin: 8px 0 0 36px;
+  }
+
+  .measurement-item-table-no-item {
+    font-size: 8pt;
+    margin: 8px 0 0 36px;
+    max-width: 350px;
+    padding: 16px;
+    text-align: center;
   }
 
   > .mat-table {

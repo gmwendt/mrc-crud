@@ -48,14 +48,12 @@ export class ChartComponent implements AfterViewInit {
         return moment(value).format('MMM D');
       }
     },
-    height: 300,
-    width: 400,
+    height: 200,
+    width: 350,
     plugins: [Chartist.plugins.tooltip({
       transformTooltipTextFnc: function(tooltip) {
         var xy = tooltip.split(",");
-        console.log(xy[0]);
-        var text = moment(new Date(parseInt(xy[0])).toISOString()).format('L') + ': ' + xy[1] + ' kg';
-        return text;
+        return moment(new Date(parseInt(xy[0])).toISOString()).format('L') + ': ' + xy[1] + ' kg';
       }
     })]
   };
@@ -64,6 +62,11 @@ export class ChartComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    console.log(this.browserLocale);
     var chart = new Chartist.Line(this._chartRef.nativeElement, this.data, this.options);
+  }
+
+  private get browserLocale(): string {
+    return navigator.language || (<any>navigator).userLanguage;
   }
 }

@@ -1,5 +1,19 @@
+measurement-item .measurement-item-label {
+  display: flex;
+  font-size: 9pt;
+  margin: 16px 0 0 38px;
+}
+
 measurement-item .measurement-item-add-button {
   margin: 8px 0 0 36px;
+}
+
+measurement-item .measurement-item-table-no-item {
+  font-size: 8pt;
+  margin: 8px 0 0 36px;
+  max-width: 350px;
+  padding: 16px;
+  text-align: center;
 }
 
 measurement-item > .mat-table {
@@ -7,8 +21,16 @@ measurement-item > .mat-table {
   max-width: 350px;
 }
 
+measurement-item > .mat-table .mat-cell:first-of-type {
+  padding-left: 16px;
+}
+
 measurement-item .measurement-unit {
   margin-left: 4px;
+}
+
+measurement-item .mat-button {
+  padding: 0 8px;
 }
 
 measurement-item .icon-delete, measurement-item .icon-edit {

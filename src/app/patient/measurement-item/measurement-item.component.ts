@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation, Output, EventEmitter, AfterViewInit } from "@angular/core";
+import { Component, Input, ViewEncapsulation, Output, EventEmitter, AfterViewInit, HostListener } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
 
 import { IHistoricalValue } from "../../core/common/types";
@@ -93,7 +93,7 @@ export class MeasurementItemComponent implements AfterViewInit {
   }
 
   private format_timestamp(isoDate: string): string {
-    var timestamp = moment(isoDate).format('L');
+    var timestamp = moment(isoDate).locale(this.browserLocale).format('L');
     return timestamp;
   }
 
@@ -101,5 +101,14 @@ export class MeasurementItemComponent implements AfterViewInit {
     data.sort((a, b) => {
       return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
     });
+  }
+
+  private get browserLocale(): string {
+    return navigator.language || (<any>navigator).userLanguage;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    console.log(event.target.innerWidth);
   }
 }
