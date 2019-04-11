@@ -16,6 +16,14 @@ measurement-item .measurement-item-table-no-item {
   text-align: center;
 }
 
+measurement-item .measurement-item-chart-container {
+  height: 250px;
+  margin-top: 8px; 
+  max-width: 400px; 
+  min-width: 250px; 
+  width: 100%;
+}
+
 measurement-item > .mat-table {
   margin: 8px 0 0 22px;
   max-width: 350px;

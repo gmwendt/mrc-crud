@@ -23,7 +23,7 @@
 [X] page patients
 [X] bug keypress page anamneses
 [>] page measurements
-[>] widget linechart
+[X] widget trend
 [ ] page clinics
 [ ] global loading
 [ ] user enable/disable

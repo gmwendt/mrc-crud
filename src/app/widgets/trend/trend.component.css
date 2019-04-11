@@ -1,0 +1,14 @@
+mrc-trend .chartist-tooltip {
+  color: #fff;
+  background-color: #453D3F;
+  font-size: 9pt;
+  font-weight: normal;
+}
+
+mrc-trend .chartist-tooltip.tooltip-show {
+  opacity: 0.8;
+}
+
+mrc-trend .chartist-tooltip:before {
+  border-top-color: #453D3F;
+}

@@ -1,5 +1,5 @@
-import { ChartComponent } from "../chart/chart.component";
+import { TrendComponent } from "../trend/trend.component";
 
 export const COMMON_COMPONENTS: Array<any> = [
-  ChartComponent
+  TrendComponent
 ];

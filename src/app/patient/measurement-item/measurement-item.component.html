@@ -55,7 +55,7 @@
   <div class="measurement-item-table-no-item">Nenhuma meta adicionada</div>
 </ng-template>
 
-<div style="margin-top: 8px; width: 350px; height: 200px;">
+<div class="measurement-item-chart-container" *ngIf="showChart" #container>
   <label class="measurement-item-label">Gráfico evolutivo</label>
-  <mrc-chart></mrc-chart>
+  <mrc-trend [series]="chartSeries" [height]="ChartHeight" [width]="chartWidth" unit="kg"></mrc-trend>
 </div>
