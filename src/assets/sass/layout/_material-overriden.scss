@@ -84,10 +84,11 @@
       min-height: 28px;
     }
 
-    .mat-row:hover {
-      background-color: #efefef;
-      cursor: pointer;
-    }
+    // TODO: move to components scss
+    // .mat-row:hover {
+    //   background-color: #efefef;
+    //   cursor: pointer;
+    // }
   }
 
   .mat-dialog-container {

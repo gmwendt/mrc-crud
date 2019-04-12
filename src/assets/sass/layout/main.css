@@ -241,10 +241,10 @@
   min-height: 28px;
 }
 
-.mrc-global .mat-table .mat-row:hover {
+/* .mrc-global .mat-table .mat-row:hover {
   background-color: #efefef;
   cursor: pointer;
-}
+} */
 
 .mrc-global .mat-dialog-container {
   padding: 12px;

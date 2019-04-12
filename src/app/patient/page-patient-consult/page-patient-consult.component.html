@@ -1,9 +1,9 @@
 <div>
   <div class="mrc-page-title">{{ patient?.name }}</div>
   <div class="mrc-page-subtitle">
-    <div>99 anos</div>
+    <div>{{patientAge}}</div>
     <div>0,00 m</div>
-    <div>0,00 kg</div>
+    <div>{{currentWeight}}</div>
   </div>
 </div>
 <div id="page-patient-consult-content">
@@ -37,7 +37,7 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
               <mat-panel-title>Peso</mat-panel-title>
-              <mat-panel-description>78 kg</mat-panel-description>
+              <mat-panel-description>{{currentWeight}}{{weightDate}}</mat-panel-description>
             </mat-expansion-panel-header>
 
             <measurement-item *ngIf="patient && patient.measurements" 

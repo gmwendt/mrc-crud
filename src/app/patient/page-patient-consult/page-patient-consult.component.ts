@@ -11,6 +11,9 @@ import { DialogService } from "../../shared/dialog.service";
 
 import { Subscription } from "rxjs";
 import { DialogHistoricalValueEditComponent, DialogHistoricalValueEditData } from "app/shared/dialog-historical-value-edit/dialog-historical-value-edit.component";
+import { HttpErrorResponse } from "@angular/common/http";
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'page-patient-consult',
@@ -45,7 +48,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
         this.createAnamnasesTable();
       }
       catch (error) {
-        console.log(error);
+        this.on_error(error);
       }
       finally {
         if (this.patient && !this.patient.measurements)
@@ -56,6 +59,36 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
         this._detector.detectChanges();
       }
     });
+  }
+
+  get currentWeight(): string {
+    if (!this.patient || 
+        !this.patient.measurements || 
+        !this.patient.measurements.weigth || 
+        this.patient.measurements.weigth.length == 0)
+      return '-- kg';
+
+    return this.patient.measurements.weigth[0].value + ' kg';
+  }
+
+  get weightDate(): string {
+    if (!this.patient || 
+      !this.patient.measurements || 
+      !this.patient.measurements.weigth || 
+      this.patient.measurements.weigth.length == 0)
+    return;
+
+    return ' em ' + moment(this.patient.measurements.weigth[0].timestamp).locale(this.browserLocale).format('L');
+  }
+
+  get patientAge(): string {
+    if (!this.patient || !this.patient.birthDate)
+      return '-- anos';
+
+    let age = moment().diff(this.patient.birthDate, 'years');
+    let strAge = age <= 1 ? age + ' ano' : age + ' anos';
+
+    return strAge;
   }
 
   get dirty(): boolean {
@@ -101,16 +134,25 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
       this.createAnamnasesTable();
     }
     catch (error) {
-      this.on_error(error["statusText"]);
+      this.on_error(error);
     }
     finally {
       this.loading = false;
     }
   }
 
-  private on_measurement_edited(histValue?: IHistoricalValue): void {
-    console.log(this.patient);
-    this.markAsDirty();
+  private async on_measurement_edited(histValue?: IHistoricalValue): Promise<void> {
+    this.loading = true;
+
+    try {
+      await this._patient.updatePatient(this.patient);
+    }
+    catch (error) {
+      this.on_error(error);
+    }
+    finally {
+      this.loading = false;
+    }
   }
 
   private createAnamnasesTable(): void {
@@ -122,7 +164,9 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     this._router.navigate([route, id], { relativeTo: this._route, queryParams: queryParams });
   }
 
-  private show_error_dialog(msg: string): void {
+  private show_error_dialog(error: any): void {
+    var msg = error instanceof HttpErrorResponse ? (error.error ? error.error["error"] : error["message"]) : error;
+
     var dialogData: DialogAlertData = {
       text: msg,
       caption: 'Erro',
@@ -132,7 +176,12 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 	}
 
 	private on_error(error: any): void {
+    console.log(error);
 		this.show_error_dialog(error);
+  }
+
+  private get browserLocale(): string {
+    return navigator.language || (<any>navigator).userLanguage;
   }
   
   ngOnDestroy(): void {
