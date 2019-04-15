@@ -51,8 +51,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
         this.on_error(error);
       }
       finally {
-        if (this.patient && !this.patient.measurements)
-          this.patient.measurements = new Measurements();
+        this.normalizeMeasurements();
           
         this.selectedTabIndex = 0;
         this.loading = false;
@@ -132,6 +131,13 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 
   private navigate(route: string, id: string | FileSystemCommands, queryParams?: Object): void {
     this._router.navigate([route, id], { relativeTo: this._route, queryParams: queryParams });
+  }
+
+  private normalizeMeasurements(): void {
+    if (this.patient && !this.patient.measurements) 
+      this.patient.measurements = new Measurements();
+    else
+      this.patient.measurements = Measurements.normalize(this.patient.measurements);
   }
 
   private show_error_dialog(error: any): void {

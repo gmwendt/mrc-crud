@@ -84,6 +84,10 @@ export class PatientComponent implements OnInit {
   }
 
   private createTable(): void {
+    this.patients.sort((a,b) => {
+      return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+    });
+    
 		this.dataSource = new MatTableDataSource(this.patients);
   }
 

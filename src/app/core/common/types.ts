@@ -339,7 +339,7 @@ export class Patient {
 
   get height(): IHistoricalValue | string {
     if (!this.measurements || !this.measurements.height || this.measurements.height.length == 0)
-      return;
+      return '-- cm';
 
     return this.measurements.height[0];
   }
@@ -358,22 +358,68 @@ export class Patient {
 }
 
 export class Measurements {
-  constructor(public weigth?: IHistoricalValue[], public weigthGoals?: IHistoricalValue[], public height?: IHistoricalValue[], public heightGoals?: IHistoricalValue[]) {
-    if (!weigth)
-      this.weigth = [];
-
-    if (!weigthGoals)
-      this.weigthGoals = [];
-
-    if (!height)
-      this.height = [];
-
-    if (!heightGoals)
-      this.heightGoals = [];
+  constructor(public weigth?: IHistoricalValue[], public weigthGoals?: IHistoricalValue[], public height?: IHistoricalValue[], public heightGoals?: IHistoricalValue[],
+    public armRelaxedRight?: IHistoricalValue[], public armRelaxedRightGoals?: IHistoricalValue[], public armRelaxedLeft?: IHistoricalValue[], public armRelaxedLeftGoals?: IHistoricalValue[],
+    public armContractedRight?: IHistoricalValue[], public armContractedRightGoals?: IHistoricalValue[], public armContractedLeft?: IHistoricalValue[], public armContractedLeftGoals?: IHistoricalValue[],
+    public forearmRight?: IHistoricalValue[], public forearmRightGoals?: IHistoricalValue[], public forearmLeft?: IHistoricalValue[], , public forearmLeftGoals?: IHistoricalValue[]) {
+    
+    Measurements.normalize(this);
   }
 
   toJSON(): string {
     return JSON.stringify(Object.assign({}, this));
+  }
+
+  static normalize(measurement: Measurements): Measurements {
+    if (!measurement.weigth)
+      measurement.weigth = [];
+
+    if (!measurement.weigthGoals)
+      measurement.weigthGoals = [];
+
+    if (!measurement.height)
+      measurement.height = [];
+
+    if (!measurement.heightGoals)
+      measurement.heightGoals = [];
+
+    if (!measurement.armRelaxedRight)
+      measurement.armRelaxedRight = [];
+
+    if (!measurement.armRelaxedRightGoals)
+      measurement.armRelaxedRightGoals = [];
+
+    if (!measurement.armRelaxedLeft)
+      measurement.armRelaxedLeft = [];
+
+    if (!measurement.armRelaxedLeftGoals)
+      measurement.armRelaxedLeftGoals = [];
+
+    if (!measurement.armContractedRight)
+      measurement.armContractedRight = [];
+
+    if (!measurement.armContractedRightGoals)
+      measurement.armContractedRightGoals = [];
+
+    if (!measurement.armContractedLeft)
+      measurement.armContractedLeft = [];
+
+    if (!measurement.armContractedLeftGoals)
+      measurement.armContractedLeftGoals = [];
+
+    if (!measurement.forearmRight)
+      measurement.forearmRight = [];
+
+    if (!measurement.forearmRightGoals)
+      measurement.forearmRightGoals = [];
+
+    if (!measurement.forearmLeft)
+      measurement.forearmLeft = [];
+
+    if (!measurement.forearmLeftGoals)
+      measurement.forearmLeftGoals = [];
+
+    return measurement;
   }
 
   static fromJSON(json: Measurements | string): Measurements {
@@ -480,6 +526,6 @@ export class MatPaginatorIntlBr extends MatPaginatorIntl {
     const endIndex = startIndex < length ?
       Math.min(startIndex + pageSize, length) :
       startIndex + pageSize;
-    return startIndex + 1 + ' - ' + endIndex + ' od ' + length;
+    return startIndex + 1 + ' - ' + endIndex + ' de ' + length;
   };
 }

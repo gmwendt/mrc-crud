@@ -3,7 +3,7 @@ mrc-patients {
 
 	.patient-filter-input {
 		display: flex;
-		margin: 8px 36px;
+		margin: 16px 0 0 36px;
 	}
 
 	> .mat-button {
@@ -17,6 +17,7 @@ mrc-patients {
 	}
 
 	.mat-table {
+		height: calc(100% - 227px);
 		margin: 8px 22px;
 
 		.mat-row:hover {

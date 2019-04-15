@@ -127,7 +127,7 @@ export class MeasurementItemComponent implements AfterViewInit {
 
     var dialogRef = this._dialog.open(DialogHistoricalValueEditComponent, { data: dialogData });
     dialogRef.afterClosed().subscribe((result: IHistoricalValue) => {
-      if (!result || !this.data)
+      if (!result || !data)
         return;
 
       if (histValue) {

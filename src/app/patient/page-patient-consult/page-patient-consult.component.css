@@ -35,6 +35,10 @@ page-patient-consult #page-patient-consult-content {
   margin-top: 8px;
 }
 
+page-patient-consult .mat-accordion > .mat-expansion-panel > .mat-expansion-panel-content {
+  margin-left: 8px;
+}
+
 page-patient-consult #page-patient-consult-content .mat-cell > span {
   line-height: 0;
 }

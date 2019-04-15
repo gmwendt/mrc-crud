@@ -33,6 +33,14 @@ page-patient-consult {
     overflow: auto;
     margin-top: 8px;
 
+    .mat-accordion {
+      > .mat-expansion-panel {
+        > .mat-expansion-panel-content {
+          margin-left: 8px;
+        }
+      }
+    }
+
     .mat-cell {
       > span {
         line-height: 0;

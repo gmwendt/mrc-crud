@@ -48,6 +48,10 @@ page-anamneses-edit {
 
     .mat-expansion-panel {
       max-width: 860px;
+
+      > &-header {
+        padding: 0 22px;
+      }
     }
 
     .icon-calendar-picker {

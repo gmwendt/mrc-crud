@@ -11,6 +11,7 @@
 
     <mat-tab-group [(selectedIndex)]="selectedTabIndex">
       <mat-tab label="Anamneses">
+        <button mat-button (click)="on_anamneses_edit()">Adicionar anamneses</button>
         <mat-table #table [dataSource]="anamneses" class="mat-elevation-z8">
 
           <ng-container matColumnDef="clinicCase">
@@ -42,12 +43,78 @@
 
           <mat-expansion-panel>
             <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
-              <mat-panel-title>Altura</mat-panel-title>
-              <mat-panel-description>1,80 m</mat-panel-description>
+              <mat-panel-title>Circunferências</mat-panel-title>
             </mat-expansion-panel-header>
 
-  
+            <measurement-item [data]="patient.measurements.armRelaxedRight" [goalData]="patient.measurements.armRelaxedRightGoals"
+            valueLabel="Braço relaxado direito" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+
+            <measurement-item [data]="patient.measurements.armRelaxedLeft" [goalData]="patient.measurements.armRelaxedLeftGoals"
+            valueLabel="Braço relaxado esquerdo" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+
+            <measurement-item [data]="patient.measurements.armContractedRight" [goalData]="patient.measurements.armContractedRightGoals"
+            valueLabel="Braço contraido direito" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+
+            <measurement-item [data]="patient.measurements.armContractedLeft" [goalData]="patient.measurements.armContractedLeftGoals"
+            valueLabel="Braço contraido esquerdo" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <measurement-item [data]="patient.measurements.forearmRight" [goalData]="patient.measurements.forearmRightGoals"
+            valueLabel="Antebraço direito" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <measurement-item [data]="patient.measurements.forearmLeft" [goalData]="patient.measurements.forearmLeftGoals"
+            valueLabel="Antebraço esquerdo" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <!-- TODO -->
+            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            valueLabel="Punho direito" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+
+            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            valueLabel="Punho esquerdo" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+
+            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            valueLabel="Pescoço" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+
+            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            valueLabel="Ombro" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+
+            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            valueLabel="Peitoral" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+
+            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            valueLabel="Cintura " unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+
+            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            valueLabel="Abdomen" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+
+            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            valueLabel="Quadril" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+
+            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            valueLabel="Panturrilha direita" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            valueLabel="Panturrilha esquerda" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            valueLabel="Coxa direita" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            valueLabel="Coxa esquerda" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            valueLabel="Coxa proximal direita" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            valueLabel="Coxa proximal esquerda" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
           </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+              <mat-panel-title>Diâmetros Ósseos</mat-panel-title>
+            </mat-expansion-panel-header>
+            <!-- TODO -->
+          </mat-expansion-panel>
+
         </mat-accordion>
       </mat-tab>
       <mat-tab label="Third"> Content 3 </mat-tab>

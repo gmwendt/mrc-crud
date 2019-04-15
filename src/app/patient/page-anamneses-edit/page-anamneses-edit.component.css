@@ -52,6 +52,10 @@ page-anamneses-edit #page-anamneses-edit-content .mat-expansion-panel {
   max-width: 860px;
 }
 
+page-anamneses-edit #page-anamneses-edit-content .mat-expansion-panel > .mat-expansion-panel-header {
+  padding: 0 22px;
+}
+
 page-anamneses-edit #page-anamneses-edit-content .icon-calendar-picker {
   background-color: white;
   cursor: pointer;

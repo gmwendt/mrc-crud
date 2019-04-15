@@ -1,11 +1,7 @@
 <mat-expansion-panel>
   <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
     <mat-panel-title>{{ valueLabel }}</mat-panel-title>
-    <mat-panel-description *ngIf="data && data.length > 0">
-      {{format_value(data[0])}}
-      <span class="measurement-item-margin-left-right-4">em</span>
-      {{format_timestamp(data[0].timestamp)}}
-    </mat-panel-description>
+    <mat-panel-description *ngIf="data && data.length > 0">{{format_value(data[0])}}</mat-panel-description>
   </mat-expansion-panel-header>
 
   <button mat-button (click)="on_edit_measurement_value_clicked(data)">Nova medida</button>
