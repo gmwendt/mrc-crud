@@ -78,6 +78,11 @@
       font-family: 'Segoe UI';
     }
 
+    .mat-cell:first-of-type,
+    .mat-header-cell:first-of-type {
+      padding-left: 16px;
+    }
+
     .mat-row, 
     .mat-header-row {
       height: 28px;
@@ -144,6 +149,8 @@
   }
 
   .mat-tab-group {
+    height: 100%;
+    
     .mat-ink-bar {
       background-color: #298dca;
     }

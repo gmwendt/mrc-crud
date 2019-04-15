@@ -1,3 +1,6 @@
+import * as moment from 'moment';
+import { MatPaginatorIntl } from '@angular/material';
+
 export enum FileSystemCommands {
   Remove,
   Add
@@ -316,10 +319,46 @@ export class Patient {
     this.cpf = '';
     this.birthDate = '';
   }
+
+  get age(): string {
+    if (!this.birthDate)
+      return '-- anos';
+
+    let age = moment().diff(this.birthDate, 'years');
+    let strAge = age <= 1 ? age + ' ano' : age + ' anos';
+
+    return strAge;
+  }
+
+  get weight(): IHistoricalValue | string {
+    if (!this.measurements || !this.measurements.weigth || this.measurements.weigth.length == 0)
+      return '-- kg';
+
+    return this.measurements.weigth[0];
+  }
+
+  get height(): IHistoricalValue | string {
+    if (!this.measurements || !this.measurements.height || this.measurements.height.length == 0)
+      return;
+
+    return this.measurements.height[0];
+  }
+
+  static fromJSON(json: Patient | string): Patient {
+    if (typeof json === 'string')
+      return JSON.parse(json, Patient.reviver);
+  
+    var data = Object.create(Patient.prototype);
+    return Object.assign(data, json);
+  }
+
+  private static reviver(key: string, value: any): any {
+    return key === "" ? Patient.fromJSON(value) : value;
+  }
 }
 
 export class Measurements {
-  constructor(public weigth?: IHistoricalValue[], public weigthGoals?: IHistoricalValue[], public height?: IHistoricalValue[]) {
+  constructor(public weigth?: IHistoricalValue[], public weigthGoals?: IHistoricalValue[], public height?: IHistoricalValue[], public heightGoals?: IHistoricalValue[]) {
     if (!weigth)
       this.weigth = [];
 
@@ -328,6 +367,9 @@ export class Measurements {
 
     if (!height)
       this.height = [];
+
+    if (!heightGoals)
+      this.heightGoals = [];
   }
 
   toJSON(): string {
@@ -421,4 +463,23 @@ export class ScheduleMap {
 export class SystemInfo {
   public _id?: string;
   public nextAccountSequence: number;
+}
+
+export class MatPaginatorIntlBr extends MatPaginatorIntl {
+  itemsPerPageLabel = 'Itens por página';
+  nextPageLabel     = 'Próxima página';
+  previousPageLabel = 'Página anterior';
+
+  getRangeLabel = function (page, pageSize, length) {
+    if (length === 0 || pageSize === 0) {
+      return '0 od ' + length;
+    }
+    length = Math.max(length, 0);
+    const startIndex = page * pageSize;
+    // If the start index exceeds the list length, do not try and fix the end index to the end.
+    const endIndex = startIndex < length ?
+      Math.min(startIndex + pageSize, length) :
+      startIndex + pageSize;
+    return startIndex + 1 + ' - ' + endIndex + ' od ' + length;
+  };
 }

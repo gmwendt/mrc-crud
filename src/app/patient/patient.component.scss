@@ -1,7 +1,16 @@
 mrc-patients {
-  height: 100%;
-  
-  .icon-delete, .icon-edit {
+	height: 100%;
+
+	.patient-filter-input {
+		display: flex;
+		margin: 8px 36px;
+	}
+
+	> .mat-button {
+		margin: 8px 0 0 36px;
+	}
+
+	.icon-delete, .icon-edit {
 		cursor: pointer;
 		font-size: 12pt;
 		color: #4f4f4f;		
@@ -9,5 +18,10 @@ mrc-patients {
 
 	.mat-table {
 		margin: 8px 22px;
+
+		.mat-row:hover {
+			background-color: #efefef;
+			cursor: pointer;
+		}
 	}
 }

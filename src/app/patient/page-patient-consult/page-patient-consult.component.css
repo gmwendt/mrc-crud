@@ -20,6 +20,15 @@ page-patient-consult .mat-table {
   margin: 0;
 }
 
+page-patient-consult .mat-table .mat-row:hover {
+  background-color: #efefef;
+  cursor: pointer;
+}
+
+page-patient-consult .margin-left-4 {
+  margin-left: 4px;
+}
+
 page-patient-consult #page-patient-consult-content {
   flex: 1;
   overflow: auto;

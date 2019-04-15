@@ -61,36 +61,6 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  get currentWeight(): string {
-    if (!this.patient || 
-        !this.patient.measurements || 
-        !this.patient.measurements.weigth || 
-        this.patient.measurements.weigth.length == 0)
-      return '-- kg';
-
-    return this.patient.measurements.weigth[0].value + ' kg';
-  }
-
-  get weightDate(): string {
-    if (!this.patient || 
-      !this.patient.measurements || 
-      !this.patient.measurements.weigth || 
-      this.patient.measurements.weigth.length == 0)
-    return;
-
-    return ' em ' + moment(this.patient.measurements.weigth[0].timestamp).locale(this.browserLocale).format('L');
-  }
-
-  get patientAge(): string {
-    if (!this.patient || !this.patient.birthDate)
-      return '-- anos';
-
-    let age = moment().diff(this.patient.birthDate, 'years');
-    let strAge = age <= 1 ? age + ' ano' : age + ' anos';
-
-    return strAge;
-  }
-
   get dirty(): boolean {
     return this._dirty;
   }
@@ -165,7 +135,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   }
 
   private show_error_dialog(error: any): void {
-    var msg = error instanceof HttpErrorResponse ? (error.error ? error.error["error"] : error["message"]) : error;
+    var msg = error instanceof HttpErrorResponse ? error["message"] : error;
 
     var dialogData: DialogAlertData = {
       text: msg,
@@ -173,7 +143,18 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 			button: DialogAlertButton.OK,
     };
     this._dialog.openAlert(dialogData).then(result => { });
-	}
+  }
+
+  private format_value(data: IHistoricalValue | string): string {
+    if (!data)
+      return;
+
+    if (typeof data === 'string')
+      return data;
+
+    var value = typeof data.value === 'number' ? data.value.toLocaleString() : data.value.toString();
+    return value + ' ' + data.unit;
+  }
 
 	private on_error(error: any): void {
     console.log(error);

@@ -1,9 +1,9 @@
 <div>
-  <div class="mrc-page-title">{{ patient?.name }}</div>
+  <div class="mrc-page-title" (click)="teste()">{{ patient?.name }}</div>
   <div class="mrc-page-subtitle">
-    <div>{{patientAge}}</div>
-    <div>0,00 m</div>
-    <div>{{currentWeight}}</div>
+    <div>{{patient?.age}}</div>
+    <div>{{format_value(patient?.height)}}</div>
+    <div>{{format_value(patient?.weight)}}</div>
   </div>
 </div>
 <div id="page-patient-consult-content">
@@ -33,26 +33,13 @@
       </mat-tab>
 
       <mat-tab label="Medidas">
-        <mat-accordion displayMode="flat" multi="true">
-          <mat-expansion-panel>
-            <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
-              <mat-panel-title>Peso</mat-panel-title>
-              <mat-panel-description>{{currentWeight}}{{weightDate}}</mat-panel-description>
-            </mat-expansion-panel-header>
+        <mat-accordion displayMode="flat" multi="true" *ngIf="patient && patient.measurements">
 
-            <measurement-item *ngIf="patient && patient.measurements" 
-                              [data]="patient.measurements.weigth" [goalData]="patient.measurements.weigthGoals"
-                              valueLabel="Peso" unit="kg" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+          <measurement-item [data]="patient.measurements.weigth" [goalData]="patient.measurements.weigthGoals"
+                            valueLabel="Peso" unit="kg" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+          <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+                            valueLabel="Altura" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
 
-          </mat-expansion-panel>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
-              <mat-panel-title>Altura</mat-panel-title>
-              <mat-panel-description>1,80 m</mat-panel-description>
-            </mat-expansion-panel-header>
-  
-  
-          </mat-expansion-panel>
           <mat-expansion-panel>
             <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
               <mat-panel-title>Altura</mat-panel-title>

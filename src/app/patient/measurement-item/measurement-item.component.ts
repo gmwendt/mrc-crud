@@ -153,8 +153,19 @@ export class MeasurementItemComponent implements AfterViewInit {
   }
 
   private format_timestamp(isoDate: string): string {
-    var timestamp = moment(isoDate).locale(this.browserLocale).format('L');
-    return timestamp;
+    if (isoDate)
+      return moment(isoDate).locale(this.browserLocale).format('L');
+  }
+
+  private format_value(data: IHistoricalValue | string): string {
+    if (!data)
+      return;
+
+    if (typeof data === 'string')
+      return data;
+
+    var value = typeof data.value === 'number' ? data.value.toLocaleString() : data.value.toString();
+    return value + ' ' + data.unit;
   }
 
   private sortData(data: IHistoricalValue[]): void {

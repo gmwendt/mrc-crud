@@ -5,10 +5,6 @@ measurement-item {
     margin: 16px 0 0 38px;
   }
 
-  .measurement-item-add-button {
-    margin: 8px 0 0 36px;
-  }
-
   .measurement-item-table-no-item {
     font-size: 8pt;
     margin: 8px 0 0 36px;
@@ -25,23 +21,22 @@ measurement-item {
     width: 100%;
   }
 
-  > .mat-table {
+  .mat-table {
     margin: 8px 0 0 22px;
     max-width: 350px;
-    
-    //TODO: move to global
-    .mat-cell:first-of-type {
-      padding-left: 16px;
+  }
+
+  .measurement-item-margin-left-right-4 {
+    margin: 0 4px;
+  }
+
+  .mat-expansion-panel-body {
+    > .mat-button {
+      height: 22px;
+      line-height: 22px;
+      margin: 8px 0 0 36px;
+      padding: 0 8px;
     }
-  }
-
-  .measurement-unit {
-    margin-left: 4px;
-  }
-
-  //TODO: move to global
-  .mat-button {
-    padding: 0 8px;
   }
 
   .icon-delete, .icon-edit {

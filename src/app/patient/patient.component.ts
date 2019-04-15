@@ -22,7 +22,7 @@ export class PatientComponent implements OnInit {
   private displayedColumns = ['name', 'commands'];
   private loading = true;
   private patients: Patient[];
-  private dataSource;
+  private dataSource: MatTableDataSource<Patient>;
 
   constructor(private _userService: UserService, private _patient: PatientService, private _dialog: DialogService,
     private _router: Router, private _route: ActivatedRoute) {
@@ -91,8 +91,12 @@ export class PatientComponent implements OnInit {
     this._router.navigate([routeId, patientId], { relativeTo: this._route, queryParams: queryParams });
   }
 
+  private applyFilter(filterValue: string): void {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   private show_error_dialog(error: any): void {
-    var msg = error instanceof HttpErrorResponse ? (error.error ? error.error["error"] : error["message"]) : error;
+    var msg = error instanceof HttpErrorResponse ? error["message"] : error;
 
     var dialogData: DialogAlertData = {
       text: msg,

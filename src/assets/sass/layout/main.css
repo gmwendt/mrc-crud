@@ -235,16 +235,16 @@
   font-family: 'Segoe UI';
 }
 
+.mrc-global .mat-table .mat-cell:first-of-type,
+.mrc-global .mat-table .mat-header-cell:first-of-type {
+  padding-left: 16px;
+}
+
 .mrc-global .mat-table .mat-row,
 .mrc-global .mat-table .mat-header-row {
   height: 28px;
   min-height: 28px;
 }
-
-/* .mrc-global .mat-table .mat-row:hover {
-  background-color: #efefef;
-  cursor: pointer;
-} */
 
 .mrc-global .mat-dialog-container {
   padding: 12px;
@@ -270,6 +270,10 @@
   min-width: 25px !important;
   opacity: 1;
   padding: 8px;
+}
+
+.mrc-global .mat-tab-group {
+  height: 100%;
 }
 
 .mrc-global .mat-tab-group .mat-ink-bar {

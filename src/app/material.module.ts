@@ -12,12 +12,16 @@ import {
 	MatListModule,
 	MatMenuModule,
 	MatNativeDateModule,
+	MatPaginatorIntl,
+	MatPaginatorModule,
 	MatSelectModule,
 	MatTableModule,
 	MatTabsModule,
 } from '@angular/material';
 
 import { CdkTableModule } from '@angular/cdk/table';
+
+import { MatPaginatorIntlBr } from './core/common/types';
 
 @NgModule({
   imports: [
@@ -33,6 +37,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 		MatListModule,
 		MatMenuModule,
 		MatNativeDateModule,
+		MatPaginatorModule,
 		MatSelectModule,
 		MatTableModule,
 		MatTabsModule,
@@ -50,9 +55,11 @@ import { CdkTableModule } from '@angular/cdk/table';
 		MatListModule,
 		MatMenuModule,
 		MatNativeDateModule,
+		MatPaginatorModule,
 		MatSelectModule,
 		MatTableModule,
 		MatTabsModule,
-  ]
+	], 
+	providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlBr}]
 })
 export class MaterialModule {}

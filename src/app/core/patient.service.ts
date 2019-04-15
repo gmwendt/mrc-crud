@@ -18,6 +18,8 @@ export class PatientService {
           res.address = res.address ? AddressInfo.fromJSON(res.address) : null;
           res.anamneses = res.anamneses ? JSON.parse(<any>res.anamneses).map(a => Anamneses.fromJSON(a)) : undefined;
           res.measurements = res.measurements ? Measurements.fromJSON(res.measurements) : null;
+
+          res = Patient.fromJSON(res);
           resolve(res);
         }, (err) => {
           reject(err);
@@ -49,6 +51,8 @@ export class PatientService {
           res.address = res.address ? AddressInfo.fromJSON(res.address) : null;
           res.anamneses = res.anamneses ? JSON.parse(<any>res.anamneses).map(a => Anamneses.fromJSON(a)) : undefined;
           res.measurements = res.measurements ? Measurements.fromJSON(res.measurements) : null;
+          
+          res = Patient.fromJSON(res);
           resolve(res);
         }, (err) => {
           reject(err);

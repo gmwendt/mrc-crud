@@ -17,6 +17,15 @@ page-patient-consult {
 
   .mat-table {
     margin: 0;
+
+    .mat-row:hover {
+      background-color: #efefef;
+      cursor: pointer;
+    }
+  }
+
+  .margin-left-4 {
+    margin-left: 4px; 
   }
 
   #page-patient-consult-content {

@@ -1,61 +1,73 @@
-<button mat-button (click)="on_edit_measurement_value_clicked(data)" class="measurement-item-add-button">Nova medida</button>
-<mat-table [dataSource]="dataSource" *ngIf="data.length > 0; else noMeasurementsBlock">
-  <ng-container matColumnDef="timestamp">
-    <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ format_timestamp(element.timestamp) }}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="value">
-    <mat-header-cell *matHeaderCellDef>{{ valueLabel }}</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.value }} <p class="measurement-unit">{{ element.unit }}</p></mat-cell>
-  </ng-container>
+<mat-expansion-panel>
+  <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+    <mat-panel-title>{{ valueLabel }}</mat-panel-title>
+    <mat-panel-description *ngIf="data && data.length > 0">
+      {{format_value(data[0])}}
+      <span class="measurement-item-margin-left-right-4">em</span>
+      {{format_timestamp(data[0].timestamp)}}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
 
-  <ng-container matColumnDef="commands">
-    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-    <mat-cell *matCellDef="let element; let i = index;"> 
-      <span (click)="on_edit_measurement_value_clicked(data, element)"
-        title="Editar" class="icon-edit"></span>
-      <span (click)="on_remove_clicked(i, data)"
-          title="Remover" class="icon-delete"></span> 
-    </mat-cell>
-  </ng-container>
-  
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</mat-table>
-<ng-template #noMeasurementsBlock>
-  <div class="measurement-item-table-no-item">Nenhuma medida adicionada</div>
-</ng-template>
+  <button mat-button (click)="on_edit_measurement_value_clicked(data)">Nova medida</button>
+  <mat-table [dataSource]="dataSource" *ngIf="data && data.length > 0; else noMeasurementsBlock">
+    <ng-container matColumnDef="timestamp">
+      <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ format_timestamp(element.timestamp) }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="value">
+      <mat-header-cell *matHeaderCellDef>{{ valueLabel }}</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ format_value(element) }}</mat-cell>
+    </ng-container>
 
-<label class="measurement-item-label">Metas</label>
-<button mat-button (click)="on_edit_measurement_value_clicked(goalData, null, true)" class="measurement-item-add-button">Nova meta</button>
-<mat-table [dataSource]="goalDataSource" *ngIf="goalData.length > 0; else noGoalsBlock">
-  <ng-container matColumnDef="timestamp">
-    <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ format_timestamp(element.timestamp) }}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="value">
-    <mat-header-cell *matHeaderCellDef>{{ valueLabel }}</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.value }} <p class="measurement-unit">{{ element.unit }}</p></mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="commands">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index;"> 
+        <span (click)="on_edit_measurement_value_clicked(data, element)"
+          title="Editar" class="icon-edit"></span>
+        <span (click)="on_remove_clicked(i, data)"
+            title="Remover" class="icon-delete"></span> 
+      </mat-cell>
+    </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <ng-template #noMeasurementsBlock>
+    <div class="measurement-item-table-no-item">Nenhuma medida adicionada</div>
+  </ng-template>
 
-  <ng-container matColumnDef="commands">
-    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-    <mat-cell *matCellDef="let element; let i = index;"> 
-      <span (click)="on_edit_measurement_value_clicked(goalData, element)"
-        title="Editar" class="icon-edit"></span>
-      <span (click)="on_remove_clicked(i, goalData, true)"
-          title="Remover" class="icon-delete"></span> 
-    </mat-cell>
-  </ng-container>
-  
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</mat-table>
-<ng-template #noGoalsBlock>
-  <div class="measurement-item-table-no-item">Nenhuma meta adicionada</div>
-</ng-template>
+  <label class="measurement-item-label">Metas</label>
+  <button mat-button (click)="on_edit_measurement_value_clicked(goalData, null, true)">Nova meta</button>
+  <mat-table [dataSource]="goalDataSource" *ngIf="goalData && goalData.length > 0; else noGoalsBlock">
+    <ng-container matColumnDef="timestamp">
+      <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ format_timestamp(element.timestamp) }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="value">
+      <mat-header-cell *matHeaderCellDef>{{ valueLabel }}</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ format_value(element) }}</mat-cell>
+    </ng-container>
 
-<div class="measurement-item-chart-container" *ngIf="showChart" #container>
-  <label class="measurement-item-label">Gráfico evolutivo</label>
-  <mrc-trend [series]="chartSeries" [height]="ChartHeight" [width]="chartWidth" unit="kg"></mrc-trend>
-</div>
+    <ng-container matColumnDef="commands">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index;"> 
+        <span (click)="on_edit_measurement_value_clicked(goalData, element)"
+          title="Editar" class="icon-edit"></span>
+        <span (click)="on_remove_clicked(i, goalData, true)"
+            title="Remover" class="icon-delete"></span> 
+      </mat-cell>
+    </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <ng-template #noGoalsBlock>
+    <div class="measurement-item-table-no-item">Nenhuma meta adicionada</div>
+  </ng-template>
+
+  <div class="measurement-item-chart-container" *ngIf="showChart" #container>
+    <label class="measurement-item-label">Gráfico evolutivo</label>
+    <mrc-trend [series]="chartSeries" [height]="ChartHeight" [width]="chartWidth" unit="kg"></mrc-trend>
+  </div>
+
+</mat-expansion-panel>

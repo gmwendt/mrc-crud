@@ -1,7 +1,6 @@
 <div class="mrc-page-title">Pacientes</div>
-<div class="mrc-page-commands" (click)="editPatient()">
-  <label>Adicionar paciente</label>
-</div>
+<button mat-button (click)="editPatient()">Adicionar paciente</button>
+<input class="patient-filter-input" (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
 <progress-spinner [progress]="loading">
   <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -25,4 +24,5 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigate('consulta', row._id)"></mat-row>
   </mat-table>
+  <mat-paginator [pageSizeOptions]="[10, 20, 30, 40, 50]" showFirstLastButtons></mat-paginator>
 </progress-spinner>

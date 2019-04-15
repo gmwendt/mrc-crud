@@ -396,7 +396,7 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private show_error_dialog(error: any): void {
-    var msg = error instanceof HttpErrorResponse ? (error.error ? error.error["error"] : error["message"]) : error;
+    var msg = error instanceof HttpErrorResponse ? error["message"] : error;
 
     var dialogData: DialogAlertData = {
       text: msg,
