@@ -32,7 +32,6 @@ measurement-item .mat-table > .mat-row > .mat-cell:first-of-type {
 
 measurement-item .mat-table > .mat-header-row > .mat-header-cell,
 measurement-item .mat-table > .mat-row > .mat-cell {
-  display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

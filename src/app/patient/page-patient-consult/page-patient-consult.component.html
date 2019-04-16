@@ -11,7 +11,7 @@
 
     <mat-tab-group [(selectedIndex)]="selectedTabIndex">
       <mat-tab label="Anamneses">
-        <button mat-button (click)="on_anamneses_edit()">Adicionar anamneses</button>
+        <button mat-button class="page-patient-consult-content-add-anamnese" (click)="on_anamneses_edit()">Adicionar anamneses</button>
         <mat-table #table [dataSource]="anamneses" class="mat-elevation-z8">
 
           <ng-container matColumnDef="clinicCase">
@@ -64,47 +64,46 @@
             <measurement-item [data]="patient.measurements.forearmLeft" [goalData]="patient.measurements.forearmLeftGoals"
             valueLabel="Antebraço esquerdo" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
             
-            <!-- TODO -->
-            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            <measurement-item [data]="patient.measurements.fistRight" [goalData]="patient.measurements.fistRightGoals"
             valueLabel="Punho direito" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
-
-            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            
+            <measurement-item [data]="patient.measurements.fistLeft" [goalData]="patient.measurements.fistLeftGoals"
             valueLabel="Punho esquerdo" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
-
-            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            
+            <measurement-item [data]="patient.measurements.neck" [goalData]="patient.measurements.neckGoals"
             valueLabel="Pescoço" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
-
-            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            
+            <measurement-item [data]="patient.measurements.shoulders" [goalData]="patient.measurements.shouldersGoals"
             valueLabel="Ombro" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
-
-            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            
+            <measurement-item [data]="patient.measurements.breastplate" [goalData]="patient.measurements.breastplateGoals"
             valueLabel="Peitoral" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
-
-            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            
+            <measurement-item [data]="patient.measurements.weist" [goalData]="patient.measurements.weistGoals"
             valueLabel="Cintura " unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
-
-            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
-            valueLabel="Abdomen" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
-
-            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            
+            <measurement-item [data]="patient.measurements.abdomenCirc" [goalData]="patient.measurements.abdomenCircGoals"
+            valueLabel="Abdômen" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <measurement-item [data]="patient.measurements.hip" [goalData]="patient.measurements.hipGoals"
             valueLabel="Quadril" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
-
-            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            
+            <measurement-item [data]="patient.measurements.calfRight" [goalData]="patient.measurements.calfRightGoals"
             valueLabel="Panturrilha direita" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
             
-            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            <measurement-item [data]="patient.measurements.calfLeft" [goalData]="patient.measurements.calfLeftGoals"
             valueLabel="Panturrilha esquerda" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
             
-            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            <measurement-item [data]="patient.measurements.thighRight" [goalData]="patient.measurements.thighRightGoals"
             valueLabel="Coxa direita" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
             
-            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            <measurement-item [data]="patient.measurements.thighLeft" [goalData]="patient.measurements.thighLeftGoals"
             valueLabel="Coxa esquerda" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
             
-            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            <measurement-item [data]="patient.measurements.proximalThighRight" [goalData]="patient.measurements.proximalThighRightGoals"
             valueLabel="Coxa proximal direita" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
             
-            <measurement-item [data]="patient.measurements.height" [goalData]="patient.measurements.heightGoals"
+            <measurement-item [data]="patient.measurements.proximalThighLeft" [goalData]="patient.measurements.proximalThighLeftGoals"
             valueLabel="Coxa proximal esquerda" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
           </mat-expansion-panel>
 
@@ -113,6 +112,49 @@
               <mat-panel-title>Diâmetros Ósseos</mat-panel-title>
             </mat-expansion-panel-header>
             <!-- TODO -->
+            <measurement-item [data]="patient.measurements.fist" [goalData]="patient.measurements.fistGoals"
+            valueLabel="Punho" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <measurement-item [data]="patient.measurements.femur" [goalData]="patient.measurements.femurGoals"
+            valueLabel="Fêmur" unit="cm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+              <mat-panel-title>Pregas cutâneas</mat-panel-title>
+            </mat-expansion-panel-header>
+            <measurement-item [data]="patient.measurements.biceps" [goalData]="patient.measurements.bicepsGoals"
+            valueLabel="Bíceps" unit="mm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <measurement-item [data]="patient.measurements.abdomenFold" [goalData]="patient.measurements.abdomenFoldGoals"
+            valueLabel="Abdominal" unit="mm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <measurement-item [data]="patient.measurements.triceps" [goalData]="patient.measurements.tricepsGoals"
+            valueLabel="Tríceps" unit="mm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <measurement-item [data]="patient.measurements.suprailiac" [goalData]="patient.measurements.suprailiacGoals"
+            valueLabel="Suprailíaca" unit="mm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <measurement-item [data]="patient.measurements.averageAxillary" [goalData]="patient.measurements.averageAxillaryGoals"
+            valueLabel="Axilar Média" unit="mm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <measurement-item [data]="patient.measurements.subscapular" [goalData]="patient.measurements.subscapularGoals"
+            valueLabel="Subescapular" unit="mm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <measurement-item [data]="patient.measurements.chest" [goalData]="patient.measurements.chestGoals"
+            valueLabel="Tórax" unit="mm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+            <measurement-item [data]="patient.measurements.thighFold" [goalData]="patient.measurements.thighFoldGoals"
+            valueLabel="Coxa" unit="mm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            
+          </mat-expansion-panel>
+          
+          <mat-expansion-panel>
+            <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+              <mat-panel-title>Massa corporal</mat-panel-title>
+            </mat-expansion-panel-header>
+            <!-- TODO -->
+
           </mat-expansion-panel>
 
         </mat-accordion>

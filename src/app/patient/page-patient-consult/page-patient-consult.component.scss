@@ -28,10 +28,18 @@ page-patient-consult {
     margin-left: 4px; 
   }
 
+  .mat-expansion-panel {
+    max-width: 500px;
+  }
+
   #page-patient-consult-content {
     flex: 1;
     overflow: auto;
     margin-top: 8px;
+
+    .page-patient-consult-content-add-anamnese {
+      margin: 8px 0 8px 16px;
+    }
 
     .mat-accordion {
       > .mat-expansion-panel {

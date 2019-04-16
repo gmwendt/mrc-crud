@@ -31,8 +31,7 @@ measurement-item {
         padding-left: 8px;
       }
 
-      >.mat-header-cell, > .mat-cell {
-        display: block;
+      > .mat-header-cell, > .mat-cell {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

@@ -163,9 +163,18 @@
   .mat-expansion-panel {
     box-shadow: none;
 
+    &-header.mat-expanded {
+      font-weight: bold;
+    }
+
     &-header {
       font-size: 9pt;
       padding: 0 8px;
+
+      &-description {
+        flex: 0 0 auto;
+        margin-right: 32px; 
+      }
       // font-weight: 400;
       // flex-direction: row-reverse; // this will set the pointer on the front
 
