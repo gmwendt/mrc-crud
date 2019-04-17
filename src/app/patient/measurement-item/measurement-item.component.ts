@@ -40,6 +40,9 @@ export class MeasurementItemComponent implements AfterViewInit {
   @Input()
   unit: string;
 
+  @Input()
+  predictiveEquations: string[];
+
   @Output()
   measurementEdited: EventEmitter<IHistoricalValue | null> = new EventEmitter<IHistoricalValue | null>();
 

@@ -17,6 +17,7 @@ import { MrcInputDateValidator } from './input-mrc-date-validator.directive';
 import { MrcInputPhoneMaskDirective } from './input-phone-mask.directive';
 import { MrcInputRequiredDirective } from './input-required.directive';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
+import { ProgressSpinner2Component } from './progress-spinner-2/progress-spinner-2.component';
 import { TimeInputComponent } from './time-input/time-input.component';
 import { ZipcodeInputComponent } from './zipcode-input/zipcode-input.component';
 
@@ -35,7 +36,7 @@ import { MatMomentDateModule } from '../mat-moment-date.module';
   ],
   declarations: [ AddProfessionalComponent, CheckListComponent, DialogAddUserComponent, DialogAlertComponent, 
     DialogCapabilitiesChecklistComponent, DialogHistoricalValueEditComponent, DialogSelector, MrcInputEmailValidatorDirective, 
-    MrcInputDateValidator, MrcInputPhoneMaskDirective, MrcInputRequiredDirective, ProgressSpinnerComponent, TimeInputComponent, 
+    MrcInputDateValidator, MrcInputPhoneMaskDirective, MrcInputRequiredDirective, ProgressSpinnerComponent, ProgressSpinner2Component, TimeInputComponent, 
     ZipcodeInputComponent ],
   exports: [ 
     AddProfessionalComponent,
@@ -55,6 +56,7 @@ import { MatMomentDateModule } from '../mat-moment-date.module';
     MrcInputPhoneMaskDirective,
     MrcInputRequiredDirective,
     ProgressSpinnerComponent, 
+    ProgressSpinner2Component,
     ReactiveFormsModule,
     TimeInputComponent,
     ZipcodeInputComponent ],

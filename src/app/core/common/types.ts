@@ -357,7 +357,28 @@ export class Patient {
   }
 }
 
+export class Equations {
+  static IMC(measurements: Measurements): number {
+    if (!measurements.weigth || measurements.weigth.length == 0)
+      return;
+
+    if (!measurements.height || measurements.height.length == 0)
+      return;
+
+    let height = measurements.height[0].value;
+    let weight = measurements.weigth[0].value;
+    
+    return weight / (height * height);
+  }
+}
+
 export class Measurements {
+  private static _keys: string[] = ["weigth", "weigthGoals", "height", "heightGoals", "armRelaxedRight", "armRelaxedRightGoals", "armRelaxedLeft", "armRelaxedLeftGoals", "armContractedRight", "armContractedRightGoals", 
+  "armContractedLeft", "armContractedLeftGoals", "forearmRight", "forearmRightGoals", "forearmLeft", "forearmLeftGoals", "fistRight", "fistRightGoals", "fistLeft", "fistLeftGoals", "neck", "neckGoals", "shoulders", 
+  "shouldersGoals", "breastplate", "breastplateGoals", "weist", "weistGoals", "abdomenCirc", "abdomenCircGoals", "hip", "hipGoals", 'imc', 'imcGoals', "calfRight", "calfRightGoals", "calfLeft", "calfLeftGoals", "thighRight", 
+  "thighRightGoals", "thighLeft", "thighLeftGoals", "proximalThighRight", "proximalThighRightGoals", "proximalThighLeft", "proximalThighLeftGoals", "fist", "fistGoals", "femur", "femurGoals", "biceps", "bicepsGoals",
+  "abdomenFold", "abdomenFoldGoals", "triceps", "tricepsGoals", "suprailiac", "suprailiacGoals", "averageAxillary", "averageAxillaryGoals", "subscapular", "subscapularGoals", "chest", "chestGoals", "thighFold", "thighFoldGoals"];
+
   constructor(public weigth?: IHistoricalValue[], public weigthGoals?: IHistoricalValue[], public height?: IHistoricalValue[], public heightGoals?: IHistoricalValue[],
     public armRelaxedRight?: IHistoricalValue[], public armRelaxedRightGoals?: IHistoricalValue[], public armRelaxedLeft?: IHistoricalValue[], public armRelaxedLeftGoals?: IHistoricalValue[],
     public armContractedRight?: IHistoricalValue[], public armContractedRightGoals?: IHistoricalValue[], public armContractedLeft?: IHistoricalValue[], public armContractedLeftGoals?: IHistoricalValue[],
@@ -373,7 +394,8 @@ export class Measurements {
     public biceps?: IHistoricalValue[], public bicepsGoals?: IHistoricalValue[], public abdomenFold?: IHistoricalValue[], public abdomenFoldGoals?: IHistoricalValue[],
     public triceps?: IHistoricalValue[], public tricepsGoals?: IHistoricalValue[], public suprailiac?: IHistoricalValue[], public suprailiacGoals?: IHistoricalValue[],
     public averageAxillary?: IHistoricalValue[], public averageAxillaryGoals?: IHistoricalValue[], public subscapular?: IHistoricalValue[], public subscapularGoals?: IHistoricalValue[],
-    public chest?: IHistoricalValue[], public chestGoals?: IHistoricalValue[], public thighFold?: IHistoricalValue[], public thighFoldGoals?: IHistoricalValue[]) {
+    public chest?: IHistoricalValue[], public chestGoals?: IHistoricalValue[], public thighFold?: IHistoricalValue[], public thighFoldGoals?: IHistoricalValue[],
+    public imc?: IHistoricalValue[], public imcGoals?: IHistoricalValue[]) {
     
     Measurements.normalize(this);
   }
@@ -383,197 +405,10 @@ export class Measurements {
   }
 
   static normalize(measurement: Measurements): Measurements {
-    if (!measurement.weigth)
-      measurement.weigth = [];
-
-    if (!measurement.weigthGoals)
-      measurement.weigthGoals = [];
-
-    if (!measurement.height)
-      measurement.height = [];
-
-    if (!measurement.heightGoals)
-      measurement.heightGoals = [];
-
-    if (!measurement.armRelaxedRight)
-      measurement.armRelaxedRight = [];
-
-    if (!measurement.armRelaxedRightGoals)
-      measurement.armRelaxedRightGoals = [];
-
-    if (!measurement.armRelaxedLeft)
-      measurement.armRelaxedLeft = [];
-
-    if (!measurement.armRelaxedLeftGoals)
-      measurement.armRelaxedLeftGoals = [];
-
-    if (!measurement.armContractedRight)
-      measurement.armContractedRight = [];
-
-    if (!measurement.armContractedRightGoals)
-      measurement.armContractedRightGoals = [];
-
-    if (!measurement.armContractedLeft)
-      measurement.armContractedLeft = [];
-
-    if (!measurement.armContractedLeftGoals)
-      measurement.armContractedLeftGoals = [];
-
-    if (!measurement.forearmRight)
-      measurement.forearmRight = [];
-
-    if (!measurement.forearmRightGoals)
-      measurement.forearmRightGoals = [];
-
-    if (!measurement.forearmLeft)
-      measurement.forearmLeft = [];
-
-    if (!measurement.forearmLeftGoals)
-      measurement.forearmLeftGoals = [];
-
-    if (!measurement.fistRight)
-      measurement.fistRight = [];
-
-    if (!measurement.fistRightGoals)
-      measurement.fistRightGoals = [];
-
-    if (!measurement.fistLeft)
-      measurement.fistLeft = [];
-
-    if (!measurement.fistLeftGoals)
-      measurement.fistLeftGoals = [];
-
-    if (!measurement.neck)
-      measurement.neck = [];
-
-    if (!measurement.neckGoals)
-      measurement.neckGoals = [];
-
-    if (!measurement.shoulders)
-      measurement.shoulders = [];
-
-    if (!measurement.shouldersGoals)
-      measurement.shouldersGoals = [];
-
-    if (!measurement.breastplate)
-      measurement.breastplate = [];
-
-    if (!measurement.breastplateGoals)
-      measurement.breastplateGoals = [];
-
-    if (!measurement.weist)
-      measurement.weist = [];
-
-    if (!measurement.weistGoals)
-      measurement.weistGoals = [];
-
-    if (!measurement.abdomenCirc)
-      measurement.abdomenCirc = [];
-
-    if (!measurement.abdomenCircGoals)
-      measurement.abdomenCircGoals = [];
-
-    if (!measurement.hip)
-      measurement.hip = [];
-
-    if (!measurement.hipGoals)
-      measurement.hipGoals = [];
-
-    if (!measurement.calfRight)
-      measurement.calfRight = [];
-
-    if (!measurement.calfRightGoals)
-      measurement.calfRightGoals = [];
-
-    if (!measurement.calfLeft)
-      measurement.calfLeft = [];
-
-    if (!measurement.calfLeftGoals)
-      measurement.calfLeftGoals = [];
-
-    if (!measurement.thighRight)
-      measurement.thighRight = [];
-
-    if (!measurement.thighRightGoals)
-      measurement.thighRightGoals = [];
-
-    if (!measurement.thighLeft)
-      measurement.thighLeft = [];
-
-    if (!measurement.thighLeftGoals)
-      measurement.thighLeftGoals = [];
-
-    if (!measurement.proximalThighRight)
-      measurement.proximalThighRight = [];
-
-    if (!measurement.proximalThighRightGoals)
-      measurement.proximalThighRightGoals = [];
-
-    if (!measurement.proximalThighLeft)
-      measurement.proximalThighLeft = [];
-
-    if (!measurement.proximalThighLeftGoals)
-      measurement.proximalThighLeftGoals = [];
-
-    if (!measurement.fist)
-      measurement.fist = [];
-
-    if (!measurement.fistGoals)
-      measurement.fistGoals = [];
-
-    if (!measurement.femur)
-      measurement.femur = [];
-
-    if (!measurement.femurGoals)
-      measurement.femurGoals = [];
-
-    if (!measurement.biceps)
-      measurement.biceps = [];
-
-    if (!measurement.bicepsGoals)
-      measurement.bicepsGoals = [];
-
-    if (!measurement.abdomenFold)
-      measurement.abdomenFold = [];
-
-    if (!measurement.abdomenFoldGoals)
-      measurement.abdomenFoldGoals = [];
-
-    if (!measurement.triceps)
-      measurement.triceps = [];
-
-    if (!measurement.tricepsGoals)
-      measurement.tricepsGoals = [];
-
-    if (!measurement.suprailiac)
-      measurement.suprailiac = [];
-
-    if (!measurement.suprailiacGoals)
-      measurement.suprailiacGoals = [];
-
-    if (!measurement.averageAxillary)
-      measurement.averageAxillary = [];
-
-    if (!measurement.averageAxillaryGoals)
-      measurement.averageAxillaryGoals = [];
-
-    if (!measurement.subscapular)
-      measurement.subscapular = [];
-
-    if (!measurement.subscapularGoals)
-      measurement.subscapularGoals = [];
-
-    if (!measurement.chest)
-      measurement.chest = [];
-
-    if (!measurement.chestGoals)
-      measurement.chestGoals = [];
-
-    if (!measurement.thighFold)
-      measurement.thighFold = [];
-
-    if (!measurement.thighFoldGoals)
-      measurement.thighFoldGoals = [];
+    this._keys.forEach(key => {
+      if (!measurement[key])
+        measurement[key] = [];
+    });
 
     return measurement;
   }

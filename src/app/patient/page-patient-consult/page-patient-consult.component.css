@@ -56,3 +56,7 @@ page-patient-consult #page-patient-consult-content .mat-cell > span .icon-delete
   cursor: pointer;
   font-size: 12pt;
 }
+
+page-patient-consult progress-spinner-2 {
+  height: calc(100% - 30px);
+}

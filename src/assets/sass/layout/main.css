@@ -11,6 +11,11 @@
   border-color: #b0b0b0;
 }
 
+.mrc-global label {
+  font-family: 'Segoe UI', sans-serif, 'Arial', Tahoma, Geneva, Verdana;
+  font-size: 9pt;
+}
+
 .mrc-global input:-moz-read-only {
   background-color: #e7e7e7;
   color: #343434;
