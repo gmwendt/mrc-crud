@@ -158,8 +158,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     if (typeof data === 'string')
       return data;
 
-    var value = typeof data.value === 'number' ? data.value.toLocaleString() : data.value.toString();
-    return value + ' ' + data.unit;
+    return data.value + ' ' + data.unit;
   }
 
 	private on_error(error: any): void {

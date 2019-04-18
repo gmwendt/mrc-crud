@@ -1,16 +1,16 @@
 <mat-expansion-panel>
   <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
     <mat-panel-title>{{ valueLabel }}</mat-panel-title>
-    <mat-panel-description *ngIf="data && data.length > 0">{{format_value(data[0])}}</mat-panel-description>
+    <mat-panel-description *ngIf="data && data.length > 0">{{ format_value(data[0]) | localeString }}</mat-panel-description>
   </mat-expansion-panel-header>
 
   <ng-container *ngIf="predictiveEquations && predictiveEquations.length > 0">
     <label style="margin-left: 16px">Equação preditiva</label>
     <div style="display: flex">
-      <mat-select [value]="predictiveEquations[0]">
-        <mat-option *ngFor="let item of predictiveEquations" [value]="item">Equação IMC</mat-option>
+      <mat-select [value]="predictiveEquations[0]" #select>
+        <mat-option *ngFor="let item of predictiveEquations" [value]="item">{{ equations.text(item) }}</mat-option>
       </mat-select>
-      <label>22,5 {{unit}}</label>
+      <label>{{ equations.calculate(select.value, measurements) | localeString }} {{ unit }}</label>
     </div>
   </ng-container>
 
@@ -23,7 +23,7 @@
     </ng-container>
     <ng-container matColumnDef="value">
       <mat-header-cell *matHeaderCellDef>{{ valueLabel }}</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ format_value(element) }}</mat-cell>
+      <mat-cell *matCellDef="let element">{{ format_value(element) | localeString }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="commands">
@@ -52,7 +52,7 @@
     </ng-container>
     <ng-container matColumnDef="value">
       <mat-header-cell *matHeaderCellDef>{{ valueLabel }}</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ format_value(element) }}</mat-cell>
+      <mat-cell *matCellDef="let element">{{ format_value(element) | localeString }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="commands">

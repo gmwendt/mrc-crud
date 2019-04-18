@@ -24,6 +24,8 @@ import { ZipcodeInputComponent } from './zipcode-input/zipcode-input.component';
 import { MaterialModule } from '../material.module';
 import { MatMomentDateModule } from '../mat-moment-date.module';
 
+import { COMMON_PIPES } from './common/pipes';
+
 @NgModule({
   imports: [ 
     CommonModule,
@@ -34,7 +36,8 @@ import { MatMomentDateModule } from '../mat-moment-date.module';
     ReactiveFormsModule,
     RouterModule,
   ],
-  declarations: [ AddProfessionalComponent, CheckListComponent, DialogAddUserComponent, DialogAlertComponent, 
+  declarations: [ COMMON_PIPES,
+    AddProfessionalComponent, CheckListComponent, DialogAddUserComponent, DialogAlertComponent, 
     DialogCapabilitiesChecklistComponent, DialogHistoricalValueEditComponent, DialogSelector, MrcInputEmailValidatorDirective, 
     MrcInputDateValidator, MrcInputPhoneMaskDirective, MrcInputRequiredDirective, ProgressSpinnerComponent, ProgressSpinner2Component, TimeInputComponent, 
     ZipcodeInputComponent ],
@@ -42,6 +45,7 @@ import { MatMomentDateModule } from '../mat-moment-date.module';
     AddProfessionalComponent,
     CheckListComponent, 
     CommonModule,
+    COMMON_PIPES,
     DialogAddUserComponent, 
     DialogAlertComponent, 
     DialogCapabilitiesChecklistComponent,

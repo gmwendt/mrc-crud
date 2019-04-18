@@ -2,8 +2,8 @@
   <div class="mrc-page-title" (click)="teste()">{{ patient?.name }}</div>
   <div class="mrc-page-subtitle">
     <div>{{patient?.age}}</div>
-    <div>{{format_value(patient?.height)}}</div>
-    <div>{{format_value(patient?.weight)}}</div>
+    <div>{{format_value(patient?.height) | localeString}}</div>
+    <div>{{format_value(patient?.weight) | localeString}}</div>
   </div>
 </div>
 <div id="page-patient-consult-content">
@@ -153,7 +153,7 @@
           </mat-expansion-panel-header>
 
           <measurement-item [data]="patient.measurements.imc" [goalData]="patient.measurements.imcGoals" [predictiveEquations]="['imc']"
-          valueLabel="IMC" unit="kg/m²" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+          [measurements]="patient.measurements" valueLabel="IMC" unit="kg/m²" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
           <!-- TODO -->
 
         </mat-expansion-panel>

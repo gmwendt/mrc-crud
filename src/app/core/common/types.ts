@@ -358,17 +358,36 @@ export class Patient {
 }
 
 export class Equations {
-  static IMC(measurements: Measurements): number {
+
+  static text(equation: string): string {
+    switch (equation) {
+      case 'imc':
+        return 'Equação IMC';
+    }
+  }
+
+  static calculate(equation: string, measurement: Measurements): number {
+    if (!measurement)
+      return;
+
+    switch (equation) {
+      case 'imc':
+        return this.IMC(measurement)
+    }
+  }
+
+  private static IMC(measurements: Measurements): number {
     if (!measurements.weigth || measurements.weigth.length == 0)
       return;
 
     if (!measurements.height || measurements.height.length == 0)
       return;
 
-    let height = measurements.height[0].value;
+    let height = measurements.height[0].value / 100;
     let weight = measurements.weigth[0].value;
+    let imc = Math.round(weight / (height * height) * 100) / 100;
     
-    return weight / (height * height);
+    return imc;
   }
 }
 
