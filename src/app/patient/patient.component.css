@@ -20,9 +20,14 @@ mrc-patients .icon-delete, mrc-patients .icon-edit {
 mrc-patients .mat-table {
   height: calc(100% - 227px);
   margin: 8px 22px;
+  max-width: 800px;
 }
 
 mrc-patients .mat-table .mat-row:hover {
   background-color: #efefef;
   cursor: pointer;
+}
+
+mrc-patients .mat-paginator {
+  max-width: 800px;
 }

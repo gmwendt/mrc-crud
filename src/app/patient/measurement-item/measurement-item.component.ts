@@ -160,6 +160,19 @@ export class MeasurementItemComponent implements AfterViewInit {
     this.measurementEdited.emit();
   }
 
+  private register_predictive_value(value: any): void {
+    var histValue: IHistoricalValue = {
+      timestamp: new Date(Date.now()).toISOString(),
+      unit: this.unit,
+      value: value
+    };
+
+    this.data.push(histValue);
+
+    this.updateTable(this.data);
+    this.measurementEdited.emit(histValue);
+  }
+
   private format_timestamp(isoDate: string): string {
     if (isoDate)
       return moment(isoDate).locale(this.browserLocale).format('L');
@@ -172,7 +185,11 @@ export class MeasurementItemComponent implements AfterViewInit {
     if (typeof data === 'string')
       return data;
 
-    return data.value + ' ' + data.unit;
+    let value = data.value;
+    if (typeof value === 'number' && !isNaN(value)) 
+      value = value.toLocaleString();
+
+    return value + ' ' + data.unit;
   }
 
   private sortData(data: IHistoricalValue[]): void {

@@ -39,12 +39,19 @@ page-patient-consult #page-patient-consult-content {
   margin-top: 8px;
 }
 
-page-patient-consult .mat-accordion > .mat-expansion-panel > .mat-expansion-panel-content {
-  margin-left: 8px;
+page-patient-consult #page-patient-consult-content .page-patient-consult-content-add-anamnese {
+  height: 22px;
+  line-height: 22px;
+  margin: 8px 0 8px 16px;
+  padding: 0 8px;
 }
 
-page-patient-consult #page-patient-consult-content .page-patient-consult-content-add-anamnese {
-  margin: 8px 0 8px 16px;
+page-patient-consult #page-patient-consult-content .page-patient-consult-content-anamneses-table {
+  max-width: 800px;
+}
+
+page-patient-consult #page-patient-consult-content .mat-accordion > .mat-expansion-panel > .mat-expansion-panel-content {
+  margin-left: 8px;
 }
 
 page-patient-consult #page-patient-consult-content .mat-cell > span {

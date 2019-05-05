@@ -43,6 +43,46 @@ measurement-item {
     margin: 0 4px;
   }
 
+  #measurement-item-predictive-equation {
+    
+    > label {
+      margin-left: 16px;
+    }
+
+    &-content {
+      display: flex;
+
+      #measurement-item-predictive-equation-select-container {
+        display: inline;
+        margin: 0 16px 4px 16px;
+        width: 70%;
+
+        > .mat-select {
+          background-color: #e5e5e5;
+          border-radius: 4px;
+          font-size: 9pt;
+          padding: 4px;
+        }
+      }
+
+      .measurement-item-predictive-equation-value {
+        align-items: center;
+        display: flex; 
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .icon-save {
+        align-items: center;
+        color: #298dca;
+        cursor: pointer;
+        display: flex;
+        margin-left: 8px;
+      }
+    }
+  }
+
   .mat-expansion-panel-body {
     > .mat-button {
       height: 22px;

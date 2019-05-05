@@ -293,6 +293,10 @@
   box-shadow: none;
 }
 
+.mrc-global .mat-expansion-panel-header.mat-expanded {
+  font-weight: bold;
+}
+
 .mrc-global .mat-expansion-panel-header {
   font-size: 9pt;
   padding: 0 8px;
@@ -300,11 +304,7 @@
 
 .mrc-global .mat-expansion-panel-header-description {
   flex: 0 0 auto;
-  margin-right: 32px; 
-}
-
-.mrc-global .mat-expansion-panel-header.mat-expanded {
-  font-weight: bold;
+  margin-right: 32px;
 }
 
 .mrc-global .mat-expansion-panel-body {

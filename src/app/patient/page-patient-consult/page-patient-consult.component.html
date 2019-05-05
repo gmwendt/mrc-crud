@@ -10,7 +10,7 @@
   <mat-tab-group [(selectedIndex)]="selectedTabIndex">
     <mat-tab label="Anamneses">
       <button mat-button class="page-patient-consult-content-add-anamnese" (click)="on_anamneses_edit()">Adicionar anamneses</button>
-      <mat-table #table [dataSource]="anamneses" class="mat-elevation-z8">
+      <mat-table #table [dataSource]="anamneses" class="page-patient-consult-content-anamneses-table">
 
         <ng-container matColumnDef="clinicCase">
           <mat-header-cell *matHeaderCellDef> Caso clínico </mat-header-cell>

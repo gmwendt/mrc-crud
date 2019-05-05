@@ -25,12 +25,14 @@ measurement-item .mat-table {
   max-width: 350px;
 }
 
-measurement-item .mat-table > .mat-header-row > .mat-header-cell:first-of-type,
+measurement-item .mat-table > .mat-header-row > .mat-header-cell:first-of-type, measurement-item .mat-table > .mat-header-row > .mat-cell:first-of-type,
+measurement-item .mat-table > .mat-row > .mat-header-cell:first-of-type,
 measurement-item .mat-table > .mat-row > .mat-cell:first-of-type {
   padding-left: 8px;
 }
 
-measurement-item .mat-table > .mat-header-row > .mat-header-cell,
+measurement-item .mat-table > .mat-header-row > .mat-header-cell, measurement-item .mat-table > .mat-header-row > .mat-cell,
+measurement-item .mat-table > .mat-row > .mat-header-cell,
 measurement-item .mat-table > .mat-row > .mat-cell {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -39,6 +41,43 @@ measurement-item .mat-table > .mat-row > .mat-cell {
 
 measurement-item .measurement-item-margin-left-right-4 {
   margin: 0 4px;
+}
+
+measurement-item #measurement-item-predictive-equation > label {
+  margin-left: 16px;
+}
+
+measurement-item #measurement-item-predictive-equation-content {
+  display: flex;
+}
+
+measurement-item #measurement-item-predictive-equation-content #measurement-item-predictive-equation-select-container {
+  display: inline;
+  margin: 0 16px 4px 16px;
+  width: 70%;
+}
+
+measurement-item #measurement-item-predictive-equation-content #measurement-item-predictive-equation-select-container > .mat-select {
+  background-color: #e5e5e5;
+  border-radius: 4px;
+  font-size: 9pt;
+  padding: 4px;
+}
+
+measurement-item #measurement-item-predictive-equation-content .measurement-item-predictive-equation-value {
+  align-items: center;
+  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+measurement-item #measurement-item-predictive-equation-content .icon-save {
+  align-items: center;
+  color: #298dca;
+  cursor: pointer;
+  display: flex;
+  margin-left: 8px;
 }
 
 measurement-item .mat-expansion-panel-body > .mat-button {
