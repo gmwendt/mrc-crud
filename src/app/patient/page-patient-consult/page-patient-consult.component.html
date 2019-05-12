@@ -119,7 +119,7 @@
 
         <mat-expansion-panel>
           <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
-            <mat-panel-title>Pregas cutâneas</mat-panel-title>
+            <mat-panel-title>Dobras cutâneas</mat-panel-title>
           </mat-expansion-panel-header>
           <measurement-item [data]="patient.measurements.biceps" [goalData]="patient.measurements.bicepsGoals"
           valueLabel="Bíceps" unit="mm" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
@@ -152,8 +152,25 @@
             <mat-panel-title>Massa corporal</mat-panel-title>
           </mat-expansion-panel-header>
 
-          <measurement-item [data]="patient.measurements.imc" [goalData]="patient.measurements.imcGoals" [predictiveEquations]="['imc']"
-          [measurements]="patient.measurements" valueLabel="IMC" unit="kg/m²" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+          <div style="margin: 8px">
+            <mat-radio-group [(ngModel)]="bodyCompositionTypeValue">
+              <mat-radio-button [value]="bodyCompositionType.Skinfolds">Dobras cutâneas</mat-radio-button>
+              <mat-radio-button [value]="bodyCompositionType.Bioimpedance">Bioimpedância</mat-radio-button>
+            </mat-radio-group>
+          </div>  
+          <ng-container *ngIf="bodyCompositionTypeValue == bodyCompositionType.Skinfolds">
+            <mat-select #select>
+              <mat-option value="item">TODO 1</mat-option>
+              <mat-option value="item">TODO 2</mat-option>
+              <mat-option value="item">TODO 3</mat-option>
+            </mat-select>
+          </ng-container>
+
+          <!-- [predictiveEquations]="['imc']" [measurements]="patient.measurements"  -->
+          <measurement-item [data]="bodyCompositionTypeValue == bodyCompositionType.Bioimpedance ? patient.measurements.imc : get_predictive_value('imc', 'kg/m²')" 
+            [goalData]="bodyCompositionTypeValue == bodyCompositionType.Bioimpedance ? patient.measurements.imcGoals : get_predictive_value('imcGoals', 'kg/m²')" 
+            [canAdd]="false" [noItemErrorMsg]="equations.getEquationError(patient.measurements, 'imc')" [noGoalsErrorMsg]="equations.getEquationError(patient.measurements, 'imcGoals')"
+            valueLabel="IMC" unit="kg/m²" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
           <!-- TODO -->
 
         </mat-expansion-panel>

@@ -3,17 +3,21 @@ import { Location } from '@angular/common';
 import { MatTableDataSource } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue } from "../../core/common/types";
+import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue, Equations } from "../../core/common/types";
 import { PatientService } from "../../core/patient.service";
 
 import { DialogAlertData, DialogAlertButton, DialogAlertResult } from "../../shared/dialog-alert/dialog-alert.component";
 import { DialogService } from "../../shared/dialog.service";
 
 import { Subscription } from "rxjs";
-import { DialogHistoricalValueEditComponent, DialogHistoricalValueEditData } from "app/shared/dialog-historical-value-edit/dialog-historical-value-edit.component";
 import { HttpErrorResponse } from "@angular/common/http";
 
 import * as moment from 'moment';
+
+export enum BodyCompositionTypeEnum {
+  Bioimpedance, 
+  Skinfolds
+}
 
 @Component({
   selector: 'page-patient-consult',
@@ -32,6 +36,10 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private loading = true;
   private patient: Patient;
   private selectedTabIndex: number = 2;
+  private bodyCompositionTypeValue: BodyCompositionTypeEnum;
+
+  private bodyCompositionType = BodyCompositionTypeEnum;
+  private equations = Equations;
   
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _router: Router,
     private _patient: PatientService, private _location: Location , private _dialog: DialogService) {
@@ -52,6 +60,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
       }
       finally {
         this.normalizeMeasurements();
+        this.definyBodyCompositionType();
           
         this.selectedTabIndex = 0;
         this.loading = false;
@@ -73,7 +82,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   }
 
   private checkErrors(): void {
-    //TODO
+    //TODO ??
   }
 
   private on_anamneses_edit(anamnesesId?: string): void {
@@ -140,6 +149,13 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
       this.patient.measurements = Measurements.normalize(this.patient.measurements);
   }
 
+  private definyBodyCompositionType(): void {
+    if (this.patient.measurements.imc && this.patient.measurements.imc.length > 0) //TODO others
+      this.bodyCompositionTypeValue = BodyCompositionTypeEnum.Bioimpedance;
+    else
+      this.bodyCompositionTypeValue = BodyCompositionTypeEnum.Skinfolds;
+  }
+
   private show_error_dialog(error: any): void {
     var msg = error instanceof HttpErrorResponse ? error["message"] : error;
 
@@ -158,7 +174,19 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     if (typeof data === 'string')
       return data;
 
-    return data.value + ' ' + data.unit;
+    let value = data.value;
+    if (typeof value === 'number' && !isNaN(value)) 
+      value = value.toLocaleString();
+  
+    return value + ' ' + data.unit;
+  }
+
+  private get_predictive_value(equation: string, unit: string): IHistoricalValue[] {
+    //TODO
+    if (!this.patient || !this.patient.measurements)
+      return;
+
+    return Equations.calculate(equation, unit, this.patient.measurements);
   }
 
 	private on_error(error: any): void {

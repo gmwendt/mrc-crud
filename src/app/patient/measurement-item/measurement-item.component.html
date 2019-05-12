@@ -4,23 +4,7 @@
     <mat-panel-description *ngIf="data && data.length > 0">{{ format_value(data[0]) }}</mat-panel-description>
   </mat-expansion-panel-header>
 
-  <div id="measurement-item-predictive-equation" *ngIf="predictiveEquations && predictiveEquations.length > 0">
-    <label>Equação preditiva:</label>
-    <div id="measurement-item-predictive-equation-content">
-      <div id="measurement-item-predictive-equation-select-container">
-        <mat-select [value]="predictiveEquations[0]" #select>
-          <mat-option *ngFor="let item of predictiveEquations" [value]="item">{{ equations.text(item) }}</mat-option>
-        </mat-select>
-      </div>
-      <label class="measurement-item-predictive-equation-value" 
-             title="Valor obtido atravéz da equação preditiva">{{ equations.calculate(select.value, measurements) | localeString }} {{ unit }}</label>
-      <span class="icon-save" title="Registrar valor" 
-            (click)="register_predictive_value(equations.calculate(select.value, measurements))"></span>
-    </div>
-  </div>
-
-
-  <button mat-button (click)="on_edit_measurement_value_clicked(data)">Nova medida</button>
+  <button *ngIf="canAdd" mat-button (click)="on_edit_measurement_value_clicked(data)">Nova medida</button>
   <mat-table [dataSource]="dataSource" *ngIf="data && data.length > 0; else noMeasurementsBlock">
     <ng-container matColumnDef="timestamp">
       <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
@@ -45,11 +29,14 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
   <ng-template #noMeasurementsBlock>
-    <div class="measurement-item-table-no-item">Nenhuma medida adicionada</div>
+    <div *ngIf="noItemErrorMsg; else noItemsMsgBlock" class="measurement-item-table-no-item">{{ noItemErrorMsg }}</div>
+    <ng-template #noItemsMsgBlock>
+      <div class="measurement-item-table-no-item">Nenhuma medida adicionada</div>
+    </ng-template>
   </ng-template>
 
   <label class="measurement-item-label">Metas</label>
-  <button mat-button (click)="on_edit_measurement_value_clicked(goalData, null, true)">Nova meta</button>
+  <button *ngIf="canAdd" mat-button (click)="on_edit_measurement_value_clicked(goalData, null, true)">Nova meta</button>
   <mat-table [dataSource]="goalDataSource" *ngIf="goalData && goalData.length > 0; else noGoalsBlock">
     <ng-container matColumnDef="timestamp">
       <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
@@ -74,7 +61,10 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
   <ng-template #noGoalsBlock>
-    <div class="measurement-item-table-no-item">Nenhuma meta adicionada</div>
+    <div *ngIf="noGoalsErrorMsg; else noGoalsMsgBlock" class="measurement-item-table-no-item">{{ noGoalsErrorMsg }}</div>
+    <ng-template #noGoalsMsgBlock>
+      <div class="measurement-item-table-no-item">Nenhuma meta adicionada</div>
+    </ng-template>
   </ng-template>
 
   <div class="measurement-item-chart-container" *ngIf="showChart" #container>

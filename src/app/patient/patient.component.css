@@ -1,5 +1,5 @@
 mrc-patients {
-  height: 100%;
+  height: calc(100% - 30px);
 }
 
 mrc-patients .patient-filter-input {

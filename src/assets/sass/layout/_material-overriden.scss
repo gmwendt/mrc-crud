@@ -214,4 +214,37 @@
       max-height: 28px;
     }
   }
+
+  .mat-radio-button {
+
+    .mat-radio-container {
+      width: 15px;
+      height: 15px;
+
+      .mat-radio-outer-circle,
+      .mat-radio-inner-circle {
+        width: 15px;
+        height: 15px;
+      }
+    }
+
+    .mat-radio-label {
+      margin-right: 8px;
+    }
+
+    .mat-radio-inner-circle {
+      background-color: #298dca;
+    }
+
+    .mat-radio-ripple {
+      display: none;
+    }
+  }
+
+  .mat-radio-button.mat-accent.mat-radio-checked {
+
+    .mat-radio-outer-circle {
+      border-color: #298dca;
+    }
+  }
 }

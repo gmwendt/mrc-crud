@@ -322,6 +322,33 @@
   max-height: 28px;
 }
 
+.mrc-global .mat-radio-button .mat-radio-container {
+  width: 15px;
+  height: 15px;
+}
+
+.mrc-global .mat-radio-button .mat-radio-container .mat-radio-outer-circle,
+.mrc-global .mat-radio-button .mat-radio-container .mat-radio-inner-circle {
+  width: 15px;
+  height: 15px;
+}
+
+.mrc-global .mat-radio-button .mat-radio-label {
+  margin-right: 8px;
+}
+
+.mrc-global .mat-radio-button .mat-radio-inner-circle {
+  background-color: #298dca;
+}
+
+.mrc-global .mat-radio-button .mat-radio-ripple {
+  display: none;
+}
+
+.mrc-global .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #298dca;
+}
+
 /**
  * Applies styles for users in high contrast mode. Note that this only applies
  * to Microsoft browsers. Chrome can be included by checking for the `html[hc]`
