@@ -1,4 +1,4 @@
-import { PoopShadesEnum, UrineColorEnum, IMetabolicTrackingItem } from "./types";
+import { PoopShadesEnum, UrineColorEnum, IMetabolicTrackingItem, ValueClassification } from "./types";
 
 export class LocalStorageConstants {
   public static MRC_USER = '_MRC_USER';
@@ -35,6 +35,15 @@ export class DaysName {
         return this.Sunday;
     }
   }
+}
+
+export class ImcClassification {
+  public static UnderWeight: ValueClassification = { color: '#96d3e4', text: 'Abaixo do peso' };
+  public static IdealWeight: ValueClassification = { color: '#42cb81', text: 'Peso ideal' };
+  public static OverWeight: ValueClassification = { color: '#f2d38b', text: 'Sobrepeso' };
+  public static ObesityI: ValueClassification = { color: '#e9a340', text: 'Obesidade I' };
+  public static ObesityII: ValueClassification = { color: '#ef6161', text: 'Obesidade II' };
+  public static ObesityIII: ValueClassification = { color: '#d361ef', text: 'Obesidade III' };
 }
 
 export class FecesFormatDescription {

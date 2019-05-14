@@ -3,7 +3,8 @@ import { Location } from '@angular/common';
 import { MatTableDataSource } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue, Equations } from "../../core/common/types";
+import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue } from "../../core/common/types";
+import { Equations } from "../../core/common/worker";
 import { PatientService } from "../../core/patient.service";
 
 import { DialogAlertData, DialogAlertButton, DialogAlertResult } from "../../shared/dialog-alert/dialog-alert.component";

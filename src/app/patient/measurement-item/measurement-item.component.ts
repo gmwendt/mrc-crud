@@ -1,7 +1,8 @@
 import { Component, Input, ViewEncapsulation, Output, ElementRef, EventEmitter, AfterViewInit, HostListener, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
 
-import { IHistoricalValue, Equations, Measurements } from "../../core/common/types";
+import { IHistoricalValue, Measurements } from "../../core/common/types";
+import { Equations } from "../../core/common/worker";
 
 import { DialogHistoricalValueEditComponent, DialogHistoricalValueEditData } from "../../shared/dialog-historical-value-edit/dialog-historical-value-edit.component";
 import { DialogService } from "../../shared/dialog.service";
@@ -52,12 +53,16 @@ export class MeasurementItemComponent implements AfterViewInit {
   @Input()
   noGoalsErrorMsg: string;
 
+  @Input()
+  itemRef: string;
+
+  @Input()
+  showClassification: boolean;
+
   @Output()
   measurementEdited: EventEmitter<IHistoricalValue | null> = new EventEmitter<IHistoricalValue | null>();
 
   @ViewChild('container') _chartContainer: ElementRef;
-
-  private equations = Equations;
 
   constructor(private _dialog: DialogService, private _detector: ChangeDetectorRef) {
   }
@@ -202,6 +207,20 @@ export class MeasurementItemComponent implements AfterViewInit {
     data.sort((a, b) => {
       return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
     });
+  }
+
+  private getValueClassificationText(histValue: IHistoricalValue): string {
+    if (!this.itemRef)
+      return;
+
+    return Equations.getValueClassification(histValue.value, this.itemRef).text;
+  }
+
+  private getValueClassificationColor(histValue: IHistoricalValue): string {
+    if (!this.itemRef)
+      return;
+
+    return Equations.getValueClassification(histValue.value, this.itemRef).color;
   }
 
   private get showChart(): boolean {

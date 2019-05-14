@@ -1,7 +1,12 @@
 <mat-expansion-panel>
   <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
     <mat-panel-title>{{ valueLabel }}</mat-panel-title>
-    <mat-panel-description *ngIf="data && data.length > 0">{{ format_value(data[0]) }}</mat-panel-description>
+    <mat-panel-description *ngIf="data && data.length > 0">
+      <div>{{ format_value(data[0]) }}</div>
+      <div style="margin-left: 8px; padding: 0 4px;" *ngIf="showClassification" [style.background-color]="getValueClassificationColor(data[0])">
+        {{ getValueClassificationText(data[0]) }}
+      </div>
+    </mat-panel-description>
   </mat-expansion-panel-header>
 
   <button *ngIf="canAdd" mat-button (click)="on_edit_measurement_value_clicked(data)">Nova medida</button>
@@ -12,7 +17,12 @@
     </ng-container>
     <ng-container matColumnDef="value">
       <mat-header-cell *matHeaderCellDef>{{ valueLabel }}</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ format_value(element) }}</mat-cell>
+      <mat-cell *matCellDef="let element">
+        <div>{{ format_value(element) }}</div>
+        <div style="margin-left: 8px; padding: 0 4px;" *ngIf="showClassification" [style.background-color]="getValueClassificationColor(data[0])">
+          {{ getValueClassificationText(element) }}
+        </div>
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="commands">

@@ -166,11 +166,11 @@
             </mat-select>
           </ng-container>
 
-          <!-- [predictiveEquations]="['imc']" [measurements]="patient.measurements"  -->
           <measurement-item [data]="bodyCompositionTypeValue == bodyCompositionType.Bioimpedance ? patient.measurements.imc : get_predictive_value('imc', 'kg/m²')" 
             [goalData]="bodyCompositionTypeValue == bodyCompositionType.Bioimpedance ? patient.measurements.imcGoals : get_predictive_value('imcGoals', 'kg/m²')" 
-            [canAdd]="false" [noItemErrorMsg]="equations.getEquationError(patient.measurements, 'imc')" [noGoalsErrorMsg]="equations.getEquationError(patient.measurements, 'imcGoals')"
-            valueLabel="IMC" unit="kg/m²" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
+            [canAdd]="bodyCompositionTypeValue == bodyCompositionType.Bioimpedance ? true : false" [noItemErrorMsg]="equations.getEquationError(patient.measurements, 'imc')" 
+            [noGoalsErrorMsg]="equations.getEquationError(patient.measurements, 'imcGoals')" [showClassification]="true" 
+            valueLabel="IMC" unit="kg/m²" itemRef="imc" (measurementEdited)="on_measurement_edited($event)"></measurement-item>
           <!-- TODO -->
 
         </mat-expansion-panel>
