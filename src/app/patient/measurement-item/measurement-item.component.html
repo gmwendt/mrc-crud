@@ -3,7 +3,7 @@
     <mat-panel-title>{{ valueLabel }}</mat-panel-title>
     <mat-panel-description *ngIf="data && data.length > 0">
       <div>{{ format_value(data[0]) }}</div>
-      <div style="margin-left: 8px; padding: 0 4px;" *ngIf="showClassification" [style.background-color]="getValueClassificationColor(data[0])">
+      <div class="measurement-item-value-classification" *ngIf="showClassification" [style.background-color]="getValueClassificationColor(data[0])">
         {{ getValueClassificationText(data[0]) }}
       </div>
     </mat-panel-description>
@@ -18,14 +18,17 @@
     <ng-container matColumnDef="value">
       <mat-header-cell *matHeaderCellDef>{{ valueLabel }}</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <div>{{ format_value(element) }}</div>
-        <div style="margin-left: 8px; padding: 0 4px;" *ngIf="showClassification" [style.background-color]="getValueClassificationColor(data[0])">
-          {{ getValueClassificationText(element) }}
+        <div class="measurement-item-table-value">
+          <div>{{ format_value(element) }}</div>
+          <div class="measurement-item-value-classification" *ngIf="showClassification" 
+            [title]="getValueClassificationText(element)" [style.background-color]="getValueClassificationColor(element)">
+            {{ getValueClassificationText(element) }}
+          </div>
         </div>
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="commands">
+    <ng-container *ngIf="canAdd" matColumnDef="commands">
       <mat-header-cell *matHeaderCellDef> </mat-header-cell>
       <mat-cell *matCellDef="let element; let i = index;"> 
         <span (click)="on_edit_measurement_value_clicked(data, element)"
@@ -39,7 +42,7 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
   <ng-template #noMeasurementsBlock>
-    <div *ngIf="noItemErrorMsg; else noItemsMsgBlock" class="measurement-item-table-no-item">{{ noItemErrorMsg }}</div>
+    <div *ngIf="noItemErrorMsg && !canAdd; else noItemsMsgBlock" class="measurement-item-table-no-item">{{ noItemErrorMsg }}</div>
     <ng-template #noItemsMsgBlock>
       <div class="measurement-item-table-no-item">Nenhuma medida adicionada</div>
     </ng-template>
@@ -71,7 +74,7 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
   <ng-template #noGoalsBlock>
-    <div *ngIf="noGoalsErrorMsg; else noGoalsMsgBlock" class="measurement-item-table-no-item">{{ noGoalsErrorMsg }}</div>
+    <div *ngIf="noGoalsErrorMsg && !canAdd; else noGoalsMsgBlock" class="measurement-item-table-no-item">{{ noGoalsErrorMsg }}</div>
     <ng-template #noGoalsMsgBlock>
       <div class="measurement-item-table-no-item">Nenhuma meta adicionada</div>
     </ng-template>

@@ -370,7 +370,8 @@
               <label class="page-anamneses-edit-content-item-description" style="margin-left: 4px">(Escala de Bristol)</label>
             </div>
             <div class="mrc-input">
-              <mat-select [value]="anamnese.clinicalEvaluation?.fecesFormat" (selectionChange)="anamnese.clinicalEvaluation.fecesFormat = $event.value; markAsDirty()" placeholder="Selecione">
+              <mat-select [value]="anamnese.clinicalEvaluation?.fecesFormat" (selectionChange)="anamnese.clinicalEvaluation.fecesFormat = $event.value; markAsDirty()" 
+                placeholder="Selecione" panelClass="page-anamneses-edit-select-panel-override">
                 <mat-select-trigger id="mrc-face-format-select-option">
                   <img [src]="getFecesFormatImage(anamnese.clinicalEvaluation.fecesFormat)">
                   <label>{{ getFecesFormatText(anamnese.clinicalEvaluation.fecesFormat) }}</label>

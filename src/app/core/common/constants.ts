@@ -1,4 +1,4 @@
-import { PoopShadesEnum, UrineColorEnum, IMetabolicTrackingItem, ValueClassification } from "./types";
+import { PoopShadesEnum, UrineColorEnum, IMetabolicTrackingItem, ValueClassification, ICorporalDensityProtocol, CorporalDensityProtocolsEnum } from "./types";
 
 export class LocalStorageConstants {
   public static MRC_USER = '_MRC_USER';
@@ -312,6 +312,14 @@ export const MetabolicTrackingList: IMetabolicTrackingItem[] = [
   { id: 'oftenSick', group: MetabolicTrackingGroup.Others, description: 'Frequentemente doente', score: 0 },
   { id: 'frequentOrUrgentUrgeToUrinate', group: MetabolicTrackingGroup.Others, description: 'Frequente ou urgente vontade de urinar', score: 0 },
   { id: 'genitalItchingOrDischarge', group: MetabolicTrackingGroup.Others, description: 'Coceira genital ou corrimento', score: 0 },
+];
+
+export const CorporalDensityProtocols: ICorporalDensityProtocol[] = [
+  { text: '3 Pregas: Jackson & Pollock', value: CorporalDensityProtocolsEnum.JacksonAndPollock }, //H e M
+  { text: '3 Pregas: Guedes', value: CorporalDensityProtocolsEnum.Guedes }, //H e M
+  { text: '4 Pregas: Durin & Womersley', value: CorporalDensityProtocolsEnum.DurinAndWomersley }, 
+  { text: '4 Pregas: Faulkner', value: CorporalDensityProtocolsEnum.Faulkner }, 
+  { text: '3 Pregas: Jackson, Pollock & Ward', value: CorporalDensityProtocolsEnum.JacksonPollockAndWard }, 
 ];
 /*
 export class Nutrients {

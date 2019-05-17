@@ -247,4 +247,17 @@
       border-color: #298dca;
     }
   }
+
+  .mat-select {
+    font-size: 9pt;
+  }
+
+  .mat-select-panel {
+
+    .mat-option {
+      font-size: 9pt;
+      height: 24px;
+      line-height: 24px;
+    }
+  }
 }

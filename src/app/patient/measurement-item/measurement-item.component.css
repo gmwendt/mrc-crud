@@ -20,6 +20,20 @@ measurement-item .measurement-item-chart-container {
   width: 100%;
 }
 
+measurement-item .measurement-item-table-value {
+  display: flex; 
+  width: 100%;
+}
+
+measurement-item .measurement-item-value-classification {
+  border-radius: 4px;
+  margin-left: 8px;
+  overflow: hidden;
+  padding: 0px 4px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 measurement-item .mat-table {
   margin: 8px 0 0 18px;
   max-width: 350px;
@@ -37,6 +51,21 @@ measurement-item .mat-table > .mat-row > .mat-cell {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+measurement-item .mat-table > .mat-header-row .mat-column-commands,
+measurement-item .mat-table > .mat-row .mat-column-commands {
+  max-width: 40px;
+}
+
+measurement-item .mat-table > .mat-header-row .mat-column-timestamp,
+measurement-item .mat-table > .mat-row .mat-column-timestamp {
+  max-width: 70px;
+}
+
+measurement-item .mat-table > .mat-header-row .mat-column-value,
+measurement-item .mat-table > .mat-row .mat-column-value {
+  margin: 0 8px;
 }
 
 measurement-item .measurement-item-margin-left-right-4 {

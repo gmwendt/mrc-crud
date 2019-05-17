@@ -152,3 +152,8 @@ page-anamneses-edit #mrc-edit-page-footer-buttons > button {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.mrc-global .page-anamneses-edit-select-panel-override > .mat-option {
+  height: 36px;
+  line-height: 36px;
+}

@@ -2,7 +2,7 @@ import { Component, Input, ViewEncapsulation, Output, ElementRef, EventEmitter, 
 import { MatTableDataSource } from "@angular/material";
 
 import { IHistoricalValue, Measurements } from "../../core/common/types";
-import { Equations } from "../../core/common/worker";
+import { Equations, Util } from "../../core/common/worker";
 
 import { DialogHistoricalValueEditComponent, DialogHistoricalValueEditData } from "../../shared/dialog-historical-value-edit/dialog-historical-value-edit.component";
 import { DialogService } from "../../shared/dialog.service";
@@ -22,18 +22,13 @@ export class MeasurementItemComponent implements AfterViewInit {
   private ChartMargin = 44;
   private ChartHeight = 250;
 
-  private displayedColumns = ['timestamp', 'value', 'commands'];
   private dataSource: MatTableDataSource<IHistoricalValue>;
   private goalDataSource: MatTableDataSource<IHistoricalValue>;
   private chartSeries: IChartistSeriesData[] = [];
 
   private _chartWidth: number;
-
-  @Input()
-  data: IHistoricalValue[];
-
-  @Input()
-  goalData: IHistoricalValue[];
+  private _data: IHistoricalValue[];
+  private _goalData: IHistoricalValue[];
 
   @Input()
   valueLabel: string;
@@ -72,6 +67,32 @@ export class MeasurementItemComponent implements AfterViewInit {
     this.updateTable(this.goalData, true);
 
     this.chartWidth = window.innerWidth > 400 + this.ChartMargin ? 400 : window.innerWidth - this.ChartMargin;
+  }
+
+  @Input()
+  set data(value: IHistoricalValue[]) {
+    if (Util.CompareArray(value, this.data))
+      return;
+      
+    this._data = value;
+    this.updateTable(this.data);
+  }
+
+  get data(): IHistoricalValue[] {
+    return this._data;
+  }
+
+  @Input()
+  set goalData(value: IHistoricalValue[]) {
+    if (Util.CompareArray(value, this.goalData))
+      return;
+      
+    this._goalData = value;
+    this.updateTable(this.goalData, true);
+  }
+
+  get goalData(): IHistoricalValue[] {
+    return this._goalData;
   }
 
   get chartWidth(): number {
@@ -213,14 +234,24 @@ export class MeasurementItemComponent implements AfterViewInit {
     if (!this.itemRef)
       return;
 
-    return Equations.getValueClassification(histValue.value, this.itemRef).text;
+    let classf = Equations.getValueClassification(histValue.value, this.itemRef);
+
+    if (!classf)
+      return
+
+    return classf.text;
   }
 
   private getValueClassificationColor(histValue: IHistoricalValue): string {
     if (!this.itemRef)
       return;
 
-    return Equations.getValueClassification(histValue.value, this.itemRef).color;
+    let classf = Equations.getValueClassification(histValue.value, this.itemRef);
+
+    if (!classf)
+      return
+
+    return classf.color;
   }
 
   private get showChart(): boolean {
@@ -229,6 +260,13 @@ export class MeasurementItemComponent implements AfterViewInit {
 
   private get browserLocale(): string {
     return navigator.language || (<any>navigator).userLanguage;
+  }
+
+  private get displayedColumns(): string[] {
+    if (this.canAdd)
+      return ['timestamp', 'value', 'commands'];
+    else 
+      return ['timestamp', 'value'];
   }
 
   @HostListener('window:resize', ['$event'])

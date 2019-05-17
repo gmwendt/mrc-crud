@@ -2,3 +2,9 @@ A = Active, F = Fixed
 
 [A] ZipcodeInputComponent: Input possuí 8 caracteres, selecionar tudo e digitar 9.    Created on: 31/01/2019
 [A] PageClinicEditComponent: Input Número do logradouro deve aceitar apenas números   Created on: 31/01/2019
+
+---------------------
+
+contato@clinicagoethe.com.br
+nutrisof: 123456
+nutrium: 123456ab*

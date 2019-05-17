@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { MatTableDataSource } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 
+import { CorporalDensityProtocols } from "../../core/common/constants";
 import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue } from "../../core/common/types";
 import { Equations } from "../../core/common/worker";
 import { PatientService } from "../../core/patient.service";
@@ -41,6 +42,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 
   private bodyCompositionType = BodyCompositionTypeEnum;
   private equations = Equations;
+  private protocols = CorporalDensityProtocols;
   
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _router: Router,
     private _patient: PatientService, private _location: Location , private _dialog: DialogService) {

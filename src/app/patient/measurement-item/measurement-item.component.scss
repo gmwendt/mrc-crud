@@ -21,6 +21,20 @@ measurement-item {
     width: 100%;
   }
 
+  .measurement-item-table-value {
+    display: flex; 
+    width: 100%;
+  }
+
+  .measurement-item-value-classification {
+    border-radius: 4px;
+    margin-left: 8px;
+    overflow: hidden;
+    padding: 0px 4px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .mat-table {
     margin: 8px 0 0 18px;
     max-width: 350px;
@@ -35,6 +49,18 @@ measurement-item {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+      }
+
+      .mat-column-commands {
+        max-width: 40px;
+      }
+      
+      .mat-column-timestamp {
+        max-width: 70px;
+      }
+
+      .mat-column-value {
+        margin: 0 8px;
       }
     }
   }

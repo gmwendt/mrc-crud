@@ -152,7 +152,17 @@
             <mat-panel-title>Massa corporal</mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div style="margin: 8px">
+          <div style="max-width: 300px;margin-bottom: 4px;">
+            <label>Protocolo de referência</label>
+            <mat-select #select>
+              <mat-option *ngFor="let item of protocols" [value]="item.value">{{ item.text }}</mat-option>
+            </mat-select>
+          </div>
+          <div style="margin-bottom: 8px">
+            <mat-checkbox [disableRipple]="true">Exibir valores calculados automaticamente através do protocolo selecionado.</mat-checkbox>
+          </div>
+
+          <!-- <div style="margin: 8px">
             <mat-radio-group [(ngModel)]="bodyCompositionTypeValue">
               <mat-radio-button [value]="bodyCompositionType.Skinfolds">Dobras cutâneas</mat-radio-button>
               <mat-radio-button [value]="bodyCompositionType.Bioimpedance">Bioimpedância</mat-radio-button>
@@ -160,11 +170,9 @@
           </div>  
           <ng-container *ngIf="bodyCompositionTypeValue == bodyCompositionType.Skinfolds">
             <mat-select #select>
-              <mat-option value="item">TODO 1</mat-option>
-              <mat-option value="item">TODO 2</mat-option>
-              <mat-option value="item">TODO 3</mat-option>
+              <mat-option *ngFor="let item of protocols" [value]="item.value">{{ item.text }}</mat-option>
             </mat-select>
-          </ng-container>
+          </ng-container> -->
 
           <measurement-item [data]="bodyCompositionTypeValue == bodyCompositionType.Bioimpedance ? patient.measurements.imc : get_predictive_value('imc', 'kg/m²')" 
             [goalData]="bodyCompositionTypeValue == bodyCompositionType.Bioimpedance ? patient.measurements.imcGoals : get_predictive_value('imcGoals', 'kg/m²')" 

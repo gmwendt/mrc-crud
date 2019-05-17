@@ -511,3 +511,16 @@ export class MatPaginatorIntlBr extends MatPaginatorIntl {
     return startIndex + 1 + ' - ' + endIndex + ' de ' + length;
   };
 }
+
+export enum CorporalDensityProtocolsEnum {
+  JacksonAndPollock,
+  Guedes,
+  DurinAndWomersley,
+  Faulkner,
+  JacksonPollockAndWard
+}
+
+export interface ICorporalDensityProtocol {
+  text: string;
+  value: CorporalDensityProtocolsEnum;
+}

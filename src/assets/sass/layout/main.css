@@ -349,6 +349,16 @@
   border-color: #298dca;
 }
 
+.mrc-global .mat-select {
+  font-size: 9pt;
+}
+
+.mrc-global .mat-select-panel .mat-option {
+  font-size: 9pt;
+  height: 24px;
+  line-height: 24px;
+}
+
 /**
  * Applies styles for users in high contrast mode. Note that this only applies
  * to Microsoft browsers. Chrome can be included by checking for the `html[hc]`
