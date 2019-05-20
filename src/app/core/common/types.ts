@@ -260,6 +260,10 @@ export class EatingHabits {
   }
 }
 
+export class LabAnalyse {
+
+}
+
 export class Clinic {
   public _id?: string;
   public accountRefId: number;
@@ -523,4 +527,9 @@ export enum CorporalDensityProtocolsEnum {
 export interface ICorporalDensityProtocol {
   text: string;
   value: CorporalDensityProtocolsEnum;
+}
+
+export interface IDialogSelectorSource {
+  key: string;
+  value: any;
 }

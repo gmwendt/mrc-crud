@@ -22,8 +22,9 @@
 [X] date icons
 [X] page patients
 [X] bug keypress page anamneses
-[>] page measurements
 [X] widget trend
+[||] page measurements
+[>] page labAnalysis
 [ ] page clinics
 [ ] global loading
 [ ] user enable/disable

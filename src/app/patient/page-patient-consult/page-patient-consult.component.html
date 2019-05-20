@@ -9,7 +9,7 @@
 <div id="page-patient-consult-content">
   <mat-tab-group [(selectedIndex)]="selectedTabIndex">
     <mat-tab label="Anamneses">
-      <button mat-button class="page-patient-consult-content-add-anamnese" (click)="on_anamneses_edit()">Adicionar anamneses</button>
+      <button mat-button class="page-patient-consult-content-add-button" (click)="on_anamneses_edit()">Adicionar anamneses</button>
       <mat-table #table [dataSource]="anamneses" class="page-patient-consult-content-anamneses-table">
 
         <ng-container matColumnDef="clinicCase">
@@ -152,7 +152,7 @@
             <mat-panel-title>Massa corporal</mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div style="max-width: 300px;margin-bottom: 4px;">
+          <!-- <div style="max-width: 300px;margin-bottom: 4px;">
             <label>Protocolo de referência</label>
             <mat-select #select>
               <mat-option *ngFor="let item of protocols" [value]="item.value">{{ item.text }}</mat-option>
@@ -160,9 +160,9 @@
           </div>
           <div style="margin-bottom: 8px">
             <mat-checkbox [disableRipple]="true">Exibir valores calculados automaticamente através do protocolo selecionado.</mat-checkbox>
-          </div>
+          </div> -->
 
-          <!-- <div style="margin: 8px">
+          <div style="margin: 8px">
             <mat-radio-group [(ngModel)]="bodyCompositionTypeValue">
               <mat-radio-button [value]="bodyCompositionType.Skinfolds">Dobras cutâneas</mat-radio-button>
               <mat-radio-button [value]="bodyCompositionType.Bioimpedance">Bioimpedância</mat-radio-button>
@@ -172,7 +172,7 @@
             <mat-select #select>
               <mat-option *ngFor="let item of protocols" [value]="item.value">{{ item.text }}</mat-option>
             </mat-select>
-          </ng-container> -->
+          </ng-container>
 
           <measurement-item [data]="bodyCompositionTypeValue == bodyCompositionType.Bioimpedance ? patient.measurements.imc : get_predictive_value('imc', 'kg/m²')" 
             [goalData]="bodyCompositionTypeValue == bodyCompositionType.Bioimpedance ? patient.measurements.imcGoals : get_predictive_value('imcGoals', 'kg/m²')" 
@@ -185,7 +185,10 @@
 
       </mat-accordion>
     </mat-tab>
-    <mat-tab label="Third"> Content 3 </mat-tab>
+    <mat-tab label="Análises laboratoriais">
+      <button mat-button class="page-patient-consult-content-add-button" (click)="on_exam_request_click()">Solicitar exame</button> 
+
+    </mat-tab>
   </mat-tab-group>
 </div>
 <progress-spinner-2 *ngIf="loading"></progress-spinner-2> 

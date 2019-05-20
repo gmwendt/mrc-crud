@@ -106,11 +106,11 @@ export class DialogSelector implements OnDestroy {
       num = this.selection.selected.length;
 
     if (num == 0)
-      return 'Nenhum sintoma selecionado.';
+      return 'Nenhum item selecionado.';
     else if (num == 1)
-      return '1 sintoma selecionado.';
+      return '1 item selecionado.';
     else
-      return `${num} sintomas selecionados.`;
+      return `${num} itens selecionados.`;
   }
 
   //private get selectedGroup(): string {

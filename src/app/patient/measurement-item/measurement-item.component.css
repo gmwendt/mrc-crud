@@ -60,7 +60,7 @@ measurement-item .mat-table > .mat-row .mat-column-commands {
 
 measurement-item .mat-table > .mat-header-row .mat-column-timestamp,
 measurement-item .mat-table > .mat-row .mat-column-timestamp {
-  max-width: 70px;
+  max-width: 76px;
 }
 
 measurement-item .mat-table > .mat-header-row .mat-column-value,

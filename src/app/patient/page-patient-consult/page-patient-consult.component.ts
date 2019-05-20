@@ -9,6 +9,7 @@ import { Equations } from "../../core/common/worker";
 import { PatientService } from "../../core/patient.service";
 
 import { DialogAlertData, DialogAlertButton, DialogAlertResult } from "../../shared/dialog-alert/dialog-alert.component";
+import { DialogSelector, DialogSelectorColumn, DialogSelectorData } from "../../shared/dialog-selector/dialog-selector.component";
 import { DialogService } from "../../shared/dialog.service";
 
 import { Subscription } from "rxjs";
@@ -29,7 +30,8 @@ export enum BodyCompositionTypeEnum {
 })
 export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 
-  private _anamnesesRoute: string = 'anamneses';
+  private _routeAnamneses: string = 'anamneses';
+  private _routeLabAnalyse: string = 'analiseLaboratorial';
   private _dirty: boolean;
   private _paramsDisposable: Subscription;
   
@@ -90,7 +92,23 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 
   private on_anamneses_edit(anamnesesId?: string): void {
     var id = anamnesesId ? anamnesesId : FileSystemCommands.Add;
-    this.navigate(this._anamnesesRoute, id);
+    this.navigate(this._routeAnamneses, id);
+  }
+
+  private on_exam_request_click(labAnalyseId?: string): void {
+    let dialogSelectorData: DialogSelectorData = {
+      columns: [{ key: 'exam' }],
+      source: [{ 'exam': 'Urina' }, { 'exam': 'HDL' }],
+      title: 'Tste'
+    };
+    let dialogRef = this._dialog.open(DialogSelector, { data: dialogSelectorData, disableClose: true, height: '450px'});
+
+    dialogRef.afterClosed().subscribe((result: any[]) => {
+      if (!result || result.length == 0)
+        return;
+
+      console.log(result);
+    });
   }
 
   private async on_remove_anamneses_click(event: MouseEvent, anamnese: Anamneses): Promise<void> {
