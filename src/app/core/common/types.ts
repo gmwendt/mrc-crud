@@ -528,8 +528,3 @@ export interface ICorporalDensityProtocol {
   text: string;
   value: CorporalDensityProtocolsEnum;
 }
-
-export interface IDialogSelectorSource {
-  key: string;
-  value: any;
-}

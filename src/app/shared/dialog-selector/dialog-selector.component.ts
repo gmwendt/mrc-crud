@@ -39,11 +39,10 @@ export class DialogSelector implements OnDestroy {
   @Output() addItemClicked: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private _dialogRef: MatDialogRef<DialogSelector>, @Inject(MAT_DIALOG_DATA) data: DialogSelectorData) {
-
-      this.columns = data.columns;
-      this.data = data.source;
-      this.title = data.title;
-      // this.groups = data.groups;
+    this.columns = data.columns;
+    this.data = data.source;
+    this.title = data.title;
+    // this.groups = data.groups;
   }
 
   isAllSelected() {

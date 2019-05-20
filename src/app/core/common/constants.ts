@@ -1,4 +1,4 @@
-import { PoopShadesEnum, UrineColorEnum, IMetabolicTrackingItem, ValueClassification, ICorporalDensityProtocol, CorporalDensityProtocolsEnum, IDialogSelectorSource } from "./types";
+import { PoopShadesEnum, UrineColorEnum, IMetabolicTrackingItem, ValueClassification, ICorporalDensityProtocol, CorporalDensityProtocolsEnum } from "./types";
 
 export class LocalStorageConstants {
   public static MRC_USER = '_MRC_USER';
@@ -322,12 +322,14 @@ export const CorporalDensityProtocols: ICorporalDensityProtocol[] = [
   { text: '3 Pregas: Jackson, Pollock & Ward', value: CorporalDensityProtocolsEnum.JacksonPollockAndWard }, 
 ];
 
-export const LabExams: IDialogSelectorSource[] = [
-  { key: 'labExam', value: 'Ácido Fólico' }, { key: 'labExam', value: 'Ácido Lático' }, { key: 'labExam', value: 'Ácido Úrico' }, { key: 'labExam', value: 'ACTH' },
-  { key: 'labExam', value: 'ADH' }, { key: 'labExam', value: 'Alanina Aminotransferase (ALT)' }, { key: 'labExam', value: 'Albumina' }, { key: 'labExam', value: 'Alumínio Urina' },
-  { key: 'labExam', value: 'Amilase' }, { key: 'labExam', value: 'Amônia' }, { key: 'labExam', value: 'Androestenediona' }, { key: 'labExam', value: 'Anti estreptolisina O' },
-  { key: 'labExam', value: 'Anti Tireoglobulina' }, { key: 'labExam', value: 'Anti TPO' }, { key: 'labExam', value: 'Antigeno Carinoembrionário (CEA)' }, 
-  { key: 'labExam', value: 'Apoproteína A-1' }, { key: 'labExam', value: 'Apoproteína B-100' }, { key: 'labExam', value: 'Aspartato Aminotransferase (AST)' }
+export const LabExamKey: string = 'labExam';
+
+export const LabExams: any[] = [
+  { [LabExamKey]: 'Ácido Fólico' }, { [LabExamKey]: 'Ácido Lático' }, { [LabExamKey]: 'Ácido Úrico' }, {  [LabExamKey]: 'ACTH' },
+  { [LabExamKey]: 'ADH' }, { [LabExamKey]: 'Alanina Aminotransferase (ALT)' }, { [LabExamKey]: 'Albumina' }, { [LabExamKey]: 'Alumínio Urina' },
+  { [LabExamKey]: 'Amilase' }, { [LabExamKey]: 'Amônia' }, { [LabExamKey]: 'Androestenediona' }, { [LabExamKey]: 'Anti estreptolisina O' },
+  { [LabExamKey]: 'Anti Tireoglobulina' }, { [LabExamKey]: 'Anti TPO' }, { [LabExamKey]: 'Antigeno Carinoembrionário (CEA)' }, 
+  { [LabExamKey]: 'Apoproteína A-1' }, { [LabExamKey]: 'Apoproteína B-100' }, { [LabExamKey]: 'Aspartato Aminotransferase (AST)' }
 ];
 /*
 export class Nutrients {

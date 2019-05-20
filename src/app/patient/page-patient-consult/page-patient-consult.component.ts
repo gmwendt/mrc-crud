@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { MatTableDataSource } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { CorporalDensityProtocols } from "../../core/common/constants";
+import { CorporalDensityProtocols, LabExamKey, LabExams } from "../../core/common/constants";
 import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue } from "../../core/common/types";
 import { Equations } from "../../core/common/worker";
 import { PatientService } from "../../core/patient.service";
@@ -97,8 +97,8 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 
   private on_exam_request_click(labAnalyseId?: string): void {
     let dialogSelectorData: DialogSelectorData = {
-      columns: [{ key: 'exam' }],
-      source: [{ 'exam': 'Urina' }, { 'exam': 'HDL' }],
+      columns: [{ key: LabExamKey }],
+      source: LabExams,
       title: 'Tste'
     };
     let dialogRef = this._dialog.open(DialogSelector, { data: dialogSelectorData, disableClose: true, height: '450px'});
