@@ -1,4 +1,4 @@
-import { PoopShadesEnum, UrineColorEnum, IMetabolicTrackingItem, ValueClassification, ICorporalDensityProtocol, CorporalDensityProtocolsEnum } from "./types";
+import { PoopShadesEnum, UrineColorEnum, IMetabolicTrackingItem, ValueClassification, ICorporalDensityProtocol, CorporalDensityProtocolsEnum, ILaboratoryExamItem } from "./types";
 
 export class LocalStorageConstants {
   public static MRC_USER = '_MRC_USER';
@@ -322,15 +322,17 @@ export const CorporalDensityProtocols: ICorporalDensityProtocol[] = [
   { text: '3 Pregas: Jackson, Pollock & Ward', value: CorporalDensityProtocolsEnum.JacksonPollockAndWard }, 
 ];
 
-export const LabExamKey: string = 'labExam';
+export const LabExamItemKey: string = 'labExam';
 
-export const LabExams: any[] = [
-  { [LabExamKey]: 'Ácido Fólico' }, { [LabExamKey]: 'Ácido Lático' }, { [LabExamKey]: 'Ácido Úrico' }, {  [LabExamKey]: 'ACTH' },
-  { [LabExamKey]: 'ADH' }, { [LabExamKey]: 'Alanina Aminotransferase (ALT)' }, { [LabExamKey]: 'Albumina' }, { [LabExamKey]: 'Alumínio Urina' },
-  { [LabExamKey]: 'Amilase' }, { [LabExamKey]: 'Amônia' }, { [LabExamKey]: 'Androestenediona' }, { [LabExamKey]: 'Anti estreptolisina O' },
-  { [LabExamKey]: 'Anti Tireoglobulina' }, { [LabExamKey]: 'Anti TPO' }, { [LabExamKey]: 'Antigeno Carinoembrionário (CEA)' }, 
-  { [LabExamKey]: 'Apoproteína A-1' }, { [LabExamKey]: 'Apoproteína B-100' }, { [LabExamKey]: 'Aspartato Aminotransferase (AST)' }
+export const LabExamsItems: ILaboratoryExamItem[] = [ 
+  { [LabExamItemKey]: 'Ácido Fólico' }, { [LabExamItemKey]: 'Ácido Lático' }, { [LabExamItemKey]: 'Ácido Úrico' }, {  [LabExamItemKey]: 'ACTH' },
+  { [LabExamItemKey]: 'ADH' }, { [LabExamItemKey]: 'Alanina Aminotransferase (ALT)' }, { [LabExamItemKey]: 'Albumina' }, { [LabExamItemKey]: 'Alumínio Urina' },
+  { [LabExamItemKey]: 'Amilase' }, { [LabExamItemKey]: 'Amônia' }, { [LabExamItemKey]: 'Androestenediona' }, { [LabExamItemKey]: 'Anti estreptolisina O' },
+  { [LabExamItemKey]: 'Anti Tireoglobulina' }, { [LabExamItemKey]: 'Anti TPO' }, { [LabExamItemKey]: 'Antigeno Carinoembrionário (CEA)' }, 
+  { [LabExamItemKey]: 'Apoproteína A-1' }, { [LabExamItemKey]: 'Apoproteína B-100' }, { [LabExamItemKey]: 'Aspartato Aminotransferase (AST)' }
+  //TODO
 ];
+
 /*
 export class Nutrients {
   public static AcidoGraxoOmega6 = 'Ácido Graxo Ômega-6';

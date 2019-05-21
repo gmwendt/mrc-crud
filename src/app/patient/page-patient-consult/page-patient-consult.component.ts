@@ -3,8 +3,8 @@ import { Location } from '@angular/common';
 import { MatTableDataSource } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { CorporalDensityProtocols, LabExamKey, LabExams } from "../../core/common/constants";
-import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue } from "../../core/common/types";
+import { CorporalDensityProtocols, LabExamItemKey, LabExamsItems } from "../../core/common/constants";
+import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue, ILaboratoryExamItem, LaboratoryExam } from "../../core/common/types";
 import { Equations } from "../../core/common/worker";
 import { PatientService } from "../../core/patient.service";
 
@@ -97,17 +97,19 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 
   private on_exam_request_click(labAnalyseId?: string): void {
     let dialogSelectorData: DialogSelectorData = {
-      columns: [{ key: LabExamKey }],
-      source: LabExams,
+      columns: [{ key: LabExamItemKey }],
+      source: LabExamsItems,
       title: 'Tste'
     };
     let dialogRef = this._dialog.open(DialogSelector, { data: dialogSelectorData, disableClose: true, height: '450px'});
 
-    dialogRef.afterClosed().subscribe((result: any[]) => {
+    dialogRef.afterClosed().subscribe((result: ILaboratoryExamItem[]) => {
+      debugger;
       if (!result || result.length == 0)
         return;
 
-      console.log(result);
+      let exam = new LaboratoryExam('Nova solicitação de exames', new Date(Date.now()).toISOString(), false, result);
+      debugger;
     });
   }
 

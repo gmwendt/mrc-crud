@@ -14,7 +14,8 @@ var PatientSchema = new mongoose.Schema({
   ocupation: String,
   anamneses: String,
   placeOfCare: String,
-  measurements: String
+  measurements: String,
+  exams: String
 });
 
 module.exports = mongoose.model('Patient', PatientSchema);

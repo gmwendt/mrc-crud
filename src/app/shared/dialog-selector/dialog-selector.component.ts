@@ -3,6 +3,8 @@ import { MatDialogRef, MatTableDataSource, MAT_DIALOG_DATA, MatSelectChange } fr
 
 import { SelectionModel } from '@angular/cdk/collections';
 
+import { IListSelection } from '../../core/common/types';
+
 // import { SymptomOption } from '../../core/common/constants';
 
 export class DialogSelectorColumn {
@@ -11,7 +13,7 @@ export class DialogSelectorColumn {
 }
 
 export interface DialogSelectorData {
-  source: any[];
+  source: IListSelection[];
   columns: DialogSelectorColumn[];
   title: string;
   // groups?: SymptomOption[];

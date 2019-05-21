@@ -311,6 +311,7 @@ export class Patient {
   public anamneses?: Anamneses[];
   public placeOfCare: string;
   public measurements?: Measurements;
+  public exams?: LaboratoryExam[];
 
   constructor(accountRefId: number) {
     this.accountRefId = accountRefId;
@@ -419,6 +420,38 @@ export class Measurements {
   private static reviver(key: string, value: any): any {
     return key === "" ? Measurements.fromJSON(value) : value;
   }
+}
+
+export class LaboratoryExam {
+  constructor(public description: string, public date: string, public isResult?: boolean, public examsList: ILaboratoryExamItem[] = [], 
+    public examsResult: any[] = []) {
+  }
+
+  static fromJSON(json: LaboratoryExam | string): LaboratoryExam {
+    if (typeof json === 'string')
+      return JSON.parse(json, LaboratoryExam.reviver);
+  
+    var data = Object.create(LaboratoryExam.prototype);
+    return Object.assign(data, json);
+  }
+
+  private static reviver(key: string, value: any): any {
+    return key === "" ? LaboratoryExam.fromJSON(value) : value;
+  }
+}
+
+export class ILaboratoryExamItem implements IListSelection  {
+  [key: string] : string;
+}
+
+export interface ILabExamResult {
+  examName: string;
+  result: string;
+  unit: string;
+}
+
+export interface IListSelection {
+  [key: string] : string;
 }
 
 export class Capabilities {
