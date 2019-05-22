@@ -36,7 +36,8 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private _paramsDisposable: Subscription;
   
   private anamneses: MatTableDataSource<Anamneses>;
-  private displayedColumns = ['clinicCase', 'commands'];
+  private examsRequested: MatTableDataSource<LaboratoryExam>;
+  private anamnesesDisplayedColumns = ['clinicCase', 'commands'];
   private loading = true;
   private patient: Patient;
   private selectedTabIndex: number = 2;
@@ -159,6 +160,10 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private createAnamnasesTable(): void {
     if (this.patient)
 		  this.anamneses = new MatTableDataSource(this.patient.anamneses);
+  }
+
+  private createExamsRequestedTable(): void {
+
   }
 
   private navigate(route: string, id: string | FileSystemCommands, queryParams?: Object): void {

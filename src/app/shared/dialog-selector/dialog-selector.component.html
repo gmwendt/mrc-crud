@@ -45,6 +45,11 @@
     </mat-table>
   </div>
   <div id="dialog-selector-workspace-list">
+    <div>
+      <label>Outros:</label>
+      <input type="text" #otherBox/>
+      <span class="icon-add" (click)="add_item(otherBox.value)"></span>
+    </div>
     <div id="dialog-selector-workspace-list-text">{{ selectionText }}</div>
     <!-- <mat-list>
       <mat-list-item *ngFor="let item of selection.selected">{{ item.name }}</mat-list-item>

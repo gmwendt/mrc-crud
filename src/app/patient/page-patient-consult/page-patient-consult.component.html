@@ -26,8 +26,8 @@
           </mat-cell>
         </ng-container>
         
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="on_anamneses_edit(row.id)"></mat-row>
+        <mat-header-row *matHeaderRowDef="anamnesesDisplayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: anamnesesDisplayedColumns;" (click)="on_anamneses_edit(row.id)"></mat-row>
       </mat-table>
     </mat-tab>
 

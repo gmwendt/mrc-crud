@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, Output, ViewEncapsulation, Inject, } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, Output, ViewEncapsulation, Inject, ViewChild, ElementRef, } from '@angular/core';
 import { MatDialogRef, MatTableDataSource, MAT_DIALOG_DATA, MatSelectChange } from '@angular/material';
 
 import { SelectionModel } from '@angular/cdk/collections';
@@ -37,6 +37,8 @@ export class DialogSelector implements OnDestroy {
   // private groups: SymptomOption[];
   
   private _data: any[];
+
+  @ViewChild('otherBox') _otherBox: ElementRef;
 
   @Output() addItemClicked: EventEmitter<any> = new EventEmitter<any>();
 
@@ -90,6 +92,35 @@ export class DialogSelector implements OnDestroy {
                   });
     
     this.dataSource = new MatTableDataSource(filterd);
+  }
+
+  private add_item(name: string): void {
+    if (this.columns.length == 0)
+      return;
+
+    if (this.data.some(i => i[this.columns[0].key] == name)) {
+      console.log("Item already exist!"); //TODO
+      return;
+    }
+
+    let data = this.data.slice();
+    data.push({ 
+      [this.columns[0].key]: name 
+    });
+
+    this._otherBox.nativeElement.value = '';
+    this.data = data;
+
+    this.selectItem(name);
+  }
+
+  private selectItem(itemValue: any): void {
+    if (this.columns.length == 0)
+      return;
+      
+    let data = this.data.find(i => i[this.columns[0].key] === itemValue);
+    if (data)
+      this.selection.select(data);
   }
 
   private get displayedColumns(): string[] {

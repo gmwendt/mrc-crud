@@ -29,7 +29,7 @@ dialog-selector #dialog-selector-workspace {
 }
 
 dialog-selector #dialog-selector-workspace-table {
-  height: calc(100% - 140px);
+  height: calc(100% - 50px);
   overflow: auto;
 }
 
