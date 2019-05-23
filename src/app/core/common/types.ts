@@ -427,6 +427,10 @@ export class LaboratoryExam {
     public examsResult: any[] = []) {
   }
 
+  toJSON(): string {
+    return JSON.stringify(Object.assign({}, this));
+  }
+
   static fromJSON(json: LaboratoryExam | string): LaboratoryExam {
     if (typeof json === 'string')
       return JSON.parse(json, LaboratoryExam.reviver);

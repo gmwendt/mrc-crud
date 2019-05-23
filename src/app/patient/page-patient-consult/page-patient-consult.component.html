@@ -10,7 +10,7 @@
   <mat-tab-group [(selectedIndex)]="selectedTabIndex">
     <mat-tab label="Anamneses">
       <button mat-button class="page-patient-consult-content-add-button" (click)="on_anamneses_edit()">Adicionar anamneses</button>
-      <mat-table #table [dataSource]="anamneses" class="page-patient-consult-content-anamneses-table">
+      <mat-table #table [dataSource]="anamneses" class="page-patient-consult-content-table">
 
         <ng-container matColumnDef="clinicCase">
           <mat-header-cell *matHeaderCellDef> Caso clínico </mat-header-cell>
@@ -185,8 +185,39 @@
 
       </mat-accordion>
     </mat-tab>
-    <mat-tab label="Análises laboratoriais">
-      <button mat-button class="page-patient-consult-content-add-button" (click)="on_exam_request_click()">Solicitar exame</button> 
+    <mat-tab label="Exames laboratoriais">
+      <mat-accordion displayMode="flat" multi="true" *ngIf="patient">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+            <mat-panel-title>Requisições</mat-panel-title>
+          </mat-expansion-panel-header>
+          <button mat-button class="page-patient-consult-content-add-button" (click)="on_exam_request_click()">Nova requisição</button>
+          <mat-table #table [dataSource]="examsRequested" class="page-patient-consult-content-table">
+      
+            <ng-container matColumnDef="description">
+              <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="commands">
+              <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+              <mat-cell *matCellDef="let element"> 
+                <span>
+                  <span title="Remover" class="icon-delete" (click)="on_remove_exam_request_click($event, element)"></span> 
+                </span>  
+              </mat-cell>
+            </ng-container>
+              
+            <mat-header-row *matHeaderRowDef="examsRequestedDisplayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: examsRequestedDisplayedColumns;"></mat-row> <!-- TODO: (click)="on_anamneses_edit(row.id)" -->
+          </mat-table> 
+        </mat-expansion-panel>
+      </mat-accordion>
+      
+      <!-- <button mat-button class="page-patient-consult-content-add-button" [matMenuTriggerFor]="appMenu">Novo</button> 
+      <mat-menu #appMenu="matMenu" yposition="below">
+        <button mat-menu-item (click)="on_exam_request_click()">Requisição de exame</button>
+        <button mat-menu-item>Resultado de exame</button>
+      </mat-menu> -->
 
     </mat-tab>
   </mat-tab-group>

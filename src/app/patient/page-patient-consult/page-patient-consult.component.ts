@@ -38,6 +38,8 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private anamneses: MatTableDataSource<Anamneses>;
   private examsRequested: MatTableDataSource<LaboratoryExam>;
   private anamnesesDisplayedColumns = ['clinicCase', 'commands'];
+  private examsRequestedDisplayedColumns = ['description', 'commands'];
+
   private loading = true;
   private patient: Patient;
   private selectedTabIndex: number = 2;
@@ -60,6 +62,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
       try {
         this.patient = await this._patient.getPatientById(id);
         this.createAnamnasesTable();
+        this.createExamsRequestedTable();
       }
       catch (error) {
         this.on_error(error);
@@ -105,12 +108,16 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     let dialogRef = this._dialog.open(DialogSelector, { data: dialogSelectorData, disableClose: true, height: '450px'});
 
     dialogRef.afterClosed().subscribe((result: ILaboratoryExamItem[]) => {
-      debugger;
       if (!result || result.length == 0)
         return;
 
-      let exam = new LaboratoryExam('Nova solicitação de exames', new Date(Date.now()).toISOString(), false, result);
-      debugger;
+      let exam = new LaboratoryExam('Solicitação de exames', new Date(Date.now()).toISOString(), false, result);
+      
+      if (!this.patient.exams)
+        this.patient.exams = [];
+
+      this.patient.exams.push(exam);
+      this.updatePatient().then(() => this.createExamsRequestedTable());
     });
   }
 
@@ -130,20 +137,37 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     this.loading = true;
     var index = this.patient.anamneses.indexOf(anamnese);
 
-    try {
-      this.patient.anamneses.splice(index, 1);
-      await this._patient.updatePatient(this.patient);
-      this.createAnamnasesTable();
+    this.patient.anamneses.splice(index, 1);
+    await this.updatePatient();
+    this.createAnamnasesTable();
+  }
+
+  private async on_remove_exam_request_click(event: MouseEvent, exam: LaboratoryExam): Promise<void> {
+    event.stopPropagation();
+
+    var dialogData: DialogAlertData = {
+			text: 'Deseja remover esta Requisição de Exames?',
+			button: DialogAlertButton.YesNo,
+			textAlign: 'center',
     }
-    catch (error) {
-      this.on_error(error);
-    }
-    finally {
-      this.loading = false;
-    }
+
+    var dialogResult = await this._dialog.openAlert(dialogData);
+    if (dialogResult == DialogAlertResult.No)
+      return;
+
+    this.loading = true;
+    var index = this.patient.exams.indexOf(exam);
+
+    this.patient.exams.splice(index, 1);
+    await this.updatePatient();
+    this.createExamsRequestedTable();
   }
 
   private async on_measurement_edited(histValue?: IHistoricalValue): Promise<void> {
+    await this.updatePatient();
+  }
+
+  private async updatePatient(): Promise<void> {
     this.loading = true;
 
     try {
@@ -163,7 +187,8 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   }
 
   private createExamsRequestedTable(): void {
-
+    if (this.patient)
+      this.examsRequested = new MatTableDataSource(this.patient.exams);
   }
 
   private navigate(route: string, id: string | FileSystemCommands, queryParams?: Object): void {
