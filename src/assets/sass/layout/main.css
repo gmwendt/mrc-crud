@@ -218,6 +218,11 @@
   border: none;
 }
 
+.mrc-global .mat-form-field .mat-form-field-label {
+  color: #343434;
+  font-size: 12pt;
+}
+
 .mrc-global .mat-form-field .mat-focused .mat-form-field-label {
   color: #298dca !important;
 }

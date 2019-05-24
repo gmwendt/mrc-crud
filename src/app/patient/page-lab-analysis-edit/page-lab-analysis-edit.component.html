@@ -1,1 +1,66 @@
-<div>análise laboratorial</div>
+<div>
+  <div class="mrc-page-title">Requisição Laboratorial</div>
+  <div class="mrc-page-subtitle" *ngIf="isNew; else elseBlock">Nova requisição</div>
+  <ng-template #elseBlock>
+    <div class="mrc-page-subtitle">Editar requisição</div>
+  </ng-template>
+</div>
+<progress-spinner [progress]="loading">
+  <div *ngIf="labExam" style="display: flex; flex-direction: column; margin: 16px 22px; height: calc(100% - 50px);"> 
+    <mat-form-field floatLabel="always" style="max-width: 500px;">
+      <mat-label>Descrição</mat-label>
+      <textarea matInput [formControl]="descriptionFormControl" style="height: 80px;"></textarea>
+      <mat-error>Campo <strong>obrigatório</strong></mat-error>
+    </mat-form-field>
+
+    <mat-form-field floatLabel="always" style="max-width: 300px;">
+      <mat-label>Data</mat-label>
+      <input matInput [matDatepicker]="myDatepicker" [formControl]="dateFormControl">
+      <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #myDatepicker></mat-datepicker>
+      <mat-error *ngIf="dateFormControl.hasError('required')">
+        Informe uma data válida
+      </mat-error>
+    </mat-form-field>
+
+    <mat-accordion displayMode="flat" multi="true">
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+          <mat-panel-title>Requisições</mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div>
+          <button mat-button style="margin-right: 8px">Adicionar exames</button> <!-- TODO -->
+          <button mat-button style="margin-right: 8px">Preencher resultados</button> <!-- TODO -->
+          <button mat-button style="margin-right: 8px">Imprimir</button> <!-- TODO -->
+          <button mat-button>Enviar para e-mail do paciente</button> <!-- TODO -->
+        </div>
+        <mat-table #table [dataSource]="tableSource">
+          <ng-container matColumnDef="exam">
+            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ element.labExam }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="commands">
+            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-cell *matCellDef="let element"> 
+              <span>
+                <span title="Remover" class="icon-delete"></span> <!-- TODO: (click)="on_remove_exam_request_click($event, element)" -->
+              </span>  
+            </mat-cell>
+          </ng-container>
+            
+          <mat-header-row *matHeaderRowDef="tableDisplayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: tableDisplayedColumns;"></mat-row>
+        </mat-table>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</progress-spinner>
+<div id="mrc-edit-page-footer">
+  <div class="mrc-dialog-separator"></div>
+  <!-- <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div> --> <!-- TODO -->
+  <div id="mrc-edit-page-footer-buttons">
+    <button mat-button>Aplicar</button> <!-- TODO: [disabled]="!dirty && !isNew" (click)="on_apply_clicked()" -->
+    <button mat-button>Cancelar</button> <!-- TODO: (click)="on_cancel_clicked()" -->
+  </div>
+</div>

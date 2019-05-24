@@ -187,7 +187,7 @@
     </mat-tab>
     <mat-tab label="Exames laboratoriais">
       <mat-accordion displayMode="flat" multi="true" *ngIf="patient">
-        <mat-expansion-panel>
+        <mat-expansion-panel [expanded]="true">
           <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
             <mat-panel-title>Requisições</mat-panel-title>
           </mat-expansion-panel-header>
@@ -208,16 +208,10 @@
             </ng-container>
               
             <mat-header-row *matHeaderRowDef="examsRequestedDisplayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: examsRequestedDisplayedColumns;"></mat-row> <!-- TODO: (click)="on_anamneses_edit(row.id)" -->
+            <mat-row *matRowDef="let row; columns: examsRequestedDisplayedColumns;" (click)="on_exam_request_edit(row.id)"></mat-row>
           </mat-table> 
         </mat-expansion-panel>
       </mat-accordion>
-      
-      <!-- <button mat-button class="page-patient-consult-content-add-button" [matMenuTriggerFor]="appMenu">Novo</button> 
-      <mat-menu #appMenu="matMenu" yposition="below">
-        <button mat-menu-item (click)="on_exam_request_click()">Requisição de exame</button>
-        <button mat-menu-item>Resultado de exame</button>
-      </mat-menu> -->
 
     </mat-tab>
   </mat-tab-group>

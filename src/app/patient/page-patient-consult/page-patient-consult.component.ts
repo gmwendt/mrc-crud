@@ -111,7 +111,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
       if (!result || result.length == 0)
         return;
 
-      let exam = new LaboratoryExam('Solicitação de exames', new Date(Date.now()).toISOString(), false, result);
+      let exam = new LaboratoryExam(this.guid(), 'Solicitação de exames', new Date(Date.now()).toISOString(), false, result);
       
       if (!this.patient.exams)
         this.patient.exams = [];
@@ -119,6 +119,11 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
       this.patient.exams.push(exam);
       this.updatePatient().then(() => this.createExamsRequestedTable());
     });
+  }
+
+  private on_exam_request_edit(examId?: string): void {
+    var id = examId ? examId : FileSystemCommands.Add;
+    this.navigate(this._routeLabAnalyse, id);
   }
 
   private async on_remove_anamneses_click(event: MouseEvent, anamnese: Anamneses): Promise<void> {
@@ -249,6 +254,18 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 
   private get browserLocale(): string {
     return navigator.language || (<any>navigator).userLanguage;
+  }
+
+  private guid(): string {
+    return this.guidS4() + this.guidS4() + '-' +
+      this.guidS4() + '-' + this.guidS4() + '-' +
+      this.guidS4() + '-' + this.guidS4() + this.guidS4() + this.guidS4();
+  }
+
+  private guidS4(): string {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
   }
   
   ngOnDestroy(): void {

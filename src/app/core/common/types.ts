@@ -423,7 +423,7 @@ export class Measurements {
 }
 
 export class LaboratoryExam {
-  constructor(public description: string, public date: string, public isResult?: boolean, public examsRequested: ILaboratoryExamItem[] = [], 
+  constructor(public id: string, public description: string, public date: string, public isResult?: boolean, public examsRequested: ILaboratoryExamItem[] = [], 
     public examsResult: any[] = []) {
   }
 

@@ -54,6 +54,11 @@
       border: none
     }
 
+    &-label {
+      color: #343434;
+      font-size: 12pt;
+    }
+
     .mat-focused .mat-form-field-label {
       color: #298dca !important;
     }
