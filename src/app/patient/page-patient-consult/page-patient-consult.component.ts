@@ -103,7 +103,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     let dialogSelectorData: DialogSelectorData = {
       columns: [{ key: LabExamItemKey }],
       source: LabExamsItems,
-      title: 'Tste'
+      title: 'Solicitação de exames'
     };
     let dialogRef = this._dialog.open(DialogSelector, { data: dialogSelectorData, disableClose: true, height: '450px'});
 

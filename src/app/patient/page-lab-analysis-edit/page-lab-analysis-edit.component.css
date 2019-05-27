@@ -1,0 +1,53 @@
+page-lab-analysis-edit {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 30px);
+}
+
+page-lab-analysis-edit progress-spinner {
+  height: calc(100% - 100px);
+}
+
+page-lab-analysis-edit .page-lab-analysis-edit-content {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 50px);
+  margin: 16px 22px;
+}
+
+page-lab-analysis-edit .page-lab-analysis-edit-content-description-field {
+  max-width: 500px;
+}
+
+page-lab-analysis-edit .page-lab-analysis-edit-content-description-field textarea {
+  height: 80px;
+}
+
+page-lab-analysis-edit .page-lab-analysis-edit-content-date-field {
+  max-width: 300px;
+}
+
+page-lab-analysis-edit .page-lab-analysis-edit-content-table-actions > .mat-button {
+  margin-right: 8px;
+}
+
+page-lab-analysis-edit .page-lab-analysis-edit-content .icon-delete {
+  color: #4f4f4f;
+  cursor: pointer;
+  font-size: 12pt;
+}
+
+page-lab-analysis-edit #mrc-edit-page-footer .mrc-edit-page-error {
+  color: #ef1508;
+  font-size: 9pt;
+  margin: 0 0 4px 22px;
+}
+
+page-lab-analysis-edit #mrc-edit-page-footer-buttons {
+  margin: 8px 0 8px 22px;
+}
+
+page-lab-analysis-edit #mrc-edit-page-footer-buttons > button {
+  margin: 0 8px 0 0;
+  width: 85px;
+}

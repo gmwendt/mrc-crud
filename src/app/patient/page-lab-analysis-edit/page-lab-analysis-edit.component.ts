@@ -6,7 +6,10 @@ import { ActivatedRoute } from "@angular/router";
 import { LaboratoryExam, FileSystemCommands, Patient, ILaboratoryExamItem } from "../../core/common/types";
 
 import { DialogAlertData, DialogAlertButton } from "../../shared/dialog-alert/dialog-alert.component";
+import { DialogSelectorData, DialogSelector } from "../../shared/dialog-selector/dialog-selector.component";
 import { DialogService } from "../../shared/dialog.service";
+
+import { LabExamItemKey, LabExamsItems } from "../../core/common/constants";
 import { PatientService } from "../../core/patient.service";
 
 import { Subscription } from "rxjs";
@@ -16,14 +19,15 @@ import { MatTableDataSource } from "@angular/material";
 @Component({
   selector: 'page-lab-analysis-edit',
   templateUrl: './page-lab-analysis-edit.component.html',
-  // styleUrls: ['./page-lab-analysis-edit.component.css'],
+  styleUrls: ['./page-lab-analysis-edit.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
   private _paramsDisposable: Subscription;
   private _queryParamsDisposable: Subscription;
-  private _patient: Patient
+  private _dirty: boolean;
+  private _patient: Patient;
   
   private dateFormControl: FormControl;
   private descriptionFormControl: FormControl;
@@ -78,6 +82,18 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
     }
   }
 
+  get dirty(): boolean {
+    return this._dirty;
+  }
+
+  private markAsDirty(): void {
+    if (this._dirty)
+      return;
+
+    this._dirty = true;
+    this._detector.markForCheck();
+  }
+
   private initializeFields(): void {
     let timestamp = this.labExam ? this.labExam.date : new Date(Date.now());
     let desc = this.labExam ? this.labExam.description : '';
@@ -89,6 +105,46 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
   private createExamTable(): void {
     if (this.labExam)
       this.tableSource = new MatTableDataSource(this.labExam.examsRequested);
+  }
+
+  private async on_remove_exam_click(event: MouseEvent, exam: ILaboratoryExamItem): Promise<void> {
+    event.stopPropagation();
+
+    let index = this.labExam.examsRequested.indexOf(exam);
+    this.labExam.examsRequested.splice(index, 1);
+    this.createExamTable();
+
+    this.markAsDirty();
+  }
+
+  private on_add_exams_click(): void {
+    let dialogSelectorData: DialogSelectorData = {
+      columns: [{ key: LabExamItemKey }],
+      source: LabExamsItems,
+      title: 'Solicitação de exames'
+    };
+    let dialogRef = this._dialog.open(DialogSelector, { data: dialogSelectorData, disableClose: true, height: '450px'});
+    this.labExam.examsRequested.forEach((exam: ILaboratoryExamItem) => {
+      let name = exam[LabExamItemKey];
+      if (!dialogRef.componentInstance.data.some(i => i[LabExamItemKey] == name))
+        dialogRef.componentInstance.data.push({
+          [LabExamItemKey]: name
+        });
+      dialogRef.componentInstance.selectItem(name);
+    })
+
+    dialogRef.afterClosed().subscribe((result: ILaboratoryExamItem[]) => {
+      if (!result) //Cancelled
+        return;
+
+      this.labExam.examsRequested = result;
+      this.createExamTable();
+      this.markAsDirty();
+    });
+  }
+
+  private on_fill_result_click(): void {
+    //TODO
   }
 
   private show_error_dialog(error: any): void {
@@ -105,6 +161,28 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
 	private on_error(error: any): void {
     console.log(error);
 		this.show_error_dialog(error);
+  }
+
+  private get pageTitle(): string {
+    if (!this.labExam)
+      return;
+
+    let title = this.labExam.isResult ? 'Resultado Laboratorial' : 'Requisição Laboratorial';
+    return title;
+  }
+
+  private get pageSubtitle(): string {
+    if (!this.labExam)
+      return;
+
+    if (this.isNew) {
+      if (this.labExam.isResult)
+        return 'Novo resultado';
+      return 'Nova requisição'
+    }
+    else if (this.labExam.isResult)
+      return 'Editar resultado';
+    return 'Editar requisição';
   }
 
   ngOnDestroy(): void {

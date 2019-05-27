@@ -114,7 +114,7 @@ export class DialogSelector implements OnDestroy {
     this.selectItem(name);
   }
 
-  private selectItem(itemValue: any): void {
+  selectItem(itemValue: any): void {
     if (this.columns.length == 0)
       return;
       

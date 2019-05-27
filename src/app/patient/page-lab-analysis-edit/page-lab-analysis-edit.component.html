@@ -1,19 +1,16 @@
 <div>
-  <div class="mrc-page-title">Requisição Laboratorial</div>
-  <div class="mrc-page-subtitle" *ngIf="isNew; else elseBlock">Nova requisição</div>
-  <ng-template #elseBlock>
-    <div class="mrc-page-subtitle">Editar requisição</div>
-  </ng-template>
+  <div class="mrc-page-title">{{ pageTitle }}</div>
+  <div class="mrc-page-subtitle">{{ pageSubtitle }}</div>
 </div>
 <progress-spinner [progress]="loading">
-  <div *ngIf="labExam" style="display: flex; flex-direction: column; margin: 16px 22px; height: calc(100% - 50px);"> 
-    <mat-form-field floatLabel="always" style="max-width: 500px;">
+  <div *ngIf="labExam" class="page-lab-analysis-edit-content"> 
+    <mat-form-field floatLabel="always" class="page-lab-analysis-edit-content-description-field">
       <mat-label>Descrição</mat-label>
-      <textarea matInput [formControl]="descriptionFormControl" style="height: 80px;"></textarea>
+      <textarea matInput [formControl]="descriptionFormControl"></textarea>
       <mat-error>Campo <strong>obrigatório</strong></mat-error>
     </mat-form-field>
 
-    <mat-form-field floatLabel="always" style="max-width: 300px;">
+    <mat-form-field floatLabel="always" class="page-lab-analysis-edit-content-date-field">
       <mat-label>Data</mat-label>
       <input matInput [matDatepicker]="myDatepicker" [formControl]="dateFormControl">
       <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
@@ -26,14 +23,14 @@
     <mat-accordion displayMode="flat" multi="true">
       <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
-          <mat-panel-title>Requisições</mat-panel-title>
+          <mat-panel-title>{{ labExam.isResult ? 'Resultados' : 'Requisições' }}</mat-panel-title>
         </mat-expansion-panel-header>
 
-        <div>
-          <button mat-button style="margin-right: 8px">Adicionar exames</button> <!-- TODO -->
-          <button mat-button style="margin-right: 8px">Preencher resultados</button> <!-- TODO -->
-          <button mat-button style="margin-right: 8px">Imprimir</button> <!-- TODO -->
-          <button mat-button>Enviar para e-mail do paciente</button> <!-- TODO -->
+        <div class="page-lab-analysis-edit-content-table-actions">
+          <button mat-button (click)="on_add_exams_click()">{{ labExam.isResult ? 'Adicionar resultado' : 'Adicionar exames' }}</button> 
+          <button mat-button *ngIf="!labExam.isResult" (click)="on_fill_result_click()">Preencher resultados</button> 
+          <button mat-button *ngIf="!labExam.isResult">Imprimir</button> <!-- TODO -->
+          <button mat-button *ngIf="!labExam.isResult">Enviar para e-mail do paciente</button> <!-- TODO -->
         </div>
         <mat-table #table [dataSource]="tableSource">
           <ng-container matColumnDef="exam">
@@ -44,7 +41,7 @@
             <mat-header-cell *matHeaderCellDef> </mat-header-cell>
             <mat-cell *matCellDef="let element"> 
               <span>
-                <span title="Remover" class="icon-delete"></span> <!-- TODO: (click)="on_remove_exam_request_click($event, element)" -->
+                <span title="Remover" class="icon-delete" (click)="on_remove_exam_click($event, element)"></span>
               </span>  
             </mat-cell>
           </ng-container>

@@ -1,5 +1,43 @@
 page-lab-analysis-edit {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 30px);
+
+  progress-spinner {
+    height: calc(100% - 100px);
+  }
   
+  .page-lab-analysis-edit-content {
+    display: flex; 
+    flex-direction: column; 
+    height: calc(100% - 50px);
+    margin: 16px 22px; 
+
+    &-description-field {
+      max-width: 500px;
+
+      textarea {
+        height: 80px;
+      }
+    }
+
+    &-date-field {
+      max-width: 300px;
+    }
+
+    &-table-actions {
+      > .mat-button {
+        margin-right: 8px;
+      }
+    }
+    
+    .icon-delete {
+      color: #4f4f4f;		
+      cursor: pointer;
+      font-size: 12pt;
+    }
+  }
+
   #mrc-edit-page-footer {
 
     .mrc-edit-page-error {
