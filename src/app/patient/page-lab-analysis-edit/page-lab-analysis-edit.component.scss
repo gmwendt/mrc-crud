@@ -4,7 +4,7 @@ page-lab-analysis-edit {
   height: calc(100% - 30px);
 
   progress-spinner {
-    height: calc(100% - 100px);
+    height: calc(100% - 120px);
   }
   
   .page-lab-analysis-edit-content {
@@ -29,6 +29,14 @@ page-lab-analysis-edit {
       > .mat-button {
         margin-right: 8px;
       }
+    }
+
+    &-table-empty {
+      font-size: 8pt;
+      margin: 8px 0 0 16px;
+      max-width: 350px;
+      padding: 16px;
+      text-align: center;
     }
     
     .icon-delete {

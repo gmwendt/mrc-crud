@@ -13,7 +13,7 @@ export class DialogSelectorColumn {
 }
 
 export interface DialogSelectorData {
-  source: IListSelection[];
+  source: any[];
   columns: DialogSelectorColumn[];
   title: string;
   // groups?: SymptomOption[];

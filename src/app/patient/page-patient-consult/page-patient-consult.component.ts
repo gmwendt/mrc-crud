@@ -36,7 +36,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private _paramsDisposable: Subscription;
   
   private anamneses: MatTableDataSource<Anamneses>;
-  private examsRequested: MatTableDataSource<LaboratoryExam>;
+  private exams: MatTableDataSource<LaboratoryExam>;
   private anamnesesDisplayedColumns = ['clinicCase', 'commands'];
   private examsRequestedDisplayedColumns = ['description', 'commands'];
 
@@ -101,7 +101,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 
   private on_exam_request_click(labAnalyseId?: string): void {
     let dialogSelectorData: DialogSelectorData = {
-      columns: [{ key: LabExamItemKey }],
+      columns: [{ key: 'desciption' }],
       source: LabExamsItems,
       title: 'Solicitação de exames'
     };
@@ -193,7 +193,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 
   private createExamsRequestedTable(): void {
     if (this.patient)
-      this.examsRequested = new MatTableDataSource(this.patient.exams);
+      this.exams = new MatTableDataSource(this.patient.exams);
   }
 
   private navigate(route: string, id: string | FileSystemCommands, queryParams?: Object): void {

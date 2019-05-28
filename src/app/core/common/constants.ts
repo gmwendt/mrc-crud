@@ -325,11 +325,11 @@ export const CorporalDensityProtocols: ICorporalDensityProtocol[] = [
 export const LabExamItemKey: string = 'labExam';
 
 export const LabExamsItems: ILaboratoryExamItem[] = [ 
-  { [LabExamItemKey]: 'Ácido Fólico' }, { [LabExamItemKey]: 'Ácido Lático' }, { [LabExamItemKey]: 'Ácido Úrico' }, {  [LabExamItemKey]: 'ACTH' },
-  { [LabExamItemKey]: 'ADH' }, { [LabExamItemKey]: 'Alanina Aminotransferase (ALT)' }, { [LabExamItemKey]: 'Albumina' }, { [LabExamItemKey]: 'Alumínio Urina' },
-  { [LabExamItemKey]: 'Amilase' }, { [LabExamItemKey]: 'Amônia' }, { [LabExamItemKey]: 'Androestenediona' }, { [LabExamItemKey]: 'Anti estreptolisina O' },
-  { [LabExamItemKey]: 'Anti Tireoglobulina' }, { [LabExamItemKey]: 'Anti TPO' }, { [LabExamItemKey]: 'Antigeno Carinoembrionário (CEA)' }, 
-  { [LabExamItemKey]: 'Apoproteína A-1' }, { [LabExamItemKey]: 'Apoproteína B-100' }, { [LabExamItemKey]: 'Aspartato Aminotransferase (AST)' }
+  { desciption: 'Ácido Fólico' }, { desciption: 'Ácido Lático' }, { desciption: 'Ácido Úrico' }, {  desciption: 'ACTH' },
+  { desciption: 'ADH' }, { desciption: 'Alanina Aminotransferase (ALT)' }, { desciption: 'Albumina' }, { desciption: 'Alumínio Urina' },
+  { desciption: 'Amilase' }, { desciption: 'Amônia' }, { desciption: 'Androestenediona' }, { desciption: 'Anti estreptolisina O' },
+  { desciption: 'Anti Tireoglobulina' }, { desciption: 'Anti TPO' }, { desciption: 'Antigeno Carinoembrionário (CEA)' }, 
+  { desciption: 'Apoproteína A-1' }, { desciption: 'Apoproteína B-100' }, { desciption: 'Aspartato Aminotransferase (AST)' }
   //TODO
 ];
 

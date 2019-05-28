@@ -36,7 +36,6 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
   private isNew: boolean;
   private labExam: LaboratoryExam;
   private tableSource: MatTableDataSource<ILaboratoryExamItem>;
-  private tableDisplayedColumns = ['exam', 'commands'];
 
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _patientService: PatientService, 
     private _dialog: DialogService) {
@@ -104,14 +103,14 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
 
   private createExamTable(): void {
     if (this.labExam)
-      this.tableSource = new MatTableDataSource(this.labExam.examsRequested);
+      this.tableSource = new MatTableDataSource(this.labExam.exams);
   }
 
   private async on_remove_exam_click(event: MouseEvent, exam: ILaboratoryExamItem): Promise<void> {
     event.stopPropagation();
 
-    let index = this.labExam.examsRequested.indexOf(exam);
-    this.labExam.examsRequested.splice(index, 1);
+    let index = this.labExam.exams.indexOf(exam);
+    this.labExam.exams.splice(index, 1);
     this.createExamTable();
 
     this.markAsDirty();
@@ -119,12 +118,12 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
 
   private on_add_exams_click(): void {
     let dialogSelectorData: DialogSelectorData = {
-      columns: [{ key: LabExamItemKey }],
+      columns: [{ key: 'desciption' }],
       source: LabExamsItems,
       title: 'Solicitação de exames'
     };
     let dialogRef = this._dialog.open(DialogSelector, { data: dialogSelectorData, disableClose: true, height: '450px'});
-    this.labExam.examsRequested.forEach((exam: ILaboratoryExamItem) => {
+    this.labExam.exams.forEach((exam: ILaboratoryExamItem) => {
       let name = exam[LabExamItemKey];
       if (!dialogRef.componentInstance.data.some(i => i[LabExamItemKey] == name))
         dialogRef.componentInstance.data.push({
@@ -137,14 +136,20 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
       if (!result) //Cancelled
         return;
 
-      this.labExam.examsRequested = result;
+      this.labExam.exams = result;
       this.createExamTable();
       this.markAsDirty();
     });
   }
 
   private on_fill_result_click(): void {
-    //TODO
+    this.isNew = true;
+    this.labExam.isResult = true;
+  }
+
+  private on_cancel_clicked(): void {
+    debugger;
+    //todo
   }
 
   private show_error_dialog(error: any): void {
@@ -161,6 +166,16 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
 	private on_error(error: any): void {
     console.log(error);
 		this.show_error_dialog(error);
+  }
+
+  private get tableDisplayedColumns(): string[] {
+    if (!this.labExam)
+      return;
+
+    if (this.labExam.isResult)  
+      return ['exam', 'value', 'commands']; 
+
+    return ['exam', 'commands']; 
   }
 
   private get pageTitle(): string {

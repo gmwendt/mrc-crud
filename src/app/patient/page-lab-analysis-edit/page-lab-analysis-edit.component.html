@@ -32,10 +32,17 @@
           <button mat-button *ngIf="!labExam.isResult">Imprimir</button> <!-- TODO -->
           <button mat-button *ngIf="!labExam.isResult">Enviar para e-mail do paciente</button> <!-- TODO -->
         </div>
-        <mat-table #table [dataSource]="tableSource">
+        <mat-table #table [dataSource]="tableSource" 
+          *ngIf="this.labExam.exams && this.labExam.exams.length > 0; else elseBlock">
           <ng-container matColumnDef="exam">
-            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-            <mat-cell *matCellDef="let element">{{ element.labExam }}</mat-cell>
+            <mat-header-cell *matHeaderCellDef>Exame</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ element.desciption }}</mat-cell>
+          </ng-container>
+          <ng-container *ngIf="this.labExam.isResult" matColumnDef="value">
+            <mat-header-cell *matHeaderCellDef>Valor</mat-header-cell>
+            <mat-cell *matCellDef="let element"> 
+              <input type="text" [value]="element.value" (change)="element.value = valueBox.value" #valueBox>
+            </mat-cell>
           </ng-container>
           <ng-container matColumnDef="commands">
             <mat-header-cell *matHeaderCellDef> </mat-header-cell>
@@ -49,6 +56,9 @@
           <mat-header-row *matHeaderRowDef="tableDisplayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: tableDisplayedColumns;"></mat-row>
         </mat-table>
+        <ng-template #elseBlock>
+          <div class="page-lab-analysis-edit-content-table-empty">Nenhum exame adicionado</div>
+        </ng-template>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
@@ -58,6 +68,6 @@
   <!-- <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div> --> <!-- TODO -->
   <div id="mrc-edit-page-footer-buttons">
     <button mat-button>Aplicar</button> <!-- TODO: [disabled]="!dirty && !isNew" (click)="on_apply_clicked()" -->
-    <button mat-button>Cancelar</button> <!-- TODO: (click)="on_cancel_clicked()" -->
+    <button mat-button (click)="on_cancel_clicked()">Cancelar</button> <!-- TODO: (click)="on_cancel_clicked()" -->
   </div>
 </div>

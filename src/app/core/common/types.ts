@@ -423,8 +423,7 @@ export class Measurements {
 }
 
 export class LaboratoryExam {
-  constructor(public id: string, public description: string, public date: string, public isResult?: boolean, public examsRequested: ILaboratoryExamItem[] = [], 
-    public examsResult: any[] = []) {
+  constructor(public id: string, public description: string, public date: string, public isResult?: boolean, public exams: ILaboratoryExamItem[] = []) {
   }
 
   toJSON(): string {
@@ -444,8 +443,11 @@ export class LaboratoryExam {
   }
 }
 
-export class ILaboratoryExamItem implements IListSelection  {
-  [key: string] : string;
+export class ILaboratoryExamItem  {
+  desciption: string;
+  value?: any;
+  unit?: string;
+  availableUnits?: string[];
 }
 
 export interface ILabExamResult {
