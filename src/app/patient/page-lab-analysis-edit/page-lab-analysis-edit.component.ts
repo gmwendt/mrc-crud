@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation, AfterViewInit, ChangeDetectorRef, ChangeD
 import { FormControl, Validators } from "@angular/forms";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ActivatedRoute } from "@angular/router";
+import { MatTableDataSource } from "@angular/material";
 
 import { LaboratoryExam, FileSystemCommands, Patient, ILaboratoryExamItem } from "../../core/common/types";
 
@@ -14,7 +15,6 @@ import { PatientService } from "../../core/patient.service";
 
 import { Subscription } from "rxjs";
 import * as moment from 'moment';
-import { MatTableDataSource } from "@angular/material";
 
 @Component({
   selector: 'page-lab-analysis-edit',
@@ -28,6 +28,7 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
   private _queryParamsDisposable: Subscription;
   private _dirty: boolean;
   private _patient: Patient;
+  private _examList: any;
   
   private dateFormControl: FormControl;
   private descriptionFormControl: FormControl;
@@ -43,6 +44,12 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+
+    this._examList = require('../../../assets/data/exams.json'); /*
+      TODO: 
+      importing OK, move to inside the function that consume this json and use let
+    */
+    
     this._paramsDisposable = this._route.params.subscribe(async (params) => {
       var patientId = params['id'];
       var labAnalyseId = params['labAnalyseId'];
