@@ -192,7 +192,7 @@
             <mat-panel-title>Requisições</mat-panel-title>
           </mat-expansion-panel-header>
           <button mat-button class="page-patient-consult-content-add-button" (click)="on_exam_request_click()">Nova requisição</button>
-          <mat-table #table [dataSource]="exams" class="page-patient-consult-content-table">
+          <mat-table #table [dataSource]="examsReq" class="page-patient-consult-content-table">
       
             <ng-container matColumnDef="description">
               <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>

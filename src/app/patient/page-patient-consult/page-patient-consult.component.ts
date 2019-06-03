@@ -3,8 +3,8 @@ import { Location } from '@angular/common';
 import { MatTableDataSource } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { CorporalDensityProtocols, LabExamItemKey, LabExamsItems } from "../../core/common/constants";
-import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue, ILaboratoryExamItem, LaboratoryExam } from "../../core/common/types";
+import { CorporalDensityProtocols } from "../../core/common/constants";
+import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue, LaboratoryExamItem, LaboratoryExam } from "../../core/common/types";
 import { Equations } from "../../core/common/worker";
 import { PatientService } from "../../core/patient.service";
 
@@ -36,7 +36,8 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private _paramsDisposable: Subscription;
   
   private anamneses: MatTableDataSource<Anamneses>;
-  private exams: MatTableDataSource<LaboratoryExam>;
+  private examsReq: MatTableDataSource<LaboratoryExam>;
+  private examsRes: MatTableDataSource<LaboratoryExam>;
   private anamnesesDisplayedColumns = ['clinicCase', 'commands'];
   private examsRequestedDisplayedColumns = ['description', 'commands'];
 
@@ -100,17 +101,20 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   }
 
   private on_exam_request_click(labAnalyseId?: string): void {
+    let examList = require('../../../assets/data/exams.json'); 
+    let columnKey = 'description';
+    
     let dialogSelectorData: DialogSelectorData = {
-      columns: [{ key: 'desciption' }],
-      source: LabExamsItems,
+      columns: [{ key: columnKey }],
+      source: examList,
       title: 'Solicitação de exames'
     };
     let dialogRef = this._dialog.open(DialogSelector, { data: dialogSelectorData, disableClose: true, height: '450px'});
 
-    dialogRef.afterClosed().subscribe((result: ILaboratoryExamItem[]) => {
+    dialogRef.afterClosed().subscribe((result: LaboratoryExamItem[]) => {
       if (!result || result.length == 0)
         return;
-
+      
       let exam = new LaboratoryExam(this.guid(), 'Solicitação de exames', new Date(Date.now()).toISOString(), false, result);
       
       if (!this.patient.exams)
@@ -192,8 +196,10 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   }
 
   private createExamsRequestedTable(): void {
-    if (this.patient)
-      this.exams = new MatTableDataSource(this.patient.exams);
+    if (this.patient) {
+      this.examsReq = new MatTableDataSource(this.patient.exams.filter(e => !e.isResult));
+      //TODO: examsRes
+    }
   }
 
   private navigate(route: string, id: string | FileSystemCommands, queryParams?: Object): void {
