@@ -211,6 +211,30 @@
             <mat-row *matRowDef="let row; columns: examsRequestedDisplayedColumns;" (click)="on_exam_request_edit(row.id)"></mat-row>
           </mat-table> 
         </mat-expansion-panel>
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+            <mat-panel-title>Resultados</mat-panel-title>
+          </mat-expansion-panel-header>
+          <button mat-button class="page-patient-consult-content-add-button" (click)="on_new_exam_click(true)">Novo resultado</button>  <!-- TODO: testar click -->
+          <mat-table #table [dataSource]="examsRes" class="page-patient-consult-content-table">
+      
+            <ng-container matColumnDef="description">
+              <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="commands">
+              <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+              <mat-cell *matCellDef="let element"> 
+                <span>
+                  <span title="Remover" class="icon-delete"></span> <!-- TODO: (click)="on_remove_exam_request_click($event, element)" -->
+                </span>  
+              </mat-cell>
+            </ng-container>
+              
+            <mat-header-row *matHeaderRowDef="examsRequestedDisplayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: examsRequestedDisplayedColumns;" (click)="on_exam_request_edit(row.id)"></mat-row>
+          </mat-table> 
+        </mat-expansion-panel>
       </mat-accordion>
 
     </mat-tab>

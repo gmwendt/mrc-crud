@@ -125,6 +125,16 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     });
   }
 
+  private on_new_exam_click(isResult?: boolean): void {
+    let exam = new LaboratoryExam(this.guid(), 'Resultado de exames', new Date(Date.now()).toISOString(), true);
+
+    if (!this.patient.exams)
+      this.patient.exams = [];
+
+    this.patient.exams.push(exam);
+    this.navigate(this._routeLabAnalyse, exam.id);
+  }
+
   private on_exam_request_edit(examId?: string): void {
     var id = examId ? examId : FileSystemCommands.Add;
     this.navigate(this._routeLabAnalyse, id);
@@ -196,9 +206,9 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   }
 
   private createExamsRequestedTable(): void {
-    if (this.patient) {
+    if (this.patient && this.patient.exams) {
       this.examsReq = new MatTableDataSource(this.patient.exams.filter(e => !e.isResult));
-      //TODO: examsRes
+      this.examsRes = new MatTableDataSource(this.patient.exams.filter(e => e.isResult));
     }
   }
 
