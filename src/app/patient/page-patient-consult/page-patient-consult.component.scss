@@ -48,6 +48,14 @@ page-patient-consult {
       max-width: 800px;
     }
 
+    .page-patient-consult-content-table-empty {
+      font-size: 8pt;
+      margin: 8px 0 0 16px;
+      max-width: 350px;
+      padding: 16px;
+      text-align: center;
+    }
+
     .mat-accordion {
       > .mat-expansion-panel {
         > .mat-expansion-panel-content {

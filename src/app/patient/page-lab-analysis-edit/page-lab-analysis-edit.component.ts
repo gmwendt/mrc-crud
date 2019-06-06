@@ -86,6 +86,12 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
   }
 
   get dirty(): boolean {
+    if (!this.dateFormControl || !this.descriptionFormControl || !this.examValueFormControls)
+      return false;
+
+    if (this.dateFormControl.dirty || this.descriptionFormControl.dirty || this.examValueFormControls.some(e => e.dirty))
+      return true;
+
     return this._dirty;
   }
 

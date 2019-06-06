@@ -63,7 +63,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
       try {
         this.patient = await this._patient.getPatientById(id);
         this.createAnamnasesTable();
-        this.createExamsRequestedTable();
+        this.createExamsTables();
       }
       catch (error) {
         this.on_error(error);
@@ -121,7 +121,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
         this.patient.exams = [];
 
       this.patient.exams.push(exam);
-      this.updatePatient().then(() => this.createExamsRequestedTable());
+      this.updatePatient().then(() => this.createExamsTables());
     });
   }
 
@@ -161,11 +161,12 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     this.createAnamnasesTable();
   }
 
-  private async on_remove_exam_request_click(event: MouseEvent, exam: LaboratoryExam): Promise<void> {
+  private async on_remove_exam_click(event: MouseEvent, exam: LaboratoryExam): Promise<void> {
     event.stopPropagation();
 
+    let text = 'Deseja remover ' + exam.description;
     var dialogData: DialogAlertData = {
-			text: 'Deseja remover esta Requisição de Exames?',
+			text: text,
 			button: DialogAlertButton.YesNo,
 			textAlign: 'center',
     }
@@ -179,7 +180,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 
     this.patient.exams.splice(index, 1);
     await this.updatePatient();
-    this.createExamsRequestedTable();
+    this.createExamsTables();
   }
 
   private async on_measurement_edited(histValue?: IHistoricalValue): Promise<void> {
@@ -205,7 +206,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 		  this.anamneses = new MatTableDataSource(this.patient.anamneses);
   }
 
-  private createExamsRequestedTable(): void {
+  private createExamsTables(): void {
     if (this.patient && this.patient.exams) {
       this.examsReq = new MatTableDataSource(this.patient.exams.filter(e => !e.isResult));
       this.examsRes = new MatTableDataSource(this.patient.exams.filter(e => e.isResult));

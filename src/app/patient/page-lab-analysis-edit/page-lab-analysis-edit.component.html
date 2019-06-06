@@ -33,7 +33,7 @@
           <button mat-button *ngIf="!labExam.isResult">Enviar para e-mail do paciente</button> <!-- TODO -->
         </div>
         <mat-table #table [dataSource]="tableSource" 
-          *ngIf="this.labExam.exams && this.labExam.exams.length > 0; else elseBlock">
+          *ngIf="labExam.exams && labExam.exams.length > 0; else elseBlock">
           <ng-container matColumnDef="exam">
             <mat-header-cell *matHeaderCellDef>Exame</mat-header-cell>
             <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
@@ -74,7 +74,7 @@
   <div class="mrc-dialog-separator"></div>
   <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div> 
   <div id="mrc-edit-page-footer-buttons">
-    <button mat-button (click)="on_save_clicked()">Salvar</button> <!-- TODO: [disabled]="!dirty && !isNew" -->
+    <button mat-button [disabled]="!dirty && !isNew" (click)="on_save_clicked()">Salvar</button> <!-- TODO: testar -->
     <button mat-button (click)="on_cancel_clicked()">Cancelar</button> 
   </div>
 </div>
