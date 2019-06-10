@@ -218,7 +218,7 @@
           <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
             <mat-panel-title>Resultados</mat-panel-title>
           </mat-expansion-panel-header>
-          <button mat-button class="page-patient-consult-content-add-button" (click)="on_new_exam_click(true)">Novo resultado</button>  <!-- TODO: testar click | click com erro -->
+          <button mat-button class="page-patient-consult-content-add-button" (click)="on_exam_request_edit()">Novo resultado</button>
           <mat-table #table [dataSource]="examsRes" class="page-patient-consult-content-table" *ngIf="examsRes && examsRes.data.length > 0; else noExamsResBlock">
       
             <ng-container matColumnDef="description">

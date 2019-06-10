@@ -24,7 +24,7 @@
 [X] bug keypress page anamneses
 [X] widget trend
 [||] page measurements
-[>] page labAnalysis
+[>] page labAnalysis -> definir tamanho das tabelas
 [ ] page clinics
 [ ] global loading
 [ ] user enable/disable

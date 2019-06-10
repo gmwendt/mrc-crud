@@ -53,9 +53,9 @@
           </ng-container>
           <ng-container matColumnDef="commands">
             <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-            <mat-cell *matCellDef="let element"> 
+            <mat-cell *matCellDef="let element; let i = index;"> 
               <span>
-                <span title="Remover" class="icon-delete" (click)="on_remove_exam_click($event, element)"></span>
+                <span title="Remover" class="icon-delete" (click)="on_remove_exam_click($event, element, i)"></span>
               </span>  
             </mat-cell>
           </ng-container>

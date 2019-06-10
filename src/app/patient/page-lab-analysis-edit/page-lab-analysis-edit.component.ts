@@ -73,7 +73,12 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
     this._patient = await this._patientService.getPatientById(patientId);
 
     if (this.isNew) {
-      //TODO
+      this.labExam = new LaboratoryExam(this.guid(), 'Resultado de exames', new Date(Date.now()).toISOString(), true);
+      
+      if (!this._patient.exams)
+        this._patient.exams = [];
+
+      this._patient.exams.push(this.labExam);
     }
     else {
       this.labExam = this._patient.exams.find(a => a.id == labAnalyseId);
@@ -110,17 +115,24 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
     this.dateFormControl = new FormControl(moment(timestamp), Validators.required);
     this.descriptionFormControl = new FormControl(desc, Validators.required);
 
-    this.examValueFormControls = [];
     if (this.labExam && this.labExam.exams)
-      this.labExam.exams.forEach(exam => {
-        let formControl = new FormControl(exam.value, Validators.required);
-        this.examValueFormControls.push(formControl);
-      });
+      this.initializeValueFields(this.labExam.exams);
   }
 
+  private initializeValueFields(items: LaboratoryExamItem[]): void {
+    this.examValueFormControls = [];
+
+    items.forEach(e => {
+      let formControl = new FormControl(e.value, Validators.required);
+      this.examValueFormControls.push(formControl);
+    });
+  }
+  
   private createExamTable(): void {
     if (this.labExam)
       this.tableSource = new MatTableDataSource(this.labExam.exams);
+
+    this._detector.detectChanges();
   }
 
   private checkErros(): boolean {
@@ -157,11 +169,11 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  private async on_remove_exam_click(event: MouseEvent, exam: LaboratoryExamItem): Promise<void> {
+  private async on_remove_exam_click(event: MouseEvent, exam: LaboratoryExamItem, index: number): Promise<void> {
     event.stopPropagation();
 
-    let index = this.labExam.exams.indexOf(exam);
     this.labExam.exams.splice(index, 1);
+    this.examValueFormControls.splice(index, 1);
     this.createExamTable();
 
     this.markAsDirty();
@@ -189,7 +201,15 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
       if (!result) //Cancelled
         return;
 
+      //set result values
+      result.forEach(r => {
+        let exam = this.labExam.exams.find(e => e.id == r.id);
+        if (exam)
+          r.value = exam.value; 
+      });
+      this.initializeValueFields(result);
       this.labExam.exams = result;
+
       this.createExamTable();
       this.markAsDirty();
     });
@@ -270,6 +290,18 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
     else if (this.labExam.isResult)
       return 'Editar resultado';
     return 'Editar requisição';
+  }
+
+  private guid(): string {
+    return this.guidS4() + this.guidS4() + '-' +
+      this.guidS4() + '-' + this.guidS4() + '-' +
+      this.guidS4() + '-' + this.guidS4() + this.guidS4() + this.guidS4();
+  }
+
+  private guidS4(): string {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
   }
 
   ngOnDestroy(): void {
