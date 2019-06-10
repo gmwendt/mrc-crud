@@ -187,56 +187,68 @@
     </mat-tab>
     <mat-tab label="Exames laboratoriais">
       <mat-accordion displayMode="flat" multi="true" *ngIf="patient">
-        <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel [expanded]="true" [style.height]="accordionReq.expanded ? '50%' : ''" #accordionReq>
           <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
             <mat-panel-title>Requisições</mat-panel-title>
           </mat-expansion-panel-header>
           <button mat-button class="page-patient-consult-content-add-button" (click)="on_exam_request_click()">Nova requisição</button>
-          <mat-table #table [dataSource]="examsReq" class="page-patient-consult-content-table" *ngIf="examsReq && examsReq.data.length > 0; else noExamsReqBlock">
-      
-            <ng-container matColumnDef="description">
-              <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="commands">
-              <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-              <mat-cell *matCellDef="let element"> 
-                <span>
-                  <span title="Remover" class="icon-delete" (click)="on_remove_exam_click($event, element)"></span> 
-                </span>  
-              </mat-cell>
-            </ng-container>
-              
-            <mat-header-row *matHeaderRowDef="examsRequestedDisplayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: examsRequestedDisplayedColumns;" (click)="on_exam_request_edit(row.id)"></mat-row>
-          </mat-table> 
+          <div [style.height]="examTableHeight" style="overflow: auto">
+            <mat-table #table [dataSource]="examsReq" class="page-patient-consult-content-table" *ngIf="examsReq && examsReq.data.length > 0; else noExamsReqBlock">
+        
+              <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="timeElapsed">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ getTimeElapsed(element.date) }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="commands">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell *matCellDef="let element"> 
+                  <span>
+                    <span title="Remover" class="icon-delete" (click)="on_remove_exam_click($event, element)"></span> 
+                  </span>  
+                </mat-cell>
+              </ng-container>
+                
+              <mat-header-row *matHeaderRowDef="examsRequestedDisplayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: examsRequestedDisplayedColumns;" (click)="on_exam_request_edit(row.id)"></mat-row>
+            </mat-table> 
+          </div>
           <ng-template #noExamsReqBlock>
             <div class="page-patient-consult-content-table-empty">Não há requisição de exames</div>
           </ng-template>
         </mat-expansion-panel>
-        <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel [expanded]="true" [style.height]="accordionReq.expanded ? '50%' : 'calc(100% - 28px)'">
           <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
             <mat-panel-title>Resultados</mat-panel-title>
           </mat-expansion-panel-header>
           <button mat-button class="page-patient-consult-content-add-button" (click)="on_exam_request_edit()">Novo resultado</button>
-          <mat-table #table [dataSource]="examsRes" class="page-patient-consult-content-table" *ngIf="examsRes && examsRes.data.length > 0; else noExamsResBlock">
-      
-            <ng-container matColumnDef="description">
-              <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="commands">
-              <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-              <mat-cell *matCellDef="let element"> 
-                <span>
-                  <span title="Remover" class="icon-delete" (click)="on_remove_exam_click($event, element)"></span>
-                </span>  
-              </mat-cell>
-            </ng-container>
-              
-            <mat-header-row *matHeaderRowDef="examsRequestedDisplayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: examsRequestedDisplayedColumns;" (click)="on_exam_request_edit(row.id)"></mat-row>
-          </mat-table> 
+          <div [style.height]="examTableHeight" style="overflow: auto">
+            <mat-table #table [dataSource]="examsRes" class="page-patient-consult-content-table" *ngIf="examsRes && examsRes.data.length > 0; else noExamsResBlock">
+        
+              <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="timeElapsed">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ getTimeElapsed(element.date) }}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="commands">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell *matCellDef="let element"> 
+                  <span>
+                    <span title="Remover" class="icon-delete" (click)="on_remove_exam_click($event, element)"></span>
+                  </span>  
+                </mat-cell>
+              </ng-container>
+                
+              <mat-header-row *matHeaderRowDef="examsRequestedDisplayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: examsRequestedDisplayedColumns;" (click)="on_exam_request_edit(row.id)"></mat-row>
+            </mat-table> 
+          </div>
           <ng-template #noExamsResBlock>
             <div class="page-patient-consult-content-table-empty">Não há resultado de exames</div>
           </ng-template>

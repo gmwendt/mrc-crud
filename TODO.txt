@@ -24,7 +24,8 @@
 [X] bug keypress page anamneses
 [X] widget trend
 [||] page measurements
-[>] page labAnalysis -> definir tamanho das tabelas
+[>] page labAnalysis -> ao clicar em 'preencher resultado' atualizar data e descrição
+                     -> criar modelos de exames
 [ ] page clinics
 [ ] global loading
 [ ] user enable/disable

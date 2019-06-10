@@ -27,6 +27,10 @@ page-lab-analysis-edit {
 
     &-table {
 
+      &-container {
+        overflow: auto;
+      }
+
       &-actions {
         > .mat-button {
           margin-right: 8px;

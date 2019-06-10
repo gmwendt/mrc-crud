@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy, OnDestroy } from "@angular/core";
+import { Component, ViewEncapsulation, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy, OnDestroy, ElementRef, HostListener } from "@angular/core";
 import { Location } from '@angular/common';
 import { FormControl, Validators } from "@angular/forms";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -40,7 +40,7 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
   private tableSource: MatTableDataSource<LaboratoryExamItem>;
   private errorList: string[];
 
-  constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _patientService: PatientService, 
+  constructor(private _element: ElementRef, private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _patientService: PatientService, 
     private _dialog: DialogService, private _location: Location) {
 
   }
@@ -292,6 +292,13 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
     return 'Editar requisição';
   }
 
+  private get tableHeight(): string {
+    if (!this._element)
+      return;
+
+    return (this._element.nativeElement.clientHeight - 400) + 'px';
+  }
+
   private guid(): string {
     return this.guidS4() + this.guidS4() + '-' +
       this.guidS4() + '-' + this.guidS4() + '-' +
@@ -313,5 +320,10 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
       this._queryParamsDisposable.unsubscribe();
       this._queryParamsDisposable = null;
     }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this._detector.detectChanges();
   }
 }

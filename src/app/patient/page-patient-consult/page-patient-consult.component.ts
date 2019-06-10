@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ChangeDetectorRef, OnDestroy, ViewEncapsulation } from "@angular/core";
+import { AfterViewInit, Component, ChangeDetectorRef, OnDestroy, ViewEncapsulation, ElementRef, HostListener } from "@angular/core";
 import { Location } from '@angular/common';
 import { MatTableDataSource } from "@angular/material";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -39,7 +39,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private examsReq: MatTableDataSource<LaboratoryExam>;
   private examsRes: MatTableDataSource<LaboratoryExam>;
   private anamnesesDisplayedColumns = ['clinicCase', 'commands'];
-  private examsRequestedDisplayedColumns = ['description', 'commands'];
+  private examsRequestedDisplayedColumns = ['description', 'timeElapsed', 'commands'];
 
   private loading = true;
   private patient: Patient;
@@ -50,7 +50,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private equations = Equations;
   private protocols = CorporalDensityProtocols;
   
-  constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _router: Router,
+  constructor(private _element: ElementRef, private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _router: Router,
     private _patient: PatientService, private _location: Location , private _dialog: DialogService) {
   }
 
@@ -221,6 +221,26 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
       this.bodyCompositionTypeValue = BodyCompositionTypeEnum.Skinfolds;
   }
 
+  private getTimeElapsed(time: string): string {
+    if (!time)
+      return;
+
+    let elapsed = moment.duration(moment().diff(time));
+    
+    if (elapsed.asSeconds() < 60)
+      return `há ${Math.round(elapsed.asSeconds())} segundos.`;
+    else if (elapsed.asMinutes() < 60)
+      return `há ${Math.round(elapsed.asMinutes())} minutos.`;
+    else if (elapsed.asHours() < 24)
+      return `há ${Math.round(elapsed.asHours())} horas.`;
+    else if (elapsed.asDays() < 31)
+      return `há ${Math.round(elapsed.asDays())} dias.`;
+    else if (elapsed.asMonths() < 12)
+      return `há ${Math.round(elapsed.asMonths())} meses.`;
+    else// if (elapsed.asYears() < 60)
+      return `há ${Math.round(elapsed.asYears())} anos.`;
+  }
+
   private show_error_dialog(error: any): void {
     var msg = error instanceof HttpErrorResponse ? error["message"] : error;
 
@@ -244,6 +264,13 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
       value = value.toLocaleString();
   
     return value + ' ' + data.unit;
+  }
+
+  private get examTableHeight(): string {
+    if (!this._element)
+      return;
+
+    return (this._element.nativeElement.clientHeight - 266) / 2 + 'px';
   }
 
   private get_predictive_value(equation: string, unit: string): IHistoricalValue[] {
@@ -280,5 +307,10 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
       this._paramsDisposable.unsubscribe();
       this._paramsDisposable = null;
     }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this._detector.detectChanges();
   }
 }

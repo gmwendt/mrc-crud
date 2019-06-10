@@ -32,37 +32,39 @@
           <button mat-button *ngIf="!labExam.isResult">Imprimir</button> <!-- TODO -->
           <button mat-button *ngIf="!labExam.isResult">Enviar para e-mail do paciente</button> <!-- TODO -->
         </div>
-        <mat-table #table [dataSource]="tableSource" 
-          *ngIf="labExam.exams && labExam.exams.length > 0; else elseBlock">
-          <ng-container matColumnDef="exam">
-            <mat-header-cell *matHeaderCellDef>Exame</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
-          </ng-container>
-          <ng-container *ngIf="this.labExam.isResult" matColumnDef="value">
-            <mat-header-cell *matHeaderCellDef>Valor</mat-header-cell>
-            <mat-cell *matCellDef="let element; let i = index;"> 
-              <mat-form-field class="page-lab-analysis-edit-content-table-value" floatLabel="always">
-                <input matInput type="number" [(ngModel)]="element.value"  [formControl]="examValueFormControls[i]">
-              </mat-form-field>
-              <select (change)="on_unit_change(element, unitSelect.value)" #unitSelect>
-                <option *ngFor="let unit of element.availableUnits" [value]="unit.converterFactor" [selected]="unit.converterFactor == element.converterFactor">
-                  {{ unit.description }}
-                </option> 
-              </select>
-            </mat-cell>
-          </ng-container>
-          <ng-container matColumnDef="commands">
-            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-            <mat-cell *matCellDef="let element; let i = index;"> 
-              <span>
-                <span title="Remover" class="icon-delete" (click)="on_remove_exam_click($event, element, i)"></span>
-              </span>  
-            </mat-cell>
-          </ng-container>
-            
-          <mat-header-row *matHeaderRowDef="tableDisplayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: tableDisplayedColumns;"></mat-row>
-        </mat-table>
+        <div class="page-lab-analysis-edit-content-table-container" [style.height]="tableHeight">
+          <mat-table #table [dataSource]="tableSource" 
+            *ngIf="labExam.exams && labExam.exams.length > 0; else elseBlock">
+            <ng-container matColumnDef="exam">
+              <mat-header-cell *matHeaderCellDef>Exame</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
+            </ng-container>
+            <ng-container *ngIf="this.labExam.isResult" matColumnDef="value">
+              <mat-header-cell *matHeaderCellDef>Valor</mat-header-cell>
+              <mat-cell *matCellDef="let element; let i = index;"> 
+                <mat-form-field class="page-lab-analysis-edit-content-table-value" floatLabel="always">
+                  <input matInput type="number" [(ngModel)]="element.value"  [formControl]="examValueFormControls[i]">
+                </mat-form-field>
+                <select (change)="on_unit_change(element, unitSelect.value)" #unitSelect>
+                  <option *ngFor="let unit of element.availableUnits" [value]="unit.converterFactor" [selected]="unit.converterFactor == element.converterFactor">
+                    {{ unit.description }}
+                  </option> 
+                </select>
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="commands">
+              <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+              <mat-cell *matCellDef="let element; let i = index;"> 
+                <span>
+                  <span title="Remover" class="icon-delete" (click)="on_remove_exam_click($event, element, i)"></span>
+                </span>  
+              </mat-cell>
+            </ng-container>
+              
+            <mat-header-row *matHeaderRowDef="tableDisplayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: tableDisplayedColumns;"></mat-row>
+          </mat-table>
+        </div>
         <ng-template #elseBlock>
           <div class="page-lab-analysis-edit-content-table-empty">Nenhum exame adicionado</div>
         </ng-template>

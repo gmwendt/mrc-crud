@@ -27,6 +27,10 @@ page-lab-analysis-edit .page-lab-analysis-edit-content-date-field {
   max-width: 300px;
 }
 
+page-lab-analysis-edit .page-lab-analysis-edit-content-table-container {
+  overflow: auto;
+}
+
 page-lab-analysis-edit .page-lab-analysis-edit-content-table-actions > .mat-button {
   margin-right: 8px;
 }

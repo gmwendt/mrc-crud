@@ -16,6 +16,10 @@ page-patient-consult .mat-tab-group {
   margin: 0 22px;
 }
 
+page-patient-consult .mat-tab-body-wrapper {
+  height: 100%;
+}
+
 page-patient-consult .mat-table {
   margin: 0;
 }
@@ -48,6 +52,18 @@ page-patient-consult #page-patient-consult-content .page-patient-consult-content
 
 page-patient-consult #page-patient-consult-content .page-patient-consult-content-table {
   max-width: 800px;
+}
+
+page-patient-consult #page-patient-consult-content .page-patient-consult-content-table .cdk-column-commands {
+  flex: none;
+  width: 20px;
+}
+
+page-patient-consult #page-patient-consult-content .page-patient-consult-content-table .cdk-column-timeElapsed {
+  color: #9e9e9e;
+  flex: none;
+  font-style: italic;
+  width: 120px;
 }
 
 page-patient-consult #page-patient-consult-content .page-patient-consult-content-table-empty {
