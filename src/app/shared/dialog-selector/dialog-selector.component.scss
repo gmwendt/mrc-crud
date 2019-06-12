@@ -26,6 +26,32 @@ dialog-selector {
     }
   }
 
+  .dialog-selector-selection-buttons {
+    display: flex;
+
+    .mat-button {
+      height: 22px;
+      line-height: 22px;
+      margin: 8px 0 8px 16px;
+      padding: 0 8px;
+    }
+  }
+
+  .dialog-selector-add-other {
+    margin: 4px 0;
+
+    > label {
+      margin: 0 8px 0 16px;
+    }
+
+    > .icon-add {
+      cursor: pointer;
+      top: 3px;
+      left: 4px;
+      position: relative;
+    }
+  }
+
   #dialog-selector-workspace {
     overflow: hidden;
 

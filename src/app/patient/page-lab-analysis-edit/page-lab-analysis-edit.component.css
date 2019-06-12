@@ -28,11 +28,15 @@ page-lab-analysis-edit .page-lab-analysis-edit-content-date-field {
 }
 
 page-lab-analysis-edit .page-lab-analysis-edit-content-table-container {
+  margin-top: 8px;
   overflow: auto;
 }
 
 page-lab-analysis-edit .page-lab-analysis-edit-content-table-actions > .mat-button {
-  margin-right: 8px;
+  height: 22px;
+  line-height: 22px;
+  margin: 8px 0 0 8px;
+  padding: 0 8px;
 }
 
 page-lab-analysis-edit .page-lab-analysis-edit-content-table-value {
@@ -67,4 +71,13 @@ page-lab-analysis-edit #mrc-edit-page-footer-buttons {
 page-lab-analysis-edit #mrc-edit-page-footer-buttons > button {
   margin: 0 8px 0 0;
   width: 85px;
+}
+
+page-lab-analysis-edit .mat-column-exam {
+  max-width: 600px;
+}
+
+page-lab-analysis-edit .mat-column-commands {
+  flex: none;
+  width: 16px;
 }

@@ -25,6 +25,7 @@
 [X] widget trend
 [||] page measurements
 [>] page labAnalysis -> ao clicar em 'preencher resultado' atualizar data e descrição
+                     -> adicionar indicador do resultado do exame
                      -> criar modelos de exames
 [ ] page clinics
 [ ] global loading

@@ -109,7 +109,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
       source: examList,
       title: 'Solicitação de exames'
     };
-    let dialogRef = this._dialog.open(DialogSelector, { data: dialogSelectorData, disableClose: true, height: '450px'});
+    let dialogRef = this._dialog.open(DialogSelector, { data: dialogSelectorData, disableClose: true, height: '485px'});
 
     dialogRef.afterClosed().subscribe((result: LaboratoryExamItem[]) => {
       if (!result || result.length == 0)

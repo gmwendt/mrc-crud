@@ -24,6 +24,32 @@ dialog-selector .dialog-selector-filter-group > .mat-select {
   width: calc(100% - 112px);
 }
 
+dialog-selector .dialog-selector-selection-buttons {
+  display: flex;
+}
+
+dialog-selector .dialog-selector-selection-buttons .mat-button {
+  height: 22px;
+  line-height: 22px;
+  margin: 8px 0 8px 16px;
+  padding: 0 8px;
+}
+
+dialog-selector .dialog-selector-add-other {
+  margin: 4px 0;
+}
+
+dialog-selector .dialog-selector-add-other > label {
+  margin: 0 8px 0 16px;
+}
+
+dialog-selector .dialog-selector-add-other > .icon-add {
+  cursor: pointer;
+  top: 3px;
+  left: 4px;
+  position: relative;
+}
+
 dialog-selector #dialog-selector-workspace {
   overflow: hidden;
 }

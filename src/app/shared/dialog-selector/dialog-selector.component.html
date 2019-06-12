@@ -13,7 +13,11 @@
   <label>Filtro:</label>
   <input (keyup)="applyFilter($event.target.value)">
 </div>
-<div id="dialog-selector-workspace" [style.height]="isNullOrEmpty(this.notfoundMsg || this.notfoundLinkMsg) ? 'calc(100% - 132px)' : 'calc(100% - 168px)'">
+<div class="dialog-selector-selection-buttons">
+  <button mat-button (click)="on_select_all_click()">Selecionar todos</button>
+  <button mat-button (click)="on_deselect_all_click()">Deselecionar todos</button>
+</div>
+<div id="dialog-selector-workspace" [style.height]="isNullOrEmpty(this.notfoundMsg || this.notfoundLinkMsg) ? 'calc(100% - 166px)' : 'calc(100% - 202px)'">
   <div id="dialog-selector-workspace-table">
     <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -45,7 +49,7 @@
     </mat-table>
   </div>
   <div id="dialog-selector-workspace-list">
-    <div>
+    <div class="dialog-selector-add-other">
       <label>Outros:</label>
       <input type="text" #otherBox/>
       <span class="icon-add" (click)="add_item(otherBox.value)"></span>

@@ -67,6 +67,14 @@ export class DialogSelector implements OnDestroy {
     this.dataSource.filter = filterValue;
   }
 
+  private on_select_all_click(): void {
+    this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  private on_deselect_all_click(): void {
+    this.selection.clear();
+    }
+
   private cancel_clicked(): void {
     this._dialogRef.close();
   }

@@ -187,7 +187,7 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
       source: examList,
       title: 'Solicitação de exames'
     };
-    let dialogRef = this._dialog.open(DialogSelector, { data: dialogSelectorData, disableClose: true, height: '450px'});
+    let dialogRef = this._dialog.open(DialogSelector, { data: dialogSelectorData, disableClose: true, height: '485px'});
     this.labExam.exams.forEach((exam: LaboratoryExamItem) => {
       let name = exam['description'];
       if (!dialogRef.componentInstance.data.some(i => i['description'] == name))
@@ -226,6 +226,8 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
   private on_fill_result_click(): void {
     this.isNew = true;
     this.labExam.isResult = true;
+    this.labExam.date = new Date().toISOString();
+    this.dateFormControl.setValue(moment(this.labExam.date));
   }
 
   private on_cancel_clicked(): void {
