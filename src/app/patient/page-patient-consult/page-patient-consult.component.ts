@@ -31,6 +31,7 @@ export enum BodyCompositionTypeEnum {
 export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 
   private _routeAnamneses: string = 'anamneses';
+  private _routeFoodRecall: string = 'recordatorioAlimentar';
   private _routeLabAnalyse: string = 'analiseLaboratorial';
   private _dirty: boolean;
   private _paramsDisposable: Subscription;
@@ -107,7 +108,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     let dialogSelectorData: DialogSelectorData = {
       columns: [{ key: columnKey }],
       source: examList,
-      title: 'Solicitação de exames'
+      title: 'Requisição de exames'
     };
     let dialogRef = this._dialog.open(DialogSelector, { data: dialogSelectorData, disableClose: true, height: '485px'});
 
@@ -115,19 +116,24 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
       if (!result || result.length == 0)
         return;
       
-      let exam = new LaboratoryExam(this.guid(), 'Solicitação de exames', new Date(Date.now()).toISOString(), false, result);
-      
       if (!this.patient.exams)
         this.patient.exams = [];
+      let examName = 'Requisição ' + (this.patient.exams.length + 1);
+      let exam = new LaboratoryExam(this.guid(), examName, new Date(Date.now()).toISOString(), false, result);
 
       this.patient.exams.push(exam);
       this.updatePatient().then(() => this.createExamsTables());
     });
   }
 
-  private on_exam_request_edit(examId?: string): void {
+  private on_exam_edit(examId?: string): void {
     var id = examId ? examId : FileSystemCommands.Add;
     this.navigate(this._routeLabAnalyse, id);
+  }
+
+  private on_food_recall_edit(foodRecallId?: string): void {
+    var id = foodRecallId ? foodRecallId : FileSystemCommands.Add;
+    this.navigate(this._routeFoodRecall, id);
   }
 
   private async on_remove_anamneses_click(event: MouseEvent, anamnese: Anamneses): Promise<void> {

@@ -312,6 +312,7 @@ export class Patient {
   public placeOfCare: string;
   public measurements?: Measurements;
   public exams?: LaboratoryExam[];
+  public foodRecall?: FoodPlan[];
 
   constructor(accountRefId: number) {
     this.accountRefId = accountRefId;
@@ -455,6 +456,27 @@ export interface ILabExamResult {
   examName: string;
   result: string;
   unit: string;
+}
+
+export class FoodPlan {
+  constructor(public id: string, public description: string, public date: string) {
+  }
+
+  toJSON(): string {
+    return JSON.stringify(Object.assign({}, this));
+  }
+
+  static fromJSON(json: FoodPlan | string): FoodPlan {
+    if (typeof json === 'string')
+      return JSON.parse(json, FoodPlan.reviver);
+  
+    var data = Object.create(FoodPlan.prototype);
+    return Object.assign(data, json);
+  }
+
+  private static reviver(key: string, value: any): any {
+    return key === "" ? FoodPlan.fromJSON(value) : value;
+  }
 }
 
 export interface IUnit {

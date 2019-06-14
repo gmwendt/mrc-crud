@@ -23,10 +23,10 @@
 [X] page patients
 [X] bug keypress page anamneses
 [X] widget trend
-[||] page measurements
-[>] page labAnalysis -> ao clicar em 'preencher resultado' atualizar data e descrição
-                     -> adicionar indicador do resultado do exame
-                     -> criar modelos de exames
+[ ] page measurements
+[ ] page labAnalysis: criar tabela de referência para resultados de exames
+[ ] page labAnalysis: criar modelos de exames
+[>] page food recalls
 [ ] page clinics
 [ ] global loading
 [ ] user enable/disable

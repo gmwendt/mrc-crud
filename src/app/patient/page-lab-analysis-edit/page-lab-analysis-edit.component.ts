@@ -46,7 +46,6 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    
     this._paramsDisposable = this._route.params.subscribe(async (params) => {
       var patientId = params['id'];
       var labAnalyseId = params['labAnalyseId'];
@@ -225,9 +224,13 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
 
   private on_fill_result_click(): void {
     this.isNew = true;
+    
     this.labExam.isResult = true;
     this.labExam.date = new Date().toISOString();
+    this.labExam.description = 'Resultado - ' + this.labExam.description;
+
     this.dateFormControl.setValue(moment(this.labExam.date));
+    this.descriptionFormControl.setValue(this.labExam.description);
   }
 
   private on_cancel_clicked(): void {
