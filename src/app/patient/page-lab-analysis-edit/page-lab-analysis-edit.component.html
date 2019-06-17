@@ -6,13 +6,13 @@
   <div *ngIf="labExam" class="page-lab-analysis-edit-content"> 
     <mat-form-field floatLabel="always" class="page-lab-analysis-edit-content-description-field">
       <mat-label>Descrição</mat-label>
-      <textarea matInput [formControl]="descriptionFormControl"></textarea>
+      <textarea matInput [formControl]="descriptionFormControl" [(ngModel)]="labExam.description"></textarea>
       <mat-error>Campo <strong>obrigatório</strong></mat-error>
     </mat-form-field>
 
     <mat-form-field floatLabel="always" class="page-lab-analysis-edit-content-date-field">
       <mat-label>Data</mat-label>
-      <input matInput [matDatepicker]="myDatepicker" [formControl]="dateFormControl">
+      <input matInput [matDatepicker]="myDatepicker" [formControl]="dateFormControl" [value]="labExam.date" (ngModelChange)="labExam.date = $event ? $event.toISOString() : labExam.date">
       <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
       <mat-datepicker #myDatepicker></mat-datepicker>
       <mat-error *ngIf="dateFormControl.hasError('required')">

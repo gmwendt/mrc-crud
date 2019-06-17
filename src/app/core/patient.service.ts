@@ -31,7 +31,7 @@ export class PatientService {
             res.measurements = res.measurements ? Measurements.fromJSON(res.measurements) : null;
             res.anamneses = res.anamneses ? JSON.parse(<any>res.anamneses).map(a => Anamneses.fromJSON(a)) : undefined;
             res.exams = res.exams ? JSON.parse(<any>res.exams).map(a => LaboratoryExam.fromJSON(a)) : undefined;
-            res.foodRecall = res.foodRecall ? JSON.parse(<any>res.foodRecall).map(e => FoodPlan.fromJSON(e)) : undefined;
+            res.foodPlans = res.foodPlans ? JSON.parse(<any>res.foodPlans).map(e => FoodPlan.fromJSON(e)) : undefined;
           });
         resolve(res);
       }, (err) => {
@@ -84,7 +84,7 @@ export class PatientService {
     (<any>obj).anamneses = patient.anamneses ? JSON.stringify(patient.anamneses.map(a => a.toJSON())) : undefined;
     (<any>obj).measurements = patient.measurements ? patient.measurements.toJSON() : undefined;
     (<any>obj).exams = patient.exams ? JSON.stringify(patient.exams.map(e => e.toJSON())) : undefined;
-    (<any>obj).foodRecall = patient.foodRecall ? JSON.stringify(patient.foodRecall.map(e => e.toJSON())) : undefined;
+    (<any>obj).foodPlans = patient.foodPlans ? JSON.stringify(patient.foodPlans.map(e => e.toJSON())) : undefined;
     
     return obj;
   }
@@ -94,7 +94,7 @@ export class PatientService {
     patient.anamneses = patient.anamneses ? JSON.parse(<any>patient.anamneses).map(a => Anamneses.fromJSON(a)) : undefined;
     patient.measurements = patient.measurements ? Measurements.fromJSON(patient.measurements) : null;
     patient.exams = patient.exams ? JSON.parse(<any>patient.exams).map(e => LaboratoryExam.fromJSON(e)) : undefined;
-    patient.foodRecall = patient.foodRecall ? JSON.parse(<any>patient.foodRecall).map(e => FoodPlan.fromJSON(e)) : undefined;
+    patient.foodPlans = patient.foodPlans ? JSON.parse(<any>patient.foodPlans).map(e => FoodPlan.fromJSON(e)) : undefined;
 
     return patient;
   }

@@ -1,0 +1,40 @@
+<div>
+  <div class="mrc-page-title">{{ pageTitle }}</div>
+  <div class="mrc-page-subtitle">{{ pageSubtitle }}</div>
+</div>
+<progress-spinner [progress]="loading">
+  <div *ngIf="foodPlan" class="page-food-plan-edit-content"> 
+    <mat-form-field floatLabel="always" class="page-food-plan-edit-content-description-field">
+      <mat-label>Descrição</mat-label>
+      <textarea matInput [formControl]="descriptionFormControl" [(ngModel)]="foodPlan.description"></textarea>
+      <mat-error>Campo <strong>obrigatório</strong></mat-error>
+    </mat-form-field>
+    <mat-form-field floatLabel="always" class="page-food-plan-edit-content-date-field">
+      <mat-label>Data</mat-label>
+      <input matInput [matDatepicker]="myDatepicker" [formControl]="dateFormControl" [value]="foodPlan.date" (ngModelChange)="foodPlan.date = $event ? $event.toISOString() : foodPlan.date">
+      <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #myDatepicker></mat-datepicker>
+      <mat-error *ngIf="dateFormControl.hasError('required')">
+        Informe uma data válida
+      </mat-error>
+    </mat-form-field>
+
+    <mat-accordion displayMode="flat" multi="true">
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
+          <mat-panel-title>Refeições</mat-panel-title>
+        </mat-expansion-panel-header>
+        <button mat-button>Adicionar</button>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</progress-spinner>
+<div id="mrc-edit-page-footer">
+  <div class="mrc-dialog-separator"></div>
+  <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div> 
+  <div id="mrc-edit-page-footer-buttons">
+    <button mat-button [disabled]="!dirty && !isNew" (click)="on_save_clicked()">Salvar</button> <!-- TODO: testar -->
+    <button mat-button (click)="on_cancel_clicked()">Cancelar</button> 
+  </div>
+</div>

@@ -3,7 +3,9 @@ import { MatPaginatorIntl } from '@angular/material';
 
 export enum FileSystemCommands {
   Remove,
-  Add
+  Add,
+  AddType1,
+  AddType2
 }
 
 export interface AddressInfoJSON {
@@ -312,7 +314,7 @@ export class Patient {
   public placeOfCare: string;
   public measurements?: Measurements;
   public exams?: LaboratoryExam[];
-  public foodRecall?: FoodPlan[];
+  public foodPlans?: FoodPlan[];
 
   constructor(accountRefId: number) {
     this.accountRefId = accountRefId;
@@ -459,7 +461,7 @@ export interface ILabExamResult {
 }
 
 export class FoodPlan {
-  constructor(public id: string, public description: string, public date: string) {
+  constructor(public id: string, public description: string, public date: string, public isRecall?: boolean) {
   }
 
   toJSON(): string {

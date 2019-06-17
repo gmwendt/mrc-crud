@@ -31,7 +31,7 @@ export enum BodyCompositionTypeEnum {
 export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 
   private _routeAnamneses: string = 'anamneses';
-  private _routeFoodRecall: string = 'recordatorioAlimentar';
+  private _routeFoodPlan: string = 'planoAlimentar';
   private _routeLabAnalyse: string = 'analiseLaboratorial';
   private _dirty: boolean;
   private _paramsDisposable: Subscription;
@@ -131,9 +131,9 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     this.navigate(this._routeLabAnalyse, id);
   }
 
-  private on_food_recall_edit(foodRecallId?: string): void {
-    var id = foodRecallId ? foodRecallId : FileSystemCommands.Add;
-    this.navigate(this._routeFoodRecall, id);
+  private on_food_plan_edit(isRecall?: boolean, foodPlanId?: string): void {
+    var id = foodPlanId ? foodPlanId : (isRecall ? FileSystemCommands.AddType1 : FileSystemCommands.AddType2);
+    this.navigate(this._routeFoodPlan, id);
   }
 
   private async on_remove_anamneses_click(event: MouseEvent, anamnese: Anamneses): Promise<void> {
