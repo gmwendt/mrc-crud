@@ -16,6 +16,7 @@ var professional = require('./routes/professional');
 var sysInfo = require('./routes/systemInfo');
 var clinic = require('./routes/clinic');
 var patient = require('./routes/patient');
+var food = require('./routes/food');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use('/professional', professional);
 app.use('/sysInfo', sysInfo);
 app.use('/clinic', clinic);
 app.use('/patient', patient);
+app.use('/food', food);
 app.use('/', express.static('dist', { redirect: false }));
 app.get('*',  function(req, res, next) {
   res.sendFile(path.resolve('dist/index.html')); 
