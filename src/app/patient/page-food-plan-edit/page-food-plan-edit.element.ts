@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation, AfterViewInit, OnDestroy, ChangeDetection
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from "@angular/common/http";
 import { FormControl, Validators } from "@angular/forms";
+import { MatRadioChange } from "@angular/material";
 import { ActivatedRoute } from "@angular/router";
 
 import { FoodPlan, Patient, FileSystemCommands } from "../../core/common/types";
@@ -89,6 +90,11 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     this.dateFormControl = new FormControl(moment(timestamp), Validators.required);
   }
 
+  private on_food_source_change(event: MatRadioChange): void {
+    this.foodPlan.useFoodDb = event.value;
+    this.markAsDirty();
+  }
+
   private get pageTitle(): string {
     if (!this.foodPlan)
       return;
@@ -109,6 +115,12 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     else if (this.foodPlan.isRecall)
       return 'Editar recordatório';
     return 'Editar plano';
+  }
+
+  private get foodTypeSelectTxt(): string {
+    if (this.foodPlan.isRecall)
+      return 'Tipo do recordatório';
+    return 'Tipo do plano alimentar';
   }
 
   get dirty(): boolean {

@@ -19,6 +19,14 @@
       </mat-error>
     </mat-form-field>
 
+    <div class="page-food-plan-edit-content-food-source-type">
+      <label>{{ foodTypeSelectTxt }}</label>
+      <mat-radio-group (change)="on_food_source_change($event)" #radioBox>
+        <mat-radio-button [value]="true" [checked]="foodPlan.useFoodDb">Cardápio calculado</mat-radio-button>
+        <mat-radio-button [value]="false" [checked]="!foodPlan.useFoodDb">Cardápio livre</mat-radio-button>
+        <!-- TODO: Helper -->
+      </mat-radio-group>
+    </div>
     <mat-accordion displayMode="flat" multi="true">
       <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">

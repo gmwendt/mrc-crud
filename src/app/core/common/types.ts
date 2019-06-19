@@ -461,7 +461,7 @@ export interface ILabExamResult {
 }
 
 export class FoodPlan {
-  constructor(public id: string, public description: string, public date: string, public isRecall?: boolean) {
+  constructor(public id: string, public description: string, public date: string, public isRecall?: boolean, public useFoodDb: boolean = true) {
   }
 
   toJSON(): string {

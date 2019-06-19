@@ -27,6 +27,16 @@ page-food-plan-edit .page-food-plan-edit-content-date-field {
   max-width: 300px;
 }
 
+page-food-plan-edit .page-food-plan-edit-content-food-source-type {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+page-food-plan-edit .page-food-plan-edit-content-food-source-type > label {
+  margin-bottom: 4px;
+}
+
 page-food-plan-edit .page-food-plan-edit-content .mat-expansion-panel {
   max-width: 800px;
 }
