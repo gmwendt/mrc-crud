@@ -27,7 +27,7 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   /** list of foods filtered by search keyword */
   private filteredFoods: ReplaySubject<IFoodDetail[]> = new ReplaySubject<IFoodDetail[]>(1);
   private dataSource: MatTableDataSource<IFoodDetail>;
-  private tableDisplayedColumns: string[] = ['description'];
+  private tableDisplayedColumns: string[] = ['description', 'measurements'];
 
   private _selectedFoods: IFoodDetail[] = [];
 
@@ -106,7 +106,6 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private async on_selection_change(event: MatSelectChange): Promise<void> {
-    console.log(event);
     if (!event.value || !event.value.id)
       return;
 

@@ -33,6 +33,14 @@
       <mat-header-cell *matHeaderCellDef>Descrição</mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
     </ng-container>
+    <ng-container matColumnDef="measurements">
+      <mat-header-cell *matHeaderCellDef>Medida</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-select>
+          <mat-option *ngFor="let option of element.measurements">{{ option.description }}</mat-option>
+        </mat-select>
+      </mat-cell>
+    </ng-container>
 
     <mat-header-row *matHeaderRowDef="tableDisplayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: tableDisplayedColumns;"></mat-row>

@@ -56,10 +56,10 @@ router.get('/id/:foodId', (req, res) => {
 });
 
 //Filter foods
-router.get('/:filter/req/:properties', (req, res) => {
-  conosle.log(req.params);
-  const { filter } = req.params;
+router.get('/filter/:filter/req/:properties', (req, res) => {
+  const { filter } = req.params;  
   const { properties } = req.params;
+
   var foodList = FoodController.filterFoods(filter);
   var propList = properties.split(';');
 

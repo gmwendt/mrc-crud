@@ -15,14 +15,14 @@ export class FoodService {
     });
   }
 
-  tacoFilter(value: string, properties: string[]): Promise<IFoodDetail[]> {
+  tacoFilter(search: string, properties: string[]): Promise<IFoodDetail[]> {
     let reqProp = '';
     properties.forEach(p => {
       reqProp += p + ';';
     });
 
     return new Promise((resolve, reject) => {
-      this._http.get<IFoodDetail[]>('/food/' + value + '/req/' + reqProp).subscribe(res => {
+      this._http.get<IFoodDetail[]>('/food/filter/' + search + '/req/' + reqProp).subscribe(res => {
         resolve(res);
       }, err => reject(err));
     });
