@@ -4,18 +4,29 @@ const categories = require('../data/tacoCategoryList.json');
 class Food {
   static getFoodList() {
     return foodList;
+    //TODO: add measurements
   }
 
   static getFoodById(foodId) {
     return foodList.filter(food => food.id.toString() === foodId.toString());
+    //TODO: add measurements
   }
 
   static getFoodByCategoryId(categoryId) {
     const response = foodList.filter(
       food => food.category_id.toString() === categoryId.toString()
     );
-
+    //TODO: add measurements
     return response;
+  }
+
+  static filterFoods(filter) {
+    const result = foodList.filter(food => food.description.toString().toLocaleLowerCase().indexOf(filter.toLocaleLowerCase()) >= 0);
+    result.map(obj => obj.measurements = [
+      { description: 'grama',
+        converter: '0.01' }
+    ])
+    return result;
   }
 
   static getCategoriesList() {

@@ -1,1 +1,48 @@
-<div>dialog-add-meal</div>
+<div class="mrc-dialog-title">Adicionar refeição</div>
+<!-- <ng-template #editModeTitle>
+  <div class="mrc-dialog-title">Editar usuário</div>
+</ng-template> -->
+<div class="mrc-dialog-separator"></div>
+<div>
+  <div *ngIf="useFoodDb" style="display: flex; flex-direction: column;">
+    <label>Banco de dados de alimentos</label>
+    <mat-radio-group>
+      <mat-radio-button>Todos</mat-radio-button>
+      <mat-radio-button>TACO</mat-radio-button>
+      <mat-radio-button>Meus alimentos</mat-radio-button>
+      <mat-radio-button>Meus suplementos</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <mat-form-field floatLabel="always" style="margin-left: 8px"> 
+    <mat-label>Pesquisar alimento</mat-label>
+    <mat-select [formControl]="foodCtrl" placeholder="Digite no mínimo 3 caracteres" (selectionChange)="on_selection_change($event)" #select>
+      <mat-option>
+        <ngx-mat-select-search [formControl]="foodFilterCtrl" placeholderLabel="Digite no mínimo 3 caracteres">
+          <mat-icon ngxMatSelectSearchClear>X</mat-icon>
+        </ngx-mat-select-search>
+      </mat-option>
+
+      <mat-option *ngFor="let food of filteredFoods | async" [value]="food">
+        {{food.description}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef>Descrição</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="tableDisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: tableDisplayedColumns;"></mat-row>
+  </mat-table>
+</div>
+<div id="mrc-edit-page-footer">
+  <div class="mrc-dialog-separator"></div>
+  <!-- <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div>  -->
+  <div id="mrc-edit-page-footer-buttons">
+    <button mat-button>Salvar</button> <!-- TODO: [disabled]="!dirty && !isNew" (click)="on_save_clicked()" -->
+    <button mat-button>Cancelar</button>  <!-- TODO: (click)="" -->
+  </div>
+</div>

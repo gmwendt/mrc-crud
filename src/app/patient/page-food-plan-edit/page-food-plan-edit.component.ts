@@ -13,11 +13,12 @@ import { DialogService } from "../../shared/dialog.service";
 import { Subscription } from "rxjs/internal/Subscription";
 
 import * as moment from 'moment';
+import { DialogAddMeal, IDialogAddMealData } from "./dialog-add-meal/dialog-add-meal.component";
 
 @Component({
   selector: 'page-food-plan-edit',
-  templateUrl: './page-food-plan-edit.element.html',
-  styleUrls: ['./page-food-plan-edit.element.css'],
+  templateUrl: './page-food-plan-edit.component.html',
+  styleUrls: ['./page-food-plan-edit.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
@@ -93,6 +94,17 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   private on_food_source_change(event: MatRadioChange): void {
     this.foodPlan.useFoodDb = event.value;
     this.markAsDirty();
+  }
+
+  private on_add_meal_click(): void {
+    let dialogData: IDialogAddMealData = {
+      useFoodDb: this.foodPlan.useFoodDb
+    };
+    let dialogRef = this._dialog.open(DialogAddMeal, { data: dialogData });
+    
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 
   private get pageTitle(): string {

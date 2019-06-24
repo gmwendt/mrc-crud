@@ -43,7 +43,7 @@ router.get('/reduce/:properties', (req, res) => {
 });
 
 //Request a specific food
-router.get('/:foodId', (req, res) => {
+router.get('/id/:foodId', (req, res) => {
   const { foodId } = req.params;
 
   if (!isValidId(foodId)) {
@@ -53,6 +53,27 @@ router.get('/:foodId', (req, res) => {
   }
 
   res.json(FoodController.getFoodById(foodId));
+});
+
+//Filter foods
+router.get('/:filter/req/:properties', (req, res) => {
+  conosle.log(req.params);
+  const { filter } = req.params;
+  const { properties } = req.params;
+  var foodList = FoodController.filterFoods(filter);
+  var propList = properties.split(';');
+
+  var response = foodList.map((item) => {
+    var obj = {};
+    propList.forEach(p => {
+      if (p)
+        obj[p] = item[p];
+    });
+    
+    return obj;
+  });
+
+  res.json(response);
 });
 
 router.get('/category/:categoryId', (req, res) => {

@@ -481,6 +481,17 @@ export class FoodPlan {
   }
 }
 
+export interface IFoodDetail {
+  id: number;
+  description: string;
+  measurements: IFoodMeasurement[];
+}
+
+export interface IFoodMeasurement {
+  description: string;
+  converter: number;
+}
+
 export interface IUnit {
   desciption: string;
   converterFactor: number;

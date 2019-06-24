@@ -364,6 +364,23 @@
   line-height: 24px;
 }
 
+.mrc-global .mat-select-search-inside-mat-option .mat-select-search-input {
+  height: 24px !important;
+  line-height: 24px !important;
+}
+
+.mrc-global .mat-select-search-inside-mat-option .mat-button {
+  height: 18px;
+  line-height: 18px;
+  width: 18px;
+}
+
+.mrc-global .mat-select-search-inside-mat-option .mat-button .mat-icon {
+  height: 18px;
+  line-height: 18px;
+  width: 18px;
+}
+
 /**
  * Applies styles for users in high contrast mode. Note that this only applies
  * to Microsoft browsers. Chrome can be included by checking for the `html[hc]`

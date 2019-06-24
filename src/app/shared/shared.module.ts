@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 
 import { DpDatePickerModule } from 'ng2-date-picker';
 
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+
 import { AddProfessionalComponent } from './add-professional/add-professional.component';
 import { CheckListComponent } from './check-list/check-list.component';
 import { DialogAddUserComponent } from './dialog-add-user/dialog-add-user.component';
@@ -33,6 +35,7 @@ import { COMMON_PIPES } from './common/pipes';
     FormsModule, 
     MaterialModule,
     MatMomentDateModule,
+    NgxMatSelectSearchModule,
     ReactiveFormsModule,
     RouterModule,
   ],
@@ -59,6 +62,7 @@ import { COMMON_PIPES } from './common/pipes';
     MrcInputDateValidator,
     MrcInputPhoneMaskDirective,
     MrcInputRequiredDirective,
+    NgxMatSelectSearchModule,
     ProgressSpinnerComponent, 
     ProgressSpinner2Component,
     ReactiveFormsModule,

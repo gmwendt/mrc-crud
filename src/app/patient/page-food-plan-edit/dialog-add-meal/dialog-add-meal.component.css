@@ -1,0 +1,14 @@
+dialog-add-meal #mrc-edit-page-footer .mrc-edit-page-error {
+  color: #ef1508;
+  font-size: 9pt;
+  margin: 0 0 4px 22px;
+}
+
+dialog-add-meal #mrc-edit-page-footer-buttons {
+  margin: 8px 0 8px 22px;
+}
+
+dialog-add-meal #mrc-edit-page-footer-buttons > button {
+  margin: 0 8px 0 0;
+  width: 85px;
+}
