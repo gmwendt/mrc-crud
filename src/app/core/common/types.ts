@@ -485,6 +485,7 @@ export interface IFoodDetail {
   id: number;
   description: string;
   measurements: IFoodMeasurement[];
+  quantity: number;
 }
 
 export interface IFoodMeasurement {

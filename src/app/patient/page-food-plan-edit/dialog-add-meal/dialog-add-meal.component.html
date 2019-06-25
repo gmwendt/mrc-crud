@@ -28,23 +28,42 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-table [dataSource]="dataSource">
-    <ng-container matColumnDef="description">
-      <mat-header-cell *matHeaderCellDef>Descrição</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="measurements">
-      <mat-header-cell *matHeaderCellDef>Medida</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <mat-select>
-          <mat-option *ngFor="let option of element.measurements">{{ option.description }}</mat-option>
-        </mat-select>
-      </mat-cell>
-    </ng-container>
+  <div>
+    <mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef>Descrição</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="quantity">
+        <mat-header-cell *matHeaderCellDef>Quantidade</mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index;">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="element.quantity"  [formControl]="quantityFormControls[i]">
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="measurements">
+        <mat-header-cell *matHeaderCellDef>Medida</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <mat-select>
+            <mat-option *ngFor="let option of element.measurements">{{ option.description }}</mat-option>
+          </mat-select>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="tableDisplayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: tableDisplayedColumns;"></mat-row>
+    </mat-table>
 
-    <mat-header-row *matHeaderRowDef="tableDisplayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: tableDisplayedColumns;"></mat-row>
-  </mat-table>
+    <ngx-charts-pie-chart 
+      [view]="view"
+      [scheme]="colorScheme"
+      [results]="testValues"
+      [gradient]="gradient"
+      [legend]="showLegend">
+
+    </ngx-charts-pie-chart>
+  </div>
 </div>
 <div id="mrc-edit-page-footer">
   <div class="mrc-dialog-separator"></div>

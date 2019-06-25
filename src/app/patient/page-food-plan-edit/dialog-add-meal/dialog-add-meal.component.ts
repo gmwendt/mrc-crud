@@ -27,7 +27,40 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   /** list of foods filtered by search keyword */
   private filteredFoods: ReplaySubject<IFoodDetail[]> = new ReplaySubject<IFoodDetail[]>(1);
   private dataSource: MatTableDataSource<IFoodDetail>;
-  private tableDisplayedColumns: string[] = ['description', 'measurements'];
+  private tableDisplayedColumns: string[] = ['description', 'quantity', 'measurements'];
+  private quantityFormControls: FormControl[] = [];
+
+  /** Pie Chart Options */
+  view: any[] = [300, 200];
+  gradient = false;
+  showLegend = true;
+  colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
+  testValues: any[] = [
+    {
+      "name": "Germany",
+      "value": 40632,
+      "extra": {
+        "code": "de"
+      }
+    },
+    {
+      "name": "United States",
+      "value": 50000,
+      "extra": {
+        "code": "us"
+      }
+    },
+    {
+      "name": "France",
+      "value": 36745,
+      "extra": {
+        "code": "fr"
+      }
+    }
+  ];
+  /** */
 
   private _selectedFoods: IFoodDetail[] = [];
 
@@ -66,6 +99,10 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   private refreshTable(): void {
     this.dataSource = new MatTableDataSource(this._selectedFoods);
     this._detector.detectChanges();
+  }
+
+  private addValueFormControl(): void {
+    this.quantityFormControls.push(new FormControl());
   }
 
   /**
@@ -108,6 +145,8 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   private async on_selection_change(event: MatSelectChange): Promise<void> {
     if (!event.value || !event.value.id)
       return;
+
+    this.addValueFormControl();
 
     this._selectedFoods.push(event.value);
     this.refreshTable();
