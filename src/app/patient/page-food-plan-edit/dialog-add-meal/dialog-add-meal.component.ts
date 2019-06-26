@@ -1,13 +1,32 @@
 import { Component, ViewEncapsulation, Inject, OnInit, AfterViewInit, OnDestroy, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA, MatSelect, MatTableDataSource, MatSelectChange } from "@angular/material";
+import { HttpErrorResponse } from "@angular/common/http";
 import { FormControl } from "@angular/forms";
-import { ReplaySubject, Subject } from "rxjs";
-import { take, takeUntil } from 'rxjs/operators';
+
 import { IFoodDetail, IFoodMeasurement } from "../../../core/common/types";
 import { FoodService } from "../../../core/food.service";
+import { DialogAlertData, DialogAlertButton } from "../../../shared/dialog-alert/dialog-alert.component";
+import { DialogService } from "../../../shared/dialog.service";
+
+import { ReplaySubject, Subject } from "rxjs";
+import { take, takeUntil } from 'rxjs/operators';
 
 export interface IDialogAddMealData {
   useFoodDb: boolean;
+}
+
+export enum FoodSourceEnum {
+  All,
+  Taco,
+  MyFoods,
+  MySupplements
+}
+
+//TODO Export to widgets
+export interface IPieChartData {
+  name: string;
+  value: number;
+  extra?: any;
 }
 
 @Component({
@@ -27,39 +46,24 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   /** list of foods filtered by search keyword */
   private filteredFoods: ReplaySubject<IFoodDetail[]> = new ReplaySubject<IFoodDetail[]>(1);
   private dataSource: MatTableDataSource<IFoodDetail>;
-  private tableDisplayedColumns: string[] = ['description', 'quantity', 'measurements'];
+  private tableDisplayedColumns: string[] = ['description', 'quantity', 'measurements', 'commands'];
   private quantityFormControls: FormControl[] = [];
 
+  private foodSourceEnum = FoodSourceEnum;
+  private selectedFoodSource: number = FoodSourceEnum.All;
+
+  private _proteinSum: number;
+  private _carbohydrateSum: number;
+  private _lipidSum: number;
+
   /** Pie Chart Options */
-  view: any[] = [300, 200];
-  gradient = false;
-  showLegend = true;
-  colorScheme = {
+  private view: any[] = [300, 200];
+  private gradient = false;
+  private showLegend = true;
+  private colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
-  testValues: any[] = [
-    {
-      "name": "Germany",
-      "value": 40632,
-      "extra": {
-        "code": "de"
-      }
-    },
-    {
-      "name": "United States",
-      "value": 50000,
-      "extra": {
-        "code": "us"
-      }
-    },
-    {
-      "name": "France",
-      "value": 36745,
-      "extra": {
-        "code": "fr"
-      }
-    }
-  ];
+  private chartData: IPieChartData[] = [];
   /** */
 
   private _selectedFoods: IFoodDetail[] = [];
@@ -69,7 +73,7 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();
 
-  constructor(private _dialogRef: MatDialogRef<DialogAddMeal>, private _detector: ChangeDetectorRef, @Inject(MAT_DIALOG_DATA) data: IDialogAddMealData, 
+  constructor(private _dialogRef: MatDialogRef<DialogAddMeal>, private _detector: ChangeDetectorRef, private _dialog: DialogService, @Inject(MAT_DIALOG_DATA) data: IDialogAddMealData, 
     private _food: FoodService) {
     this.useFoodDb = data.useFoodDb;
   }
@@ -105,6 +109,39 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
     this.quantityFormControls.push(new FormControl());
   }
 
+  private calcMacros(): void {
+    this._proteinSum = 0;
+    this._carbohydrateSum = 0;
+    this._lipidSum = 0;
+
+    
+    this._selectedFoods.forEach(food => {
+      let converter = food.measurements.find(m => m.id === food.selectedMeasurement).converter;
+
+      let protein = food.attributes["protein"] && !isNaN(food.attributes["protein"].qty) ? food.attributes["protein"].qty : 0;
+      let carbohydrate = food.attributes["carbohydrate"] && !isNaN(food.attributes["carbohydrate"].qty) ? food.attributes["carbohydrate"].qty : 0;
+      let lipid = food.attributes["lipid"] && !isNaN(food.attributes["lipid"].qty) ? food.attributes["lipid"].qty : 0;
+
+      this._proteinSum += food.quantity ? protein * converter * food.quantity : 0;
+      this._carbohydrateSum += food.quantity ? carbohydrate * converter * food.quantity : 0;
+      this._lipidSum += food.quantity ? lipid * converter * food.quantity : 0;
+    })
+  }
+
+  private updateChart(): void {
+    this.chartData = [];
+    this.chartData.push({
+      name: "Proteínas (g)",
+      value: this._proteinSum
+    }, {
+      name: "Carboidratos (g)",
+      value: this._carbohydrateSum
+    }, {
+      name: "Lipídios (g)",
+      value: this._lipidSum
+    });
+  }
+
   /**
    * Sets the initial value after the filteredFoods are loaded initially
    */
@@ -131,15 +168,40 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    this.foods = await this._food.tacoFilter(this.foodFilterCtrl.value, ['id', 'description', 'measurements']);
+    try {
+      this.foods = await this._food.tacoFilter(this.foodFilterCtrl.value, ['id', 'description', 'measurements']);
+    }
+    catch (error) {
+      this.on_error(error);
+    }
+    finally {
+      if (!this.foods) 
+        return;
+      
+      // filter the foods
+      this.filteredFoods.next(
+        this.foods.filter(food => food.description.toLowerCase().indexOf(search) > -1)
+      );
+    }
+  }
 
-    if (!this.foods) 
-      return;
-    
-    // filter the foods
-    this.filteredFoods.next(
-      this.foods.filter(food => food.description.toLowerCase().indexOf(search) > -1)
-    );
+  private on_quantity_change(): void {
+    this.calcMacros();
+    this.updateChart();
+  }
+
+  private on_remove_food_click(event: MouseEvent, food: IFoodDetail, index: number): void {
+    event.stopPropagation();
+
+    this._selectedFoods.splice(index, 1);
+
+    this.calcMacros();
+    this.updateChart();
+    this.refreshTable();
+  }
+
+  private on_cancel_click(): void {
+    this._dialogRef.close();
   }
 
   private async on_selection_change(event: MatSelectChange): Promise<void> {
@@ -148,7 +210,36 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
 
     this.addValueFormControl();
 
-    this._selectedFoods.push(event.value);
-    this.refreshTable();
+    let food: IFoodDetail;
+
+    try {
+      food = await this._food.getFoodById(event.value.id);
+    }
+    catch (error) {
+      this.on_error(error);
+    }
+    finally {
+      this._selectedFoods.push(food);
+  
+      this.refreshTable();
+      this.calcMacros();
+      this.updateChart();
+    }
+  }
+
+  private show_error_dialog(error: any): void {
+    var msg = error instanceof HttpErrorResponse ? error["message"] : error;
+
+    var dialogData: DialogAlertData = {
+      text: msg,
+      caption: 'Erro',
+			button: DialogAlertButton.OK,
+    };
+    this._dialog.openAlert(dialogData).then(result => { });
+	}
+
+	private on_error(error: any): void {
+    console.log(error);
+		this.show_error_dialog(error);
   }
 }

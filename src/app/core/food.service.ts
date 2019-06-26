@@ -27,4 +27,15 @@ export class FoodService {
       }, err => reject(err));
     });
   }
+
+  getFoodById(id: number): Promise<IFoodDetail> {
+    return new Promise((resolve, reject) => {
+      this._http.get<IFoodDetail[]>('/food/id/' + id).subscribe(res => {
+        if (res && res.length > 0)
+          resolve(res[0]);
+        else
+          resolve(null);
+      }, err => reject(err));
+    });
+  }
 }

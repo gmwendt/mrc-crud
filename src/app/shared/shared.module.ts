@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { DpDatePickerModule } from 'ng2-date-picker';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 import { AddProfessionalComponent } from './add-professional/add-professional.component';
@@ -37,6 +38,7 @@ import { COMMON_PIPES } from './common/pipes';
     MaterialModule,
     MatMomentDateModule,
     NgxChartsModule,
+    NgxMaterialTimepickerModule,
     NgxMatSelectSearchModule,
     ReactiveFormsModule,
     RouterModule,
@@ -65,6 +67,7 @@ import { COMMON_PIPES } from './common/pipes';
     MrcInputPhoneMaskDirective,
     MrcInputRequiredDirective,
     NgxChartsModule,
+    NgxMaterialTimepickerModule,
     NgxMatSelectSearchModule,
     ProgressSpinnerComponent, 
     ProgressSpinner2Component,

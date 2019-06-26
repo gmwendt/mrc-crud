@@ -485,10 +485,13 @@ export interface IFoodDetail {
   id: number;
   description: string;
   measurements: IFoodMeasurement[];
+  selectedMeasurement: number;
   quantity: number;
+  attributes: any;
 }
 
 export interface IFoodMeasurement {
+  id: number;
   description: string;
   converter: number;
 }

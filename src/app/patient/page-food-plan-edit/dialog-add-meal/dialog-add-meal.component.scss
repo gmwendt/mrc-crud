@@ -1,4 +1,12 @@
 dialog-add-meal {
+
+  .mat-table {
+    .icon-delete, .icon-edit {
+      color: #4f4f4f;		
+      cursor: pointer;
+      font-size: 12pt;
+    }
+  }
   
   #mrc-edit-page-footer {
 

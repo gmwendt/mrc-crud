@@ -1,3 +1,9 @@
+dialog-add-meal .mat-table .icon-delete {
+  color: #4f4f4f;		
+  cursor: pointer;
+  font-size: 12pt;
+}
+
 dialog-add-meal #mrc-edit-page-footer .mrc-edit-page-error {
   color: #ef1508;
   font-size: 9pt;

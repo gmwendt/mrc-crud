@@ -22,10 +22,15 @@ class Food {
 
   static filterFoods(filter) {
     const result = foodList.filter(food => food.description.toString().toLocaleLowerCase().indexOf(filter.toLocaleLowerCase()) >= 0);
-    result.map(obj => obj.measurements = [
-      { description: 'grama',
-        converter: '0.01' }
-    ])
+    result.map(obj => { 
+      obj.measurements = [{ 
+        id: 0,
+        description: 'grama',
+        converter: '0.01' }];
+      obj.selectedMeasurement = 0;
+
+      return obj;
+    });
     return result;
   }
 

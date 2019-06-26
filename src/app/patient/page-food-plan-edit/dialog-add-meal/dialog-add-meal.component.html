@@ -4,13 +4,17 @@
 </ng-template> -->
 <div class="mrc-dialog-separator"></div>
 <div>
+  <div>
+      <input placeholder="24hr format" aria-label="24hr format" [ngxTimepicker]="fullTime" [format]="24"  readonly>
+      <ngx-material-timepicker #fullTime></ngx-material-timepicker>
+  </div>
   <div *ngIf="useFoodDb" style="display: flex; flex-direction: column;">
     <label>Banco de dados de alimentos</label>
-    <mat-radio-group>
-      <mat-radio-button>Todos</mat-radio-button>
-      <mat-radio-button>TACO</mat-radio-button>
-      <mat-radio-button>Meus alimentos</mat-radio-button>
-      <mat-radio-button>Meus suplementos</mat-radio-button>
+    <mat-radio-group [(ngModel)]="selectedFoodSource">
+      <mat-radio-button [value]="foodSourceEnum.All">Todos</mat-radio-button>
+      <mat-radio-button [value]="foodSourceEnum.Taco">TACO</mat-radio-button>
+      <mat-radio-button [value]="foodSourceEnum.MyFoods">Meus alimentos</mat-radio-button>
+      <mat-radio-button [value]="foodSourceEnum.MySupplements">Meus suplementos</mat-radio-button>
     </mat-radio-group>
   </div>
   <mat-form-field floatLabel="always" style="margin-left: 8px"> 
@@ -38,16 +42,24 @@
         <mat-header-cell *matHeaderCellDef>Quantidade</mat-header-cell>
         <mat-cell *matCellDef="let element; let i = index;">
           <mat-form-field>
-            <input matInput type="number" [(ngModel)]="element.quantity"  [formControl]="quantityFormControls[i]">
+            <input matInput type="number" [formControl]="quantityFormControls[i]" [(ngModel)]="element.quantity" (ngModelChange)="on_quantity_change()">
           </mat-form-field>
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="measurements">
         <mat-header-cell *matHeaderCellDef>Medida</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <mat-select>
-            <mat-option *ngFor="let option of element.measurements">{{ option.description }}</mat-option>
+          <mat-select [(ngModel)]="element.selectedMeasurement">
+            <mat-option *ngFor="let option of element.measurements" [value]="option.id">{{ option.description }}</mat-option>
           </mat-select>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="commands">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index;"> 
+          <span>
+            <span title="Remover" class="icon-delete" (click)="on_remove_food_click($event, element, i)"></span> 
+          </span>  
         </mat-cell>
       </ng-container>
   
@@ -58,7 +70,7 @@
     <ngx-charts-pie-chart 
       [view]="view"
       [scheme]="colorScheme"
-      [results]="testValues"
+      [results]="chartData"
       [gradient]="gradient"
       [legend]="showLegend">
 
@@ -70,6 +82,6 @@
   <!-- <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div>  -->
   <div id="mrc-edit-page-footer-buttons">
     <button mat-button>Salvar</button> <!-- TODO: [disabled]="!dirty && !isNew" (click)="on_save_clicked()" -->
-    <button mat-button>Cancelar</button>  <!-- TODO: (click)="" -->
+    <button mat-button (click)="on_cancel_click()">Cancelar</button>
   </div>
 </div>
