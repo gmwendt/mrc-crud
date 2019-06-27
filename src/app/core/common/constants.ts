@@ -233,6 +233,11 @@ export class MetabolicTrackingGroup {
   }
 }
 
+export const FoodGroups: any[] = [
+  { id: '1', description: 'Café da manhã' }, { id: '2', description: 'Lanche da manhã' }, { id: '3', description: 'Almoço' }, { id: '4', description: 'Lanche da tarde' },
+  { id: '5', description: 'Janta' }, { id: '6', description: 'Ceia' }, { id: '7', description: 'Pré-treino' }, { id: '8', description: 'Pos-treino' }
+  ];
+
 export const MetabolicTrackingList: IMetabolicTrackingItem[] = [
   { id: 'headache', group: MetabolicTrackingGroup.Head, description: 'Dor de cabeça', score: 0 },
   { id: 'feelingOfFainting', group: MetabolicTrackingGroup.Head, description: 'Sensação de desmaio', score: 0 },

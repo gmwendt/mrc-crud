@@ -4,9 +4,24 @@
 </ng-template> -->
 <div class="mrc-dialog-separator"></div>
 <div>
-  <div>
-      <input placeholder="24hr format" aria-label="24hr format" [ngxTimepicker]="fullTime" [format]="24"  readonly>
+  <div style="display: flex">
+    <div style="width: 120px">
+      <mat-form-field floatLabel="always" style="margin-left: 8px">
+        <mat-label>Refeição</mat-label>
+        <mat-select [(ngModel)]="selecteMealId" [formControl]="mealSelectCtrl">
+          <mat-option *ngFor="let meal of mealGroups" [value]="meal.id">{{ meal.description }}</mat-option>
+          <mat-option value="0">Outra</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <ng-container *ngIf="selecteMealId == '0'">
+        <input placeholder="Nome da refeição">         
+      </ng-container>
+    </div>
+    <div>
+      <label>Horário da refeição</label>
+      <input aria-label="24hr format" [ngxTimepicker]="fullTime" [value]="mealTime" [format]="24" readonly> 
       <ngx-material-timepicker #fullTime></ngx-material-timepicker>
+    </div>
   </div>
   <div *ngIf="useFoodDb" style="display: flex; flex-direction: column;">
     <label>Banco de dados de alimentos</label>

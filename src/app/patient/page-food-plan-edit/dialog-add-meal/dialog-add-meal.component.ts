@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatSelect, MatTableDataSource, MatSelect
 import { HttpErrorResponse } from "@angular/common/http";
 import { FormControl } from "@angular/forms";
 
+import { FoodGroups as MealGroups } from "../../../core/common/constants";
 import { IFoodDetail, IFoodMeasurement } from "../../../core/common/types";
 import { FoodService } from "../../../core/food.service";
 import { DialogAlertData, DialogAlertButton } from "../../../shared/dialog-alert/dialog-alert.component";
@@ -39,15 +40,23 @@ export interface IPieChartData {
 export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   private useFoodDb: boolean;
   private foods: IFoodDetail[] = [];
-  /** control for the selected food */
-  private foodCtrl: FormControl = new FormControl();
-  /** control for the MatSelect filter keyword */
-  private foodFilterCtrl: FormControl = new FormControl();
+  
   /** list of foods filtered by search keyword */
   private filteredFoods: ReplaySubject<IFoodDetail[]> = new ReplaySubject<IFoodDetail[]>(1);
   private dataSource: MatTableDataSource<IFoodDetail>;
   private tableDisplayedColumns: string[] = ['description', 'quantity', 'measurements', 'commands'];
+
+  /** Form Controls declaration */
+  /** control for the selected food */
+  private foodCtrl: FormControl = new FormControl();
+  /** control for the MatSelect filter keyword */
+  private foodFilterCtrl: FormControl = new FormControl();
   private quantityFormControls: FormControl[] = [];
+  private mealSelectCtrl: FormControl = new FormControl();
+  
+  private mealTime: string;
+  private selecteMealId: string;
+  private mealGroups = MealGroups;
 
   private foodSourceEnum = FoodSourceEnum;
   private selectedFoodSource: number = FoodSourceEnum.All;
@@ -156,6 +165,8 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
         // and after the mat-option elements are available
         this.select.compareWith = (a: IFoodDetail, b: IFoodDetail) => a && b && a.id === b.id;
       });
+
+      this.mealTime = new Date().toTimeString();
   }
 
   private async filterFoods(): Promise<void> {
