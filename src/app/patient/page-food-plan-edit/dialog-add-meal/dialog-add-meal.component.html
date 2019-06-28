@@ -4,9 +4,9 @@
 </ng-template> -->
 <div class="mrc-dialog-separator"></div>
 <div>
-  <div style="display: flex">
-    <div style="width: 120px">
-      <mat-form-field floatLabel="always" style="margin-left: 8px">
+  <div class="dialog-add-meal-details">
+    <div class="dialog-add-meal-details-desciption">
+      <mat-form-field floatLabel="always">
         <mat-label>Refeição</mat-label>
         <mat-select [(ngModel)]="selecteMealId" [formControl]="mealSelectCtrl">
           <mat-option *ngFor="let meal of mealGroups" [value]="meal.id">{{ meal.description }}</mat-option>
@@ -14,16 +14,16 @@
         </mat-select>
       </mat-form-field>
       <ng-container *ngIf="selecteMealId == '0'">
-        <input placeholder="Nome da refeição">         
+        <input style="margin-left: 8px" placeholder="Nome da refeição">         
       </ng-container>
     </div>
-    <div>
+    <div class="dialog-add-meal-details-time">
       <label>Horário da refeição</label>
-      <input aria-label="24hr format" [ngxTimepicker]="fullTime" [value]="mealTime" [format]="24" readonly> 
+      <input aria-label="24hr format" [ngxTimepicker]="fullTime" [value]="mealTime" [format]="24" readonly style="background-color: #fff;"> 
       <ngx-material-timepicker #fullTime></ngx-material-timepicker>
     </div>
   </div>
-  <div *ngIf="useFoodDb" style="display: flex; flex-direction: column;">
+  <div *ngIf="useFoodDb" class="dialog-add-meal-source">
     <label>Banco de dados de alimentos</label>
     <mat-radio-group [(ngModel)]="selectedFoodSource">
       <mat-radio-button [value]="foodSourceEnum.All">Todos</mat-radio-button>
@@ -32,7 +32,7 @@
       <mat-radio-button [value]="foodSourceEnum.MySupplements">Meus suplementos</mat-radio-button>
     </mat-radio-group>
   </div>
-  <mat-form-field floatLabel="always" style="margin-left: 8px"> 
+  <mat-form-field floatLabel="always" class="dialog-add-meal-food-source"> 
     <mat-label>Pesquisar alimento</mat-label>
     <mat-select [formControl]="foodCtrl" placeholder="Digite no mínimo 3 caracteres" (selectionChange)="on_selection_change($event)" #select>
       <mat-option>
@@ -47,49 +47,52 @@
     </mat-select>
   </mat-form-field>
 
-  <div>
-    <mat-table [dataSource]="dataSource">
-      <ng-container matColumnDef="description">
-        <mat-header-cell *matHeaderCellDef>Descrição</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="quantity">
-        <mat-header-cell *matHeaderCellDef>Quantidade</mat-header-cell>
-        <mat-cell *matCellDef="let element; let i = index;">
-          <mat-form-field>
-            <input matInput type="number" [formControl]="quantityFormControls[i]" [(ngModel)]="element.quantity" (ngModelChange)="on_quantity_change()">
-          </mat-form-field>
-        </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="measurements">
-        <mat-header-cell *matHeaderCellDef>Medida</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <mat-select [(ngModel)]="element.selectedMeasurement">
-            <mat-option *ngFor="let option of element.measurements" [value]="option.id">{{ option.description }}</mat-option>
-          </mat-select>
-        </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="commands">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let element; let i = index;"> 
-          <span>
-            <span title="Remover" class="icon-delete" (click)="on_remove_food_click($event, element, i)"></span> 
-          </span>  
-        </mat-cell>
-      </ng-container>
-  
-      <mat-header-row *matHeaderRowDef="tableDisplayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: tableDisplayedColumns;"></mat-row>
-    </mat-table>
+  <div class="dialog-add-meal-data-container">
+    <div class="dialog-add-meal-data-container-table">
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef>Descrição</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="quantity">
+          <mat-header-cell *matHeaderCellDef>Quantidade</mat-header-cell>
+          <mat-cell *matCellDef="let element; let i = index;">
+            <mat-form-field>
+              <input matInput type="number" [formControl]="quantityFormControls[i]" [(ngModel)]="element.quantity" (ngModelChange)="on_quantity_change()">
+            </mat-form-field>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="measurements">
+          <mat-header-cell *matHeaderCellDef>Medida</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <mat-select [(ngModel)]="element.selectedMeasurement">
+              <mat-option *ngFor="let option of element.measurements" [value]="option.id">{{ option.description }}</mat-option>
+            </mat-select>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="commands">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let element; let i = index;"> 
+            <span>
+              <span title="Remover" class="icon-delete" (click)="on_remove_food_click($event, element, i)"></span> 
+            </span>  
+          </mat-cell>
+        </ng-container>
+    
+        <mat-header-row *matHeaderRowDef="tableDisplayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: tableDisplayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+    <div>
+      <ngx-charts-pie-chart 
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="chartData"
+        [gradient]="gradient"
+        [legend]="showLegend">
 
-    <ngx-charts-pie-chart 
-      [view]="view"
-      [scheme]="colorScheme"
-      [results]="chartData"
-      [gradient]="gradient"
-      [legend]="showLegend">
-
-    </ngx-charts-pie-chart>
+      </ngx-charts-pie-chart>
+    </div>
   </div>
 </div>
 <div id="mrc-edit-page-footer">

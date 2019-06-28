@@ -1,5 +1,51 @@
-dialog-add-meal .mat-table .icon-delete {
-  color: #4f4f4f;		
+dialog-add-meal .dialog-add-meal-details {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+dialog-add-meal .dialog-add-meal-details-desciption {
+  width: 210px;
+}
+
+dialog-add-meal .dialog-add-meal-details-desciption .mat-form-field {
+  height: 55px;
+  margin-left: 8px;
+}
+
+dialog-add-meal .dialog-add-meal-details-time {
+  display: flex;
+  flex-direction: column;
+}
+
+dialog-add-meal .dialog-add-meal-details-time > label {
+  margin-bottom: 8px;
+}
+
+dialog-add-meal .dialog-add-meal-source {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 8px 8px;
+}
+
+dialog-add-meal .dialog-add-meal-source > label {
+  margin-bottom: 8px;
+}
+
+dialog-add-meal .dialog-add-meal-food-source {
+  margin-left: 8px;
+}
+
+dialog-add-meal .dialog-add-meal-data-container {
+  height: 300px;
+  overflow: auto;
+}
+
+dialog-add-meal .dialog-add-meal-data-container-table {
+  margin-left: 8px;
+}
+
+dialog-add-meal .mat-table .icon-delete, dialog-add-meal .mat-table .icon-edit {
+  color: #4f4f4f;
   cursor: pointer;
   font-size: 12pt;
 }

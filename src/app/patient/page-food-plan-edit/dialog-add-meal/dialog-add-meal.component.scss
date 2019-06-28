@@ -1,5 +1,51 @@
 dialog-add-meal {
 
+  .dialog-add-meal-details {
+    display: flex; 
+    margin-bottom: 8px;
+
+    &-desciption {
+      width: 210px;
+
+      .mat-form-field {
+        height: 55px;
+        margin-left: 8px; 
+      }
+    }
+
+    &-time {
+      display: flex; 
+      flex-direction: column;
+
+      > label {
+        margin-bottom: 8px;
+      }
+    }
+  }
+
+  .dialog-add-meal-source {
+    display: flex; 
+    flex-direction: column;
+    margin: 0 0 8px 8px; 
+     
+    > label {
+      margin-bottom: 8px;
+    }
+  }
+
+  .dialog-add-meal-food-source {
+    margin-left: 8px;
+  }
+
+  .dialog-add-meal-data-container {
+    height: 300px; 
+    overflow: auto;
+
+    &-table {
+      margin-left: 8px;
+    }
+  }
+
   .mat-table {
     .icon-delete, .icon-edit {
       color: #4f4f4f;		
