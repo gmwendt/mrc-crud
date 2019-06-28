@@ -10,7 +10,7 @@ import { ZipcodeService } from "../../core/zipcode.service";
 })
 export class ZipcodeInputComponent {
 
-  @ViewChild('box') _box: ElementRef;
+  @ViewChild('box', {static: false}) _box: ElementRef;
 
   @Input() isRequired: boolean;
 

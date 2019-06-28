@@ -30,7 +30,7 @@ export class NewUserData {
 })
 export class DialogAddUserComponent {
 
-  @ViewChild(AddProfessionalComponent) professionalView: AddProfessionalComponent;
+  @ViewChild(AddProfessionalComponent, {static: false}) professionalView: AddProfessionalComponent;
 
   public newUserData: NewUserData = {
     capabilities: new Capabilities(),

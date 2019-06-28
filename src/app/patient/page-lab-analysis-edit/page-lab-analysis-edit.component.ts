@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { FormControl, Validators } from "@angular/forms";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ActivatedRoute } from "@angular/router";
-import { MatTableDataSource } from "@angular/material";
+import { MatTableDataSource } from "@angular/material/table";
 
 import { LaboratoryExam, FileSystemCommands, Patient, LaboratoryExamItem } from "../../core/common/types";
 
@@ -186,7 +186,7 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
       source: examList,
       title: 'Solicitação de exames'
     };
-    let dialogRef = this._dialog.open(DialogSelector, { data: dialogSelectorData, disableClose: true, height: '485px'});
+    let dialogRef = this._dialog.open<DialogSelector>(DialogSelector, { data: dialogSelectorData, disableClose: true, height: '485px'});
     this.labExam.exams.forEach((exam: LaboratoryExamItem) => {
       let name = exam['description'];
       if (!dialogRef.componentInstance.data.some(i => i['description'] == name))

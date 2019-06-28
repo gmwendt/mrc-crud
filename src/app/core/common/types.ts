@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import { MatPaginatorIntl } from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 
 export enum FileSystemCommands {
   Remove,

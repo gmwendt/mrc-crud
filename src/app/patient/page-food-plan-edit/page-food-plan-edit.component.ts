@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, AfterViewInit, OnDestroy, ChangeDetection
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from "@angular/common/http";
 import { FormControl, Validators } from "@angular/forms";
-import { MatRadioChange } from "@angular/material";
+import { MatRadioChange } from "@angular/material/radio";
 import { ActivatedRoute } from "@angular/router";
 
 import { FoodPlan, Patient, FileSystemCommands } from "../../core/common/types";

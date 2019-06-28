@@ -34,8 +34,8 @@ export class PageClinicEditComponent implements AfterViewInit, OnDestroy {
   private errorList: string[] = [];
   private loading = true;
 
-  @ViewChild(ZipcodeInputComponent) zipcodeInput: ZipcodeInputComponent;
-  @ViewChild(MrcInputEmailValidatorDirective) emailInput: MrcInputEmailValidatorDirective;
+  @ViewChild(ZipcodeInputComponent, {static: false}) zipcodeInput: ZipcodeInputComponent;
+  @ViewChild(MrcInputEmailValidatorDirective, {static: false}) emailInput: MrcInputEmailValidatorDirective;
   @ViewChildren(MrcInputRequiredDirective) genericRequiredInputs: QueryList<MrcInputRequiredDirective>;
   @ViewChildren(MrcInputPhoneMaskDirective) phoneInputs: QueryList<MrcInputPhoneMaskDirective>;
 

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { Patient, FileSystemCommands } from "../core/common/types";

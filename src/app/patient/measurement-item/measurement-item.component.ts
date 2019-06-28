@@ -1,5 +1,5 @@
 import { Component, Input, ViewEncapsulation, Output, ElementRef, EventEmitter, AfterViewInit, HostListener, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
-import { MatTableDataSource } from "@angular/material";
+import { MatTableDataSource } from "@angular/material/table";
 
 import { IHistoricalValue, Measurements } from "../../core/common/types";
 import { Equations, Util } from "../../core/common/worker";
@@ -57,7 +57,7 @@ export class MeasurementItemComponent implements AfterViewInit {
   @Output()
   measurementEdited: EventEmitter<IHistoricalValue | null> = new EventEmitter<IHistoricalValue | null>();
 
-  @ViewChild('container') _chartContainer: ElementRef;
+  @ViewChild('container', {static: false}) _chartContainer: ElementRef;
 
   constructor(private _dialog: DialogService, private _detector: ChangeDetectorRef) {
   }

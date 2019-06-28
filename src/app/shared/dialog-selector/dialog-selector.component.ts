@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnDestroy, Output, ViewEncapsulation, Inject, ViewChild, ElementRef, } from '@angular/core';
-import { MatDialogRef, MatTableDataSource, MAT_DIALOG_DATA, MatSelectChange } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { SelectionModel } from '@angular/cdk/collections';
 
@@ -38,7 +40,7 @@ export class DialogSelector implements OnDestroy {
   
   private _data: any[];
 
-  @ViewChild('otherBox') _otherBox: ElementRef;
+  @ViewChild('otherBox', {static: false}) _otherBox: ElementRef;
 
   @Output() addItemClicked: EventEmitter<any> = new EventEmitter<any>();
 

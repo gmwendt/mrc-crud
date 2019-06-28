@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { DialogService } from '../dialog.service';
 

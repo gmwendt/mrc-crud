@@ -14,13 +14,7 @@ import {
   import { ComponentType } from '@angular/cdk/portal';
   import { OverlayContainer } from '@angular/cdk/overlay';
   
-  import {
-    DialogPosition,
-    MatDialog,
-    MatDialogConfig,
-    MatDialogRef,
-    MatDialogContainer
-  } from '@angular/material';
+  import { DialogPosition, MatDialog, MatDialogConfig, MatDialogRef, MatDialogContainer } from '@angular/material/dialog';
   
   //import { IMoveService, MoveService, MoveOptions } from '../core/move.service';
   

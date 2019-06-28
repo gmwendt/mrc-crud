@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ChangeDetectorRef, OnDestroy, ViewEncapsulation, ElementRef, HostListener } from "@angular/core";
 import { Location } from '@angular/common';
-import { MatTableDataSource } from "@angular/material";
+import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { CorporalDensityProtocols } from "../../core/common/constants";

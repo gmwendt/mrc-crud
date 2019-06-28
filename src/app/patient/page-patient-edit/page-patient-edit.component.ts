@@ -44,10 +44,10 @@ export class PagePatientEdit implements AfterViewInit, OnDestroy {
   private dpConfig: IDatePickerConfig;
   private _dpModel: Moment;
 
-  @ViewChild(MrcInputDateValidator) dateInput: MrcInputDateValidator;
-  @ViewChild(MrcInputEmailValidatorDirective) emailInput: MrcInputEmailValidatorDirective;
-  @ViewChild(MrcInputRequiredDirective) nameInput: MrcInputRequiredDirective;
-  @ViewChild(ZipcodeInputComponent) zipcodeInput: ZipcodeInputComponent;
+  @ViewChild(MrcInputDateValidator, {static: false}) dateInput: MrcInputDateValidator;
+  @ViewChild(MrcInputEmailValidatorDirective, {static: false}) emailInput: MrcInputEmailValidatorDirective;
+  @ViewChild(MrcInputRequiredDirective, {static: false}) nameInput: MrcInputRequiredDirective;
+  @ViewChild(ZipcodeInputComponent, {static: false}) zipcodeInput: ZipcodeInputComponent;
   @ViewChildren(MrcInputPhoneMaskDirective) phoneInputs: QueryList<MrcInputPhoneMaskDirective>;
 
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _patientService: PatientService, 

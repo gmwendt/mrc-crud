@@ -78,7 +78,7 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
   private _dpModel: Moment;
 
   @ViewChildren(MrcInputRequiredDirective) genericRequiredInputs: QueryList<MrcInputRequiredDirective>;
-  @ViewChild(MrcInputDateValidator) dateInput: MrcInputDateValidator;
+  @ViewChild(MrcInputDateValidator, {static: false}) dateInput: MrcInputDateValidator;
 
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _location: Location,
     private _patientService: PatientService, private _dialog: DialogService) {

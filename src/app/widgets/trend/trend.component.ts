@@ -15,7 +15,7 @@ import 'chartist-plugin-tooltips';
 })
 export class TrendComponent implements AfterViewInit {
 
-  @ViewChild('container') _chartRef: ElementRef;
+  @ViewChild('container', {static: false}) _chartRef: ElementRef;
               
   private _height: number;
   private _width: number;

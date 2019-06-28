@@ -1,5 +1,7 @@
 import { Component, ViewEncapsulation, Inject, OnInit, AfterViewInit, OnDestroy, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA, MatSelect, MatTableDataSource, MatSelectChange } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MatSelect, MatSelectChange } from "@angular/material/select";
+import { MatTableDataSource } from "@angular/material/table";
 import { HttpErrorResponse } from "@angular/common/http";
 import { FormControl } from "@angular/forms";
 
@@ -79,7 +81,7 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
 
   private _selectedFoods: IFoodDetail[] = [];
 
-  @ViewChild('select') select: MatSelect;
+  @ViewChild('select', {static: false}) select: MatSelect;
 
   /** Subject that emits when the component has been destroyed. */
   protected _onDestroy = new Subject<void>();

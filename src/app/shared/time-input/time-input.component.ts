@@ -8,8 +8,8 @@ import { Component, ElementRef, EventEmitter, Input, ViewChild, ViewEncapsulatio
 })
 export class TimeInputComponent {
 
-  @ViewChild('boxHours') _boxHours: ElementRef;
-  @ViewChild('boxMinutes') _boxMinutes: ElementRef;
+  @ViewChild('boxHours', {static: false}) _boxHours: ElementRef;
+  @ViewChild('boxMinutes', {static: false}) _boxMinutes: ElementRef;
 
   private _maxCharacters: number = 2;
   private _minValue: number = 0;
