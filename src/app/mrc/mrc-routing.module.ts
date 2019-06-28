@@ -9,11 +9,11 @@ import { PageResetPasswordComponent } from './pages/page-reset-password/page-res
 const mrcRoutes: Routes = [
   {
     path: 'login',
-    loadChildren: 'app/login/login.module#LoginModule'
+    loadChildren: () => import('app/login/login.module').then(m => m.LoginModule)
   },
   {
     path: 'register',
-    loadChildren: 'app/register/register.module#RegisterModule'
+    loadChildren: () => import('app/register/register.module').then(m => m.RegisterModule)
   },
   {
     path: 'home',
@@ -23,17 +23,17 @@ const mrcRoutes: Routes = [
   {
     path: 'clinicas',
     canActivate: [AuthGuardService],
-    loadChildren: 'app/clinic/clinic.module#ClinicModule'
+    loadChildren: () => import('app/clinic/clinic.module').then(m => m.ClinicModule)
   },
   {
     path: 'pacientes',
     canActivate: [AuthGuardService],
-    loadChildren: 'app/patient/patient.module#PatientModule'
+    loadChildren: () => import('app/patient/patient.module').then(m => m.PatientModule)
   },
   {
     path: 'usuarios',
     canActivate: [AuthGuardService],
-    loadChildren: 'app/users/users.module#UsersModule'
+    loadChildren: () => import('app/users/users.module').then(m => m.UsersModule)
   },
   {
     path: 'reset-pass/:accNum/:userName64/:token',
