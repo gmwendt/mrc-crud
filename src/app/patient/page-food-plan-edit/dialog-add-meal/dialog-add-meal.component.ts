@@ -66,9 +66,11 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   private _lipidSum: number;
 
   /** Pie Chart Options */
-  private view: any[] = [300, 200];
+  private view: any[] = [300, 180];
   private gradient = false;
-  private showLegend = true;
+  private showLegend = false;
+  private showLabels = true;
+  private legendPosition = 'below';
   private colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
@@ -140,13 +142,13 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   private updateChart(): void {
     this.chartData = [];
     this.chartData.push({
-      name: "Proteínas (g)",
+      name: "Proteínas",
       value: this._proteinSum
     }, {
-      name: "Carboidratos (g)",
+      name: "Carboidratos",
       value: this._carbohydrateSum
     }, {
-      name: "Lipídios (g)",
+      name: "Lipídios",
       value: this._lipidSum
     });
   }
@@ -194,6 +196,11 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
         this.foods.filter(food => food.description.toLowerCase().indexOf(search) > -1)
       );
     }
+  }
+
+  private formatTooltip(tooltip: any): any {
+    let template = Math.round(tooltip.value * 100) / 100;
+    return `<span>${tooltip.data.label} </br> ${template.toLocaleString()} g</span>`;
   }
 
   private on_quantity_change(): void {

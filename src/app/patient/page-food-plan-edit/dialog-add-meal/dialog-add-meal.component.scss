@@ -29,24 +29,63 @@ dialog-add-meal {
     margin: 0 0 8px 8px; 
      
     > label {
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
   }
 
-  .dialog-add-meal-food-source {
-    margin-left: 8px;
+  .dialog-add-meal-food-select {
+    margin: 8px 0 0 8px;
   }
 
   .dialog-add-meal-data-container {
-    height: 300px; 
     overflow: auto;
+
+    .legend-labels {
+      width: 130px;
+      background: #fff;
+    }
+
+    .ngx-charts {
+      height: 150px;
+    }
 
     &-table {
       margin-left: 8px;
+      height: 150px;
+      overflow: auto;
+    }
+
+    &-chart {
+      display: flex;
+      justify-content: center;
+    }
+
+    &-empty {
+      font-size: 8pt;
+      margin: 8px 0 0 16px;
+      max-width: 350px;
+      padding: 16px;
+      text-align: center;
     }
   }
 
   .mat-table {
+    .mat-column-commands {
+      flex: none;
+      width: 16px;
+    }
+
+    .mat-column-measurements {
+      margin: 0 4px;
+      flex: none;
+      width: 100px;
+    }
+
+    .mat-column-quantity {
+      flex: none;
+      width: 60px;
+    }
+
     .icon-delete, .icon-edit {
       color: #4f4f4f;		
       cursor: pointer;

@@ -28,26 +28,69 @@ dialog-add-meal .dialog-add-meal-source {
 }
 
 dialog-add-meal .dialog-add-meal-source > label {
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
-dialog-add-meal .dialog-add-meal-food-source {
-  margin-left: 8px;
+dialog-add-meal .dialog-add-meal-food-select {
+  margin: 8px 0 0 8px;
 }
 
 dialog-add-meal .dialog-add-meal-data-container {
-  height: 300px;
   overflow: auto;
+}
+
+dialog-add-meal .dialog-add-meal-data-container .legend-labels {
+  width: 130px;
+  background: #fff;
+}
+
+dialog-add-meal .dialog-add-meal-data-container .ngx-charts {
+  height: 150px;
+}
+
+dialog-add-meal .dialog-add-meal-data-container .legend-labels .legend-label {
+  color: #252525;
 }
 
 dialog-add-meal .dialog-add-meal-data-container-table {
   margin-left: 8px;
+  height: 150px;
+  overflow: auto;
+}
+
+dialog-add-meal .dialog-add-meal-data-container-chart {
+  display: flex;
+  justify-content: center;
+}
+
+dialog-add-meal .dialog-add-meal-data-container-empty {
+  font-size: 8pt;
+  margin: 8px 0 0 16px;
+  max-width: 350px;
+  padding: 16px;
+  text-align: center;
 }
 
 dialog-add-meal .mat-table .icon-delete, dialog-add-meal .mat-table .icon-edit {
   color: #4f4f4f;
   cursor: pointer;
   font-size: 12pt;
+}
+
+dialog-add-meal .mat-table .mat-column-commands {
+  flex: none;
+  width: 16px;
+}
+
+dialog-add-meal .mat-table .mat-column-measurements {
+  margin: 0 4px;
+  flex: none;
+  width: 100px;
+}
+
+dialog-add-meal .mat-table .mat-column-quantity {
+  flex: none;
+  width: 60px;
 }
 
 dialog-add-meal #mrc-edit-page-footer .mrc-edit-page-error {

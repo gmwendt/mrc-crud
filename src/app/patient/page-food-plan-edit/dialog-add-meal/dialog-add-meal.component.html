@@ -32,7 +32,7 @@
       <mat-radio-button [value]="foodSourceEnum.MySupplements">Meus suplementos</mat-radio-button>
     </mat-radio-group>
   </div>
-  <mat-form-field floatLabel="always" class="dialog-add-meal-food-source"> 
+  <mat-form-field floatLabel="always" class="dialog-add-meal-food-select"> 
     <mat-label>Pesquisar alimento</mat-label>
     <mat-select [formControl]="foodCtrl" placeholder="Digite no mínimo 3 caracteres" (selectionChange)="on_selection_change($event)" #select>
       <mat-option>
@@ -47,8 +47,8 @@
     </mat-select>
   </mat-form-field>
 
-  <div class="dialog-add-meal-data-container">
-    <div class="dialog-add-meal-data-container-table">
+  <div class="dialog-add-meal-data-container" [style.height]="!dataSource || dataSource.data.length <= 0 ? '120px' : '300px'">
+    <div class="dialog-add-meal-data-container-table" *ngIf="dataSource && dataSource.data.length > 0; else noFoodsAddedBlock">
       <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="description">
           <mat-header-cell *matHeaderCellDef>Descrição</mat-header-cell>
@@ -83,17 +83,23 @@
         <mat-row *matRowDef="let row; columns: tableDisplayedColumns;"></mat-row>
       </mat-table>
     </div>
-    <div>
+    <div class="dialog-add-meal-data-container-chart" *ngIf="dataSource && dataSource.data.length > 0">
       <ngx-charts-pie-chart 
         [view]="view"
         [scheme]="colorScheme"
         [results]="chartData"
         [gradient]="gradient"
-        [legend]="showLegend">
+        [legend]="showLegend"
+        [labels]="showLabels"
+        [legendPosition]="legendPosition"
+        [tooltipText]="formatTooltip">
 
       </ngx-charts-pie-chart>
     </div>
   </div>
+  <ng-template #noFoodsAddedBlock>
+    <div class="dialog-add-meal-data-container-empty">Nenhum alimento adicionado.</div>
+  </ng-template>
 </div>
 <div id="mrc-edit-page-footer">
   <div class="mrc-dialog-separator"></div>
