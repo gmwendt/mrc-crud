@@ -47,7 +47,7 @@
     </mat-select>
   </mat-form-field>
 
-  <div class="dialog-add-meal-data-container" [style.height]="!dataSource || dataSource.data.length <= 0 ? '120px' : '300px'">
+  <div class="dialog-add-meal-data-container">
     <div class="dialog-add-meal-data-container-table" *ngIf="dataSource && dataSource.data.length > 0; else noFoodsAddedBlock">
       <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="description">
@@ -61,6 +61,22 @@
               <input matInput type="number" [formControl]="quantityFormControls[i]" [(ngModel)]="element.quantity" (ngModelChange)="on_quantity_change()">
             </mat-form-field>
           </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="protein">
+          <mat-header-cell *matHeaderCellDef>Proteínas</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ getFoodDetail(element, 'protein', 'qty', 'g') }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="carbs">
+          <mat-header-cell *matHeaderCellDef>Carboidratos</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ getFoodDetail(element, 'carbohydrate', 'qty', 'g') }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="lipids">
+          <mat-header-cell *matHeaderCellDef>Lipídios</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ getFoodDetail(element, 'lipid', 'qty', 'g') }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="energy">
+          <mat-header-cell *matHeaderCellDef>Energia</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ getFoodDetail(element, 'energy', 'kcal', 'kcal') }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="measurements">
           <mat-header-cell *matHeaderCellDef>Medida</mat-header-cell>
@@ -83,23 +99,14 @@
         <mat-row *matRowDef="let row; columns: tableDisplayedColumns;"></mat-row>
       </mat-table>
     </div>
-    <div class="dialog-add-meal-data-container-chart" *ngIf="dataSource && dataSource.data.length > 0">
-      <ngx-charts-pie-chart 
-        [view]="view"
-        [scheme]="colorScheme"
-        [results]="chartData"
-        [gradient]="gradient"
-        [legend]="showLegend"
-        [labels]="showLabels"
-        [legendPosition]="legendPosition"
-        [tooltipText]="formatTooltip">
-
-      </ngx-charts-pie-chart>
-    </div>
+    <ng-template #noFoodsAddedBlock>
+      <div class="dialog-add-meal-data-container-empty">Nenhum alimento adicionado.</div>
+    </ng-template>
   </div>
-  <ng-template #noFoodsAddedBlock>
-    <div class="dialog-add-meal-data-container-empty">Nenhum alimento adicionado.</div>
-  </ng-template>
+  <mat-form-field floatLabel="always" style="height: 60px; width: 100%;">
+    <mat-label>Observações</mat-label>
+    <textarea matInput [formControl]="descriptionFormControl" style="height: 35px; max-height: 35px;"></textarea>
+  </mat-form-field>
 </div>
 <div id="mrc-edit-page-footer">
   <div class="mrc-dialog-separator"></div>

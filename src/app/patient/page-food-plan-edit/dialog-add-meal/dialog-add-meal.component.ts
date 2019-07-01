@@ -46,7 +46,7 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   /** list of foods filtered by search keyword */
   private filteredFoods: ReplaySubject<IFoodDetail[]> = new ReplaySubject<IFoodDetail[]>(1);
   private dataSource: MatTableDataSource<IFoodDetail>;
-  private tableDisplayedColumns: string[] = ['description', 'quantity', 'measurements', 'commands'];
+  private tableDisplayedColumns: string[] = ['description', 'quantity', 'protein', 'carbs', 'lipids', 'energy', 'measurements', 'commands'];
 
   /** Form Controls declaration */
   /** control for the selected food */
@@ -55,7 +55,7 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   private foodFilterCtrl: FormControl = new FormControl();
   private quantityFormControls: FormControl[] = [];
   private mealSelectCtrl: FormControl = new FormControl();
-  
+  private descriptionFormControl: FormControl = new FormControl(); 
   private mealTime: string;
   private selecteMealId: string;
   private mealGroups = MealGroups;
@@ -63,9 +63,10 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   private foodSourceEnum = FoodSourceEnum;
   private selectedFoodSource: number = FoodSourceEnum.All;
 
-  private _proteinSum: number;
-  private _carbohydrateSum: number;
-  private _lipidSum: number;
+  private proteinSum: number;
+  private carbohydrateSum: number;
+  private lipidSum: number;
+  private energySum: number;
 
   /** Pie Chart Options */
   private view: any[] = [300, 180];
@@ -123,21 +124,23 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private calcMacros(): void {
-    this._proteinSum = 0;
-    this._carbohydrateSum = 0;
-    this._lipidSum = 0;
+    this.proteinSum = 0;
+    this.carbohydrateSum = 0;
+    this.lipidSum = 0;
+    this.energySum = 0;
 
-    
     this._selectedFoods.forEach(food => {
       let converter = food.measurements.find(m => m.id === food.selectedMeasurement).converter;
 
       let protein = food.attributes["protein"] && !isNaN(food.attributes["protein"].qty) ? food.attributes["protein"].qty : 0;
       let carbohydrate = food.attributes["carbohydrate"] && !isNaN(food.attributes["carbohydrate"].qty) ? food.attributes["carbohydrate"].qty : 0;
       let lipid = food.attributes["lipid"] && !isNaN(food.attributes["lipid"].qty) ? food.attributes["lipid"].qty : 0;
+      let energy = food.attributes["energy"] && !isNaN(food.attributes["energy"].qty) ? food.attributes["energy"].qty : 0;
 
-      this._proteinSum += food.quantity ? protein * converter * food.quantity : 0;
-      this._carbohydrateSum += food.quantity ? carbohydrate * converter * food.quantity : 0;
-      this._lipidSum += food.quantity ? lipid * converter * food.quantity : 0;
+      this.proteinSum += food.quantity ? protein * converter * food.quantity : 0;
+      this.carbohydrateSum += food.quantity ? carbohydrate * converter * food.quantity : 0;
+      this.lipidSum += food.quantity ? lipid * converter * food.quantity : 0;
+      this.energySum += food.quantity ? energy * converter * food.quantity : 0;
     })
   }
 
@@ -145,13 +148,13 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
     this.chartData = [];
     this.chartData.push({
       name: "Proteínas",
-      value: this._proteinSum
+      value: this.proteinSum
     }, {
       name: "Carboidratos",
-      value: this._carbohydrateSum
+      value: this.carbohydrateSum
     }, {
       name: "Lipídios",
-      value: this._lipidSum
+      value: this.lipidSum
     });
   }
 
@@ -205,6 +208,16 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
     return `<span>${tooltip.data.label} </br> ${template.toLocaleString()} g</span>`;
   }
 
+  private getFoodDetail(food: IFoodDetail, detail: string, qtyPath: string, unit?: string): string {
+    let converter = food.measurements.find(m => m.id === food.selectedMeasurement).converter;
+    
+    let detailQty = food.attributes[detail] && !isNaN(food.attributes[detail][qtyPath]) ? food.attributes[detail][qtyPath] : 0;
+    let detailCalc = food.quantity ? detailQty * converter * food.quantity : 0;
+    let unitSpacing = unit ? ' ' + unit : '';
+
+    return (Math.round(detailCalc * 100) / 100).toLocaleString() + unitSpacing;
+  }
+
   private on_quantity_change(): void {
     this.calcMacros();
     this.updateChart();
@@ -214,6 +227,7 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
     event.stopPropagation();
 
     this._selectedFoods.splice(index, 1);
+    this.quantityFormControls.splice(index, 1); //TODO: testar
 
     this.calcMacros();
     this.updateChart();

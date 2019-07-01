@@ -33,17 +33,18 @@ router.get('/accountRefId/:accountId/userName/:userName', function(req, res, nex
 
 // GET USER BY EMAIL
 router.get('/email/:email', function(req, res, next) {
-  var email = req.param("email");
+  const { email } = req.params;
+
   User.find({"email": email}, function(e, docs) {
     res.json(docs);
   });
 });
 
 // REQUEST LOGIN
-router.get('/authenticate/:email/:pwd', function(req, res, next) {
-  var email = req.param("email");
-  var pwd = req.param("pwd");
-  User.find({"email": email}, function(e, docs) {
+router.get('/authenticate/:email/:pwd', (req, res, next) => {
+  const { email } = req.params;
+  const { pwd } = req.params;
+  User.find({"email": email}, async (e, docs) => {
     if (docs && docs.length <= 0) {
       res.send(401);
       return;
@@ -52,12 +53,18 @@ router.get('/authenticate/:email/:pwd', function(req, res, next) {
     var user = docs[0];
     
     if (user.passwordHash == pwd) {
-      mongoose.connect('mongodb+srv://sa:Abcd1234@cluster0-rewhk.mongodb.net/' + user.accountRefId + '?retryWrites=true')
-        .then(() =>  {
-          console.log('connection to ' + user.accountRefId + ' successful');
-          res.status(200).json({ ok: true });
-        })
-        .catch((err) => { console.error(err); res.send(500); });
+      try {
+        await mongoose.connection.close();
+        await mongoose.connect('mongodb+srv://sa:Abcd1234@cluster0-rewhk.mongodb.net/' + user.accountRefId + '?retryWrites=true');
+      }
+      catch (err) {
+        console.error(err); 
+        res.send(500);
+      }
+      finally {
+        console.log('connection to ' + user.accountRefId + ' successful');
+        res.status(200).json({ ok: true });
+      }
     }
     else 
       res.send(401);
@@ -66,7 +73,7 @@ router.get('/authenticate/:email/:pwd', function(req, res, next) {
 
 /*GEL USERS LIST BY ACCOUNT ID*/
 router.get('/accountRefId/:accountId', function(req, res, next) {
-  var accountId = req.param("accountId");
+  const { accountId } = req.params;
   User.find({"accountRefId": accountId}, function(e,docs) {
     res.json(docs);
   });
@@ -97,14 +104,20 @@ router.delete('/:id', function(req, res, next) {
 });
 
 //LOGOUT
-router.get('/logout/:id', function(req, res) {
+router.get('/logout/:id', async (req, res) => {
   if (mongoose.connection.name != 'mean-app') {
-    mongoose.connect('mongodb+srv://sa:Abcd1234@cluster0-rewhk.mongodb.net/mean-app?retryWrites=true')
-    .then(() =>  {
+    try {
+      await mongoose.connection.close();
+      await mongoose.connect('mongodb+srv://sa:Abcd1234@cluster0-rewhk.mongodb.net/mean-app?retryWrites=true');
+    }
+    catch (err) {
+      console.error(err); 
+      res.send(500);
+    }
+    finally {
       console.log('connection to mean-app successful');
       res.status(200).json({ ok: true });
-    })
-    .catch((err) => { console.error(err); res.send(500); });
+    }
   }
   else
     res.status(200).json({ ok: true });

@@ -39,6 +39,7 @@ dialog-add-meal {
 
   .dialog-add-meal-data-container {
     overflow: auto;
+    height: 248px;
 
     .legend-labels {
       width: 130px;
@@ -51,7 +52,6 @@ dialog-add-meal {
 
     &-table {
       margin-left: 8px;
-      height: 150px;
       overflow: auto;
     }
 
@@ -61,11 +61,11 @@ dialog-add-meal {
     }
 
     &-empty {
+      align-items: center;
+      display: flex;
       font-size: 8pt;
-      margin: 8px 0 0 16px;
-      max-width: 350px;
-      padding: 16px;
-      text-align: center;
+      height: 248px;
+      justify-content: center;
     }
   }
 
@@ -73,23 +73,65 @@ dialog-add-meal {
     .mat-column-commands {
       flex: none;
       width: 16px;
+      margin-left: 8px;
     }
 
     .mat-column-measurements {
-      margin: 0 4px;
       flex: none;
-      width: 100px;
+      width: 90px;
+      justify-content: center;
     }
 
     .mat-column-quantity {
       flex: none;
-      width: 60px;
+      width: 80px;
+      justify-content: center;
+    }
+
+    .mat-column-protein {
+      flex: none;
+      width: 80px;
+      justify-content: center;
+    }
+
+    .mat-column-carbs {
+      flex: none;
+      width: 82px;
+      justify-content: center;
+    }
+
+    .mat-column-lipids {
+      flex: none;
+      width: 80px;
+      justify-content: center;
+    }
+
+    .mat-column-energy {
+      flex: none;
+      width: 80px;
+      justify-content: center;
     }
 
     .icon-delete, .icon-edit {
       color: #4f4f4f;		
       cursor: pointer;
       font-size: 12pt;
+    }
+
+    .mat-form-field {
+      width: 80px;
+      height: 24px;
+      padding: 2px 0;
+  
+      &-wrapper {
+        height: 24px;
+        line-height: 24px;
+      }
+  
+      &-infix {
+        padding: 0;
+        margin-top: -10px;
+      }
     }
   }
   
