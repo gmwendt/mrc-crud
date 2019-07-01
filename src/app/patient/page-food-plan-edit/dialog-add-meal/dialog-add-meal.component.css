@@ -4,6 +4,7 @@ dialog-add-meal .dialog-add-meal-details {
 }
 
 dialog-add-meal .dialog-add-meal-details-desciption {
+  height: 80px;
   width: 210px;
 }
 
@@ -37,7 +38,7 @@ dialog-add-meal .dialog-add-meal-food-select {
 
 dialog-add-meal .dialog-add-meal-data-container {
   overflow: auto;
-  height: 248px;
+  height: 225px;
 }
 
 dialog-add-meal .dialog-add-meal-data-container .legend-labels {
@@ -63,13 +64,18 @@ dialog-add-meal .dialog-add-meal-data-container-empty {
   align-items: center;
   display: flex;
   font-size: 8pt;
-  height: 248px;
+  height: 225px;
   justify-content: center;
+}
+
+dialog-add-meal .mat-table .mat-column-description {
+  flex: none;
+  width: 228px;
 }
 
 dialog-add-meal .mat-table .mat-column-commands {
   flex: none;
-  width: 16px;
+  width: 0;
   margin-left: 8px;
 }
 
@@ -137,8 +143,13 @@ dialog-add-meal #mrc-edit-page-footer .mrc-edit-page-error {
   margin: 0 0 4px 22px;
 }
 
+dialog-add-meal #mrc-edit-page-footer .mrc-dialog-separator {
+  width: 100%;
+  margin: 8px 0;
+}
+
 dialog-add-meal #mrc-edit-page-footer-buttons {
-  margin: 8px 0 8px 22px;
+  margin: 8px 0 0 8px;
 }
 
 dialog-add-meal #mrc-edit-page-footer-buttons > button {

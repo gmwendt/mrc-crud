@@ -5,6 +5,7 @@ dialog-add-meal {
     margin-bottom: 8px;
 
     &-desciption {
+      height: 80px;
       width: 210px;
 
       .mat-form-field {
@@ -39,7 +40,7 @@ dialog-add-meal {
 
   .dialog-add-meal-data-container {
     overflow: auto;
-    height: 248px;
+    height: 225px;
 
     .legend-labels {
       width: 130px;
@@ -64,15 +65,20 @@ dialog-add-meal {
       align-items: center;
       display: flex;
       font-size: 8pt;
-      height: 248px;
+      height: 225px;
       justify-content: center;
     }
   }
 
   .mat-table {
+    .mat-column-description {
+      flex: none;
+      width: 228px;
+    }
+
     .mat-column-commands {
       flex: none;
-      width: 16px;
+      width: 0;
       margin-left: 8px;
     }
 
@@ -143,8 +149,13 @@ dialog-add-meal {
       margin: 0 0 4px 22px;
     }
 
+    .mrc-dialog-separator {
+      margin: 8px 0;
+      width: 100%;
+    }
+
     &-buttons {
-      margin: 8px 0 8px 22px;
+      margin: 8px 0 0 8px;
       
       > button {
         margin: 0 8px 0 0;

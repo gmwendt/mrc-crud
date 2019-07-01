@@ -25,6 +25,13 @@ export enum FoodSourceEnum {
   MySupplements
 }
 
+export interface IMacroNutrients {
+  protein?: number;
+  carbohydrate?: number;
+  lipid?: number;
+  energy?: number;
+}
+
 //TODO Export to widgets
 export interface IPieChartData {
   name: string;
@@ -46,7 +53,8 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   /** list of foods filtered by search keyword */
   private filteredFoods: ReplaySubject<IFoodDetail[]> = new ReplaySubject<IFoodDetail[]>(1);
   private dataSource: MatTableDataSource<IFoodDetail>;
-  private tableDisplayedColumns: string[] = ['description', 'quantity', 'protein', 'carbs', 'lipids', 'energy', 'measurements', 'commands'];
+  private totalizerSource: MatTableDataSource<IMacroNutrients>;
+  private tableDisplayedColumns: string[] = ['description', 'quantity', 'measurements', 'protein', 'carbs', 'lipids', 'energy', 'commands'];
 
   /** Form Controls declaration */
   /** control for the selected food */
@@ -67,18 +75,6 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   private carbohydrateSum: number;
   private lipidSum: number;
   private energySum: number;
-
-  /** Pie Chart Options */
-  private view: any[] = [300, 180];
-  private gradient = false;
-  private showLegend = false;
-  private showLabels = true;
-  private legendPosition = 'below';
-  private colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-  };
-  private chartData: IPieChartData[] = [];
-  /** */
 
   private _selectedFoods: IFoodDetail[] = [];
 
@@ -113,9 +109,21 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
     this._onDestroy.complete();
   }
 
-
   private refreshTable(): void {
     this.dataSource = new MatTableDataSource(this._selectedFoods);
+    this._detector.detectChanges();
+  }
+
+  private refreshTotalizer(): void {
+    let arr: IMacroNutrients[] = [];
+    arr.push({
+      carbohydrate: Math.round(this.carbohydrateSum * 100) / 100,
+      energy: Math.round(this.energySum * 100) / 100,
+      lipid: Math.round(this.lipidSum * 100) / 100,
+      protein: Math.round(this.proteinSum * 100) / 100
+    });
+
+    this.totalizerSource = new MatTableDataSource(arr);
     this._detector.detectChanges();
   }
 
@@ -135,27 +143,15 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
       let protein = food.attributes["protein"] && !isNaN(food.attributes["protein"].qty) ? food.attributes["protein"].qty : 0;
       let carbohydrate = food.attributes["carbohydrate"] && !isNaN(food.attributes["carbohydrate"].qty) ? food.attributes["carbohydrate"].qty : 0;
       let lipid = food.attributes["lipid"] && !isNaN(food.attributes["lipid"].qty) ? food.attributes["lipid"].qty : 0;
-      let energy = food.attributes["energy"] && !isNaN(food.attributes["energy"].qty) ? food.attributes["energy"].qty : 0;
+      let energy = food.attributes["energy"] && !isNaN(food.attributes["energy"].kcal) ? food.attributes["energy"].kcal : 0;
 
       this.proteinSum += food.quantity ? protein * converter * food.quantity : 0;
       this.carbohydrateSum += food.quantity ? carbohydrate * converter * food.quantity : 0;
       this.lipidSum += food.quantity ? lipid * converter * food.quantity : 0;
       this.energySum += food.quantity ? energy * converter * food.quantity : 0;
-    })
-  }
-
-  private updateChart(): void {
-    this.chartData = [];
-    this.chartData.push({
-      name: "Proteínas",
-      value: this.proteinSum
-    }, {
-      name: "Carboidratos",
-      value: this.carbohydrateSum
-    }, {
-      name: "Lipídios",
-      value: this.lipidSum
     });
+
+    this.refreshTotalizer();
   }
 
   /**
@@ -220,7 +216,6 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
 
   private on_quantity_change(): void {
     this.calcMacros();
-    this.updateChart();
   }
 
   private on_remove_food_click(event: MouseEvent, food: IFoodDetail, index: number): void {
@@ -230,7 +225,6 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
     this.quantityFormControls.splice(index, 1); //TODO: testar
 
     this.calcMacros();
-    this.updateChart();
     this.refreshTable();
   }
 
@@ -257,7 +251,6 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   
       this.refreshTable();
       this.calcMacros();
-      this.updateChart();
     }
   }
 

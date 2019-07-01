@@ -62,6 +62,14 @@
             </mat-form-field>
           </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="measurements">
+          <mat-header-cell *matHeaderCellDef>Medida</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <mat-select [(ngModel)]="element.selectedMeasurement">
+              <mat-option *ngFor="let option of element.measurements" [value]="option.id">{{ option.description }}</mat-option>
+            </mat-select>
+          </mat-cell>
+        </ng-container>
         <ng-container matColumnDef="protein">
           <mat-header-cell *matHeaderCellDef>Proteínas</mat-header-cell>
           <mat-cell *matCellDef="let element">{{ getFoodDetail(element, 'protein', 'qty', 'g') }}</mat-cell>
@@ -78,14 +86,6 @@
           <mat-header-cell *matHeaderCellDef>Energia</mat-header-cell>
           <mat-cell *matCellDef="let element">{{ getFoodDetail(element, 'energy', 'kcal', 'kcal') }}</mat-cell>
         </ng-container>
-        <ng-container matColumnDef="measurements">
-          <mat-header-cell *matHeaderCellDef>Medida</mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            <mat-select [(ngModel)]="element.selectedMeasurement">
-              <mat-option *ngFor="let option of element.measurements" [value]="option.id">{{ option.description }}</mat-option>
-            </mat-select>
-          </mat-cell>
-        </ng-container>
         <ng-container matColumnDef="commands">
           <mat-header-cell *matHeaderCellDef></mat-header-cell>
           <mat-cell *matCellDef="let element; let i = index;"> 
@@ -94,8 +94,36 @@
             </span>  
           </mat-cell>
         </ng-container>
-    
+
         <mat-header-row *matHeaderRowDef="tableDisplayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: tableDisplayedColumns;"></mat-row>
+      </mat-table>
+      <mat-table [dataSource]="totalizerSource">
+        <ng-container matColumnDef="description">
+          <mat-cell *matCellDef="let element"></mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="quantity">
+          <mat-cell *matCellDef="let element"></mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="measurements">
+          <mat-cell *matCellDef="let element"></mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="protein">
+          <mat-cell *matCellDef="let element">{{ element.protein }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="carbs">
+          <mat-cell *matCellDef="let element">{{ element.carbohydrate }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="lipids">
+          <mat-cell *matCellDef="let element">{{ element.lipid }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="energy">
+          <mat-cell *matCellDef="let element">{{ element.energy }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="commands">
+          <mat-cell *matCellDef="let element;"></mat-cell>
+        </ng-container>
+
         <mat-row *matRowDef="let row; columns: tableDisplayedColumns;"></mat-row>
       </mat-table>
     </div>
