@@ -233,7 +233,7 @@ export class MetabolicTrackingGroup {
   }
 }
 
-export const FoodGroups: any[] = [
+export const MealGroups: any[] = [
   { id: '1', description: 'Café da manhã' }, { id: '2', description: 'Lanche da manhã' }, { id: '3', description: 'Almoço' }, { id: '4', description: 'Lanche da tarde' },
   { id: '5', description: 'Janta' }, { id: '6', description: 'Ceia' }, { id: '7', description: 'Pré-treino' }, { id: '8', description: 'Pos-treino' }
   ];

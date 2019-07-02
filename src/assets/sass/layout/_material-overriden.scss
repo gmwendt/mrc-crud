@@ -50,21 +50,6 @@
   }
 
   .mat-form-field {
-    /** Testar */
-    // width: 80px;
-    // height: 24px;
-    // padding: 2px 0;
-
-    // &-wrapper {
-    //   height: 24px;
-    //   line-height: 24px;
-    // }
-
-    // &-infix {
-    //   padding: 0;
-    //   margin-top: -10px;
-    // }
-    /** End */
 
     input {
       border: none
@@ -99,13 +84,21 @@
       font-family: 'Segoe UI';
     }
 
+    .mat-footer-cell {
+      font-size: 9pt;      
+      font-family: 'Segoe UI';
+      font-weight: 700;
+    }
+
     .mat-cell:first-of-type,
-    .mat-header-cell:first-of-type {
+    .mat-header-cell:first-of-type,
+    .mat-footer-cell:first-of-type {
       padding-left: 16px;
     }
 
     .mat-row, 
-    .mat-header-row {
+    .mat-header-row,
+    .mat-footer-row {
       height: 28px;
       min-height: 28px;
     }
@@ -275,6 +268,12 @@
         line-height: 18px;
         width: 18px;
       }
+    }
+  }
+
+  ngx-material-timepicker-dial-control {
+    input {
+      height: 100%;
     }
   }
 }

@@ -214,11 +214,6 @@
   padding: 0 8px;
 }
 
-.mrc-global .mat-form-field {
-  /** Testar */
-  /** End */
-}
-
 .mrc-global .mat-form-field input {
   border: none;
 }
@@ -250,13 +245,21 @@
   font-family: 'Segoe UI';
 }
 
+.mrc-global .mat-table .mat-footer-cell {
+  font-size: 9pt;      
+  font-family: 'Segoe UI';
+  font-weight: 700;
+}
+
 .mrc-global .mat-table .mat-cell:first-of-type,
-.mrc-global .mat-table .mat-header-cell:first-of-type {
+.mrc-global .mat-table .mat-header-cell:first-of-type,
+.mrc-global .mat-table .mat-footer-cell:first-of-type {
   padding-left: 16px;
 }
 
 .mrc-global .mat-table .mat-row,
-.mrc-global .mat-table .mat-header-row {
+.mrc-global .mat-table .mat-header-row,
+.mrc-global .mat-table .mat-footer-row {
   height: 28px;
   min-height: 28px;
 }
@@ -384,6 +387,10 @@
   height: 18px;
   line-height: 18px;
   width: 18px;
+}
+
+.mrc-global ngx-material-timepicker-dial-control input {
+  height: 100%;
 }
 
 /* Theme for the ripple elements.*/

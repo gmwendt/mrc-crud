@@ -100,7 +100,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     let dialogData: IDialogAddMealData = {
       useFoodDb: this.foodPlan.useFoodDb
     };
-    let dialogRef = this._dialog.open(DialogAddMeal, { data: dialogData, width: '800px', height: '600px' });
+    let dialogRef = this._dialog.open(DialogAddMeal, { data: dialogData, width: '800px', height: '660px' });
     
     dialogRef.afterClosed().subscribe(result => {
 

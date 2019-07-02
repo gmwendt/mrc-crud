@@ -17,6 +17,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { CdkTableModule } from '@angular/cdk/table';
 
@@ -42,6 +43,7 @@ import { MatPaginatorIntlBr } from './core/common/types';
 		MatSelectModule,
 		MatTableModule,
 		MatTabsModule,
+		MatTooltipModule
   ],
   exports: [
 		CdkTableModule,
@@ -62,6 +64,7 @@ import { MatPaginatorIntlBr } from './core/common/types';
 		MatSelectModule,
 		MatTableModule,
 		MatTabsModule,
+		MatTooltipModule
 	], 
 	providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlBr}]
 })

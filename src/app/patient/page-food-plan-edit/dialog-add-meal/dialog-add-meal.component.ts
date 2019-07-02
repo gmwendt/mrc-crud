@@ -3,9 +3,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSelect, MatSelectChange } from "@angular/material/select";
 import { MatTableDataSource } from "@angular/material/table";
 import { HttpErrorResponse } from "@angular/common/http";
-import { FormControl } from "@angular/forms";
+import { FormControl, Validators } from "@angular/forms";
 
-import { FoodGroups as MealGroups } from "../../../core/common/constants";
+import { MealGroups } from "../../../core/common/constants";
 import { IFoodDetail, IFoodMeasurement } from "../../../core/common/types";
 import { FoodService } from "../../../core/food.service";
 import { DialogAlertData, DialogAlertButton } from "../../../shared/dialog-alert/dialog-alert.component";
@@ -16,6 +16,13 @@ import { take, takeUntil } from 'rxjs/operators';
 
 export interface IDialogAddMealData {
   useFoodDb: boolean;
+}
+
+export interface IDialogAddMealResult {
+  mealId: string;
+  mealTime: string;
+  selectedFoods: IFoodDetail[];
+  notes: string;
 }
 
 export enum FoodSourceEnum {
@@ -62,11 +69,14 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   /** control for the MatSelect filter keyword */
   private foodFilterCtrl: FormControl = new FormControl();
   private quantityFormControls: FormControl[] = [];
-  private mealSelectCtrl: FormControl = new FormControl();
-  private descriptionFormControl: FormControl = new FormControl(); 
+  private mealSelectCtrl: FormControl;
+  private notesFormControl: FormControl; 
+  private mealNameCtrl: FormControl;
+
   private mealTime: string;
   private selecteMealId: string;
   private mealGroups = MealGroups;
+  private errorList: string[];
 
   private foodSourceEnum = FoodSourceEnum;
   private selectedFoodSource: number = FoodSourceEnum.All;
@@ -98,6 +108,8 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(() => {
         this.filterFoods();
       });
+
+    this.initializeControls();
   }
 
   ngAfterViewInit() {
@@ -109,6 +121,12 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
     this._onDestroy.complete();
   }
 
+  private initializeControls(): void {
+    this.mealSelectCtrl = new FormControl(null, Validators.required);
+    this.mealNameCtrl = new FormControl(null, Validators.required);
+    this.notesFormControl = new FormControl();
+  }
+
   private refreshTable(): void {
     this.dataSource = new MatTableDataSource(this._selectedFoods);
     this._detector.detectChanges();
@@ -117,10 +135,10 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   private refreshTotalizer(): void {
     let arr: IMacroNutrients[] = [];
     arr.push({
-      carbohydrate: Math.round(this.carbohydrateSum * 100) / 100,
-      energy: Math.round(this.energySum * 100) / 100,
-      lipid: Math.round(this.lipidSum * 100) / 100,
-      protein: Math.round(this.proteinSum * 100) / 100
+      carbohydrate: this.carbohydrateSum,
+      energy: this.energySum,
+      lipid: this.lipidSum,
+      protein: this.proteinSum
     });
 
     this.totalizerSource = new MatTableDataSource(arr);
@@ -128,7 +146,7 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private addValueFormControl(): void {
-    this.quantityFormControls.push(new FormControl());
+    this.quantityFormControls.push(new FormControl(0, Validators.required));
   }
 
   private calcMacros(): void {
@@ -214,6 +232,27 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
     return (Math.round(detailCalc * 100) / 100).toLocaleString() + unitSpacing;
   }
 
+  private checkErrors(): boolean {
+    this.errorList = [];
+
+    if (!this.mealSelectCtrl.valid || (!this.mealGroups.some(meal => meal.id === this.mealSelectCtrl.value) && !this.mealNameCtrl.valid)) {
+      this.errorList.push('Todos os campos devem ser preenchidos.');
+      return false;
+    }
+
+    if (!this._selectedFoods || this._selectedFoods.length == 0) {
+      this.errorList.push('Pelo menos 1 alimento deve ser adicionado.');
+      return false;
+    }
+
+    if (this.quantityFormControls.some(form => !form.valid)) {
+      this.errorList.push('Informe a quantidade de todos os alimentos adicionados.');
+      return false;
+    }
+
+    return true;
+  }
+
   private on_quantity_change(): void {
     this.calcMacros();
   }
@@ -222,14 +261,18 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
     event.stopPropagation();
 
     this._selectedFoods.splice(index, 1);
-    this.quantityFormControls.splice(index, 1); //TODO: testar
+    this.quantityFormControls.splice(index, 1); 
 
-    this.calcMacros();
     this.refreshTable();
+    this.calcMacros();
   }
 
   private on_cancel_click(): void {
     this._dialogRef.close();
+  }
+
+  private on_save_clicked(): void {
+    this.checkErrors();
   }
 
   private async on_selection_change(event: MatSelectChange): Promise<void> {

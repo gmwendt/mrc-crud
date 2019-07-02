@@ -5,16 +5,20 @@
 <div class="mrc-dialog-separator"></div>
 <div>
   <div class="dialog-add-meal-details">
-    <div class="dialog-add-meal-details-desciption">
-      <mat-form-field floatLabel="always">
+    <div class="dialog-add-meal-details-description">
+      <mat-form-field floatLabel="always" class="dialog-add-meal-meal-select-field">
         <mat-label>Refeição</mat-label>
         <mat-select [(ngModel)]="selecteMealId" [formControl]="mealSelectCtrl">
           <mat-option *ngFor="let meal of mealGroups" [value]="meal.id">{{ meal.description }}</mat-option>
           <mat-option value="0">Outra</mat-option>
         </mat-select>
+        <mat-error *ngIf="mealSelectCtrl.hasError('required')">Selecione uma refeição</mat-error>
       </mat-form-field>
       <ng-container *ngIf="selecteMealId == '0'">
-        <input style="margin-left: 8px" placeholder="Nome da refeição">         
+        <mat-form-field floatLabel="always">
+          <input matInput placeholder="Nome da refeição" [formControl]="mealNameCtrl">
+          <mat-error *ngIf="mealNameCtrl.hasError('required')">Informe um nome para esta refeição</mat-error>
+        </mat-form-field>
       </ng-container>
     </div>
     <div class="dialog-add-meal-details-time">
@@ -47,13 +51,17 @@
     </mat-select>
   </mat-form-field>
 
-  <div class="dialog-add-meal-data-container">
+  <div class="dialog-add-meal-data-container" [style.height]="!errorList || errorList.length == 0 ? '245px' : '221px'">
     <div class="dialog-add-meal-data-container-table" *ngIf="dataSource && dataSource.data.length > 0; else noFoodsAddedBlock">
       <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="description">
           <mat-header-cell *matHeaderCellDef>Descrição</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
+          <mat-cell *matCellDef="let element">
+            <span class="cell-ellipsis" [matTooltip]="element.description" matTooltipShowDelay="500">{{ element.description }}</span>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
+
         <ng-container matColumnDef="quantity">
           <mat-header-cell *matHeaderCellDef>Quantidade</mat-header-cell>
           <mat-cell *matCellDef="let element; let i = index;">
@@ -61,7 +69,9 @@
               <input matInput type="number" [formControl]="quantityFormControls[i]" [(ngModel)]="element.quantity" (ngModelChange)="on_quantity_change()">
             </mat-form-field>
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
+
         <ng-container matColumnDef="measurements">
           <mat-header-cell *matHeaderCellDef>Medida</mat-header-cell>
           <mat-cell *matCellDef="let element">
@@ -69,23 +79,49 @@
               <mat-option *ngFor="let option of element.measurements" [value]="option.id">{{ option.description }}</mat-option>
             </mat-select>
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
+
         <ng-container matColumnDef="protein">
           <mat-header-cell *matHeaderCellDef>Proteínas</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ getFoodDetail(element, 'protein', 'qty', 'g') }}</mat-cell>
+          <mat-cell *matCellDef="let element">
+            <span class="cell-ellipsis" [matTooltip]="getFoodDetail(element, 'protein', 'qty', 'g')" matTooltipShowDelay="500">{{ getFoodDetail(element, 'protein', 'qty', 'g') }}</span>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef>
+            <span class="cell-ellipsis" [matTooltip]="proteinSum | unitFormater: 'g':'2'" matTooltipShowDelay="500">{{ proteinSum | unitFormater: 'g':'2' }}</span>
+          </mat-footer-cell>
         </ng-container>
+
         <ng-container matColumnDef="carbs">
           <mat-header-cell *matHeaderCellDef>Carboidratos</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ getFoodDetail(element, 'carbohydrate', 'qty', 'g') }}</mat-cell>
+          <mat-cell *matCellDef="let element">
+            <span class="cell-ellipsis" [matTooltip]="getFoodDetail(element, 'carbohydrate', 'qty', 'g')" matTooltipShowDelay="500">{{ getFoodDetail(element, 'carbohydrate', 'qty', 'g') }}</span>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef>
+            <span class="cell-ellipsis" [matTooltip]="carbohydrateSum | unitFormater: 'g':'2'" matTooltipShowDelay="500">{{ carbohydrateSum | unitFormater: 'g':'2' }}</span>
+          </mat-footer-cell>
         </ng-container>
+
         <ng-container matColumnDef="lipids">
           <mat-header-cell *matHeaderCellDef>Lipídios</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ getFoodDetail(element, 'lipid', 'qty', 'g') }}</mat-cell>
+          <mat-cell *matCellDef="let element">
+            <span class="cell-ellipsis" [matTooltip]="getFoodDetail(element, 'lipid', 'qty', 'g')" matTooltipShowDelay="500">{{ getFoodDetail(element, 'lipid', 'qty', 'g') }}</span>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef>
+            <span class="cell-ellipsis" [matTooltip]="lipidSum | unitFormater: 'g':'2'" matTooltipShowDelay="500">{{ lipidSum | unitFormater: 'g':'2' }}</span>
+          </mat-footer-cell>
         </ng-container>
+
         <ng-container matColumnDef="energy">
           <mat-header-cell *matHeaderCellDef>Energia</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ getFoodDetail(element, 'energy', 'kcal', 'kcal') }}</mat-cell>
+          <mat-cell *matCellDef="let element">
+            <span class="cell-ellipsis" [matTooltip]="getFoodDetail(element, 'energy', 'kcal', 'kcal')" matTooltipShowDelay="500">{{ getFoodDetail(element, 'energy', 'kcal', 'kcal') }}</span>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef>
+            <span class="cell-ellipsis" [matTooltip]="energySum | unitFormater: 'kcal':'2'" matTooltipShowDelay="500">{{ energySum | unitFormater: 'kcal':'2' }}</span>
+          </mat-footer-cell>
         </ng-container>
+
         <ng-container matColumnDef="commands">
           <mat-header-cell *matHeaderCellDef></mat-header-cell>
           <mat-cell *matCellDef="let element; let i = index;"> 
@@ -93,54 +129,28 @@
               <span title="Remover" class="icon-delete" (click)="on_remove_food_click($event, element, i)"></span> 
             </span>  
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
         </ng-container>
 
-        <mat-header-row *matHeaderRowDef="tableDisplayedColumns"></mat-header-row>
+        <mat-header-row *matHeaderRowDef="tableDisplayedColumns; sticky: true"></mat-header-row>
         <mat-row *matRowDef="let row; columns: tableDisplayedColumns;"></mat-row>
-      </mat-table>
-      <mat-table [dataSource]="totalizerSource">
-        <ng-container matColumnDef="description">
-          <mat-cell *matCellDef="let element"></mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="quantity">
-          <mat-cell *matCellDef="let element"></mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="measurements">
-          <mat-cell *matCellDef="let element"></mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="protein">
-          <mat-cell *matCellDef="let element">{{ element.protein }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="carbs">
-          <mat-cell *matCellDef="let element">{{ element.carbohydrate }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="lipids">
-          <mat-cell *matCellDef="let element">{{ element.lipid }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="energy">
-          <mat-cell *matCellDef="let element">{{ element.energy }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="commands">
-          <mat-cell *matCellDef="let element;"></mat-cell>
-        </ng-container>
-
-        <mat-row *matRowDef="let row; columns: tableDisplayedColumns;"></mat-row>
+        <mat-footer-row *matFooterRowDef="tableDisplayedColumns; sticky: true"></mat-footer-row>
       </mat-table>
     </div>
     <ng-template #noFoodsAddedBlock>
       <div class="dialog-add-meal-data-container-empty">Nenhum alimento adicionado.</div>
     </ng-template>
   </div>
-  <mat-form-field floatLabel="always" style="height: 60px; width: 100%;">
+  <mat-form-field floatLabel="always" class="dialog-add-meal-notes-field">
     <mat-label>Observações</mat-label>
-    <textarea matInput [formControl]="descriptionFormControl" style="height: 35px; max-height: 35px;"></textarea>
+    <textarea matInput [formControl]="notesFormControl"></textarea>
   </mat-form-field>
 </div>
 <div id="mrc-edit-page-footer">
   <div class="mrc-dialog-separator"></div>
-  <!-- <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div>  -->
+  <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div> 
   <div id="mrc-edit-page-footer-buttons">
-    <button mat-button>Salvar</button> <!-- TODO: [disabled]="!dirty && !isNew" (click)="on_save_clicked()" -->
+    <button mat-button (click)="on_save_clicked()">Salvar</button> <!-- TODO: [disabled]="!dirty && !isNew" -->
     <button mat-button (click)="on_cancel_click()">Cancelar</button>
   </div>
 </div>

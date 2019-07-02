@@ -1,11 +1,12 @@
 dialog-add-meal .dialog-add-meal-details {
   display: flex;
-  margin-bottom: 8px;
+  flex-direction: column;
+  margin: 0 0 8px 8px;
 }
 
-dialog-add-meal .dialog-add-meal-details-desciption {
-  height: 80px;
-  width: 210px;
+dialog-add-meal .dialog-add-meal-details-description {
+  display: flex;
+  height: 68px;
 }
 
 dialog-add-meal .dialog-add-meal-details-desciption .mat-form-field {
@@ -16,6 +17,7 @@ dialog-add-meal .dialog-add-meal-details-desciption .mat-form-field {
 dialog-add-meal .dialog-add-meal-details-time {
   display: flex;
   flex-direction: column;
+  max-width: 115px;
 }
 
 dialog-add-meal .dialog-add-meal-details-time > label {
@@ -25,7 +27,7 @@ dialog-add-meal .dialog-add-meal-details-time > label {
 dialog-add-meal .dialog-add-meal-source {
   display: flex;
   flex-direction: column;
-  margin: 0 0 8px 8px;
+  margin: 16px 0 8px 8px;
 }
 
 dialog-add-meal .dialog-add-meal-source > label {
@@ -34,11 +36,6 @@ dialog-add-meal .dialog-add-meal-source > label {
 
 dialog-add-meal .dialog-add-meal-food-select {
   margin: 8px 0 0 8px;
-}
-
-dialog-add-meal .dialog-add-meal-data-container {
-  overflow: auto;
-  height: 225px;
 }
 
 dialog-add-meal .dialog-add-meal-data-container .legend-labels {
@@ -53,6 +50,7 @@ dialog-add-meal .dialog-add-meal-data-container .ngx-charts {
 dialog-add-meal .dialog-add-meal-data-container-table {
   margin-left: 8px;
   overflow: auto;
+  height: calc(100% - 8px);
 }
 
 dialog-add-meal .dialog-add-meal-data-container-chart {
@@ -64,11 +62,21 @@ dialog-add-meal .dialog-add-meal-data-container-empty {
   align-items: center;
   display: flex;
   font-size: 8pt;
-  height: 225px;
+  height: 100%;
   justify-content: center;
 }
 
+dialog-add-meal .mat-table .mat-cell {
+  white-space: nowrap;
+}
+
+dialog-add-meal .mat-table .mat-cell .cell-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 dialog-add-meal .mat-table .mat-column-description {
+  cursor: default;
   flex: none;
   width: 228px;
 }
@@ -92,26 +100,30 @@ dialog-add-meal .mat-table .mat-column-quantity {
 }
 
 dialog-add-meal .mat-table .mat-column-protein {
+  cursor: default;
   flex: none;
-  width: 80px;
+  width: 75px;
   justify-content: center;
 }
 
 dialog-add-meal .mat-table .mat-column-carbs {
+  cursor: default;
   flex: none;
-  width: 82px;
+  width: 79px;
   justify-content: center;
 }
 
 dialog-add-meal .mat-table .mat-column-lipids {
+  cursor: default;
   flex: none;
-  width: 80px;
+  width: 74px;
   justify-content: center;
 }
 
 dialog-add-meal .mat-table .mat-column-energy {
+  cursor: default;
   flex: none;
-  width: 80px;
+  width: 77px;
   justify-content: center;
 }
 
@@ -143,9 +155,27 @@ dialog-add-meal #mrc-edit-page-footer .mrc-edit-page-error {
   margin: 0 0 4px 22px;
 }
 
-dialog-add-meal #mrc-edit-page-footer .mrc-dialog-separator {
+dialog-add-meal .mrc-dialog-separator {
   width: 100%;
   margin: 8px 0;
+}
+
+dialog-add-meal .dialog-add-meal-notes-field {
+  height: 60px; 
+  width: 100%;
+}
+
+dialog-add-meal .dialog-add-meal-notes-field textarea {
+  height: 35px; 
+  max-height: 35px;
+}
+
+dialog-add-meal .dialog-add-meal-meal-select-field {
+  margin-right: 8px
+}
+
+dialog-add-meal .dialog-add-meal-meal-select-field .mat-form-field-infix {
+  padding: 0.475em 0;
 }
 
 dialog-add-meal #mrc-edit-page-footer-buttons {
