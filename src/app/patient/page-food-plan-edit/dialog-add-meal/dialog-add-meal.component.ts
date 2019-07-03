@@ -6,7 +6,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { FormControl, Validators } from "@angular/forms";
 
 import { MealGroups } from "../../../core/common/constants";
-import { IFoodDetail, IFoodMeasurement } from "../../../core/common/types";
+import { IFoodDetail, IMeal } from "../../../core/common/types";
 import { FoodService } from "../../../core/food.service";
 import { DialogAlertData, DialogAlertButton } from "../../../shared/dialog-alert/dialog-alert.component";
 import { DialogService } from "../../../shared/dialog.service";
@@ -16,13 +16,6 @@ import { take, takeUntil } from 'rxjs/operators';
 
 export interface IDialogAddMealData {
   useFoodDb: boolean;
-}
-
-export interface IDialogAddMealResult {
-  mealId: string;
-  mealTime: string;
-  selectedFoods: IFoodDetail[];
-  notes: string;
 }
 
 export enum FoodSourceEnum {
@@ -72,8 +65,8 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   private mealSelectCtrl: FormControl;
   private notesFormControl: FormControl; 
   private mealNameCtrl: FormControl;
+  private pickerInputCtrl: FormControl;
 
-  private mealTime: string;
   private selecteMealId: string;
   private mealGroups = MealGroups;
   private errorList: string[];
@@ -122,9 +115,12 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private initializeControls(): void {
+    let date = new Date();
+    
     this.mealSelectCtrl = new FormControl(null, Validators.required);
     this.mealNameCtrl = new FormControl(null, Validators.required);
     this.notesFormControl = new FormControl();
+    this.pickerInputCtrl = new FormControl(date.getHours() + ":" + date.getMinutes());
   }
 
   private refreshTable(): void {
@@ -186,8 +182,6 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
         // and after the mat-option elements are available
         this.select.compareWith = (a: IFoodDetail, b: IFoodDetail) => a && b && a.id === b.id;
       });
-
-      this.mealTime = new Date().toTimeString();
   }
 
   private async filterFoods(): Promise<void> {
@@ -237,6 +231,8 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
 
     if (!this.mealSelectCtrl.valid || (!this.mealGroups.some(meal => meal.id === this.mealSelectCtrl.value) && !this.mealNameCtrl.valid)) {
       this.errorList.push('Todos os campos devem ser preenchidos.');
+      this.mealSelectCtrl.markAsTouched();
+      this.mealNameCtrl.markAsTouched();
       return false;
     }
 
@@ -246,7 +242,8 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
     }
 
     if (this.quantityFormControls.some(form => !form.valid)) {
-      this.errorList.push('Informe a quantidade de todos os alimentos adicionados.');
+      this.errorList.push('Informe a quantidade dos alimentos adicionados.');
+      this.quantityFormControls.forEach(fc => fc.markAsTouched());
       return false;
     }
 
@@ -272,7 +269,18 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private on_save_clicked(): void {
-    this.checkErrors();
+    if (!this.checkErrors())
+      return;
+
+    let mealName = this.mealGroups.some(meal => meal.id === this.mealSelectCtrl.value) ? this.mealGroups.find(meal => meal.id === this.mealSelectCtrl.value).description : this.mealNameCtrl.value;
+    let result: IMeal = {
+      mealName: mealName,
+      mealTime: this.pickerInputCtrl.value,
+      notes: this.notesFormControl.value,
+      selectedFoods: this._selectedFoods
+    };
+
+    this._dialogRef.close(result);
   }
 
   private async on_selection_change(event: MatSelectChange): Promise<void> {

@@ -5,7 +5,9 @@ import { FormControl, Validators } from "@angular/forms";
 import { MatRadioChange } from "@angular/material/radio";
 import { ActivatedRoute } from "@angular/router";
 
-import { FoodPlan, Patient, FileSystemCommands } from "../../core/common/types";
+import { DialogAddMeal, IDialogAddMealData } from "./dialog-add-meal/dialog-add-meal.component";
+
+import { FoodPlan, Patient, FileSystemCommands, IMeal, IFoodDetail } from "../../core/common/types";
 import { PatientService } from "../../core/patient.service";
 import { DialogAlertButton, DialogAlertData } from "../../shared/dialog-alert/dialog-alert.component";
 import { DialogService } from "../../shared/dialog.service";
@@ -13,7 +15,6 @@ import { DialogService } from "../../shared/dialog.service";
 import { Subscription } from "rxjs/internal/Subscription";
 
 import * as moment from 'moment';
-import { DialogAddMeal, IDialogAddMealData } from "./dialog-add-meal/dialog-add-meal.component";
 
 @Component({
   selector: 'page-food-plan-edit',
@@ -29,7 +30,6 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   private _patient: Patient;
 
   private descriptionFormControl: FormControl;
-  private dateFormControl: FormControl;
 
   private loading: boolean;
   private isNew: boolean;
@@ -88,7 +88,6 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     let timestamp = this.foodPlan ? this.foodPlan.date : new Date(Date.now());
 
     this.descriptionFormControl = new FormControl(desc, Validators.required);
-    this.dateFormControl = new FormControl(moment(timestamp), Validators.required);
   }
 
   private on_food_source_change(event: MatRadioChange): void {
@@ -102,9 +101,19 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     };
     let dialogRef = this._dialog.open(DialogAddMeal, { data: dialogData, width: '800px', height: '660px' });
     
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: IMeal) => {
+      if (!result)
+        return;
 
+      this.foodPlan.meals.push(result);
+      this.markAsDirty();
+      this._detector.detectChanges();
     });
+  }
+
+  private formatFoodDetail(food: IFoodDetail): string {
+    let measurement = food.measurements.find(m => m.id === food.selectedMeasurement);
+    return food.description + ' - ' + food.quantity + " " + measurement.description;
   }
 
   private get pageTitle(): string {
@@ -136,10 +145,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   }
 
   get dirty(): boolean {
-    if (!this.dateFormControl || !this.descriptionFormControl)
-      return false;
-
-    if (this.dateFormControl.dirty || this.descriptionFormControl.dirty)
+    if (this.descriptionFormControl && this.descriptionFormControl.dirty)
       return true;
 
     return this._dirty;

@@ -23,7 +23,7 @@
     </div>
     <div class="dialog-add-meal-details-time">
       <label>Horário da refeição</label>
-      <input aria-label="24hr format" [ngxTimepicker]="fullTime" [value]="mealTime" [format]="24" readonly style="background-color: #fff;"> 
+      <input aria-label="24hr format" [ngxTimepicker]="fullTime" [format]="24" readonly style="background-color: #fff;" [formControl]="pickerInputCtrl"> 
       <ngx-material-timepicker #fullTime></ngx-material-timepicker>
     </div>
   </div>

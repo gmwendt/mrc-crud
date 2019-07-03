@@ -9,15 +9,6 @@
       <textarea matInput [formControl]="descriptionFormControl" [(ngModel)]="foodPlan.description"></textarea>
       <mat-error>Campo <strong>obrigatório</strong></mat-error>
     </mat-form-field>
-    <mat-form-field floatLabel="always" class="page-food-plan-edit-content-date-field">
-      <mat-label>Data</mat-label>
-      <input matInput [matDatepicker]="myDatepicker" [formControl]="dateFormControl" [value]="foodPlan.date" (ngModelChange)="foodPlan.date = $event ? $event.toISOString() : foodPlan.date">
-      <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-      <mat-datepicker #myDatepicker></mat-datepicker>
-      <mat-error *ngIf="dateFormControl.hasError('required')">
-        Informe uma data válida
-      </mat-error>
-    </mat-form-field>
 
     <div class="page-food-plan-edit-content-food-source-type">
       <label>{{ foodTypeSelectTxt }}</label>
@@ -27,22 +18,35 @@
         <!-- TODO: Helper -->
       </mat-radio-group>
     </div>
-    <mat-accordion displayMode="flat" multi="true">
-      <mat-expansion-panel [expanded]="true">
-        <mat-expansion-panel-header expandedHeight="28px" collapsedHeight="28px">
-          <mat-panel-title>Refeições</mat-panel-title>
-        </mat-expansion-panel-header>
-        <button mat-button (click)="on_add_meal_click()">Adicionar</button>
-
-      </mat-expansion-panel>
-    </mat-accordion>
+    <div style="display: flex; flex-direction: column; margin-top: 8px;">
+      <label>Refeições</label>
+      <button mat-button (click)="on_add_meal_click()" style="max-width: 80px">Adicionar</button>
+      <ng-container *ngFor="let meal of foodPlan.meals">
+        <mat-card style="margin-top: 8px; max-width: 250px; padding-bottom: 4px">
+          <h1 style="color: grey;font-weight: 500;">{{ meal.mealName }}</h1>
+          <div style="display: flex;">
+            <div style="color: #a6a3a3;">{{ meal.mealTime }}</div>
+            <ul style="font-size: 9pt; margin: 0;">
+              <li *ngFor="let food of meal.selectedFoods">
+                {{ formatFoodDetail(food) }}
+              </li>
+            </ul>
+          </div>
+          <div style="margin-top: 16px;color: #4f4f4f;">
+            <span title="Editar" class="icon-edit" style="vertical-align: sub;"></span> <!-- TODO:  (click)=""-->
+            <span title="Remover" class="icon-delete" style="vertical-align: sub;"></span>  <!-- TODO:  (click)=""-->
+            <button mat-button *ngIf="!foodPlan.isRecall" style="float: right; margin: 0">Adicionar substituição</button> <!-- TODO:  (click)=""-->
+          </div>
+        </mat-card>
+      </ng-container>
+    </div>
   </div>
 </progress-spinner>
 <div id="mrc-edit-page-footer">
   <div class="mrc-dialog-separator"></div>
-  <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div> 
+  <!-- <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div>  -->
   <div id="mrc-edit-page-footer-buttons">
-    <button mat-button [disabled]="!dirty && !isNew" (click)="on_save_clicked()">Salvar</button> <!-- TODO: testar -->
-    <button mat-button (click)="on_cancel_clicked()">Cancelar</button> 
+    <button mat-button [disabled]="!dirty && !isNew">Salvar</button> <!-- TODO: (click)="on_save_clicked()" -->
+    <button mat-button>Cancelar</button> <!-- TODO: (click)="on_cancel_clicked()" -->
   </div>
 </div>
