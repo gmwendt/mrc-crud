@@ -16,6 +16,10 @@ import { take, takeUntil } from 'rxjs/operators';
 
 export interface IDialogAddMealData {
   useFoodDb: boolean;
+  mealName?: string;
+  mealTime?: string;
+  selectedFoods?: IFoodDetail[];
+  notes?: string;
 }
 
 export enum FoodSourceEnum {
@@ -53,7 +57,6 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   /** list of foods filtered by search keyword */
   private filteredFoods: ReplaySubject<IFoodDetail[]> = new ReplaySubject<IFoodDetail[]>(1);
   private dataSource: MatTableDataSource<IFoodDetail>;
-  private totalizerSource: MatTableDataSource<IMacroNutrients>;
   private tableDisplayedColumns: string[] = ['description', 'quantity', 'measurements', 'protein', 'carbs', 'lipids', 'energy', 'commands'];
 
   /** Form Controls declaration */
@@ -89,6 +92,11 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   constructor(private _dialogRef: MatDialogRef<DialogAddMeal>, private _detector: ChangeDetectorRef, private _dialog: DialogService, @Inject(MAT_DIALOG_DATA) data: IDialogAddMealData, 
     private _food: FoodService) {
     this.useFoodDb = data.useFoodDb;
+
+    this.initializeControls(data.mealName, data.mealTime, data.notes);
+
+    if (data.selectedFoods) 
+      setTimeout(() => this.addFoodsToTable(data.selectedFoods), 1500);
   }
 
   async ngOnInit() {
@@ -101,8 +109,6 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(() => {
         this.filterFoods();
       });
-
-    this.initializeControls();
   }
 
   ngAfterViewInit() {
@@ -114,13 +120,17 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
     this._onDestroy.complete();
   }
 
-  private initializeControls(): void {
+  private initializeControls(mealName: string, mealTime: string, notes: string): void {
     let date = new Date();
-    
-    this.mealSelectCtrl = new FormControl(null, Validators.required);
-    this.mealNameCtrl = new FormControl(null, Validators.required);
-    this.notesFormControl = new FormControl();
-    this.pickerInputCtrl = new FormControl(date.getHours() + ":" + date.getMinutes());
+
+    let _mealSelect = this.isNullOrEmpty(mealName) ? undefined : (this.mealGroups.some(meal => meal.description === mealName) ? this.mealGroups.find(meal => meal.description === mealName).id : '0');
+    let _mealName = _mealSelect === '0' ? mealName : undefined;
+    let _mealTime = mealTime ? mealTime : date.getHours() + ":" + date.getMinutes();
+
+    this.mealSelectCtrl = new FormControl(_mealSelect, Validators.required);
+    this.mealNameCtrl = new FormControl(_mealName, Validators.required);
+    this.notesFormControl = new FormControl(notes);
+    this.pickerInputCtrl = new FormControl(_mealTime);
   }
 
   private refreshTable(): void {
@@ -128,21 +138,18 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
     this._detector.detectChanges();
   }
 
-  private refreshTotalizer(): void {
-    let arr: IMacroNutrients[] = [];
-    arr.push({
-      carbohydrate: this.carbohydrateSum,
-      energy: this.energySum,
-      lipid: this.lipidSum,
-      protein: this.proteinSum
-    });
-
-    this.totalizerSource = new MatTableDataSource(arr);
-    this._detector.detectChanges();
-  }
-
   private addValueFormControl(): void {
     this.quantityFormControls.push(new FormControl(0, Validators.required));
+  }
+
+  private addFoodsToTable(foods: IFoodDetail[]): void {
+    foods.forEach(food => {
+      this.quantityFormControls.push(new FormControl(0, Validators.required));
+      this._selectedFoods.push(food);
+    });
+
+    this.calcMacros();
+    this.refreshTable();
   }
 
   private calcMacros(): void {
@@ -164,8 +171,6 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
       this.lipidSum += food.quantity ? lipid * converter * food.quantity : 0;
       this.energySum += food.quantity ? energy * converter * food.quantity : 0;
     });
-
-    this.refreshTotalizer();
   }
 
   /**
@@ -319,5 +324,9 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
 	private on_error(error: any): void {
     console.log(error);
 		this.show_error_dialog(error);
+  }
+
+  private isNullOrEmpty(content: string): boolean {
+    return content == null || content.length < 1;
   }
 }

@@ -35,6 +35,52 @@ page-food-plan-edit {
       }
     }
 
+    &-meals {
+      display: flex; 
+      flex-direction: column; 
+      margin-top: 8px;
+
+      .mat-card {
+        margin-top: 8px; 
+        max-width: 250px; 
+        padding-bottom: 4px;
+
+        h1 {
+          color: grey;
+          font-weight: 500;
+        }
+      }
+
+      &-container {
+        display: flex;
+
+        &-time {
+          color: #a6a3a3;
+        }
+
+        &-food-list {
+          font-size: 9pt; 
+          margin: 0;
+        }
+      }
+
+      &-footer {
+        color: #4f4f4f;
+        margin-top: 16px;
+
+        .icon-edit,
+        .icon-delete {
+          cursor: pointer;
+          vertical-align: sub;
+        }
+
+        .mat-button {
+          float: right; 
+          margin: 0;
+        }
+      }
+    }
+
     .mat-expansion-panel {
       max-width: 800px;
     }

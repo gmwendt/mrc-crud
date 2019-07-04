@@ -18,24 +18,24 @@
         <!-- TODO: Helper -->
       </mat-radio-group>
     </div>
-    <div style="display: flex; flex-direction: column; margin-top: 8px;">
+    <div class="page-food-plan-edit-content-meals">
       <label>Refeições</label>
       <button mat-button (click)="on_add_meal_click()" style="max-width: 80px">Adicionar</button>
       <ng-container *ngFor="let meal of foodPlan.meals">
-        <mat-card style="margin-top: 8px; max-width: 250px; padding-bottom: 4px">
-          <h1 style="color: grey;font-weight: 500;">{{ meal.mealName }}</h1>
-          <div style="display: flex;">
-            <div style="color: #a6a3a3;">{{ meal.mealTime }}</div>
-            <ul style="font-size: 9pt; margin: 0;">
+        <mat-card>
+          <h1>{{ meal.mealName }}</h1>
+          <div class="page-food-plan-edit-content-meals-container">
+            <div class="page-food-plan-edit-content-meals-container-time">{{ meal.mealTime }}</div>
+            <ul class="page-food-plan-edit-content-meals-container-food-list">
               <li *ngFor="let food of meal.selectedFoods">
                 {{ formatFoodDetail(food) }}
               </li>
             </ul>
           </div>
-          <div style="margin-top: 16px;color: #4f4f4f;">
-            <span title="Editar" class="icon-edit" style="vertical-align: sub;"></span> <!-- TODO:  (click)=""-->
-            <span title="Remover" class="icon-delete" style="vertical-align: sub;"></span>  <!-- TODO:  (click)=""-->
-            <button mat-button *ngIf="!foodPlan.isRecall" style="float: right; margin: 0">Adicionar substituição</button> <!-- TODO:  (click)=""-->
+          <div class="page-food-plan-edit-content-meals-footer">
+            <span title="Editar" class="icon-edit" (click)="on_add_meal_click(meal)"></span> 
+            <span title="Remover" class="icon-delete"></span>  <!-- TODO:  (click)=""-->
+            <button mat-button *ngIf="!foodPlan.isRecall">Adicionar substituição</button> <!-- TODO:  (click)=""-->
           </div>
         </mat-card>
       </ng-container>

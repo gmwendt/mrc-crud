@@ -37,6 +37,52 @@ page-food-plan-edit .page-food-plan-edit-content-food-source-type > label {
   margin-bottom: 4px;
 }
 
+page-food-plan-edit .page-food-plan-edit-content-meals {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+
+page-food-plan-edit .page-food-plan-edit-content-meals .mat-card {
+  margin-top: 8px;
+  max-width: 250px;
+  padding-bottom: 4px;
+}
+
+page-food-plan-edit .page-food-plan-edit-content-meals .mat-card h1 {
+  color: grey;
+  font-weight: 500;
+}
+
+page-food-plan-edit .page-food-plan-edit-content-meals-container {
+  display: flex;
+}
+
+page-food-plan-edit .page-food-plan-edit-content-meals-container-time {
+  color: #a6a3a3;
+}
+
+page-food-plan-edit .page-food-plan-edit-content-meals-container-food-list {
+  font-size: 9pt;
+  margin: 0;
+}
+
+page-food-plan-edit .page-food-plan-edit-content-meals-footer {
+  color: #4f4f4f;
+  margin-top: 16px;
+}
+
+page-food-plan-edit .page-food-plan-edit-content-meals-footer .icon-edit,
+page-food-plan-edit .page-food-plan-edit-content-meals-footer .icon-delete {
+  cursor: pointer;
+  vertical-align: sub;
+}
+
+page-food-plan-edit .page-food-plan-edit-content-meals-footer .mat-button {
+  float: right;
+  margin: 0;
+}
+
 page-food-plan-edit .page-food-plan-edit-content .mat-expansion-panel {
   max-width: 800px;
 }

@@ -9,7 +9,7 @@ dialog-add-meal .dialog-add-meal-details-description {
   height: 68px;
 }
 
-dialog-add-meal .dialog-add-meal-details-desciption .mat-form-field {
+dialog-add-meal .dialog-add-meal-details-description .mat-form-field {
   height: 55px;
   margin-left: 8px;
 }
@@ -48,9 +48,9 @@ dialog-add-meal .dialog-add-meal-data-container .ngx-charts {
 }
 
 dialog-add-meal .dialog-add-meal-data-container-table {
+  height: calc(100% - 8px);
   margin-left: 8px;
   overflow: auto;
-  height: calc(100% - 8px);
 }
 
 dialog-add-meal .dialog-add-meal-data-container-chart {
@@ -64,6 +64,29 @@ dialog-add-meal .dialog-add-meal-data-container-empty {
   font-size: 8pt;
   height: 100%;
   justify-content: center;
+}
+
+dialog-add-meal .dialog-add-meal-meal-select-field {
+  margin-right: 8px;
+}
+
+dialog-add-meal .dialog-add-meal-meal-select-field .mat-form-field-infix {
+  padding: 0.475em 0;
+}
+
+dialog-add-meal .dialog-add-meal-notes-field {
+  height: 60px;
+  width: 100%;
+}
+
+dialog-add-meal .dialog-add-meal-notes-field textarea {
+  height: 35px;
+  max-height: 35px;
+}
+
+dialog-add-meal .mrc-dialog-separator {
+  margin: 8px 0;
+  width: 100%;
 }
 
 dialog-add-meal .mat-table .mat-cell {
@@ -153,29 +176,6 @@ dialog-add-meal #mrc-edit-page-footer .mrc-edit-page-error {
   color: #ef1508;
   font-size: 9pt;
   margin: 0 0 4px 22px;
-}
-
-dialog-add-meal .mrc-dialog-separator {
-  width: 100%;
-  margin: 8px 0;
-}
-
-dialog-add-meal .dialog-add-meal-notes-field {
-  height: 60px; 
-  width: 100%;
-}
-
-dialog-add-meal .dialog-add-meal-notes-field textarea {
-  height: 35px; 
-  max-height: 35px;
-}
-
-dialog-add-meal .dialog-add-meal-meal-select-field {
-  margin-right: 8px
-}
-
-dialog-add-meal .dialog-add-meal-meal-select-field .mat-form-field-infix {
-  padding: 0.475em 0;
 }
 
 dialog-add-meal #mrc-edit-page-footer-buttons {

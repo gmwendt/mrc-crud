@@ -95,9 +95,15 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     this.markAsDirty();
   }
 
-  private on_add_meal_click(): void {
+  private on_add_meal_click(meal?: IMeal): void {
+    let editing = meal ? true : false;
+
     let dialogData: IDialogAddMealData = {
-      useFoodDb: this.foodPlan.useFoodDb
+      useFoodDb: this.foodPlan.useFoodDb,
+      mealName: editing ? meal.mealName : undefined,
+      mealTime: editing ? meal.mealTime : undefined,
+      notes: editing ? meal.notes : undefined,
+      selectedFoods: editing ? meal.selectedFoods : undefined
     };
     let dialogRef = this._dialog.open(DialogAddMeal, { data: dialogData, width: '800px', height: '660px' });
     
@@ -105,7 +111,9 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       if (!result)
         return;
 
-      this.foodPlan.meals.push(result);
+      if (!editing)
+        this.foodPlan.meals.push(result);
+        
       this.markAsDirty();
       this._detector.detectChanges();
     });
