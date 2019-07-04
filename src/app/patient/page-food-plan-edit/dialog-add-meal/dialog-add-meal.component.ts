@@ -70,7 +70,6 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   private mealNameCtrl: FormControl;
   private pickerInputCtrl: FormControl;
 
-  private selecteMealId: string;
   private mealGroups = MealGroups;
   private errorList: string[];
 
@@ -92,11 +91,7 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   constructor(private _dialogRef: MatDialogRef<DialogAddMeal>, private _detector: ChangeDetectorRef, private _dialog: DialogService, @Inject(MAT_DIALOG_DATA) data: IDialogAddMealData, 
     private _food: FoodService) {
     this.useFoodDb = data.useFoodDb;
-
-    this.initializeControls(data.mealName, data.mealTime, data.notes);
-
-    if (data.selectedFoods) 
-      setTimeout(() => this.addFoodsToTable(data.selectedFoods), 1500);
+    this.initializeControls(data);
   }
 
   async ngOnInit() {
@@ -113,6 +108,7 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.setInitialValue();
+    this.refreshTable();
   }
 
   ngOnDestroy() {
@@ -120,17 +116,25 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
     this._onDestroy.complete();
   }
 
-  private initializeControls(mealName: string, mealTime: string, notes: string): void {
+  private initializeControls(data: IDialogAddMealData): void {
     let date = new Date();
 
-    let _mealSelect = this.isNullOrEmpty(mealName) ? undefined : (this.mealGroups.some(meal => meal.description === mealName) ? this.mealGroups.find(meal => meal.description === mealName).id : '0');
-    let _mealName = _mealSelect === '0' ? mealName : undefined;
-    let _mealTime = mealTime ? mealTime : date.getHours() + ":" + date.getMinutes();
+    let mealSelect = this.isNullOrEmpty(data.mealName) ? undefined : (this.mealGroups.some(meal => meal.description === data.mealName) ? this.mealGroups.find(meal => meal.description === data.mealName).id : '0');
+    let mealName = mealSelect === '0' ? data.mealName : undefined;
+    let mealTime = data.mealTime ? data.mealTime : date.getHours() + ":" + date.getMinutes();
 
-    this.mealSelectCtrl = new FormControl(_mealSelect, Validators.required);
-    this.mealNameCtrl = new FormControl(_mealName, Validators.required);
-    this.notesFormControl = new FormControl(notes);
-    this.pickerInputCtrl = new FormControl(_mealTime);
+    this.mealSelectCtrl = new FormControl(mealSelect, Validators.required);
+    this.mealNameCtrl = new FormControl(mealName, Validators.required);
+    this.notesFormControl = new FormControl(data.notes);
+    this.pickerInputCtrl = new FormControl(mealTime);
+
+    if (data.selectedFoods)
+      data.selectedFoods.forEach(food => {
+        this.quantityFormControls.push(new FormControl(0, Validators.required));
+        this._selectedFoods.push(food);
+      });
+
+    setTimeout(() => this.calcMacros());
   }
 
   private refreshTable(): void {
@@ -140,16 +144,6 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
 
   private addValueFormControl(): void {
     this.quantityFormControls.push(new FormControl(0, Validators.required));
-  }
-
-  private addFoodsToTable(foods: IFoodDetail[]): void {
-    foods.forEach(food => {
-      this.quantityFormControls.push(new FormControl(0, Validators.required));
-      this._selectedFoods.push(food);
-    });
-
-    this.calcMacros();
-    this.refreshTable();
   }
 
   private calcMacros(): void {

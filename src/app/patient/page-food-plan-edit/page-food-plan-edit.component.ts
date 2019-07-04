@@ -9,7 +9,7 @@ import { DialogAddMeal, IDialogAddMealData } from "./dialog-add-meal/dialog-add-
 
 import { FoodPlan, Patient, FileSystemCommands, IMeal, IFoodDetail } from "../../core/common/types";
 import { PatientService } from "../../core/patient.service";
-import { DialogAlertButton, DialogAlertData } from "../../shared/dialog-alert/dialog-alert.component";
+import { DialogAlertButton, DialogAlertData, DialogAlertResult } from "../../shared/dialog-alert/dialog-alert.component";
 import { DialogService } from "../../shared/dialog.service";
 
 import { Subscription } from "rxjs/internal/Subscription";
@@ -95,7 +95,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     this.markAsDirty();
   }
 
-  private on_add_meal_click(meal?: IMeal): void {
+  private on_add_meal_click(meal?: IMeal, index?: number): void {
     let editing = meal ? true : false;
 
     let dialogData: IDialogAddMealData = {
@@ -111,12 +111,31 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       if (!result)
         return;
 
-      if (!editing)
+      if (editing)
+        this.foodPlan.meals[index] = result;
+      else 
         this.foodPlan.meals.push(result);
         
       this.markAsDirty();
       this._detector.detectChanges();
     });
+  }
+
+  private async on_remove_meal_click(meal: IMeal, index: number): Promise<void> {
+    let dialogData: DialogAlertData = {
+			text: `Deseja remover a refeição ${meal.mealName}?`,
+			button: DialogAlertButton.YesNo,
+			textAlign: 'center',
+    };
+
+    let dialogResult = await this._dialog.openAlert(dialogData);
+    if (dialogResult == DialogAlertResult.No)
+      return;
+
+    this.foodPlan.meals.splice(index, 1);
+
+    this.markAsDirty();
+    this._detector.detectChanges();
   }
 
   private formatFoodDetail(food: IFoodDetail): string {

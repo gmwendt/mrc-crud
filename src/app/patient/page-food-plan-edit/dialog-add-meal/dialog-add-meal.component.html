@@ -8,13 +8,13 @@
     <div class="dialog-add-meal-details-description">
       <mat-form-field floatLabel="always" class="dialog-add-meal-meal-select-field">
         <mat-label>Refeição</mat-label>
-        <mat-select [(ngModel)]="selecteMealId" [formControl]="mealSelectCtrl">
+        <mat-select [formControl]="mealSelectCtrl">
           <mat-option *ngFor="let meal of mealGroups" [value]="meal.id">{{ meal.description }}</mat-option>
           <mat-option value="0">Outra</mat-option>
         </mat-select>
         <mat-error *ngIf="mealSelectCtrl.hasError('required')">Selecione uma refeição</mat-error>
       </mat-form-field>
-      <ng-container *ngIf="selecteMealId == '0'">
+      <ng-container *ngIf="mealSelectCtrl.value == '0'">
         <mat-form-field floatLabel="always">
           <input matInput placeholder="Nome da refeição" [formControl]="mealNameCtrl">
           <mat-error *ngIf="mealNameCtrl.hasError('required')">Informe um nome para esta refeição</mat-error>
