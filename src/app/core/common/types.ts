@@ -502,6 +502,7 @@ export interface IMeal {
   selectedFoods: IFoodDetail[];
   notes: string;
   substituteMeals?: ISubstituteMeal[];
+  mealAsText?: string;
 }
 
 export interface ISubstituteMeal {
