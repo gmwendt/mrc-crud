@@ -11,14 +11,13 @@ dialog-add-meal {
 
       .mat-form-field {
         height: 55px;
-        margin-left: 8px; 
       }
     }
 
     &-time {
       display: flex; 
       flex-direction: column;
-      max-width: 115px;
+      max-width: 130px;
 
       > label {
         margin-bottom: 8px;
@@ -71,6 +70,14 @@ dialog-add-meal {
     }
   }
 
+  .dialog-add-meal-free-text {
+    margin-left: 8px;
+
+    > .mat-form-field {
+      width: calc(100% - 8px);
+    }
+  }
+
   .dialog-add-meal-meal-select-field {
     margin-right: 8px;
 
@@ -81,7 +88,8 @@ dialog-add-meal {
 
   .dialog-add-meal-notes-field {
     height: 60px; 
-    width: 100%;
+    margin-left: 8px;
+    width: calc(100% - 16px);
 
     textarea {
       height: 35px; 
@@ -184,7 +192,7 @@ dialog-add-meal {
     .mrc-edit-page-error {
       color: #ef1508;
       font-size: 9pt;
-      margin: 0 0 4px 22px;
+      margin: 0 0 4px 8px;
     }
 
     &-buttons {

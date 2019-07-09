@@ -12,9 +12,9 @@
 
     <div class="page-food-plan-edit-content-food-source-type">
       <label>{{ foodTypeSelectTxt }}</label>
-      <mat-radio-group (change)="on_food_source_change($event)" #radioBox>
-        <mat-radio-button [value]="true" [checked]="foodPlan.useFoodDb">Cardápio calculado</mat-radio-button>
-        <mat-radio-button [value]="false" [checked]="!foodPlan.useFoodDb">Cardápio livre</mat-radio-button>
+      <mat-radio-group (change)="on_food_source_change($event)" #radioGroupBox>
+        <mat-radio-button [value]="true" [checked]="foodPlan.useFoodDb" #radioBtnCalc>Cardápio calculado</mat-radio-button>
+        <mat-radio-button [value]="false" [checked]="!foodPlan.useFoodDb" #radioBtnFree>Cardápio livre</mat-radio-button>
         <!-- TODO: Helper -->
       </mat-radio-group>
     </div>
@@ -26,11 +26,18 @@
           <h1>{{ meal.mealName }}</h1>
           <div class="page-food-plan-edit-content-meals-container">
             <div class="page-food-plan-edit-content-meals-container-time">{{ meal.mealTime }}</div>
-            <ul class="page-food-plan-edit-content-meals-container-food-list">
+            <ul class="page-food-plan-edit-content-meals-container-food-list" *ngIf="foodPlan.useFoodDb; else elseBlock">
               <li *ngFor="let food of meal.selectedFoods">
                 {{ formatFoodDetail(food) }}
               </li>
             </ul>
+            <ng-template #elseBlock>
+              <ul class="page-food-plan-edit-content-meals-container-food-list">
+                <li *ngFor="let food of freeTextFoodsList(meal)">
+                  {{ food }}
+                </li>
+              </ul>
+            </ng-template>
           </div>
           <div class="page-food-plan-edit-content-meals-footer">
             <span title="Editar" class="icon-edit" (click)="on_add_meal_click(meal, i)"></span> 
@@ -46,7 +53,7 @@
   <div class="mrc-dialog-separator"></div>
   <!-- <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div>  -->
   <div id="mrc-edit-page-footer-buttons">
-    <button mat-button [disabled]="!dirty && !isNew">Salvar</button> <!-- TODO: (click)="on_save_clicked()" -->
+    <button mat-button [disabled]="!dirty && !isNew" (click)="on_save_clicked()">Salvar</button> <!-- TODO: implementar save() -->
     <button mat-button>Cancelar</button> <!-- TODO: (click)="on_cancel_clicked()" -->
   </div>
 </div>

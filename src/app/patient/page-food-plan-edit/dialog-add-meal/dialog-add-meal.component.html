@@ -12,12 +12,12 @@
           <mat-option *ngFor="let meal of mealGroups" [value]="meal.id">{{ meal.description }}</mat-option>
           <mat-option value="0">Outra</mat-option>
         </mat-select>
-        <mat-error *ngIf="mealSelectCtrl.hasError('required')">Selecione uma refeição</mat-error>
+        <!-- <mat-error *ngIf="mealSelectCtrl.hasError('required')">Selecione uma refeição</mat-error> -->
       </mat-form-field>
       <ng-container *ngIf="mealSelectCtrl.value == '0'">
         <mat-form-field floatLabel="always">
           <input matInput placeholder="Nome da refeição" [formControl]="mealNameCtrl">
-          <mat-error *ngIf="mealNameCtrl.hasError('required')">Informe um nome para esta refeição</mat-error>
+          <!-- <mat-error *ngIf="mealNameCtrl.hasError('required')">Informe um nome para esta refeição</mat-error> -->
         </mat-form-field>
       </ng-container>
     </div>
@@ -52,7 +52,7 @@
       </mat-select>
     </mat-form-field>
 
-    <div class="dialog-add-meal-data-container" [style.height]="!errorList || errorList.length == 0 ? '245px' : '221px'">
+    <div class="dialog-add-meal-data-container" [style.height]="foodsTableContainerHeight">
       <div class="dialog-add-meal-data-container-table" *ngIf="dataSource && dataSource.data.length > 0; else noFoodsAddedBlock">
         <mat-table [dataSource]="dataSource">
           <ng-container matColumnDef="description">
@@ -144,7 +144,12 @@
     </div>
   </ng-container>
   <ng-template #elseBlock>
-    
+    <div class="dialog-add-meal-free-text" [style.height]="freeTextContainerHeight">
+      <mat-form-field floatLabel="always">
+        <mat-label>Alimentos</mat-label>
+        <textarea matInput [formControl]="freeTextFormControl" [style.height]="freeTextAreaHeight"></textarea>
+      </mat-form-field>
+    </div>
   </ng-template>
   <mat-form-field floatLabel="always" class="dialog-add-meal-notes-field">
     <mat-label>Observações</mat-label>
@@ -155,7 +160,7 @@
   <div class="mrc-dialog-separator"></div>
   <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div> 
   <div id="mrc-edit-page-footer-buttons">
-    <button mat-button (click)="on_save_clicked()">Salvar</button> <!-- TODO: [disabled]="!dirty && !isNew" -->
+    <button mat-button [disabled]="!dirty && !isNew" (click)="on_save_clicked()">Salvar</button> <!-- TODO:  doing disable-->
     <button mat-button (click)="on_cancel_click()">Cancelar</button>
   </div>
 </div>

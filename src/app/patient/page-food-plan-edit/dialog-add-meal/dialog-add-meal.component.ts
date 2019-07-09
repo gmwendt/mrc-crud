@@ -15,11 +15,14 @@ import { ReplaySubject, Subject } from "rxjs";
 import { take, takeUntil } from 'rxjs/operators';
 
 export interface IDialogAddMealData {
+  editing: boolean;
   useFoodDb: boolean;
+  dialogHeight: number;
   mealName?: string;
   mealTime?: string;
   selectedFoods?: IFoodDetail[];
   notes?: string;
+  mealAsText?: string;
 }
 
 export enum FoodSourceEnum {
@@ -53,6 +56,7 @@ export interface IPieChartData {
 export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   private useFoodDb: boolean;
   private foods: IFoodDetail[] = [];
+  private isNew: boolean;
   
   /** list of foods filtered by search keyword */
   private filteredFoods: ReplaySubject<IFoodDetail[]> = new ReplaySubject<IFoodDetail[]>(1);
@@ -69,6 +73,7 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   private notesFormControl: FormControl; 
   private mealNameCtrl: FormControl;
   private pickerInputCtrl: FormControl;
+  private freeTextFormControl: FormControl;
 
   private mealGroups = MealGroups;
   private errorList: string[];
@@ -82,6 +87,8 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   private energySum: number;
 
   private _selectedFoods: IFoodDetail[] = [];
+  private _dialogHeight: number;
+  private _dirty: boolean;
 
   @ViewChild('select', {static: false}) select: MatSelect;
 
@@ -91,6 +98,8 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   constructor(private _dialogRef: MatDialogRef<DialogAddMeal>, private _detector: ChangeDetectorRef, private _dialog: DialogService, @Inject(MAT_DIALOG_DATA) data: IDialogAddMealData, 
     private _food: FoodService) {
     this.useFoodDb = data.useFoodDb;
+    this.isNew = !data.editing;
+    this._dialogHeight = data.dialogHeight;
     this.initializeControls(data);
   }
 
@@ -122,11 +131,13 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
     let mealSelect = this.isNullOrEmpty(data.mealName) ? undefined : (this.mealGroups.some(meal => meal.description === data.mealName) ? this.mealGroups.find(meal => meal.description === data.mealName).id : '0');
     let mealName = mealSelect === '0' ? data.mealName : undefined;
     let mealTime = data.mealTime ? data.mealTime : date.getHours() + ":" + date.getMinutes();
+    let mealAsText = data.mealAsText ? data.mealAsText : undefined;
 
     this.mealSelectCtrl = new FormControl(mealSelect, Validators.required);
     this.mealNameCtrl = new FormControl(mealName, Validators.required);
     this.notesFormControl = new FormControl(data.notes);
     this.pickerInputCtrl = new FormControl(mealTime);
+    this.freeTextFormControl = new FormControl(mealAsText, Validators.required);
 
     if (data.selectedFoods)
       data.selectedFoods.forEach(food => {
@@ -228,14 +239,16 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   private checkErrors(): boolean {
     this.errorList = [];
 
-    if (!this.mealSelectCtrl.valid || (!this.mealGroups.some(meal => meal.id === this.mealSelectCtrl.value) && !this.mealNameCtrl.valid)) {
+    if (!this.mealSelectCtrl.valid || (!this.mealGroups.some(meal => meal.id === this.mealSelectCtrl.value) && !this.mealNameCtrl.valid) ||
+       (!this.useFoodDb && !this.freeTextFormControl.valid)) {
       this.errorList.push('Todos os campos devem ser preenchidos.');
       this.mealSelectCtrl.markAsTouched();
       this.mealNameCtrl.markAsTouched();
+      this.freeTextFormControl.markAllAsTouched();
       return false;
     }
 
-    if (!this._selectedFoods || this._selectedFoods.length == 0) {
+    if (this.useFoodDb && (!this._selectedFoods || this._selectedFoods.length == 0)) {
       this.errorList.push('Pelo menos 1 alimento deve ser adicionado.');
       return false;
     }
@@ -261,6 +274,7 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
 
     this.refreshTable();
     this.calcMacros();
+    this.markAsDirty();
   }
 
   private on_cancel_click(): void {
@@ -276,7 +290,8 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
       mealName: mealName,
       mealTime: this.pickerInputCtrl.value,
       notes: this.notesFormControl.value,
-      selectedFoods: this._selectedFoods
+      selectedFoods: this._selectedFoods,
+      mealAsText: !this.useFoodDb ? this.freeTextFormControl.value : undefined
     };
 
     this._dialogRef.close(result);
@@ -301,6 +316,7 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   
       this.refreshTable();
       this.calcMacros();
+      this.markAsDirty();
     }
   }
 
@@ -322,5 +338,62 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
 
   private isNullOrEmpty(content: string): boolean {
     return content == null || content.length < 1;
+  }
+
+  get dirty(): boolean {
+    if (this.mealSelectCtrl && this.mealSelectCtrl.dirty)
+      return true;
+      
+    if (this.pickerInputCtrl && this.pickerInputCtrl.dirty)
+      return true;
+
+    if (this.notesFormControl && this.notesFormControl.dirty)
+      return true;
+
+    if (this.freeTextFormControl && this.freeTextFormControl.dirty)
+      return true;
+
+    if (this.quantityFormControls && this.quantityFormControls.some(ctrl => ctrl.dirty))
+      return true;
+
+    return this._dirty;
+  }
+
+  private markAsDirty(): void {
+    if (this._dirty)
+      return;
+
+    this._dirty = true;
+    this._detector.markForCheck();
+  }
+
+  private get foodsTableContainerHeight(): string {
+    if (!this._dialogHeight)
+      return;
+
+    if (!this.errorList || this.errorList.length == 0)
+      return (this._dialogHeight - 407) + 'px';
+    else
+      return (this._dialogHeight - 429) + 'px';
+  }
+
+  private get freeTextContainerHeight(): string {
+    if (!this._dialogHeight)
+      return;
+
+    if (!this.errorList || this.errorList.length == 0)
+      return (this._dialogHeight - 280) + 'px';
+    else
+      return (this._dialogHeight - 302) + 'px';
+  }
+
+  private get freeTextAreaHeight(): string {
+    if (!this._dialogHeight)
+      return;
+
+    if (!this.errorList || this.errorList.length == 0)
+      return (this._dialogHeight - 311) + 'px';
+
+    return (this._dialogHeight - 333) + 'px';
   }
 }

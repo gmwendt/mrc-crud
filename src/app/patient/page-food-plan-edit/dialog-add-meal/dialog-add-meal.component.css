@@ -11,13 +11,12 @@ dialog-add-meal .dialog-add-meal-details-description {
 
 dialog-add-meal .dialog-add-meal-details-description .mat-form-field {
   height: 55px;
-  margin-left: 8px;
 }
 
 dialog-add-meal .dialog-add-meal-details-time {
   display: flex;
   flex-direction: column;
-  max-width: 115px;
+  max-width: 130px;
 }
 
 dialog-add-meal .dialog-add-meal-details-time > label {
@@ -66,6 +65,14 @@ dialog-add-meal .dialog-add-meal-data-container-empty {
   justify-content: center;
 }
 
+dialog-add-meal .dialog-add-meal-free-text {
+  margin-left: 8px;
+}
+
+dialog-add-meal .dialog-add-meal-free-text > .mat-form-field {
+  width: calc(100% - 8px);
+}
+
 dialog-add-meal .dialog-add-meal-meal-select-field {
   margin-right: 8px;
 }
@@ -76,7 +83,8 @@ dialog-add-meal .dialog-add-meal-meal-select-field .mat-form-field-infix {
 
 dialog-add-meal .dialog-add-meal-notes-field {
   height: 60px;
-  width: 100%;
+  margin-left: 8px;
+  width: calc(100% - 16px);
 }
 
 dialog-add-meal .dialog-add-meal-notes-field textarea {

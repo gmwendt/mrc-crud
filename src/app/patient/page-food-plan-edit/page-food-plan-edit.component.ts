@@ -1,8 +1,8 @@
-import { Component, ViewEncapsulation, AfterViewInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
+import { Component, ViewEncapsulation, AfterViewInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild } from "@angular/core";
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from "@angular/common/http";
 import { FormControl, Validators } from "@angular/forms";
-import { MatRadioChange } from "@angular/material/radio";
+import { MatRadioChange, MatRadioGroup, MatRadioButton } from "@angular/material/radio";
 import { ActivatedRoute } from "@angular/router";
 
 import { DialogAddMeal, IDialogAddMealData } from "./dialog-add-meal/dialog-add-meal.component";
@@ -29,11 +29,17 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   private _dirty: boolean;
   private _patient: Patient;
 
+  private _dialogAddMealHeight = 630;
+
   private descriptionFormControl: FormControl;
 
   private loading: boolean;
   private isNew: boolean;
   private foodPlan: FoodPlan;
+
+  @ViewChild('radioGroupBox', { static: false }) matRadioGroup: MatRadioGroup; 
+  @ViewChild('radioBtnCalc', { static: false }) matRadioBtnCalc: MatRadioButton; 
+  @ViewChild('radioBtnFree', { static: false }) matRadioBtnFree: MatRadioButton; 
 
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _patientService: PatientService, 
     private _dialog: DialogService, private _location: Location) {
@@ -90,7 +96,36 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     this.descriptionFormControl = new FormControl(desc, Validators.required);
   }
 
-  private on_food_source_change(event: MatRadioChange): void {
+  private checkErrors(): boolean {
+    if (!this.descriptionFormControl.valid)
+      return false;
+
+    return true;
+  }
+
+  private async on_food_source_change(event: MatRadioChange): Promise<void> {
+    if (this.foodPlan.meals && this.foodPlan.meals.length > 0) {
+      let dialogData: DialogAlertData = {
+        text: `Esta ação irá remover todas as refeições já adicionadas. Deseja prosseguir?`,
+        button: DialogAlertButton.YesNo,
+        textAlign: 'center',
+      };
+      
+      let dialogResult = await this._dialog.openAlert(dialogData);
+      if (dialogResult == DialogAlertResult.No) {
+        if (event.value)
+          this.matRadioGroup.selected = this.matRadioBtnFree;
+        else
+          this.matRadioGroup.selected = this.matRadioBtnCalc;
+
+        this._detector.detectChanges();
+        return;
+      }
+      
+      this.foodPlan.meals = [];
+      this._detector.detectChanges();
+    }
+    
     this.foodPlan.useFoodDb = event.value;
     this.markAsDirty();
   }
@@ -99,13 +134,16 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     let editing = meal ? true : false;
 
     let dialogData: IDialogAddMealData = {
+      editing : editing,
       useFoodDb: this.foodPlan.useFoodDb,
+      dialogHeight: this._dialogAddMealHeight,
       mealName: editing ? meal.mealName : undefined,
       mealTime: editing ? meal.mealTime : undefined,
       notes: editing ? meal.notes : undefined,
-      selectedFoods: editing ? meal.selectedFoods : undefined
+      selectedFoods: editing ? meal.selectedFoods : undefined,
+      mealAsText: editing ? meal.mealAsText : undefined
     };
-    let dialogRef = this._dialog.open(DialogAddMeal, { data: dialogData, width: '800px', height: '660px' });
+    let dialogRef = this._dialog.open(DialogAddMeal, { data: dialogData, width: '800px', height: this._dialogAddMealHeight + 'px' });
     
     dialogRef.afterClosed().subscribe((result: IMeal) => {
       if (!result)
@@ -138,9 +176,40 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     this._detector.detectChanges();
   }
 
+  private async on_save_clicked(): Promise<void> {
+    if (!this.checkErrors())
+      return;
+
+      //TODO
+  //   if (!this._patient.anamneses)
+    //   this._patient.anamneses = [];
+
+    // if (this.isNew)
+    //   this._patient.anamneses.push(this.anamnese);
+
+    // this.loading = true;
+    // try {
+    //   await this._patientService.updatePatient(this._patient);
+    //   this._location.back();
+    // }
+    // catch (error) {
+    //   this.on_error(error);
+    // }
+    // finally {
+    //   this.loading = false;
+    // }
+  }
+
   private formatFoodDetail(food: IFoodDetail): string {
     let measurement = food.measurements.find(m => m.id === food.selectedMeasurement);
     return food.description + ' - ' + food.quantity + " " + measurement.description;
+  }
+
+  private freeTextFoodsList(meal: IMeal): string[] {
+    if (this.foodPlan.useFoodDb || this.isNullOrEmpty(meal.mealAsText))
+      return;
+
+    return meal.mealAsText.split(/\n/);
   }
 
   private get pageTitle(): string {
@@ -212,6 +281,10 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
       .substring(1);
+  }
+
+  private isNullOrEmpty(content: string): boolean {
+    return content == null || content.length < 1;
   }
 
   ngOnDestroy() {
