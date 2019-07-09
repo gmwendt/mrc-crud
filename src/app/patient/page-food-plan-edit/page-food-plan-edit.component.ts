@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, AfterViewInit, OnDestroy, ChangeDetection
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from "@angular/common/http";
 import { FormControl, Validators } from "@angular/forms";
-import { MatRadioChange, MatRadioGroup, MatRadioButton } from "@angular/material/radio";
+import { MatRadioChange, MatRadioButton } from "@angular/material/radio";
 import { ActivatedRoute } from "@angular/router";
 
 import { DialogAddMeal, IDialogAddMealData } from "./dialog-add-meal/dialog-add-meal.component";
@@ -37,7 +37,6 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   private isNew: boolean;
   private foodPlan: FoodPlan;
 
-  @ViewChild('radioGroupBox', { static: false }) matRadioGroup: MatRadioGroup; 
   @ViewChild('radioBtnCalc', { static: false }) matRadioBtnCalc: MatRadioButton; 
   @ViewChild('radioBtnFree', { static: false }) matRadioBtnFree: MatRadioButton; 
 
@@ -113,10 +112,10 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       
       let dialogResult = await this._dialog.openAlert(dialogData);
       if (dialogResult == DialogAlertResult.No) {
-        if (event.value)
-          this.matRadioGroup.selected = this.matRadioBtnFree;
+        if (event.value) 
+          this.matRadioBtnFree.checked = true;
         else
-          this.matRadioGroup.selected = this.matRadioBtnCalc;
+          this.matRadioBtnCalc.checked = true;
 
         this._detector.detectChanges();
         return;
@@ -131,7 +130,11 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private on_add_meal_click(meal?: IMeal, index?: number): void {
-    let editing = meal ? true : false;
+    let editing = meal ? true : false;    
+    let selectedFoodsCloned: IFoodDetail[] = [];
+
+    if (editing)
+      meal.selectedFoods.map(food => selectedFoodsCloned.push(Object.assign({}, food)));
 
     let dialogData: IDialogAddMealData = {
       editing : editing,
@@ -140,7 +143,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       mealName: editing ? meal.mealName : undefined,
       mealTime: editing ? meal.mealTime : undefined,
       notes: editing ? meal.notes : undefined,
-      selectedFoods: editing ? meal.selectedFoods : undefined,
+      selectedFoods: editing ? selectedFoodsCloned : undefined,
       mealAsText: editing ? meal.mealAsText : undefined
     };
     let dialogRef = this._dialog.open(DialogAddMeal, { data: dialogData, width: '800px', height: this._dialogAddMealHeight + 'px' });
@@ -180,24 +183,25 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     if (!this.checkErrors())
       return;
 
-      //TODO
-  //   if (!this._patient.anamneses)
-    //   this._patient.anamneses = [];
+    this.foodPlan.date = new Date().toISOString();
 
-    // if (this.isNew)
-    //   this._patient.anamneses.push(this.anamnese);
+    this.loading = true;
+    this._detector.detectChanges();
 
-    // this.loading = true;
-    // try {
-    //   await this._patientService.updatePatient(this._patient);
-    //   this._location.back();
-    // }
-    // catch (error) {
-    //   this.on_error(error);
-    // }
-    // finally {
-    //   this.loading = false;
-    // }
+    try {
+      await this._patientService.updatePatient(this._patient);
+      this._location.back();
+    }
+    catch (error) {
+      this.on_error(error);
+    }
+    finally {
+      this.loading = false;
+    }
+  }
+
+  private on_cancel_clicked(): void {
+    this._location.back();
   }
 
   private formatFoodDetail(food: IFoodDetail): string {

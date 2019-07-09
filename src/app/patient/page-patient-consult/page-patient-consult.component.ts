@@ -4,7 +4,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { CorporalDensityProtocols } from "../../core/common/constants";
-import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue, LaboratoryExamItem, LaboratoryExam } from "../../core/common/types";
+import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue, LaboratoryExamItem, LaboratoryExam, FoodPlan } from "../../core/common/types";
 import { Equations } from "../../core/common/worker";
 import { PatientService } from "../../core/patient.service";
 
@@ -39,8 +39,10 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private anamneses: MatTableDataSource<Anamneses>;
   private examsReq: MatTableDataSource<LaboratoryExam>;
   private examsRes: MatTableDataSource<LaboratoryExam>;
+  private foodRecalls: MatTableDataSource<FoodPlan>;
   private anamnesesDisplayedColumns = ['clinicCase', 'commands'];
   private examsRequestedDisplayedColumns = ['description', 'timeElapsed', 'commands'];
+  private foodPlansDisplayedColumns = ['description', 'timeElapsed', 'commands'];
 
   private loading = true;
   private patient: Patient;
@@ -63,8 +65,10 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
 
       try {
         this.patient = await this._patient.getPatientById(id);
+
         this.createAnamnasesTable();
         this.createExamsTables();
+        this.createFoodRecallTable();
       }
       catch (error) {
         this.on_error(error);
@@ -179,6 +183,26 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     this.createExamsTables();
   }
 
+  private async on_remove_foodplan_click(event: MouseEvent, foodPlan: FoodPlan): Promise<void> {
+    event.stopPropagation();
+
+    var dialogData: DialogAlertData = {
+			text: 'Deseja remover este Recordatório Alimentar?',
+			button: DialogAlertButton.YesNo,
+			textAlign: 'center',
+    }
+    
+    var dialogResult = await this._dialog.openAlert(dialogData);
+    if (dialogResult == DialogAlertResult.No)
+      return;
+
+    var index = this.patient.foodPlans.indexOf(foodPlan);
+
+    this.patient.foodPlans.splice(index, 1);
+    await this.updatePatient();
+    this.createFoodRecallTable();
+  }
+
   private async on_measurement_edited(histValue?: IHistoricalValue): Promise<void> {
     await this.updatePatient();
   }
@@ -207,6 +231,17 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
       this.examsReq = new MatTableDataSource(this.patient.exams.filter(e => !e.isResult));
       this.examsRes = new MatTableDataSource(this.patient.exams.filter(e => e.isResult));
     }
+  }
+
+  private createFoodRecallTable(): void {
+    if (!this.patient || !this.patient.foodPlans)
+      return;
+
+    this.patient.foodPlans.sort((a, b) => {
+      return (a.date > b.date) ? -1 : ((a.date < b.date) ? 1: 0);
+    });
+    
+    this.foodRecalls = new MatTableDataSource(this.patient.foodPlans.filter(plan => plan.isRecall));
   }
 
   private navigate(route: string, id: string | FileSystemCommands, queryParams?: Object): void {

@@ -12,7 +12,7 @@
 
     <div class="page-food-plan-edit-content-food-source-type">
       <label>{{ foodTypeSelectTxt }}</label>
-      <mat-radio-group (change)="on_food_source_change($event)" #radioGroupBox>
+      <mat-radio-group (change)="on_food_source_change($event)">
         <mat-radio-button [value]="true" [checked]="foodPlan.useFoodDb" #radioBtnCalc>Cardápio calculado</mat-radio-button>
         <mat-radio-button [value]="false" [checked]="!foodPlan.useFoodDb" #radioBtnFree>Cardápio livre</mat-radio-button>
         <!-- TODO: Helper -->
@@ -53,7 +53,7 @@
   <div class="mrc-dialog-separator"></div>
   <!-- <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div>  -->
   <div id="mrc-edit-page-footer-buttons">
-    <button mat-button [disabled]="!dirty && !isNew" (click)="on_save_clicked()">Salvar</button> <!-- TODO: implementar save() -->
-    <button mat-button>Cancelar</button> <!-- TODO: (click)="on_cancel_clicked()" -->
+    <button mat-button [disabled]="!dirty && !isNew" (click)="on_save_clicked()">Salvar</button> 
+    <button mat-button (click)="on_cancel_clicked()">Cancelar</button>
   </div>
 </div>
