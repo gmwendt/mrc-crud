@@ -496,6 +496,13 @@ export interface IFoodMeasurement {
   converter: number;
 }
 
+export interface IMacroNutrients {
+  protein?: number;
+  carbohydrate?: number;
+  lipid?: number;
+  energy?: number;
+}
+
 export interface IMeal {
   mealName: string;
   mealTime: string;
@@ -503,6 +510,7 @@ export interface IMeal {
   notes: string;
   substituteMeals?: ISubstituteMeal[];
   mealAsText?: string;
+  macros?: IMacroNutrients;
 }
 
 export interface ISubstituteMeal {

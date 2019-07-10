@@ -3,8 +3,8 @@
   <div class="mrc-page-subtitle">{{ pageSubtitle }}</div>
 </div>
 <progress-spinner [progress]="loading">
-  <div>
-    <div *ngIf="foodPlan" class="page-food-plan-edit-content"> 
+  <div *ngIf="foodPlan">
+    <div class="page-food-plan-edit-content"> 
       <mat-form-field floatLabel="always" class="page-food-plan-edit-content-description-field">
         <mat-label>Descrição</mat-label>
         <textarea matInput [formControl]="descriptionFormControl" [(ngModel)]="foodPlan.description"></textarea>
@@ -49,12 +49,13 @@
         </ng-container>
       </div>
     </div>
-    <div style="width: 400px; height: 180px;">
-      <canvas baseChart
+    <div style="width: 400px; height: 180px;"> <!-- *ngIf="foodPlan.useFoodDb" -->
+      <canvas #myPie></canvas>
+      <!-- baseChart
             [data]="pieChartData"
             [labels]="pieChartLabels"
             [chartType]="pieChartType"
-            [options]="pieChartOptions"></canvas>
+            [options]="pieChartOptions" -->
     </div>
   </div>
 </progress-spinner>

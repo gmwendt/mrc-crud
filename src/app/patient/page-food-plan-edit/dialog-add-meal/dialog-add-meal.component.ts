@@ -32,13 +32,6 @@ export enum FoodSourceEnum {
   MySupplements
 }
 
-export interface IMacroNutrients {
-  protein?: number;
-  carbohydrate?: number;
-  lipid?: number;
-  energy?: number;
-}
-
 //TODO Export to widgets
 export interface IPieChartData {
   name: string;
@@ -291,7 +284,13 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
       mealTime: this.pickerInputCtrl.value,
       notes: this.notesFormControl.value,
       selectedFoods: this._selectedFoods,
-      mealAsText: !this.useFoodDb ? this.freeTextFormControl.value : undefined
+      mealAsText: !this.useFoodDb ? this.freeTextFormControl.value : undefined,
+      macros: {
+        carbohydrate: this.carbohydrateSum,
+        energy: this.energySum,
+        lipid: this.lipidSum,
+        protein: this.proteinSum
+      }
     };
 
     this._dialogRef.close(result);

@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, AfterViewInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild } from "@angular/core";
+import { Component, ViewEncapsulation, AfterViewInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, ElementRef } from "@angular/core";
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from "@angular/common/http";
 import { FormControl, Validators } from "@angular/forms";
@@ -15,6 +15,7 @@ import { DialogService } from "../../shared/dialog.service";
 import { Subscription } from "rxjs/internal/Subscription";
 
 import * as moment from 'moment';
+import * as Chart from 'chart.js';
 
 @Component({
   selector: 'page-food-plan-edit',
@@ -37,19 +38,20 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   private isNew: boolean;
   private foodPlan: FoodPlan;
 
-  private pieChartLabels:string[] = ["Pending", "InProgress", "OnHold", "Complete", "Cancelled"];
-  private pieChartData:number[] = [21, 39, 10, 14, 16];
-  private pieChartType:string = 'pie';
-  private pieChartOptions:any = {'backgroundColor': [
+  private pieChartLabels: string[] = ["Proteínas (g)", "Carboidratos (g)", "Lipídios (g)"];
+  private pieChartData: number[] = [];
+  private pieChartType: string = 'pie';
+  private pieChartOptions :any = { 'backgroundColor': [
                "#FF6384",
-            "#4BC0C0",
-            "#FFCE56",
-            "#E7E9ED",
-            "#36A2EB"
-            ]}
+               "#FFCE56",
+               "#4BC0C0",
+            // "#E7E9ED",
+            // "#36A2EB"
+            ]};
 
   @ViewChild('radioBtnCalc', { static: false }) matRadioBtnCalc: MatRadioButton; 
   @ViewChild('radioBtnFree', { static: false }) matRadioBtnFree: MatRadioButton; 
+  @ViewChild('myPie', { static: false }) pieChart: ElementRef;
 
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _patientService: PatientService, 
     private _dialog: DialogService, private _location: Location) {
@@ -70,6 +72,8 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       }
       finally {
         this.initializeFields();
+        //this.updateChartData();
+        this.createChart();
 
         this.loading = false;
         this._detector.detectChanges();
@@ -111,6 +115,23 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       return false;
 
     return true;
+  }
+
+  private createChart(): void {
+    let options: Chart.ChartConfiguration = {
+      data: {
+        labels: this.pieChartLabels,
+        datasets: [{ 
+          data: [10, 20, 30],
+          backgroundColor: ["#FF6384", "#FFCE56", "#4BC0C0"] 
+        }],
+      },
+      type: 'pie',
+    };
+
+    setTimeout(() => {
+      let chart = new Chart(this.pieChart.nativeElement, options);
+    });
   }
 
   private async on_food_source_change(event: MatRadioChange): Promise<void> {
@@ -168,6 +189,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       else 
         this.foodPlan.meals.push(result);
         
+      this.updateChartData();
       this.markAsDirty();
       this._detector.detectChanges();
     });
@@ -213,6 +235,26 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
 
   private on_cancel_clicked(): void {
     this._location.back();
+  }
+
+  private updateChartData(): void {
+    let p = 0, c = 0, l = 0, e = 0;
+
+    this.foodPlan.meals.forEach(meal => {
+      if (!meal.macros)
+        return;
+
+      p += meal.macros.protein;
+      c += meal.macros.carbohydrate;
+      l += meal.macros.lipid;
+      e += meal.macros.energy;
+    });
+
+    this.pieChartData.push(p);
+    this.pieChartData.push(c);
+    this.pieChartData.push(l);
+    console.log(this.pieChartData);
+    console.log(this.pieChart);
   }
 
   private formatFoodDetail(food: IFoodDetail): string {
