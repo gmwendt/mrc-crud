@@ -3,49 +3,58 @@
   <div class="mrc-page-subtitle">{{ pageSubtitle }}</div>
 </div>
 <progress-spinner [progress]="loading">
-  <div *ngIf="foodPlan" class="page-food-plan-edit-content"> 
-    <mat-form-field floatLabel="always" class="page-food-plan-edit-content-description-field">
-      <mat-label>Descrição</mat-label>
-      <textarea matInput [formControl]="descriptionFormControl" [(ngModel)]="foodPlan.description"></textarea>
-      <mat-error>Campo <strong>obrigatório</strong></mat-error>
-    </mat-form-field>
+  <div>
+    <div *ngIf="foodPlan" class="page-food-plan-edit-content"> 
+      <mat-form-field floatLabel="always" class="page-food-plan-edit-content-description-field">
+        <mat-label>Descrição</mat-label>
+        <textarea matInput [formControl]="descriptionFormControl" [(ngModel)]="foodPlan.description"></textarea>
+        <mat-error>Campo <strong>obrigatório</strong></mat-error>
+      </mat-form-field>
 
-    <div class="page-food-plan-edit-content-food-source-type">
-      <label>{{ foodTypeSelectTxt }}</label>
-      <mat-radio-group (change)="on_food_source_change($event)">
-        <mat-radio-button [value]="true" [checked]="foodPlan.useFoodDb" #radioBtnCalc>Cardápio calculado</mat-radio-button>
-        <mat-radio-button [value]="false" [checked]="!foodPlan.useFoodDb" #radioBtnFree>Cardápio livre</mat-radio-button>
-        <!-- TODO: Helper -->
-      </mat-radio-group>
-    </div>
-    <div class="page-food-plan-edit-content-meals">
-      <label>Refeições</label>
-      <button mat-button (click)="on_add_meal_click()" style="max-width: 80px">Adicionar</button>
-      <ng-container *ngFor="let meal of foodPlan.meals; let i = index">
-        <mat-card>
-          <h1>{{ meal.mealName }}</h1>
-          <div class="page-food-plan-edit-content-meals-container">
-            <div class="page-food-plan-edit-content-meals-container-time">{{ meal.mealTime }}</div>
-            <ul class="page-food-plan-edit-content-meals-container-food-list" *ngIf="foodPlan.useFoodDb; else elseBlock">
-              <li *ngFor="let food of meal.selectedFoods">
-                {{ formatFoodDetail(food) }}
-              </li>
-            </ul>
-            <ng-template #elseBlock>
-              <ul class="page-food-plan-edit-content-meals-container-food-list">
-                <li *ngFor="let food of freeTextFoodsList(meal)">
-                  {{ food }}
+      <div class="page-food-plan-edit-content-food-source-type">
+        <label>{{ foodTypeSelectTxt }}</label>
+        <mat-radio-group (change)="on_food_source_change($event)">
+          <mat-radio-button [value]="true" [checked]="foodPlan.useFoodDb" #radioBtnCalc>Cardápio calculado</mat-radio-button>
+          <mat-radio-button [value]="false" [checked]="!foodPlan.useFoodDb" #radioBtnFree>Cardápio livre</mat-radio-button>
+          <!-- TODO: Helper -->
+        </mat-radio-group>
+      </div>
+      <div class="page-food-plan-edit-content-meals">
+        <label>Refeições</label>
+        <button mat-button (click)="on_add_meal_click()" style="max-width: 80px">Adicionar</button>
+        <ng-container *ngFor="let meal of foodPlan.meals; let i = index">
+          <mat-card>
+            <h1>{{ meal.mealName }}</h1>
+            <div class="page-food-plan-edit-content-meals-container">
+              <div class="page-food-plan-edit-content-meals-container-time">{{ meal.mealTime }}</div>
+              <ul class="page-food-plan-edit-content-meals-container-food-list" *ngIf="foodPlan.useFoodDb; else elseBlock">
+                <li *ngFor="let food of meal.selectedFoods">
+                  {{ formatFoodDetail(food) }}
                 </li>
               </ul>
-            </ng-template>
-          </div>
-          <div class="page-food-plan-edit-content-meals-footer">
-            <span title="Editar" class="icon-edit" (click)="on_add_meal_click(meal, i)"></span> 
-            <span title="Remover" class="icon-delete" (click)="on_remove_meal_click(meal, i)"></span>
-            <button mat-button *ngIf="!foodPlan.isRecall">Adicionar substituição</button> <!-- TODO:  (click)=""-->
-          </div>
-        </mat-card>
-      </ng-container>
+              <ng-template #elseBlock>
+                <ul class="page-food-plan-edit-content-meals-container-food-list">
+                  <li *ngFor="let food of freeTextFoodsList(meal)">
+                    {{ food }}
+                  </li>
+                </ul>
+              </ng-template>
+            </div>
+            <div class="page-food-plan-edit-content-meals-footer">
+              <span title="Editar" class="icon-edit" (click)="on_add_meal_click(meal, i)"></span> 
+              <span title="Remover" class="icon-delete" (click)="on_remove_meal_click(meal, i)"></span>
+              <button mat-button *ngIf="!foodPlan.isRecall">Adicionar substituição</button> <!-- TODO:  (click)=""-->
+            </div>
+          </mat-card>
+        </ng-container>
+      </div>
+    </div>
+    <div style="width: 400px; height: 180px;">
+      <canvas baseChart
+            [data]="pieChartData"
+            [labels]="pieChartLabels"
+            [chartType]="pieChartType"
+            [options]="pieChartOptions"></canvas>
     </div>
   </div>
 </progress-spinner>

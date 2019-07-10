@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { DpDatePickerModule } from 'ng2-date-picker';
+import { ChartsModule } from 'ng2-charts';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
@@ -32,6 +33,7 @@ import { COMMON_PIPES } from './common/pipes';
 
 @NgModule({
   imports: [ 
+    ChartsModule,
     CommonModule,
     DpDatePickerModule,
     FormsModule, 
@@ -50,6 +52,7 @@ import { COMMON_PIPES } from './common/pipes';
     ZipcodeInputComponent ],
   exports: [ 
     AddProfessionalComponent,
+    ChartsModule,
     CheckListComponent, 
     CommonModule,
     COMMON_PIPES,

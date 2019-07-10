@@ -5,12 +5,12 @@ page-food-plan-edit {
 
   progress-spinner {
     height: calc(100% - 120px);
+    overflow: auto;
   }
 
   .page-food-plan-edit-content {
     display: flex; 
     flex-direction: column; 
-    height: calc(100% - 50px);
     margin: 16px 22px; 
 
     &-description-field {

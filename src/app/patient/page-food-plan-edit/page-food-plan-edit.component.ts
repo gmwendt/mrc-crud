@@ -37,6 +37,17 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   private isNew: boolean;
   private foodPlan: FoodPlan;
 
+  private pieChartLabels:string[] = ["Pending", "InProgress", "OnHold", "Complete", "Cancelled"];
+  private pieChartData:number[] = [21, 39, 10, 14, 16];
+  private pieChartType:string = 'pie';
+  private pieChartOptions:any = {'backgroundColor': [
+               "#FF6384",
+            "#4BC0C0",
+            "#FFCE56",
+            "#E7E9ED",
+            "#36A2EB"
+            ]}
+
   @ViewChild('radioBtnCalc', { static: false }) matRadioBtnCalc: MatRadioButton; 
   @ViewChild('radioBtnFree', { static: false }) matRadioBtnFree: MatRadioButton; 
 

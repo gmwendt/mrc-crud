@@ -6,6 +6,7 @@ page-food-plan-edit {
 
 page-food-plan-edit progress-spinner {
   height: calc(100% - 120px);
+  overflow: auto;
 }
 
 page-food-plan-edit .page-food-plan-edit-content {
