@@ -14,10 +14,12 @@ page-food-plan-edit .page-food-plan-edit-content {
   flex-direction: column;
   height: calc(100% - 50px);
   margin: 16px 22px;
+  min-width: 400px;
 }
 
 page-food-plan-edit .page-food-plan-edit-content-description-field {
-  max-width: 500px;
+  width: 100%;
+  padding-right: 8px;
 }
 
 page-food-plan-edit .page-food-plan-edit-content-description-field textarea {

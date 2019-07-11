@@ -3,7 +3,7 @@
   <div class="mrc-page-subtitle">{{ pageSubtitle }}</div>
 </div>
 <progress-spinner [progress]="loading">
-  <div *ngIf="foodPlan">
+  <div *ngIf="foodPlan" style="display: flex">
     <div class="page-food-plan-edit-content"> 
       <mat-form-field floatLabel="always" class="page-food-plan-edit-content-description-field">
         <mat-label>Descrição</mat-label>
@@ -49,14 +49,24 @@
         </ng-container>
       </div>
     </div>
-    <div style="width: 400px;"> <!-- *ngIf="foodPlan.useFoodDb" -->
-      <mrc-pie-chart [data]="pieData"></mrc-pie-chart>
-      <!-- <canvas #myPie></canvas> -->
-      <!-- baseChart
-            [data]="pieChartData"
-            [labels]="pieChartLabels"
-            [chartType]="pieChartType"
-            [options]="pieChartOptions" -->
+    <div style="width: 400px;" *ngIf="foodPlan.useFoodDb">
+      <label>Macronutrientes</label>
+      <mrc-pie-chart [data]="pieChartData" [unit]="pieChartUnit" [hideLegend]="true"></mrc-pie-chart>
+      <!-- TODO: Table -->
+      <table>
+        <tr>
+          <td>Energia</td>
+          <td>{{ energySum | unitFormater: 'kcal':'2' }}</td>
+        </tr>
+        <tr>
+          <td>Proteínas</td>
+          <td>{{ ptnSum | unitFormater: 'g':'2' }}</td>
+        </tr>
+      </table>
+      <!-- <div style="color: #298dca; justify-content: center; display: flex; margin-top: 8px;">
+        <label style="margin-right: 4px">Energia</label>
+        <span style="font-size: 9pt;">{{ energySum | unitFormater: 'kcal':'2' }}</span>
+      </div> -->
     </div>
   </div>
 </progress-spinner>

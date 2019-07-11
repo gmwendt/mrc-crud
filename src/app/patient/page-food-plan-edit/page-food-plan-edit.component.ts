@@ -38,22 +38,17 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   private loading: boolean;
   private isNew: boolean;
   private foodPlan: FoodPlan;
+  
+  private ptnSum: number = 0;
+  private choSum: number = 0;
+  private lipSum: number = 0;
+  private energySum: number = 0;
 
-  private pieData: IPieChartData[] = [];
-  private pieChartLabels: string[] = ["Proteínas (g)", "Carboidratos (g)", "Lipídios (g)"];
-  private pieChartData: number[] = [];
-  private pieChartType: string = 'pie';
-  private pieChartOptions :any = { 'backgroundColor': [
-               "#FF6384",
-               "#FFCE56",
-               "#4BC0C0",
-            // "#E7E9ED",
-            // "#36A2EB"
-            ]};
+  private pieChartData: IPieChartData[] = [];
+  private pieChartUnit: string = '%';
 
   @ViewChild('radioBtnCalc', { static: false }) matRadioBtnCalc: MatRadioButton; 
   @ViewChild('radioBtnFree', { static: false }) matRadioBtnFree: MatRadioButton; 
-  // @ViewChild('myPie', { static: false }) pieChart: ElementRef;
 
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _patientService: PatientService, 
     private _dialog: DialogService, private _location: Location) {
@@ -74,8 +69,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       }
       finally {
         this.initializeFields();
-        //this.updateChartData();
-        this.createChart();
+        this.updateChartData();
 
         this.loading = false;
         this._detector.detectChanges();
@@ -117,36 +111,6 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       return false;
 
     return true;
-  }
-
-  private createChart(): void {
-    // let options: Chart.ChartConfiguration = {
-    //   data: {
-    //     labels: this.pieChartLabels,
-    //     datasets: [{ 
-    //       data: [10, 20, 30],
-    //       backgroundColor: ["#FF6384", "#FFCE56", "#4BC0C0"] 
-    //     }],
-    //   },
-    //   type: 'pie',
-    // };
-
-    // setTimeout(() => {
-    //   let chart = new Chart(this.pieChart.nativeElement, options);
-    // });
-    let data: IPieChartData[] = [{
-      data: 10,
-      label: 'Proteínas'
-    }, {
-      data: 20,
-      label: 'Lipídios'
-    }, {
-      data: 30,
-      label: 'Carboidratos'
-    }];
-
-    this.pieData = data;
-    this._detector.detectChanges()
   }
 
   private async on_food_source_change(event: MatRadioChange): Promise<void> {
@@ -253,23 +217,34 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private updateChartData(): void {
-    let p = 0, c = 0, l = 0, e = 0;
+    this.ptnSum = 0;
+    this.choSum = 0;
+    this.lipSum = 0;
+    this.energySum = 0;
 
     this.foodPlan.meals.forEach(meal => {
       if (!meal.macros)
         return;
 
-      p += meal.macros.protein;
-      c += meal.macros.carbohydrate;
-      l += meal.macros.lipid;
-      e += meal.macros.energy;
+      this.ptnSum += meal.macros.protein;
+      this.choSum += meal.macros.carbohydrate;
+      this.lipSum += meal.macros.lipid;
+      this.energySum += meal.macros.energy;
     });
 
-    this.pieChartData.push(p);
-    this.pieChartData.push(c);
-    this.pieChartData.push(l);
-    console.log(this.pieChartData);
-    // console.log(this.pieChart);
+    let total = this.ptnSum + this.choSum + this.lipSum;
+    let data: IPieChartData[] = [{
+      data: this.ptnSum / total * 100,
+      label: 'Proteínas'
+    }, {
+      data: this.lipSum / total * 100,
+      label: 'Lipídios'
+    }, {
+      data: this.choSum / total * 100,
+      label: 'Carboidratos'
+    }];
+    
+    this.pieChartData = data;
   }
 
   private formatFoodDetail(food: IFoodDetail): string {

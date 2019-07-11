@@ -371,9 +371,9 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
       return;
 
     if (!this.errorList || this.errorList.length == 0)
-      return (this._dialogHeight - 415) + 'px';
+      return (this._dialogHeight - 419) + 'px';
     else
-      return (this._dialogHeight - 439) + 'px';
+      return (this._dialogHeight - 446) + 'px';
   }
 
   private get freeTextContainerHeight(): string {
@@ -381,9 +381,9 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
       return;
 
     if (!this.errorList || this.errorList.length == 0)
-      return (this._dialogHeight - 284) + 'px';
+      return (this._dialogHeight - 288) + 'px';
     else
-      return (this._dialogHeight - 308) + 'px';
+      return (this._dialogHeight - 315) + 'px';
   }
 
   private get freeTextAreaHeight(): string {
@@ -391,8 +391,8 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
       return;
 
     if (!this.errorList || this.errorList.length == 0)
-      return (this._dialogHeight - 315) + 'px';
+      return (this._dialogHeight - 319) + 'px';
 
-    return (this._dialogHeight - 341) + 'px';
+    return (this._dialogHeight - 347) + 'px';
   }
 }
