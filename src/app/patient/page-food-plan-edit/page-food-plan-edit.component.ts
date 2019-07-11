@@ -16,6 +16,7 @@ import { Subscription } from "rxjs/internal/Subscription";
 
 import * as moment from 'moment';
 import * as Chart from 'chart.js';
+import { IPieChartData } from '../../widgets/pie-chart/pie-chart.component';
 
 @Component({
   selector: 'page-food-plan-edit',
@@ -38,6 +39,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   private isNew: boolean;
   private foodPlan: FoodPlan;
 
+  private pieData: IPieChartData[] = [];
   private pieChartLabels: string[] = ["Proteínas (g)", "Carboidratos (g)", "Lipídios (g)"];
   private pieChartData: number[] = [];
   private pieChartType: string = 'pie';
@@ -51,7 +53,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('radioBtnCalc', { static: false }) matRadioBtnCalc: MatRadioButton; 
   @ViewChild('radioBtnFree', { static: false }) matRadioBtnFree: MatRadioButton; 
-  @ViewChild('myPie', { static: false }) pieChart: ElementRef;
+  // @ViewChild('myPie', { static: false }) pieChart: ElementRef;
 
   constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _patientService: PatientService, 
     private _dialog: DialogService, private _location: Location) {
@@ -118,20 +120,33 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private createChart(): void {
-    let options: Chart.ChartConfiguration = {
-      data: {
-        labels: this.pieChartLabels,
-        datasets: [{ 
-          data: [10, 20, 30],
-          backgroundColor: ["#FF6384", "#FFCE56", "#4BC0C0"] 
-        }],
-      },
-      type: 'pie',
-    };
+    // let options: Chart.ChartConfiguration = {
+    //   data: {
+    //     labels: this.pieChartLabels,
+    //     datasets: [{ 
+    //       data: [10, 20, 30],
+    //       backgroundColor: ["#FF6384", "#FFCE56", "#4BC0C0"] 
+    //     }],
+    //   },
+    //   type: 'pie',
+    // };
 
-    setTimeout(() => {
-      let chart = new Chart(this.pieChart.nativeElement, options);
-    });
+    // setTimeout(() => {
+    //   let chart = new Chart(this.pieChart.nativeElement, options);
+    // });
+    let data: IPieChartData[] = [{
+      data: 10,
+      label: 'Proteínas'
+    }, {
+      data: 20,
+      label: 'Lipídios'
+    }, {
+      data: 30,
+      label: 'Carboidratos'
+    }];
+
+    this.pieData = data;
+    this._detector.detectChanges()
   }
 
   private async on_food_source_change(event: MatRadioChange): Promise<void> {
@@ -254,7 +269,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     this.pieChartData.push(c);
     this.pieChartData.push(l);
     console.log(this.pieChartData);
-    console.log(this.pieChart);
+    // console.log(this.pieChart);
   }
 
   private formatFoodDetail(food: IFoodDetail): string {

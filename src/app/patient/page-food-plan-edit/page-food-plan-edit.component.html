@@ -49,8 +49,9 @@
         </ng-container>
       </div>
     </div>
-    <div style="width: 400px; height: 180px;"> <!-- *ngIf="foodPlan.useFoodDb" -->
-      <canvas #myPie></canvas>
+    <div style="width: 400px;"> <!-- *ngIf="foodPlan.useFoodDb" -->
+      <mrc-pie-chart [data]="pieData"></mrc-pie-chart>
+      <!-- <canvas #myPie></canvas> -->
       <!-- baseChart
             [data]="pieChartData"
             [labels]="pieChartLabels"
