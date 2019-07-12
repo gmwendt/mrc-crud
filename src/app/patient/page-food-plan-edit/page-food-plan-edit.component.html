@@ -3,7 +3,7 @@
   <div class="mrc-page-subtitle">{{ pageSubtitle }}</div>
 </div>
 <progress-spinner [progress]="loading">
-  <div *ngIf="foodPlan" style="display: flex">
+  <div *ngIf="foodPlan" class="page-food-plan-edit-column">
     <div class="page-food-plan-edit-content"> 
       <mat-form-field floatLabel="always" class="page-food-plan-edit-content-description-field">
         <mat-label>Descrição</mat-label>
@@ -49,24 +49,37 @@
         </ng-container>
       </div>
     </div>
-    <div style="width: 400px;" *ngIf="foodPlan.useFoodDb">
+    <div class="page-food-plan-edit-macros" *ngIf="foodPlan.useFoodDb">
       <label>Macronutrientes</label>
-      <mrc-pie-chart [data]="pieChartData" [unit]="pieChartUnit" [hideLegend]="true"></mrc-pie-chart>
-      <!-- TODO: Table -->
-      <table>
-        <tr>
-          <td>Energia</td>
-          <td>{{ energySum | unitFormater: 'kcal':'2' }}</td>
-        </tr>
-        <tr>
-          <td>Proteínas</td>
-          <td>{{ ptnSum | unitFormater: 'g':'2' }}</td>
-        </tr>
-      </table>
-      <!-- <div style="color: #298dca; justify-content: center; display: flex; margin-top: 8px;">
-        <label style="margin-right: 4px">Energia</label>
-        <span style="font-size: 9pt;">{{ energySum | unitFormater: 'kcal':'2' }}</span>
-      </div> -->
+      <div class="page-food-plan-edit-macros-content">
+        <mrc-pie-chart [data]="pieChartData" [unit]="pieChartUnit" [hideLegend]="true"></mrc-pie-chart>
+        <table>
+          <tr>
+            <td></td>
+            <td class="mrc-col-desc">Proteínas</td>
+            <td class="mrc-col-value">{{ ptnSum | unitFormater: 'g':'2' }}</td>
+            <td>{{ getMacroPercent(ptnSum) | unitFormater: '%':'2' }}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="mrc-col-desc">Carboidratos</td>
+            <td class="mrc-col-value">{{ choSum | unitFormater: 'g':'2' }}</td>
+            <td>{{ getMacroPercent(choSum) | unitFormater: '%':'2' }}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="mrc-col-desc">Lipídios</td>
+            <td class="mrc-col-value">{{ lipSum | unitFormater: 'g':'2' }}</td>
+            <td>{{ getMacroPercent(lipSum) | unitFormater: '%':'2' }}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="mrc-col-desc">Energia</td>
+            <td class="mrc-col-value">{{ energySum | unitFormater: 'kcal':'2' }}</td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 </progress-spinner>

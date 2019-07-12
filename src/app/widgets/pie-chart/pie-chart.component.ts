@@ -107,7 +107,7 @@ export class PieChartComponent implements AfterViewInit {
       },
       options: {
         legend: {
-          display: this.hideLegend,
+          display: !this.hideLegend,
           labels: {
             fontSize: 9,
             fontFamily: 'Segoe UI'

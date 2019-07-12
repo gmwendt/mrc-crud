@@ -8,6 +8,10 @@ page-food-plan-edit {
     overflow: auto;
   }
 
+  .page-food-plan-edit-column {
+    display: flex;
+  }
+
   .page-food-plan-edit-content {
     display: flex; 
     flex-direction: column; 
@@ -92,6 +96,28 @@ page-food-plan-edit {
       line-height: 22px;
       margin: 8px 0 0 8px;
       padding: 0 8px;
+    }
+  }
+
+  .page-food-plan-edit-macros {
+    width: 400px;
+
+    &-content {
+      align-items: center;
+      display: flex; 
+      flex-direction: column;
+
+      .mrc-col-desc {
+        width: 100px;
+      }
+
+      .mrc-col-value {
+      }
+
+      > table {
+        font-size: 9pt;
+        margin-top: 8px;
+      }
     }
   }
 

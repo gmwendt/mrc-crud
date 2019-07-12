@@ -232,15 +232,14 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       this.energySum += meal.macros.energy;
     });
 
-    let total = this.ptnSum + this.choSum + this.lipSum;
     let data: IPieChartData[] = [{
-      data: this.ptnSum / total * 100,
+      data: this.getMacroPercent(this.ptnSum),
       label: 'Proteínas'
     }, {
-      data: this.lipSum / total * 100,
+      data: this.getMacroPercent(this.lipSum),
       label: 'Lipídios'
     }, {
-      data: this.choSum / total * 100,
+      data: this.getMacroPercent(this.choSum),
       label: 'Carboidratos'
     }];
     
@@ -257,6 +256,11 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       return;
 
     return meal.mealAsText.split(/\n/);
+  }
+
+  private getMacroPercent(value: number): number {
+    let total = this.ptnSum + this.choSum + this.lipSum;
+    return value / total * 100;
   }
 
   private get pageTitle(): string {

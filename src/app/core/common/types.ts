@@ -461,7 +461,8 @@ export interface ILabExamResult {
 }
 
 export class FoodPlan {
-  constructor(public id: string, public description: string, public date: string, public isRecall?: boolean, public useFoodDb: boolean = true, public meals: IMeal[] = []) {
+  constructor(public id: string, public description: string, public date: string, public isRecall?: boolean, public useFoodDb: boolean = true, public weightRef?: number,
+    public meals: IMeal[] = []) {
   }
 
   toJSON(): string {

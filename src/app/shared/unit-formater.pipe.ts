@@ -14,13 +14,10 @@ export class UnitFormaterPipe implements PipeTransform {
 
     let pow = Math.pow(10, _decimalCases);
 
-    if (typeof value === 'number') {
-      if (!isNaN(value))
-        return (Math.round(value * pow) / pow).toLocaleString() + _unit;
-      else
-        return value;
+    if (typeof value === 'number' && !isNaN(value)) {
+      return (Math.round(value * pow) / pow).toLocaleString() + _unit;
     }
 
-    return value;
+    return '?' + _unit;
   }
 }
