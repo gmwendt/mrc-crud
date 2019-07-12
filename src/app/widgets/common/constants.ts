@@ -1,0 +1,1 @@
+export const seriesColors: string[] = ["#FF6384", "#4BC0C0", "#FFCE56", "#E7E9ED", "#36A2EB"];

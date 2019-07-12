@@ -9,10 +9,13 @@ page-food-plan-edit progress-spinner {
   overflow: auto;
 }
 
+page-food-plan-edit .page-food-plan-edit-column {
+  display: flex;
+}
+
 page-food-plan-edit .page-food-plan-edit-content {
   display: flex;
   flex-direction: column;
-  height: calc(100% - 50px);
   margin: 16px 22px;
   min-width: 400px;
 }
@@ -95,6 +98,32 @@ page-food-plan-edit .page-food-plan-edit-content .mat-button {
   line-height: 22px;
   margin: 8px 0 0 8px;
   padding: 0 8px;
+}
+
+page-food-plan-edit .page-food-plan-edit-macros {
+  width: 400px;
+}
+
+page-food-plan-edit .page-food-plan-edit-macros-content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+page-food-plan-edit .page-food-plan-edit-macros-content .mrc-col-desc {
+  width: 100px;
+}
+
+page-food-plan-edit .page-food-plan-edit-macros-content .mrc-legend-item {
+  width: 8px;
+  height: 8px;
+  border-radius: 5px;
+  margin: 1px 4px 0 0;
+}
+
+page-food-plan-edit .page-food-plan-edit-macros-content > table {
+  font-size: 9pt;
+  margin-top: 8px;
 }
 
 page-food-plan-edit #mrc-edit-page-footer .mrc-edit-page-error {

@@ -7,6 +7,8 @@ import {
   ViewEncapsulation
 } from "@angular/core";
 
+import { seriesColors } from '../common/constants';
+
 import * as Chart from 'chart.js';
 
 export interface IPieChartData {
@@ -21,8 +23,6 @@ export interface IPieChartData {
 })
 export class PieChartComponent implements AfterViewInit {
 
-  private _colors: string[] = ["#FF6384", "#FFCE56", "#4BC0C0", "#E7E9ED", "#36A2EB"];
-  
   private _unit: string;
   private _hideLegend: boolean = false;
   private _data: IPieChartData[] = [];
@@ -102,7 +102,7 @@ export class PieChartComponent implements AfterViewInit {
         labels: this.dataLabels,
         datasets: [{
           data: this.dataValues,
-          backgroundColor: this._colors
+          backgroundColor: seriesColors
         }]
       },
       options: {

@@ -8,3 +8,6 @@ A = Active, F = Fixed
 contato@clinicagoethe.com.br
 nutrisof: 123456
 nutrium: 123456ab*
+
+marconutri@marconutri.com
+nutrium: 123456ab*

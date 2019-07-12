@@ -55,28 +55,30 @@
         <mrc-pie-chart [data]="pieChartData" [unit]="pieChartUnit" [hideLegend]="true"></mrc-pie-chart>
         <table>
           <tr>
-            <td></td>
+            <td><div class="mrc-legend-item" [style.background-color]="seriesColors[0]"></div></td>
             <td class="mrc-col-desc">Proteínas</td>
             <td class="mrc-col-value">{{ ptnSum | unitFormater: 'g':'2' }}</td>
             <td>{{ getMacroPercent(ptnSum) | unitFormater: '%':'2' }}</td>
+            <td>xx g/kg *</td>
           </tr>
           <tr>
-            <td></td>
+            <td><div class="mrc-legend-item" [style.background-color]="seriesColors[1]"></div></td>
             <td class="mrc-col-desc">Carboidratos</td>
             <td class="mrc-col-value">{{ choSum | unitFormater: 'g':'2' }}</td>
             <td>{{ getMacroPercent(choSum) | unitFormater: '%':'2' }}</td>
+            <td>xx g/kg *</td>
           </tr>
           <tr>
-            <td></td>
+            <td><div class="mrc-legend-item" [style.background-color]="seriesColors[2]"></div></td>
             <td class="mrc-col-desc">Lipídios</td>
             <td class="mrc-col-value">{{ lipSum | unitFormater: 'g':'2' }}</td>
             <td>{{ getMacroPercent(lipSum) | unitFormater: '%':'2' }}</td>
+            <td>xx g/kg *</td>
           </tr>
           <tr>
             <td></td>
             <td class="mrc-col-desc">Energia</td>
             <td class="mrc-col-value">{{ energySum | unitFormater: 'kcal':'2' }}</td>
-            <td></td>
           </tr>
         </table>
       </div>

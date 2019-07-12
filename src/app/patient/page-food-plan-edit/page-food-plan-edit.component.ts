@@ -9,14 +9,17 @@ import { DialogAddMeal, IDialogAddMealData } from "./dialog-add-meal/dialog-add-
 
 import { FoodPlan, Patient, FileSystemCommands, IMeal, IFoodDetail } from "../../core/common/types";
 import { PatientService } from "../../core/patient.service";
+
 import { DialogAlertButton, DialogAlertData, DialogAlertResult } from "../../shared/dialog-alert/dialog-alert.component";
 import { DialogService } from "../../shared/dialog.service";
+
+import { seriesColors as SeriesColors } from '../../widgets/common/constants';
+import { IPieChartData } from '../../widgets/pie-chart/pie-chart.component';
 
 import { Subscription } from "rxjs/internal/Subscription";
 
 import * as moment from 'moment';
 import * as Chart from 'chart.js';
-import { IPieChartData } from '../../widgets/pie-chart/pie-chart.component';
 
 @Component({
   selector: 'page-food-plan-edit',
@@ -46,6 +49,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
 
   private pieChartData: IPieChartData[] = [];
   private pieChartUnit: string = '%';
+  private seriesColors: string[] = SeriesColors;
 
   @ViewChild('radioBtnCalc', { static: false }) matRadioBtnCalc: MatRadioButton; 
   @ViewChild('radioBtnFree', { static: false }) matRadioBtnFree: MatRadioButton; 
@@ -236,11 +240,11 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       data: this.getMacroPercent(this.ptnSum),
       label: 'Proteínas'
     }, {
-      data: this.getMacroPercent(this.lipSum),
-      label: 'Lipídios'
-    }, {
       data: this.getMacroPercent(this.choSum),
       label: 'Carboidratos'
+    }, {
+      data: this.getMacroPercent(this.lipSum),
+      label: 'Lipídios'
     }];
     
     this.pieChartData = data;
