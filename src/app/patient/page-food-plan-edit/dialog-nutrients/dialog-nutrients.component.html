@@ -1,0 +1,20 @@
+<div class="mrc-dialog-title">Nutrientes</div>
+<div class="mrc-dialog-separator"></div>
+<div class="dialog-nutrients-content">
+  <table class="dialog-nutrients-content-table-micros" style="font-size: 9pt">
+    <th>Micronutrientes</th>
+    <tr *ngFor="let nut of micros">
+      <td>{{ nut.description }}</td>
+      <td>{{ nut.qty | unitFormater: nut.unit:'2' }}</td>
+    </tr>
+  </table>
+
+  <table class="dialog-nutrients-content-table-micros" style="font-size: 9pt">
+    <th>Grupos alimentares</th>
+    <tr *ngFor="let cat of categories">
+      <td>{{ cat.description }}</td>
+      <td>{{ cat.qty | unitFormater: 'g':'2' }}</td>
+      <td>{{ getCategoryPercent(cat.qty) | unitFormater: '%':'2' }}</td>
+    </tr>
+  </table>
+</div>

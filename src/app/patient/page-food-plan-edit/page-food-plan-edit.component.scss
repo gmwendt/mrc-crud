@@ -114,11 +114,20 @@ page-food-plan-edit {
       .mrc-col-value {
       }
 
+      .mrc-col-gpkg {
+        width: 100px;
+        text-align: right;
+      }
+
       .mrc-legend-item {
         width: 8px;
         height: 8px;
         border-radius: 5px;
         margin: 1px 4px 0 0;
+      }
+      
+      &-button-detail {
+        margin-top: 8px;
       }
 
       > table {

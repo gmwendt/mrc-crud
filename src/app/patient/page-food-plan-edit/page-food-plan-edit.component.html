@@ -59,21 +59,21 @@
             <td class="mrc-col-desc">Proteínas</td>
             <td class="mrc-col-value">{{ ptnSum | unitFormater: 'g':'2' }}</td>
             <td>{{ getMacroPercent(ptnSum) | unitFormater: '%':'2' }}</td>
-            <td>xx g/kg *</td>
+            <td class="mrc-col-gpkg">{{ getGramsPerKg(ptnSum) | unitFormater: 'g/kg':'2' }}*</td>
           </tr>
           <tr>
             <td><div class="mrc-legend-item" [style.background-color]="seriesColors[1]"></div></td>
             <td class="mrc-col-desc">Carboidratos</td>
             <td class="mrc-col-value">{{ choSum | unitFormater: 'g':'2' }}</td>
             <td>{{ getMacroPercent(choSum) | unitFormater: '%':'2' }}</td>
-            <td>xx g/kg *</td>
+            <td class="mrc-col-gpkg">{{ getGramsPerKg(choSum) | unitFormater: 'g/kg':'2' }}*</td>
           </tr>
           <tr>
             <td><div class="mrc-legend-item" [style.background-color]="seriesColors[2]"></div></td>
             <td class="mrc-col-desc">Lipídios</td>
             <td class="mrc-col-value">{{ lipSum | unitFormater: 'g':'2' }}</td>
             <td>{{ getMacroPercent(lipSum) | unitFormater: '%':'2' }}</td>
-            <td>xx g/kg *</td>
+            <td class="mrc-col-gpkg">{{ getGramsPerKg(lipSum) | unitFormater: 'g/kg':'2' }}*</td>
           </tr>
           <tr>
             <td></td>
@@ -81,6 +81,17 @@
             <td class="mrc-col-value">{{ energySum | unitFormater: 'kcal':'2' }}</td>
           </tr>
         </table>
+        <table style="width: 348px; font-size: 8pt;">
+          <tr>
+            <td>*</td>
+            <td *ngIf="patientWeight; else elseCol">Valor baseado no peso atual do paciente ({{ patientWeight | unitFormater: 'kg':'2' }})</td>
+            <ng-template #elseCol>
+              <td>Informe o peso do paciente na aba Medidas</td>
+            </ng-template>
+          </tr>
+        </table>
+
+        <button mat-button class="page-food-plan-edit-macros-content-button-detail" (click)="show_food_details()">Detalhar nutrientes</button>
       </div>
     </div>
   </div>

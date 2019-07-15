@@ -1,9 +1,9 @@
-<div>
+<div *ngIf="patient">
   <div class="mrc-page-title" (click)="teste()">{{ patient?.name }}</div>
   <div class="mrc-page-subtitle">
-    <div>{{patient?.age}}</div>
-    <div>{{format_value(patient?.height) | localeString}}</div>
-    <div>{{format_value(patient?.weight) | localeString}}</div>
+    <div>{{ patient.age }}</div>
+    <div>{{ format_value(patient.height) | localeString }}</div>
+    <div>{{ (patient.weight ? patient.weight.value : null) | unitFormater: 'kg':'2' }}</div>
   </div>
 </div>
 <div id="page-patient-consult-content">
@@ -11,7 +11,7 @@
     <mat-tab label="Anamneses">
       <button mat-button class="page-patient-consult-content-add-button" (click)="on_anamneses_edit()">Adicionar anamneses</button>
       <mat-table #table [dataSource]="anamneses" class="page-patient-consult-content-table">
-
+ 
         <ng-container matColumnDef="clinicCase">
           <mat-header-cell *matHeaderCellDef> Caso clínico </mat-header-cell>
           <mat-cell *matCellDef="let element">{{ element.clinicCase }}</mat-cell>

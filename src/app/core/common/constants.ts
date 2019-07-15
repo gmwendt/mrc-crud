@@ -1,4 +1,4 @@
-import { PoopShadesEnum, UrineColorEnum, IMetabolicTrackingItem, ValueClassification, ICorporalDensityProtocol, CorporalDensityProtocolsEnum, LaboratoryExamItem } from "./types";
+import { PoopShadesEnum, UrineColorEnum, IMetabolicTrackingItem, ValueClassification, ICorporalDensityProtocol, CorporalDensityProtocolsEnum, LaboratoryExamItem, INutrient, IFoodCategory } from "./types";
 
 export class LocalStorageConstants {
   public static MRC_USER = '_MRC_USER';
@@ -237,6 +237,17 @@ export const MealGroups: any[] = [
   { id: '1', description: 'Café da manhã' }, { id: '2', description: 'Lanche da manhã' }, { id: '3', description: 'Almoço' }, { id: '4', description: 'Lanche da tarde' },
   { id: '5', description: 'Janta' }, { id: '6', description: 'Ceia' }, { id: '7', description: 'Pré-treino' }, { id: '8', description: 'Pos-treino' }
   ];
+
+export const MicroNutrients: INutrient[] = [ { id: 'calcium', description: 'Cálcio' }, { id: 'cholesterol', description: 'Colesterol' }, { id: 'fiber', description: 'Fibra alimentar' },
+  { id: 'iron', description: 'Ferro' }, { id: 'magnesium', description: 'Magnésio' }, { id: 'manganese', description: 'Manganês' }, { id: 'phosphorus', description: 'Fósforo' }, { id: 'potassium', description: 'Potássio' },
+  { id: 'pyridoxine', description: 'Vitamina B6 (Piridoxina)' }, { id: 'retinol', description: 'TODO' }, { id: 'riboflavin', description: 'Vitamina B2 (Riboflavina)' }, { id: 'sodium', description: 'Sódio' },
+  { id: 'thiamine', description: 'Vitamina B1 (Tiamina)' }, { id: 'zinc', description: 'Zinco' }, { id: 'vitaminC', description: 'Vitamina C (Ácido ascórbico)' }];
+
+export const FoodCategories: IFoodCategory[] = [{ id: 1, description: 'Cereais e derivados' }, { id: 2, description: 'Verduras, hortaliças e derivados' }, { id: 3, description: 'Frutas e derivados' }, 
+{ id: 4, description: 'Pescados e frutos do mar' }, { id: 5, description: 'Carnes e derivados' }, { id: 6, description: 'Miscelâneas' }, { id: 7, description: 'Leguminosas e derivados' }, 
+{ id: 8, description: 'Nozes e Sementes' }];
+
+export const Macronutrients: INutrient[] = [{ id: 'carbohydrate', description: 'Carboidratos' }, { id: 'energy', description: 'Energia' }, { id: 'lipid', description: 'Lipídios' }, { id: 'protein', description: 'Proteinas' }];
 
 export const MetabolicTrackingList: IMetabolicTrackingItem[] = [
   { id: 'headache', group: MetabolicTrackingGroup.Head, description: 'Dor de cabeça', score: 0 },

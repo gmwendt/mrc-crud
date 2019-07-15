@@ -6,6 +6,7 @@ import { MatRadioChange, MatRadioButton } from "@angular/material/radio";
 import { ActivatedRoute } from "@angular/router";
 
 import { DialogAddMeal, IDialogAddMealData } from "./dialog-add-meal/dialog-add-meal.component";
+import { DialogNutrients } from './dialog-nutrients/dialog-nutrients.component';
 
 import { FoodPlan, Patient, FileSystemCommands, IMeal, IFoodDetail } from "../../core/common/types";
 import { PatientService } from "../../core/patient.service";
@@ -195,6 +196,13 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     this._detector.detectChanges();
   }
 
+  private show_food_details(): void {
+    let foods = [];
+    this.foodPlan.meals.forEach(meal => foods.push(...meal.selectedFoods));
+
+    this._dialog.open(DialogNutrients, { data: foods, width: '800px', height: this._dialogAddMealHeight + 'px' })
+  }
+
   private async on_save_clicked(): Promise<void> {
     if (!this.checkErrors())
       return;
@@ -265,6 +273,20 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   private getMacroPercent(value: number): number {
     let total = this.ptnSum + this.choSum + this.lipSum;
     return value / total * 100;
+  }
+
+  private getGramsPerKg(value: number): number {
+    if (!this._patient.weight)
+      return null;
+
+    return value / this._patient.weight.value;
+  }
+
+  private get patientWeight(): number {
+    if (!this._patient.weight)
+      return null;
+
+    return this._patient.weight.value;
   }
 
   private get pageTitle(): string {

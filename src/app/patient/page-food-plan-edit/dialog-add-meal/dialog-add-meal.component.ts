@@ -1,13 +1,27 @@
-import { Component, ViewEncapsulation, Inject, OnInit, AfterViewInit, OnDestroy, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
+import { 
+  AfterViewInit, 
+  ChangeDetectionStrategy, 
+  ChangeDetectorRef, 
+  Component, 
+  Inject, 
+  OnDestroy, 
+  OnInit, 
+  ViewChild, 
+  ViewEncapsulation, 
+} from "@angular/core";
+
+import { HttpErrorResponse } from "@angular/common/http";
+
+import { FormControl, Validators } from "@angular/forms";
+
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSelect, MatSelectChange } from "@angular/material/select";
 import { MatTableDataSource } from "@angular/material/table";
-import { HttpErrorResponse } from "@angular/common/http";
-import { FormControl, Validators } from "@angular/forms";
 
 import { MealGroups } from "../../../core/common/constants";
 import { IFoodDetail, IMeal } from "../../../core/common/types";
 import { FoodService } from "../../../core/food.service";
+
 import { DialogAlertData, DialogAlertButton } from "../../../shared/dialog-alert/dialog-alert.component";
 import { DialogService } from "../../../shared/dialog.service";
 

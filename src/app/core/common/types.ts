@@ -338,9 +338,9 @@ export class Patient {
     return strAge;
   }
 
-  get weight(): IHistoricalValue | string {
+  get weight(): IHistoricalValue {
     if (!this.measurements || !this.measurements.weigth || this.measurements.weigth.length == 0)
-      return '-- kg';
+      return null;
 
     return this.measurements.weigth[0];
   }
@@ -482,19 +482,40 @@ export class FoodPlan {
   }
 }
 
+export interface IFoodAttributeDetail {
+  qty: number;
+  unit: string;
+}
+
+export interface IFoodAttribute {
+  [key: string]: IFoodAttributeDetail
+}
+
 export interface IFoodDetail {
   id: number;
   description: string;
   measurements: IFoodMeasurement[];
   selectedMeasurement: number;
   quantity: number;
-  attributes: any;
+  attributes: IFoodAttribute[];
+  category_id: number;
 }
 
 export interface IFoodMeasurement {
   id: number;
   description: string;
   converter: number;
+}
+
+export interface INutrient {
+  id: string;
+  description: string;
+}
+
+export interface IFoodCategory {
+  id: number;
+  description: string;
+  qty?: number;
 }
 
 export interface IMacroNutrients {

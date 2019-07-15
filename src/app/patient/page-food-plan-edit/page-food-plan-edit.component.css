@@ -114,6 +114,11 @@ page-food-plan-edit .page-food-plan-edit-macros-content .mrc-col-desc {
   width: 100px;
 }
 
+page-food-plan-edit .page-food-plan-edit-macros-content .mrc-col-gpkg {
+  width: 100px;
+  text-align: right;
+}
+
 page-food-plan-edit .page-food-plan-edit-macros-content .mrc-legend-item {
   width: 8px;
   height: 8px;
