@@ -200,7 +200,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     let foods = [];
     this.foodPlan.meals.forEach(meal => foods.push(...meal.selectedFoods));
 
-    this._dialog.open(DialogNutrients, { data: foods, width: '800px', height: this._dialogAddMealHeight + 'px' })
+    this._dialog.open(DialogNutrients, { data: foods })
   }
 
   private async on_save_clicked(): Promise<void> {

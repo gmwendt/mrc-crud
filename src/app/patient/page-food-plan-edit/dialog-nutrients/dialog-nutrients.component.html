@@ -1,7 +1,26 @@
 <div class="mrc-dialog-title">Nutrientes</div>
 <div class="mrc-dialog-separator"></div>
 <div class="dialog-nutrients-content">
-  <table class="dialog-nutrients-content-table-micros" style="font-size: 9pt">
+  <div class="dialog-nutrients-content-col1">
+    <table class="dialog-nutrients-content-table">
+      <th>Macronutrientes</th>
+      <tr *ngFor="let nut of macros">
+        <td>{{ nut.description }}</td>
+        <td>{{ nut.qty | unitFormater: nut.unit:'2' }}</td>
+      </tr>
+    </table>
+
+    <table class="dialog-nutrients-content-table" style="margin-top: 8px;">
+      <th>Grupos alimentares</th>
+      <tr *ngFor="let cat of categories">
+        <td>{{ cat.description }}</td>
+        <td>{{ cat.qty | unitFormater: 'g':'2' }}</td>
+        <td>{{ getCategoryPercent(cat.qty) | unitFormater: '%':'2' }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <table class="dialog-nutrients-content-table">
     <th>Micronutrientes</th>
     <tr *ngFor="let nut of micros">
       <td>{{ nut.description }}</td>
@@ -9,12 +28,10 @@
     </tr>
   </table>
 
-  <table class="dialog-nutrients-content-table-micros" style="font-size: 9pt">
-    <th>Grupos alimentares</th>
-    <tr *ngFor="let cat of categories">
-      <td>{{ cat.description }}</td>
-      <td>{{ cat.qty | unitFormater: 'g':'2' }}</td>
-      <td>{{ getCategoryPercent(cat.qty) | unitFormater: '%':'2' }}</td>
-    </tr>
-  </table>
 </div>
+<div id="mrc-edit-page-footer">
+    <div class="mrc-dialog-separator"></div>
+    <div id="mrc-edit-page-footer-buttons">
+      <button mat-button (click)="on_close_click()">Fechar</button>
+    </div>
+  </div>

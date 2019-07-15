@@ -14,13 +14,14 @@ export interface INutrientDetail {
 @Component({
   selector: 'dialog-nutrients',
   templateUrl: './dialog-nutrients.component.html',
-  // styleUrls: ['./dialog-nutrients.component.css'],
+  styleUrls: ['./dialog-nutrients.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class DialogNutrients {
 
   private foods: IFoodDetail[];
   private micros: INutrientDetail[] = [];
+  private macros: INutrientDetail[] = [];
   private categories: IFoodCategory[] = [];
   
   private micronutrientsRef = MicroNutrients;
@@ -37,7 +38,13 @@ export class DialogNutrients {
       this.micronutrientsRef.forEach(availMicro => {
         let nutrient: IFoodAttributeDetail = food.attributes[availMicro.id];
         if (nutrient && nutrient.qty && typeof(nutrient.qty) === 'number') 
-          this.addOrCreateMicro(nutrient, availMicro);
+          this.addOrCreateMicro(food, nutrient, availMicro);
+      });
+
+      this.macrosRef.forEach(availMacro => {
+        let nutrient: IFoodAttributeDetail = food.attributes[availMacro.id];
+        if (nutrient && nutrient.qty && typeof(nutrient.qty) === 'number') 
+          this.addOrCreateMacro(food, nutrient, availMacro);
       });
 
       this.addOrCreateCategory(food);
@@ -63,22 +70,42 @@ export class DialogNutrients {
     }
   }
 
-  private addOrCreateMicro(nutrient: IFoodAttributeDetail, ref: INutrient): void {
+  private addOrCreateMicro(food: IFoodDetail, foodAttr: IFoodAttributeDetail, ref: INutrient): void {
     let nutTotalizer = this.micros.find(n => n.id === ref.id);
 
     if (nutTotalizer) {
-      if (nutTotalizer.unit == nutrient.unit)
-        nutTotalizer.qty += nutrient.qty;
+      if (nutTotalizer.unit == foodAttr.unit)
+        nutTotalizer.qty += foodAttr.qty * food.quantity / 100;
       else {
         //TODO: unit converter
-        console.log("unit converter error");
+        console.log("unit converter conflict");
       }
     }
     else 
       this.micros.push({
         id: ref.id,
         description: ref.description,
-        qty: nutrient.qty,
+        qty: foodAttr.qty * food.quantity / 100,
+        unit: foodAttr.unit
+      });
+  }
+
+  private addOrCreateMacro(food: IFoodDetail, nutrient: IFoodAttributeDetail, ref: INutrient): void {
+    let nutTotalizer = this.macros.find(n => n.id === ref.id);
+
+    if (nutTotalizer) {
+      if (nutTotalizer.unit == nutrient.unit)
+        nutTotalizer.qty += nutrient.qty * food.quantity / 100;
+      else {
+        //TODO: unit converter
+        console.log("unit converter conflict");
+      }
+    }
+    else 
+      this.macros.push({
+        id: ref.id,
+        description: ref.description,
+        qty: nutrient.qty * food.quantity / 100,
         unit: nutrient.unit
       });
   }
@@ -88,5 +115,9 @@ export class DialogNutrients {
     this.categories.forEach(c => total += c.qty);
 
     return qty / total * 100;
+  }
+
+  private on_close_click(): void {
+    this._dialogRef.close();
   }
 }

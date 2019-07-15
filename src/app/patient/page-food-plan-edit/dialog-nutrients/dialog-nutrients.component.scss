@@ -1,8 +1,19 @@
 dialog-nutrients {
   
   .dialog-nutrients-content {
-    &-table-micros {
+    display: flex;
+
+    &-col1 {
+      margin: 0 16px 0 8px;
+    }
+
+    &-table {
       font-size: 9pt;
     }
+  }
+
+  .mrc-dialog-separator {
+    margin: 8px 0 !important;
+    width: 100% !important;
   }
 }

@@ -86,3 +86,7 @@
   .icon-filter:before {
     content: "\e90e";
   }
+
+  .icon-list-detail:before {
+    content: "\e90f";
+  }

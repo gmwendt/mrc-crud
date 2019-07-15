@@ -79,7 +79,8 @@ page-food-plan-edit .page-food-plan-edit-content-meals-footer {
 }
 
 page-food-plan-edit .page-food-plan-edit-content-meals-footer .icon-edit,
-page-food-plan-edit .page-food-plan-edit-content-meals-footer .icon-delete {
+page-food-plan-edit .page-food-plan-edit-content-meals-footer .icon-delete,
+page-food-plan-edit .page-food-plan-edit-content-meals-footer .icon-list-detail {
   cursor: pointer;
   vertical-align: sub;
 }
@@ -124,6 +125,10 @@ page-food-plan-edit .page-food-plan-edit-macros-content .mrc-legend-item {
   height: 8px;
   border-radius: 5px;
   margin: 1px 4px 0 0;
+}
+
+page-food-plan-edit .page-food-plan-edit-macros-content-button-detail {
+  margin-top: 8px;
 }
 
 page-food-plan-edit .page-food-plan-edit-macros-content > table {

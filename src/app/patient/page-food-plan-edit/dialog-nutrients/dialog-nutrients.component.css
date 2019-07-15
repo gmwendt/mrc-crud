@@ -1,0 +1,16 @@
+dialog-nutrients .dialog-nutrients-content {
+  display: flex; 
+}
+
+dialog-nutrients .dialog-nutrients-content-col1 {
+  margin: 0 16px 0 8px;
+}
+
+dialog-nutrients .dialog-nutrients-content-table {
+  font-size: 9pt;
+}
+
+dialog-nutrients .mrc-dialog-separator {
+  margin: 8px 0 !important;
+  width: 100% !important;
+}
