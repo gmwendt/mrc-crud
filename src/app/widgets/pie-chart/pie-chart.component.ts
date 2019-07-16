@@ -134,6 +134,9 @@ export class PieChartComponent implements AfterViewInit {
     if (!this._container)
       return;
 
+    if (this._chart)
+      this._chart.destroy();
+
     this.createChartConfig();
     this._chart = new Chart(this._container.nativeElement, this._config);
   }

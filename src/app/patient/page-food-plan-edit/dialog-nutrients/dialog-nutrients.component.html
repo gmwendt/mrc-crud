@@ -6,7 +6,12 @@
       <th>Macronutrientes</th>
       <tr *ngFor="let nut of macros">
         <td>{{ nut.description }}</td>
-        <td>{{ nut.qty | unitFormater: nut.unit:'2' }}</td>
+        <td class="mrc-col-80">{{ nut.qty | unitFormater: nut.unit:'2' }}</td>
+        <td>{{ getMacroPercent(nut.qty) | unitFormater: '%':'2' }}</td>
+      </tr>
+      <tr>
+        <td>{{ energy.description }}</td>
+        <td>{{ energy.kcal | unitFormater: energy.unit:'2' }}</td>
       </tr>
     </table>
 
@@ -14,7 +19,7 @@
       <th>Grupos alimentares</th>
       <tr *ngFor="let cat of categories">
         <td>{{ cat.description }}</td>
-        <td>{{ cat.qty | unitFormater: 'g':'2' }}</td>
+        <td class="mrc-col-80">{{ cat.qty | unitFormater: 'g':'2' }}</td>
         <td>{{ getCategoryPercent(cat.qty) | unitFormater: '%':'2' }}</td>
       </tr>
     </table>

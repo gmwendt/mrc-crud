@@ -10,7 +10,17 @@ dialog-nutrients .dialog-nutrients-content-table {
   font-size: 9pt;
 }
 
+dialog-nutrients .dialog-nutrients-content-table .mrc-col-80 {
+  width: 80px;
+  text-align: center;
+}
+
 dialog-nutrients .mrc-dialog-separator {
   margin: 8px 0 !important;
   width: 100% !important;
+}
+
+dialog-nutrients #mrc-edit-page-footer-buttons {
+  display: flex;
+  justify-content: flex-end;
 }

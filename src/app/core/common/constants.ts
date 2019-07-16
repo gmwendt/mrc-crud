@@ -247,7 +247,7 @@ export const FoodCategories: IFoodCategory[] = [{ id: 1, description: 'Cereais e
 { id: 4, description: 'Pescados e frutos do mar' }, { id: 5, description: 'Carnes e derivados' }, { id: 6, description: 'Miscelâneas' }, { id: 7, description: 'Leguminosas e derivados' }, 
 { id: 8, description: 'Nozes e Sementes' }];
 
-export const Macronutrients: INutrient[] = [{ id: 'carbohydrate', description: 'Carboidratos' }, { id: 'energy', description: 'Energia' }, { id: 'lipid', description: 'Lipídios' }, { id: 'protein', description: 'Proteinas' }];
+export const Macronutrients: INutrient[] = [{ id: 'carbohydrate', description: 'Carboidratos' }, { id: 'lipid', description: 'Lipídios' }, { id: 'protein', description: 'Proteinas' }];
 
 export const MetabolicTrackingList: IMetabolicTrackingItem[] = [
   { id: 'headache', group: MetabolicTrackingGroup.Head, description: 'Dor de cabeça', score: 0 },

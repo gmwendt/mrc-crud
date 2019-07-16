@@ -11,6 +11,13 @@ export interface INutrientDetail {
   unit: string;
 }
 
+export interface IEnergyDetail {
+  id: string;
+  description: string;
+  kcal: number;
+  unit: string;
+}
+
 @Component({
   selector: 'dialog-nutrients',
   templateUrl: './dialog-nutrients.component.html',
@@ -23,10 +30,17 @@ export class DialogNutrients {
   private micros: INutrientDetail[] = [];
   private macros: INutrientDetail[] = [];
   private categories: IFoodCategory[] = [];
+  private energy: IEnergyDetail = {
+    description: 'Energia',
+    id: 'energy',
+    kcal: 0,
+    unit: 'kcal'
+  };
   
-  private micronutrientsRef = MicroNutrients;
-  private foodCategoriesRef = FoodCategories;
-  private macrosRef = Macronutrients;
+  private _micronutrientsRef = MicroNutrients;
+  private _foodCategoriesRef = FoodCategories;
+  private _macrosRef = Macronutrients;
+  private _energyRef = { id: 'energy', description: 'Energia' };
   
   constructor(private _dialogRef: MatDialogRef<DialogNutrients>, @Inject(MAT_DIALOG_DATA) data: IFoodDetail[]) {
     this.foods = data;
@@ -35,17 +49,21 @@ export class DialogNutrients {
 
   private totalizer(): void {
     this.foods.forEach(food => {
-      this.micronutrientsRef.forEach(availMicro => {
+      this._micronutrientsRef.forEach(availMicro => {
         let nutrient: IFoodAttributeDetail = food.attributes[availMicro.id];
         if (nutrient && nutrient.qty && typeof(nutrient.qty) === 'number') 
           this.addOrCreateMicro(food, nutrient, availMicro);
       });
 
-      this.macrosRef.forEach(availMacro => {
+      this._macrosRef.forEach(availMacro => {
         let nutrient: IFoodAttributeDetail = food.attributes[availMacro.id];
         if (nutrient && nutrient.qty && typeof(nutrient.qty) === 'number') 
           this.addOrCreateMacro(food, nutrient, availMacro);
       });
+
+      let energy = food.attributes[this.energy.id]
+      if (energy && energy.kcal && typeof(energy.kcal) === 'number')
+        this.energy.kcal += energy.kcal;
 
       this.addOrCreateCategory(food);
     });
@@ -57,7 +75,7 @@ export class DialogNutrients {
     if (cat) 
       cat.qty = cat.qty ? cat.qty + food.quantity : food.quantity;
     else {
-      let ref = this.foodCategoriesRef.find(c => c.id === food.category_id);
+      let ref = this._foodCategoriesRef.find(c => c.id === food.category_id);
 
       if (!ref)
         return;
@@ -113,6 +131,13 @@ export class DialogNutrients {
   private getCategoryPercent(qty: number): number {
     let total = 0;
     this.categories.forEach(c => total += c.qty);
+
+    return qty / total * 100;
+  }
+
+  private getMacroPercent(qty: number): number {
+    let total = 0;
+    this.macros.forEach(m => total += m.qty);
 
     return qty / total * 100;
   }

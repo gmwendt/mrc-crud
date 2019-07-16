@@ -4,7 +4,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { CorporalDensityProtocols } from "../../core/common/constants";
-import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue, LaboratoryExamItem, LaboratoryExam, FoodPlan } from "../../core/common/types";
+import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue, LaboratoryExamItem, LaboratoryExam, FoodPlan, EnergyExpend } from "../../core/common/types";
 import { Equations } from "../../core/common/worker";
 import { PatientService } from "../../core/patient.service";
 
@@ -33,6 +33,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private _routeAnamneses: string = 'anamneses';
   private _routeFoodPlan: string = 'planoAlimentar';
   private _routeLabAnalyse: string = 'analiseLaboratorial';
+  private _routeEnergyExpend: string = 'gastoEnergetico';
   private _dirty: boolean;
   private _paramsDisposable: Subscription;
   
@@ -40,9 +41,11 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private examsReq: MatTableDataSource<LaboratoryExam>;
   private examsRes: MatTableDataSource<LaboratoryExam>;
   private foodRecalls: MatTableDataSource<FoodPlan>;
+  private energyExpends: MatTableDataSource<EnergyExpend>;
   private anamnesesDisplayedColumns = ['clinicCase', 'commands'];
   private examsRequestedDisplayedColumns = ['description', 'timeElapsed', 'commands'];
   private foodPlansDisplayedColumns = ['description', 'timeElapsed', 'commands'];
+  private energyExpendsDisplayedColumns = ['description', 'commands']; //TODO: 'timeElapsed', 
 
   private loading = true;
   private patient: Patient;
@@ -69,6 +72,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
         this.createAnamnasesTable();
         this.createExamsTables();
         this.createFoodRecallTable();
+        this.createEnergyExpendsTable();
       }
       catch (error) {
         this.on_error(error);
@@ -138,6 +142,11 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private on_food_plan_edit(isRecall?: boolean, foodPlanId?: string): void {
     var id = foodPlanId ? foodPlanId : (isRecall ? FileSystemCommands.AddType1 : FileSystemCommands.AddType2);
     this.navigate(this._routeFoodPlan, id);
+  }
+
+  private on_energy_expend_edit(getId?: string): void {
+    var id = getId ? getId : FileSystemCommands.Add;
+    this.navigate(this._routeEnergyExpend, id);
   }
 
   private async on_remove_anamneses_click(event: MouseEvent, anamnese: Anamneses): Promise<void> {
@@ -242,6 +251,13 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     });
     
     this.foodRecalls = new MatTableDataSource(this.patient.foodPlans.filter(plan => plan.isRecall));
+  }
+
+  private createEnergyExpendsTable(): void {
+    if (!this.patient || !this.patient.energyExpend)
+      return;
+
+    this.energyExpends = new MatTableDataSource(this.patient.energyExpend);
   }
 
   private navigate(route: string, id: string | FileSystemCommands, queryParams?: Object): void {

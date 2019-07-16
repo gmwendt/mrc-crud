@@ -9,11 +9,21 @@ dialog-nutrients {
 
     &-table {
       font-size: 9pt;
+
+      .mrc-col-80 {
+        width: 80px;
+        text-align: center;
+      }
     }
   }
 
   .mrc-dialog-separator {
     margin: 8px 0 !important;
     width: 100% !important;
+  }
+
+  #mrc-edit-page-footer-buttons {
+    display: flex;
+    justify-content: flex-end;
   }
 }

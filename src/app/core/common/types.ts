@@ -315,6 +315,7 @@ export class Patient {
   public measurements?: Measurements;
   public exams?: LaboratoryExam[];
   public foodPlans?: FoodPlan[];
+  public energyExpend?: EnergyExpend[];
 
   constructor(accountRefId: number) {
     this.accountRefId = accountRefId;
@@ -458,6 +459,27 @@ export interface ILabExamResult {
   examName: string;
   result: string;
   unit: string;
+}
+
+export class EnergyExpend {
+  constructor(public id: string, public description: string, public date: string) {
+  }
+
+  toJSON(): string {
+    return JSON.stringify(Object.assign({}, this));
+  }
+
+  static fromJSON(json: EnergyExpend | string): EnergyExpend {
+    if (typeof json === 'string')
+      return JSON.parse(json, EnergyExpend.reviver);
+  
+    var data = Object.create(EnergyExpend.prototype);
+    return Object.assign(data, json);
+  }
+
+  private static reviver(key: string, value: any): any {
+    return key === "" ? EnergyExpend.fromJSON(value) : value;
+  }
 }
 
 export class FoodPlan {

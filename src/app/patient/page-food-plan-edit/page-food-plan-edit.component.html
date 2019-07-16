@@ -42,7 +42,7 @@
             </div>
             <div class="page-food-plan-edit-content-meals-footer">
               <span title="Editar" class="icon-edit" (click)="on_add_meal_click(meal, i)"></span> 
-              <span title="Detalhes" class="icon-list-detail"></span>  <!-- TODO:  (click)=""-->
+              <span title="Detalhes" class="icon-list-detail" (click)="show_meal_details(meal)"></span>
               <span title="Remover" class="icon-delete" (click)="on_remove_meal_click(meal, i)"></span>
               <button mat-button *ngIf="!foodPlan.isRecall">Adicionar substituição</button> <!-- TODO:  (click)=""-->
             </div>
@@ -50,7 +50,7 @@
         </ng-container>
       </div>
     </div>
-    <div class="page-food-plan-edit-macros" *ngIf="foodPlan.useFoodDb">
+    <div class="page-food-plan-edit-macros" *ngIf="foodPlan.useFoodDb && foodPlan.meals && foodPlan.meals.length > 0">
       <label>Macronutrientes</label>
       <div class="page-food-plan-edit-macros-content">
         <mrc-pie-chart [data]="pieChartData" [unit]="pieChartUnit" [hideLegend]="true"></mrc-pie-chart>
@@ -92,14 +92,14 @@
           </tr>
         </table>
 
-        <button mat-button class="page-food-plan-edit-macros-content-button-detail" (click)="show_food_details()">Detalhar nutrientes</button>
+        <button mat-button class="page-food-plan-edit-macros-content-button-detail" (click)="show_meal_details()">Detalhar nutrientes</button>
       </div>
     </div>
   </div>
 </progress-spinner>
 <div id="mrc-edit-page-footer">
   <div class="mrc-dialog-separator"></div>
-  <!-- <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div>  -->
+  <!-- <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div>  TODO-->
   <div id="mrc-edit-page-footer-buttons">
     <button mat-button [disabled]="!dirty && !isNew" (click)="on_save_clicked()">Salvar</button> 
     <button mat-button (click)="on_cancel_clicked()">Cancelar</button>

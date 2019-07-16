@@ -192,13 +192,18 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
 
     this.foodPlan.meals.splice(index, 1);
 
+    this.updateChartData();
     this.markAsDirty();
     this._detector.detectChanges();
   }
 
-  private show_food_details(): void {
+  private show_meal_details(meal?: IMeal): void {
     let foods = [];
-    this.foodPlan.meals.forEach(meal => foods.push(...meal.selectedFoods));
+
+    if (meal)
+      foods = meal.selectedFoods;
+    else
+      this.foodPlan.meals.forEach(food => foods.push(...food.selectedFoods));
 
     this._dialog.open(DialogNutrients, { data: foods })
   }
