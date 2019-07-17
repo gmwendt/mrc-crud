@@ -1,0 +1,47 @@
+page-energy-expend-edit {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 30px);
+
+  progress-spinner {
+    height: 100%;
+    overflow: auto;
+  }
+
+  .page-energy-expend-edit-content {
+    display: flex; 
+    flex-direction: column; 
+    height: calc(100% - 79px);
+    margin: 16px 22px; 
+
+    &-description-field {
+      max-width: 500px;
+
+      textarea {
+        height: 80px;
+      }
+    }
+
+    &-date-field {
+      max-width: 300px;
+    }
+  }
+
+  #mrc-edit-page-footer {
+
+    .mrc-edit-page-error {
+      color: #ef1508;
+      font-size: 9pt;
+      margin: 0 0 4px 22px;
+    }
+
+    &-buttons {
+      margin: 8px 0 8px 22px;
+      
+      > button {
+        margin: 0 8px 0 0;
+        width: 85px;
+      }
+    }
+  }
+}
