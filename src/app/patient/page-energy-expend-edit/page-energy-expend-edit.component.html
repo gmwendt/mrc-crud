@@ -23,6 +23,24 @@
         Informe uma data válida
       </mat-error>
     </mat-form-field>
+
+    <ng-container *ngIf="patient">
+      <div>
+        <div>Altura: {{ (patient.height ? patient.height.value : null) | unitFormater: 'cm':'2' }}</div>
+        <div>Peso: {{ (patient.weight ? patient.weight.value : null) | unitFormater: 'kg':'2' }}</div>
+      </div>
+      <div *ngIf="!patient.height">Informe a altura do paciente na aba Medidas</div>
+      <div *ngIf="!patient.weight">Informe o peso do paciente na aba Medidas</div> 
+    </ng-container>
+
+    <mat-select>
+      <mat-option *ngFor"let item of nafList">
+        <div>
+          <div>{{ item.name }} ({{ item.value }})</div>
+          <div>{{ item.description }}</div>
+        </div>
+      </mat-option>
+    </mat-select>
   </div>
   <div id="mrc-edit-page-footer">
     <div class="mrc-dialog-separator"></div>

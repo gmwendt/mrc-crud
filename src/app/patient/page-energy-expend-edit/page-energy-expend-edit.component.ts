@@ -4,6 +4,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 
+import { NafList } from './common/constants';
+
 import { Patient, FileSystemCommands, EnergyExpend } from '../../core/common/types';
 import { PatientService } from '../../core/patient.service';
 
@@ -26,6 +28,8 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
   private _dirty: boolean;
   private _patient: Patient;
   private _loading: boolean;
+
+  private nafList = NafList;
 
   private isNew: boolean;
   private energyExpend: EnergyExpend;  
@@ -67,6 +71,20 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     
     this._loading = value;
     this._detector.detectChanges();
+  }
+
+  private get patientWeight(): number {
+    if (!this._patient.weight)
+      return null;
+
+    return this._patient.weight.value;
+  }
+
+  private get patientHeight(): number {
+    if (!this._patient.height)
+      return null;
+
+    return this._patient.height.value;
   }
 
   private async loadGet(patientId: string, getId: string): Promise<void> {

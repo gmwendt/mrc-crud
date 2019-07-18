@@ -346,9 +346,9 @@ export class Patient {
     return this.measurements.weigth[0];
   }
 
-  get height(): IHistoricalValue | string {
+  get height(): IHistoricalValue {
     if (!this.measurements || !this.measurements.height || this.measurements.height.length == 0)
-      return '-- cm';
+      return null;
 
     return this.measurements.height[0];
   }

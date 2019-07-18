@@ -309,20 +309,6 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     this._dialog.openAlert(dialogData).then(result => { });
   }
 
-  private format_value(data: IHistoricalValue | string): string {
-    if (!data)
-      return;
-
-    if (typeof data === 'string')
-      return data;
-
-    let value = data.value;
-    if (typeof value === 'number' && !isNaN(value)) 
-      value = value.toLocaleString();
-  
-    return value + ' ' + data.unit;
-  }
-
   private get examTableHeight(): string {
     if (!this._element)
       return;
