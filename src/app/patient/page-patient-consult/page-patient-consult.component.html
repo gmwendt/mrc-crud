@@ -1,7 +1,7 @@
 <div *ngIf="patient">
   <div class="mrc-page-title" (click)="teste()">{{ patient?.name }}</div>
   <div class="mrc-page-subtitle">
-    <div>{{ patient.age }}</div>
+    <div>{{ patient.ageAsString }}</div>
     <div>{{ (patient.height ? patient.height.value : null) | unitFormater: 'cm':'2' }}</div>
     <div>{{ (patient.weight ? patient.weight.value : null) | unitFormater: 'kg':'2' }}</div>
   </div>

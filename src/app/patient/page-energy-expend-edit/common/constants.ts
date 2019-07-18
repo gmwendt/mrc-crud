@@ -1,19 +1,22 @@
-import { INafItem } from './types';
+import { IActivityFactor, IEnergyExpendProtocol } from './types';
+import { TmplAstBoundAttribute } from '@angular/compiler';
 
-export const NafList: INafItem[] = [{
+export const ActiviFactorHeB: IActivityFactor[] = [{
   name: 'Sedentário',
-  description: 'Trabalhos domésticos de esforço leve a moderado, atividades do cotidiano, sentado',
   value: 1.2
 }, {
   name: 'Pouco ativo',
-  description: 'Caminhadas (6,4 km/h) mais atividades do sedentário',
-  value: 1.4
+  value: 1.375
+}, {
+    name: 'Moderado',
+    value: 1.55
 }, {
   name: 'Ativo',
-  description: 'Ginástica aeróbica, corrida, natação, tênis mais atividades do sedentário',
-  value: 1.6
+  value: 1.725
 }, {
   name: 'Muito ativo',
-  description: 'Ciclismo de intensidade moderada, corrida, pular corda, tênis mais atividades do sedentário',
   value: 1.9
-}];
+  }];
+
+export const EnergyExpendProtocol: IEnergyExpendProtocol[] = [{ id: 0, name: 'Harris & Benedict (1919)' }, { id: 1, name: 'FAO/OMS (2001)' },
+  { id: 2, name: 'FAO/OMS (1985)' }];

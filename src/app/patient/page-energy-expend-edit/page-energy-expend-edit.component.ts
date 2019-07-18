@@ -4,7 +4,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 
-import { NafList } from './common/constants';
+import { ActiviFactorHeB, EnergyExpendProtocol } from './common/constants';
+import { EnergyExpendCalculator, IActivityFactor } from './common/types';
 
 import { Patient, FileSystemCommands, EnergyExpend } from '../../core/common/types';
 import { PatientService } from '../../core/patient.service';
@@ -29,13 +30,16 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
   private _patient: Patient;
   private _loading: boolean;
 
-  private nafList = NafList;
+  private protocols = EnergyExpendProtocol;
 
   private isNew: boolean;
   private energyExpend: EnergyExpend;  
 
   private descriptionFormControl: FormControl;
   private dateFormControl: FormControl;
+  private heightFormControl: FormControl;
+  private weightFormControl: FormControl;
+  private protocolFormControl: FormControl;
   
   constructor(private _detector: ChangeDetectorRef, private _route: ActivatedRoute, private _patientService: PatientService,
     private _dialog: DialogService, private _location: Location) {
@@ -61,11 +65,11 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  private get loading(): boolean {
+  get loading(): boolean {
     return this._loading;
   }
 
-  private set loading(value: boolean) {
+  set loading(value: boolean) {
     if (value == this._loading)
       return;
     
@@ -73,18 +77,36 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     this._detector.detectChanges();
   }
 
-  private get patientWeight(): number {
+  get patientWeight(): number {
     if (!this._patient.weight)
       return null;
 
     return this._patient.weight.value;
   }
 
-  private get patientHeight(): number {
+  get patientHeight(): number {
     if (!this._patient.height)
       return null;
 
     return this._patient.height.value;
+  }
+
+  get activityFactorList(): IActivityFactor[] {
+    if (!this.energyExpend)
+      return [];
+    
+    switch (this.energyExpend.selectedProtocol) {
+      case 0:
+        return ActiviFactorHeB;
+      //TODO: others
+      
+      default:
+        return [];
+    }
+  }
+
+  get tmb(): number {
+    return Math.round(EnergyExpendCalculator.tmbHarrisBenedict(this._patient.gender, this.energyExpend.weight, this.energyExpend.height, this._patient.age));
   }
 
   private async loadGet(patientId: string, getId: string): Promise<void> {
@@ -92,7 +114,10 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     this._patient = await this._patientService.getPatientById(patientId);
 
     if (this.isNew) {
-      this.energyExpend = new EnergyExpend(this.guid(), '', new Date().toISOString());
+      let weight = this._patient.weight ? this._patient.weight.value : null;
+      let height = this._patient.height ? this._patient.height.value : null;
+
+      this.energyExpend = new EnergyExpend(this.guid(), '', new Date().toISOString(), weight, height);
       
       if (!this._patient.energyExpend)
         this._patient.energyExpend = [];
@@ -113,6 +138,9 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
 
     this.descriptionFormControl = new FormControl(desc, Validators.required);
     this.dateFormControl = new FormControl(moment(timestamp), Validators.required);
+    this.heightFormControl = new FormControl(this.energyExpend.height, Validators.required);
+    this.weightFormControl = new FormControl(this.energyExpend.weight, Validators.required);
+    this.protocolFormControl = new FormControl(this.energyExpend.selectedProtocol);
   }
 
   private guid(): string {

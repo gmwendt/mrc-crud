@@ -24,23 +24,37 @@
       </mat-error>
     </mat-form-field>
 
-    <ng-container *ngIf="patient">
-      <div>
-        <div>Altura: {{ (patient.height ? patient.height.value : null) | unitFormater: 'cm':'2' }}</div>
-        <div>Peso: {{ (patient.weight ? patient.weight.value : null) | unitFormater: 'kg':'2' }}</div>
-      </div>
-      <div *ngIf="!patient.height">Informe a altura do paciente na aba Medidas</div>
-      <div *ngIf="!patient.weight">Informe o peso do paciente na aba Medidas</div> 
-    </ng-container>
+    <div style="display: flex">
+      <mat-form-field floatLabel="always">
+        <mat-label>Altura (cm)</mat-label>
+        <input matInput [formControl]="heightFormControl" [(ngModel)]="energyExpend.height">
+        <mat-error>Campo <strong>obrigatório</strong></mat-error>
+      </mat-form-field>
+      <div style="width: 8px"></div>
+      <mat-form-field floatLabel="always">
+        <mat-label>Peso (kg)</mat-label>
+        <input matInput [formControl]="weightFormControl" [(ngModel)]="energyExpend.weight">
+        <mat-error>Campo <strong>obrigatório</strong></mat-error>
+      </mat-form-field>
+    </div>
 
-    <mat-select>
-      <mat-option *ngFor"let item of nafList">
-        <div>
-          <div>{{ item.name }} ({{ item.value }})</div>
-          <div>{{ item.description }}</div>
-        </div>
-      </mat-option>
-    </mat-select>
+    <mat-form-field floatLabel="always">
+      <mat-label>Protocolo</mat-label>
+      <mat-select [(ngModel)]="energyExpend.selectedProtocol">
+        <mat-option *ngFor="let item of protocols" [value]="item.id">{{ item.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field floatLabel="always">
+      <mat-label>Nível de atividade</mat-label>
+      <mat-select [(ngModel)]="energyExpend.activityFactor">
+        <!-- TODO: <mat-option *ngFor="let activity of activityFactorList" [value]="item.id">{{ item.name }}</mat-option> -->
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="energyExpend.height && energyExpend.height">
+      <label>Resultado</label>
+      <div>TMB: {{ tmb }}</div>
+    </div>
   </div>
   <div id="mrc-edit-page-footer">
     <div class="mrc-dialog-separator"></div>

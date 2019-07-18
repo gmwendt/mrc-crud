@@ -329,7 +329,7 @@ export class Patient {
     this.birthDate = '';
   }
 
-  get age(): string {
+  get ageAsString(): string {
     if (!this.birthDate)
       return '-- anos';
 
@@ -337,6 +337,13 @@ export class Patient {
     let strAge = age <= 1 ? age + ' ano' : age + ' anos';
 
     return strAge;
+  }
+
+  get age(): number {
+    if (!this.birthDate)
+      return 0;
+    
+    return moment().diff(this.birthDate, 'years');
   }
 
   get weight(): IHistoricalValue {
@@ -462,7 +469,8 @@ export interface ILabExamResult {
 }
 
 export class EnergyExpend {
-  constructor(public id: string, public description: string, public date: string) {
+  constructor(public id: string, public description: string, public date: string, public weight?: number, public height?: number,
+    public selectedProtocol: number = 0, public activityFactor?: number) {
   }
 
   toJSON(): string {
