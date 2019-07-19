@@ -4,7 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 
-import { ActiviFactorHeB, EnergyExpendProtocol } from './common/constants';
+import { ActiviFactorHeB, EnergyExpendProtocol, InjuryFactorList, ActiviFactorFaoOms } from './common/constants';
 import { EnergyExpendCalculator, IActivityFactor } from './common/types';
 
 import { Patient, FileSystemCommands, EnergyExpend } from '../../core/common/types';
@@ -29,17 +29,25 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
   private _dirty: boolean;
   private _patient: Patient;
   private _loading: boolean;
-
-  private protocols = EnergyExpendProtocol;
+  private _result: number;
 
   private isNew: boolean;
   private energyExpend: EnergyExpend;  
 
+  //** Constants */
+  private protocols = EnergyExpendProtocol;
+  private injuries = InjuryFactorList;
+  
+  //** Controls */
   private descriptionFormControl: FormControl;
   private dateFormControl: FormControl;
   private heightFormControl: FormControl;
   private weightFormControl: FormControl;
   private protocolFormControl: FormControl;
+  private activityFormControl: FormControl;
+  private injurySelectFormControl: FormControl;
+  private injuryFactorFormControl: FormControl;
+  private resultFactorFormControl: FormControl;
   
   constructor(private _detector: ChangeDetectorRef, private _route: ActivatedRoute, private _patientService: PatientService,
     private _dialog: DialogService, private _location: Location) {
@@ -98,7 +106,9 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     switch (this.energyExpend.selectedProtocol) {
       case 0:
         return ActiviFactorHeB;
-      //TODO: others
+      case 1:
+        return ActiviFactorFaoOms;
+        //TODO: others
       
       default:
         return [];
@@ -106,7 +116,71 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
   }
 
   get tmb(): number {
-    return Math.round(EnergyExpendCalculator.tmbHarrisBenedict(this._patient.gender, this.energyExpend.weight, this.energyExpend.height, this._patient.age));
+    if (this.energyExpend.activityFactor == -1)
+      return;
+    
+    switch (this.energyExpend.selectedProtocol) {
+      case 0:
+        return EnergyExpendCalculator.tmbHarrisBenedict(this._patient.gender, this.energyExpend.weight, this.energyExpend.height, this._patient.age);
+      case 1:
+        return EnergyExpendCalculator.tmb_FAO_OMS_2001(this._patient.gender, this._patient.age, this.energyExpend.weight);
+    }
+  }
+
+  get get(): number {
+    if (this.energyExpend.activityFactor == -1)
+      return;
+    
+    switch (this.energyExpend.selectedProtocol) {
+      case 0:
+        return EnergyExpendCalculator.getHarrisBenedict(this._patient.gender, this.energyExpend.weight, this.energyExpend.height, this._patient.age, this.energyExpend.activityFactor, this.energyExpend.injuryFactor);
+      case 1:
+        return EnergyExpendCalculator.get_FAO_OMS_2001(this._patient.gender, this._patient.age, this.energyExpend.weight, this.energyExpend.activityFactor, this.energyExpend.injuryFactor);
+    }
+  }
+
+  get injuryRange(): string {
+    if (!this.energyExpend.injuryId)
+      return;
+
+    let injury = this.injuries.find(i => i.id == this.energyExpend.injuryId);
+    if (!injury)
+      return;
+
+    return injury.min + ' - ' + injury.max;
+  }
+
+  get injuryMax(): number {
+    if (!this.energyExpend.injuryId)
+      return;
+
+    let injury = this.injuries.find(i => i.id == this.energyExpend.injuryId);
+    if (!injury)
+      return;
+    
+    return injury.max;
+  }
+
+  get injuryMin(): number {
+    if (!this.energyExpend.injuryId)
+      return;
+
+    let injury = this.injuries.find(i => i.id == this.energyExpend.injuryId);
+    if (!injury)
+      return;
+
+    return injury.min;
+  }
+
+  get result(): number {
+    return this._result;
+  }
+
+  set result(value: number) {
+    if (value == this._result)
+      return;
+    
+    this._result = Math.round(value * 100) / 100;
   }
 
   private async loadGet(patientId: string, getId: string): Promise<void> {
@@ -141,6 +215,10 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     this.heightFormControl = new FormControl(this.energyExpend.height, Validators.required);
     this.weightFormControl = new FormControl(this.energyExpend.weight, Validators.required);
     this.protocolFormControl = new FormControl(this.energyExpend.selectedProtocol);
+    this.activityFormControl = new FormControl(this.energyExpend.activityFactor, Validators.required);
+    this.injurySelectFormControl = new FormControl(this.energyExpend.injuryId);
+    this.injuryFactorFormControl = new FormControl(this.energyExpend.injuryFactor);
+    this.resultFactorFormControl = new FormControl(this.energyExpend.result, Validators.required);
   }
 
   private guid(): string {
@@ -169,6 +247,55 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
   private on_error(error: any): void {
     console.log(error);
     this.show_error_dialog(error);
+  }
+
+  private on_weight_changed(value: number): void {
+    if (value == this.energyExpend.weight)
+      return;
+    
+    this.energyExpend.weight = value;
+    this.result = this.get;
+  }
+
+  private on_injury_factor_change(value: number): void {
+    if (value == this.energyExpend.injuryId)
+      return;
+    
+    let injury = this.injuries.find(i => i.id == value);
+    if (!injury) {
+      this.on_error("ERROR: can't find injury.")
+      return;
+    }
+
+    this.energyExpend.injuryId = value;
+    this.energyExpend.injuryFactor = injury.min;
+
+    this.injuryFactorFormControl.clearValidators();
+    this.injuryFactorFormControl.setValidators([Validators.min(injury.min), Validators.max(injury.max)]);
+
+    this.result = this.get;
+  }
+
+  private on_protocol_changed(value: number): void {
+    if (value == this.energyExpend.selectedProtocol)
+      return;
+    
+    this.energyExpend.selectedProtocol = value;
+    this.energyExpend.activityFactor = -1;
+
+    this.result = this.get;
+  }
+
+  private on_cancel_clicked(): void {
+    console.log(this.resultFactorFormControl);
+  }
+
+  private on_activity_factor_changed(value: number): void {
+    if (value == this.energyExpend.activityFactor)
+      return;
+
+    this.energyExpend.activityFactor = value;
+    this.result = this.get;
   }
 
   ngOnDestroy() {

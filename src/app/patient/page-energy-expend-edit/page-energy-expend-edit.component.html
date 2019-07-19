@@ -33,27 +33,48 @@
       <div style="width: 8px"></div>
       <mat-form-field floatLabel="always">
         <mat-label>Peso (kg)</mat-label>
-        <input matInput [formControl]="weightFormControl" [(ngModel)]="energyExpend.weight">
+        <input matInput type="number" [formControl]="weightFormControl" [ngModel]="energyExpend.weight" (ngModelChange)="on_weight_changed($event)">
         <mat-error>Campo <strong>obrigatório</strong></mat-error>
       </mat-form-field>
     </div>
 
     <mat-form-field floatLabel="always">
       <mat-label>Protocolo</mat-label>
-      <mat-select [(ngModel)]="energyExpend.selectedProtocol">
+      <mat-select [ngModel]="energyExpend.selectedProtocol" (ngModelChange)="on_protocol_changed($event)" [formControl]="protocolFormControl">
         <mat-option *ngFor="let item of protocols" [value]="item.id">{{ item.name }}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field floatLabel="always">
       <mat-label>Nível de atividade</mat-label>
-      <mat-select [(ngModel)]="energyExpend.activityFactor">
-        <!-- TODO: <mat-option *ngFor="let activity of activityFactorList" [value]="item.id">{{ item.name }}</mat-option> -->
+      <mat-select [ngModel]="energyExpend.activityFactor" (ngModelChange)="on_activity_factor_changed($event)" [formControl]="activityFormControl">
+        <mat-option *ngFor="let activity of activityFactorList" [value]="activity.value">{{ activity.name }}</mat-option>
       </mat-select>
     </mat-form-field>
+    <div style="display: flex">
+      <mat-form-field floatLabel="always">
+        <mat-label>Fator injúria</mat-label>
+        <mat-select [ngModel]="energyExpend.injuryId" (ngModelChange)="on_injury_factor_change($event)" [formControl]="injurySelectFormControl">
+          <mat-option *ngFor="let injury of injuries" [value]="injury.id">{{ injury.description }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div style="width: 8px"></div>
+      <mat-form-field floatLabel="always" *ngIf="energyExpend.injuryId && energyExpend.injuryId > 0">
+        <mat-label>Valor ({{ injuryRange }})</mat-label>
+        <input matInput [formControl]="injuryFactorFormControl" [(ngModel)]="energyExpend.injuryFactor" [max]="injuryMax" [min]="injuryMin">
+        <mat-error>Informe um valor entre {{ injuryMin }} e {{ injuryMax }}</mat-error>
+      </mat-form-field>
+    </div>
 
     <div *ngIf="energyExpend.height && energyExpend.height">
       <label>Resultado</label>
-      <div>TMB: {{ tmb }}</div>
+      <div>TMB: {{ tmb | unitFormater: 'kcal':'0' }}</div>
+      <div>GET: {{ get | unitFormater: 'kcal':'0' }}</div>
+    </div>
+    <div>
+      <mat-form-field floatLabel="always">
+        <mat-label>Gasto energético estipulado</mat-label>
+        <input matInput [formControl]="resultFactorFormControl" [(ngModel)]="result">
+      </mat-form-field>
     </div>
   </div>
   <div id="mrc-edit-page-footer">
@@ -61,7 +82,7 @@
     <!-- <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div>  TODO-->
     <div id="mrc-edit-page-footer-buttons">
       <button mat-button>Salvar</button> <!-- TODO: [disabled]="!dirty && !isNew" (click)="on_save_clicked()" -->
-      <button mat-button>Cancelar</button> <!-- TODO: (click)="on_cancel_clicked()" -->
+      <button mat-button (click)="on_cancel_clicked()">Cancelar</button> <!-- TODO: (click)="on_cancel_clicked()" -->
     </div>
   </div>
 </progress-spinner>
