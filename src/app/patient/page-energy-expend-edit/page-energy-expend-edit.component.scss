@@ -12,7 +12,9 @@ page-energy-expend-edit {
     display: flex; 
     flex-direction: column; 
     height: calc(100% - 79px);
-    margin: 16px 22px; 
+    margin: 16px 0;
+    overflow: auto;
+    padding: 0 22px;
 
     &-description-field {
       max-width: 500px;
@@ -24,6 +26,18 @@ page-energy-expend-edit {
 
     &-date-field {
       max-width: 300px;
+    }
+
+    &-field {
+      max-width: 180px;
+    }
+  }
+
+  .page-energy-expend-edit-columns {
+    display: flex;
+
+    &-separator {
+      width: 8px;
     }
   }
 

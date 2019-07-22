@@ -24,13 +24,13 @@
       </mat-error>
     </mat-form-field>
 
-    <div style="display: flex">
+    <div class="page-energy-expend-edit-columns">
       <mat-form-field floatLabel="always">
         <mat-label>Altura (cm)</mat-label>
         <input matInput [formControl]="heightFormControl" [(ngModel)]="energyExpend.height">
         <mat-error>Campo <strong>obrigatório</strong></mat-error>
       </mat-form-field>
-      <div style="width: 8px"></div>
+      <div class="page-energy-expend-edit-columns-separator"></div>
       <mat-form-field floatLabel="always">
         <mat-label>Peso (kg)</mat-label>
         <input matInput type="number" [formControl]="weightFormControl" [ngModel]="energyExpend.weight" (ngModelChange)="on_weight_changed($event)">
@@ -38,26 +38,26 @@
       </mat-form-field>
     </div>
 
-    <mat-form-field floatLabel="always">
+    <mat-form-field floatLabel="always" class="page-energy-expend-edit-content-field">
       <mat-label>Protocolo</mat-label>
       <mat-select [ngModel]="energyExpend.selectedProtocol" (ngModelChange)="on_protocol_changed($event)" [formControl]="protocolFormControl">
         <mat-option *ngFor="let item of protocols" [value]="item.id">{{ item.name }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field floatLabel="always">
+    <mat-form-field floatLabel="always" class="page-energy-expend-edit-content-field">
       <mat-label>Nível de atividade</mat-label>
       <mat-select [ngModel]="energyExpend.activityFactor" (ngModelChange)="on_activity_factor_changed($event)" [formControl]="activityFormControl">
         <mat-option *ngFor="let activity of activityFactorList" [value]="activity.value">{{ activity.name }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <div style="display: flex">
+    <div class="page-energy-expend-edit-columns">
       <mat-form-field floatLabel="always">
         <mat-label>Fator injúria</mat-label>
         <mat-select [ngModel]="energyExpend.injuryId" (ngModelChange)="on_injury_factor_change($event)" [formControl]="injurySelectFormControl">
           <mat-option *ngFor="let injury of injuries" [value]="injury.id">{{ injury.description }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <div style="width: 8px"></div>
+      <div class="page-energy-expend-edit-columns-separator"></div>
       <mat-form-field floatLabel="always" *ngIf="energyExpend.injuryId && energyExpend.injuryId > 0">
         <mat-label>Valor ({{ injuryRange }})</mat-label>
         <input matInput type="number" [formControl]="injuryFactorFormControl" [(ngModel)]="energyExpend.injuryFactor" [max]="injuryMax" [min]="injuryMin">
