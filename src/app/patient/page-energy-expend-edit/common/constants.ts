@@ -40,7 +40,7 @@ export const ActiviFactorFaoOms: IActivityFactor[] = [{
 }];
 
 export const EnergyExpendProtocol: IEnergyExpendProtocol[] = [{ id: 0, name: 'Harris & Benedict (1919)' }, { id: 1, name: 'FAO/OMS (2001)' },
-  { id: 2, name: 'FAO/OMS (1985)' }];
+  { id: 2, name: 'FAO/OMS (1985)' }, { id: 3, name: 'Cunningham (1991)' }, { id: 4, name: 'Schofield (1985)'}];
 
 export const InjuryFactorList: IInjuryFactor[] = [{ id: 0, description: 'Não se aplica', min: 1, max: 1 }, { id: 3, description: 'Cirurgia eletiva', min: 1, max: 1.1 }, { id: 1, description: 'Câncer', min: 1.1, max: 1.45 },
   { id: 5, description: 'Desnutrição grave', min: 1.5, max: 1.5 }, { id: 7, description: 'Fraturas múltiplas', min: 1.2, max: 1.35 }, { id: 9, description: 'Infecção grave', min: 1.3, max: 1.35 }, { id: 11, description: 'Insuficiência cardíaca', min: 1.3, max: 1.5 },

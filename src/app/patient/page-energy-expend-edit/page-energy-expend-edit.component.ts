@@ -48,6 +48,7 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
   private injurySelectFormControl: FormControl;
   private injuryFactorFormControl: FormControl;
   private resultFactorFormControl: FormControl;
+  private leanMassFormControl: FormControl;
   
   constructor(private _detector: ChangeDetectorRef, private _route: ActivatedRoute, private _patientService: PatientService,
     private _dialog: DialogService, private _location: Location) {
@@ -108,6 +109,11 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
         return ActiviFactorHeB;
       case 1:
         return ActiviFactorFaoOms;
+      case 2:
+        return ActiviFactorFaoOms;
+      case 4:
+        return ActiviFactorFaoOms;
+        
         //TODO: others
       
       default:
@@ -124,6 +130,10 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
         return EnergyExpendCalculator.tmbHarrisBenedict(this._patient.gender, this.energyExpend.weight, this.energyExpend.height, this._patient.age);
       case 1:
         return EnergyExpendCalculator.tmb_FAO_OMS_2001(this._patient.gender, this._patient.age, this.energyExpend.weight);
+      case 2:
+        return EnergyExpendCalculator.tmb_FAO_OMS_1985(this._patient.gender, this._patient.age, this.energyExpend.weight);
+      case 4:
+        return EnergyExpendCalculator.tmb_schofield(this._patient.gender, this._patient.age, this.energyExpend.weight);
     }
   }
 
@@ -136,6 +146,10 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
         return EnergyExpendCalculator.getHarrisBenedict(this._patient.gender, this.energyExpend.weight, this.energyExpend.height, this._patient.age, this.energyExpend.activityFactor, this.energyExpend.injuryFactor);
       case 1:
         return EnergyExpendCalculator.get_FAO_OMS_2001(this._patient.gender, this._patient.age, this.energyExpend.weight, this.energyExpend.activityFactor, this.energyExpend.injuryFactor);
+      case 2:
+        return EnergyExpendCalculator.get_FAO_OMS_1985(this._patient.gender, this._patient.age, this.energyExpend.weight, this.energyExpend.activityFactor, this.energyExpend.injuryFactor);
+      case 4:
+        return EnergyExpendCalculator.get_schofield(this._patient.gender, this._patient.age, this.energyExpend.weight, this.energyExpend.activityFactor, this.energyExpend.injuryFactor);
     }
   }
 
@@ -219,6 +233,10 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     this.injurySelectFormControl = new FormControl(this.energyExpend.injuryId);
     this.injuryFactorFormControl = new FormControl(this.energyExpend.injuryFactor);
     this.resultFactorFormControl = new FormControl(this.energyExpend.result, Validators.required);
+    this.leanMassFormControl = new FormControl(this.energyExpend.leanMass);
+
+    if (this.energyExpend.selectedProtocol == 3)
+      this.leanMassFormControl.setValidators(Validators.required);
   }
 
   private guid(): string {
@@ -283,11 +301,16 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     this.energyExpend.selectedProtocol = value;
     this.energyExpend.activityFactor = -1;
 
+    if (value == 3)
+      this.leanMassFormControl.setValidators(Validators.required);
+    else
+      this.leanMassFormControl.clearValidators();      
+
     this.result = this.get;
   }
 
   private on_cancel_clicked(): void {
-    console.log(this.resultFactorFormControl);
+    this._location.back();
   }
 
   private on_activity_factor_changed(value: number): void {

@@ -60,10 +60,16 @@
       <div style="width: 8px"></div>
       <mat-form-field floatLabel="always" *ngIf="energyExpend.injuryId && energyExpend.injuryId > 0">
         <mat-label>Valor ({{ injuryRange }})</mat-label>
-        <input matInput [formControl]="injuryFactorFormControl" [(ngModel)]="energyExpend.injuryFactor" [max]="injuryMax" [min]="injuryMin">
+        <input matInput type="number" [formControl]="injuryFactorFormControl" [(ngModel)]="energyExpend.injuryFactor" [max]="injuryMax" [min]="injuryMin">
         <mat-error>Informe um valor entre {{ injuryMin }} e {{ injuryMax }}</mat-error>
       </mat-form-field>
     </div>
+    <ng-container *ngIf="energyExpend.selectedProtocol == 3">
+      <mat-form-field floatLabel="always">
+        <mat-label>Massa magra (kg)</mat-label>
+        <input matInput type="number" [formControl]="leanMassFormControl" [(ngModel)]="energyExpend.leanMass">
+      </mat-form-field>
+    </ng-container>
 
     <div *ngIf="energyExpend.height && energyExpend.height">
       <label>Resultado</label>
@@ -82,7 +88,7 @@
     <!-- <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div>  TODO-->
     <div id="mrc-edit-page-footer-buttons">
       <button mat-button>Salvar</button> <!-- TODO: [disabled]="!dirty && !isNew" (click)="on_save_clicked()" -->
-      <button mat-button (click)="on_cancel_clicked()">Cancelar</button> <!-- TODO: (click)="on_cancel_clicked()" -->
+      <button mat-button (click)="on_cancel_clicked()">Cancelar</button>
     </div>
   </div>
 </progress-spinner>
