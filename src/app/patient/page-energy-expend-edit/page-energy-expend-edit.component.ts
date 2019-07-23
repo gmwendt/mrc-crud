@@ -4,10 +4,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 
-import { ActiviFactorHeB, EnergyExpendProtocol, InjuryFactorList, ActiviFactorFaoOms } from './common/constants';
-import { EnergyExpendCalculator, IActivityFactor } from './common/types';
+import { ActiviFactorHeB, EnergyExpendProtocol, InjuryFactorList, ActiviFactorFaoOms, ActiviFactorForEER_Mens_3to18, ActiviFactorForEER_Womans_3to18, ActiviFactorForEER_Mens_19orMore, ActiviFactorForEER_Womans_19orMore, ActiviFactorForTEE_Womans_3to18, ActiviFactorForTEE_Mens_3to18 } from './common/constants';
+import { EnergyExpendCalculator, IActivityFactor, IEnergyExpendProtocol } from './common/types';
 
-import { Patient, FileSystemCommands, EnergyExpend } from '../../core/common/types';
+import { Patient, FileSystemCommands, EnergyExpend, GenderEnum } from '../../core/common/types';
 import { PatientService } from '../../core/patient.service';
 
 import { DialogAlertButton, DialogAlertData } from '../../shared/dialog-alert/dialog-alert.component';
@@ -35,7 +35,7 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
   private energyExpend: EnergyExpend;  
 
   //** Constants */
-  private protocols = EnergyExpendProtocol;
+  private protocolsAvail = EnergyExpendProtocol;
   private injuries = InjuryFactorList;
   
   //** Controls */
@@ -100,9 +100,24 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     return this._patient.height.value;
   }
 
+  get protocols(): IEnergyExpendProtocol[] {
+    let arr = this.protocolsAvail.slice();
+
+    if (this._patient && this._patient.age > 18) {
+      let eerOb = arr.find(p => p.id === 4); 
+      let i = arr.indexOf(eerOb);
+      arr.splice(i, 1);
+    }
+
+    return arr;
+  }
+
   get activityFactorList(): IActivityFactor[] {
-    if (!this.energyExpend)
+    if (!this.energyExpend || !this._patient)
       return [];
+    
+    let age = this._patient.age;
+    let gender = this._patient.gender;
     
     switch (this.energyExpend.selectedProtocol) {
       case 0:
@@ -111,10 +126,16 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
         return ActiviFactorFaoOms;
       case 2:
         return ActiviFactorFaoOms;
+      case 3:
+        if (age >= 3 && age <= 18)
+          return gender == GenderEnum.Male ? ActiviFactorForEER_Mens_3to18 : ActiviFactorForEER_Womans_3to18;
+        else
+          return gender == GenderEnum.Male ? ActiviFactorForEER_Mens_19orMore : ActiviFactorForEER_Womans_19orMore;
       case 4:
+        if (age <= 18)
+          return gender == GenderEnum.Male ? ActiviFactorForTEE_Mens_3to18 : ActiviFactorForTEE_Womans_3to18;
+      case 5:
         return ActiviFactorFaoOms;
-        
-        //TODO: others
       
       default:
         return [];
@@ -133,6 +154,8 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
       case 2:
         return EnergyExpendCalculator.tmb_FAO_OMS_1985(this._patient.gender, this._patient.age, this.energyExpend.weight);
       case 4:
+        return EnergyExpendCalculator.bee_iom(this._patient.gender, this._patient.age, this.energyExpend.weight, this.energyExpend.height / 100);
+      case 5:
         return EnergyExpendCalculator.tmb_schofield(this._patient.gender, this._patient.age, this.energyExpend.weight);
     }
   }
@@ -149,8 +172,24 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
       case 2:
         return EnergyExpendCalculator.get_FAO_OMS_1985(this._patient.gender, this._patient.age, this.energyExpend.weight, this.energyExpend.activityFactor, this.energyExpend.injuryFactor);
       case 4:
+        return EnergyExpendCalculator.tee_iom(this._patient.gender, this._patient.age, this.energyExpend.weight, this.energyExpend.height / 100, this.energyExpend.activityFactor, this.energyExpend.injuryFactor);
+      case 5:
         return EnergyExpendCalculator.get_schofield(this._patient.gender, this._patient.age, this.energyExpend.weight, this.energyExpend.activityFactor, this.energyExpend.injuryFactor);
     }
+  }
+
+  get eer(): number {
+    if (this.energyExpend.activityFactor == -1)
+      return;
+    
+    switch (this.energyExpend.selectedProtocol) {
+      case 3:
+        return EnergyExpendCalculator.eer_iom_2005(this._patient.gender, this._patient.age, this.energyExpend.weight, this.energyExpend.height / 100, this.energyExpend.activityFactor, this._patient.ageInMonths, this.energyExpend.injuryFactor);
+    }
+  }
+
+  get canShowEER(): boolean {
+    return this.energyExpend.selectedProtocol == 3;
   }
 
   get injuryRange(): string {
@@ -235,8 +274,15 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     this.resultFactorFormControl = new FormControl(this.energyExpend.result, Validators.required);
     this.leanMassFormControl = new FormControl(this.energyExpend.leanMass);
 
+    // if (this.energyExpend.selectedProtocol == 3)
+    //   this.leanMassFormControl.setValidators(Validators.required);
+  }
+
+  private updateResult(): void {
     if (this.energyExpend.selectedProtocol == 3)
-      this.leanMassFormControl.setValidators(Validators.required);
+      this.result = this.eer;
+    else
+      this.result = this.get;
   }
 
   private guid(): string {
@@ -272,7 +318,7 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
       return;
     
     this.energyExpend.weight = value;
-    this.result = this.get;
+    this.updateResult();
   }
 
   private on_injury_factor_change(value: number): void {
@@ -291,7 +337,7 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     this.injuryFactorFormControl.clearValidators();
     this.injuryFactorFormControl.setValidators([Validators.min(injury.min), Validators.max(injury.max)]);
 
-    this.result = this.get;
+    this.updateResult();
   }
 
   private on_protocol_changed(value: number): void {
@@ -301,12 +347,12 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     this.energyExpend.selectedProtocol = value;
     this.energyExpend.activityFactor = -1;
 
-    if (value == 3)
-      this.leanMassFormControl.setValidators(Validators.required);
-    else
-      this.leanMassFormControl.clearValidators();      
+    // if (value == 3)
+    //   this.leanMassFormControl.setValidators(Validators.required);
+    // else
+    //   this.leanMassFormControl.clearValidators();      
 
-    this.result = this.get;
+    this.updateResult();
   }
 
   private on_cancel_clicked(): void {
@@ -318,7 +364,7 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
       return;
 
     this.energyExpend.activityFactor = value;
-    this.result = this.get;
+    this.updateResult();
   }
 
   ngOnDestroy() {

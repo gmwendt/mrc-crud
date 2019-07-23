@@ -27,7 +27,7 @@
     <div class="page-energy-expend-edit-columns">
       <mat-form-field floatLabel="always">
         <mat-label>Altura (cm)</mat-label>
-        <input matInput [formControl]="heightFormControl" [(ngModel)]="energyExpend.height">
+        <input matInput type="number" [formControl]="heightFormControl" [(ngModel)]="energyExpend.height">
         <mat-error>Campo <strong>obrigatório</strong></mat-error>
       </mat-form-field>
       <div class="page-energy-expend-edit-columns-separator"></div>
@@ -40,20 +40,20 @@
 
     <mat-form-field floatLabel="always" class="page-energy-expend-edit-content-field">
       <mat-label>Protocolo</mat-label>
-      <mat-select [ngModel]="energyExpend.selectedProtocol" (ngModelChange)="on_protocol_changed($event)" [formControl]="protocolFormControl">
+      <mat-select [ngModel]="energyExpend.selectedProtocol" (ngModelChange)="on_protocol_changed($event)" [formControl]="protocolFormControl"  [disableOptionCentering]="true">
         <mat-option *ngFor="let item of protocols" [value]="item.id">{{ item.name }}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field floatLabel="always" class="page-energy-expend-edit-content-field">
       <mat-label>Nível de atividade</mat-label>
-      <mat-select [ngModel]="energyExpend.activityFactor" (ngModelChange)="on_activity_factor_changed($event)" [formControl]="activityFormControl">
+      <mat-select [ngModel]="energyExpend.activityFactor" (ngModelChange)="on_activity_factor_changed($event)" [formControl]="activityFormControl"  [disableOptionCentering]="true">
         <mat-option *ngFor="let activity of activityFactorList" [value]="activity.value">{{ activity.name }}</mat-option>
       </mat-select>
     </mat-form-field>
     <div class="page-energy-expend-edit-columns">
       <mat-form-field floatLabel="always">
         <mat-label>Fator injúria</mat-label>
-        <mat-select [ngModel]="energyExpend.injuryId" (ngModelChange)="on_injury_factor_change($event)" [formControl]="injurySelectFormControl">
+        <mat-select [ngModel]="energyExpend.injuryId" (ngModelChange)="on_injury_factor_change($event)" [formControl]="injurySelectFormControl"  [disableOptionCentering]="true">
           <mat-option *ngFor="let injury of injuries" [value]="injury.id">{{ injury.description }}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -64,21 +64,26 @@
         <mat-error>Informe um valor entre {{ injuryMin }} e {{ injuryMax }}</mat-error>
       </mat-form-field>
     </div>
-    <ng-container *ngIf="energyExpend.selectedProtocol == 3">
+    <!-- <ng-container *ngIf="energyExpend.selectedProtocol == 3">
       <mat-form-field floatLabel="always">
         <mat-label>Massa magra (kg)</mat-label>
         <input matInput type="number" [formControl]="leanMassFormControl" [(ngModel)]="energyExpend.leanMass">
       </mat-form-field>
-    </ng-container>
+    </ng-container> -->
 
     <div *ngIf="energyExpend.height && energyExpend.height">
       <label>Resultado</label>
-      <div>TMB: {{ tmb | unitFormater: 'kcal':'0' }}</div>
-      <div>GET: {{ get | unitFormater: 'kcal':'0' }}</div>
+      <ng-container *ngIf="!canShowEER; else showEERBlock">
+        <div>TMB: {{ tmb | unitFormater: 'kcal':'0' }}</div>
+        <div>GET: {{ get | unitFormater: 'kcal':'0' }}</div>
+      </ng-container>
+      <ng-template #showEERBlock>
+        <div>EER: {{ eer | unitFormater: 'kcal':'0' }}</div>
+      </ng-template>
     </div>
     <div>
       <mat-form-field floatLabel="always">
-        <mat-label>Gasto energético estipulado</mat-label>
+        <mat-label>Gasto energético total</mat-label>
         <input matInput [formControl]="resultFactorFormControl" [(ngModel)]="result">
       </mat-form-field>
     </div>

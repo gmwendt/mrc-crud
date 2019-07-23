@@ -4,8 +4,7 @@ import { TmplAstBoundAttribute } from '@angular/compiler';
 export const ActiviFactorHeB: IActivityFactor[] = [{
   name: '',
   value: -1
-},
-  {
+}, {
   name: 'Sedentário',
   value: 1.2
 }, {
@@ -25,7 +24,7 @@ export const ActiviFactorHeB: IActivityFactor[] = [{
 export const ActiviFactorFaoOms: IActivityFactor[] = [{
   name: '',
   value: -1
-},{
+}, {
   name: 'Sedentário',
   value: 1.2
 }, {
@@ -37,10 +36,112 @@ export const ActiviFactorFaoOms: IActivityFactor[] = [{
 }, {
   name: 'Pesado',
   value: 2.19
+  }];
+
+export const ActiviFactorForEER_Mens_3to18: IActivityFactor[] = [{
+  name: '',
+  value: -1
+}, {
+  name: 'Sedentário',
+  value: 1.0
+}, {
+  name: 'Pouco ativo',
+  value: 1.13
+}, {
+  name: 'Ativo',
+  value: 1.26
+}, {
+  name: 'Muito ativo',
+  value: 1.42
+  }];
+
+export const ActiviFactorForEER_Womans_3to18: IActivityFactor[] = [{
+  name: '',
+  value: -1
+}, {
+  name: 'Sedentário',
+  value: 1.0
+}, {
+  name: 'Pouco ativo',
+  value: 1.16
+}, {
+  name: 'Ativo',
+  value: 1.31
+}, {
+  name: 'Muito ativo',
+  value: 1.56
+  }];
+
+export const ActiviFactorForEER_Mens_19orMore: IActivityFactor[] = [{
+  name: '',
+  value: -1
+}, {
+  name: 'Sedentário',
+  value: 1.0
+}, {
+  name: 'Pouco ativo',
+  value: 1.11
+}, {
+  name: 'Ativo',
+  value: 1.25
+}, {
+  name: 'Muito ativo',
+  value: 1.48
+}];
+
+export const ActiviFactorForEER_Womans_19orMore: IActivityFactor[] = [{
+  name: '',
+  value: -1
+}, {
+  name: 'Sedentário',
+  value: 1.0
+}, {
+  name: 'Pouco ativo',
+  value: 1.12
+}, {
+  name: 'Ativo',
+  value: 1.27
+}, {
+  name: 'Muito ativo',
+  value: 1.45
+  }];
+
+export const ActiviFactorForTEE_Mens_3to18: IActivityFactor[] = [{
+  name: '',
+  value: -1
+}, {
+  name: 'Sedentário',
+  value: 1.0
+}, {
+  name: 'Pouco ativo',
+  value: 1.12
+}, {
+  name: 'Ativo',
+  value: 1.24
+}, {
+  name: 'Muito ativo',
+  value: 1.45
+}];
+
+export const ActiviFactorForTEE_Womans_3to18: IActivityFactor[] = [{
+  name: '',
+  value: -1
+}, {
+  name: 'Sedentário',
+  value: 1.0
+}, {
+  name: 'Pouco ativo',
+  value: 1.18
+}, {
+  name: 'Ativo',
+  value: 1.35
+}, {
+  name: 'Muito ativo',
+  value: 1.6
 }];
 
 export const EnergyExpendProtocol: IEnergyExpendProtocol[] = [{ id: 0, name: 'Harris & Benedict (1919)' }, { id: 1, name: 'FAO/OMS (2001)' },
-  { id: 2, name: 'FAO/OMS (1985)' }, { id: 3, name: 'Cunningham (1991)' }, { id: 4, name: 'Schofield (1985)'}];
+  { id: 2, name: 'FAO/OMS (1985)' }, { id: 3, name: 'EER/IOM (2005)' }, { id: 4, name: 'EER/IOM (2005) para obesos' }, { id: 5, name: 'Schofield (1985)'}];
 
 export const InjuryFactorList: IInjuryFactor[] = [{ id: 0, description: 'Não se aplica', min: 1, max: 1 }, { id: 3, description: 'Cirurgia eletiva', min: 1, max: 1.1 }, { id: 1, description: 'Câncer', min: 1.1, max: 1.45 },
   { id: 5, description: 'Desnutrição grave', min: 1.5, max: 1.5 }, { id: 7, description: 'Fraturas múltiplas', min: 1.2, max: 1.35 }, { id: 9, description: 'Infecção grave', min: 1.3, max: 1.35 }, { id: 11, description: 'Insuficiência cardíaca', min: 1.3, max: 1.5 },

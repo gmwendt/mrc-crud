@@ -346,6 +346,13 @@ export class Patient {
     return moment().diff(this.birthDate, 'years');
   }
 
+  get ageInMonths(): number {
+    if (!this.birthDate)
+      return 0;
+
+    return moment().diff(this.birthDate, 'months');
+  }
+
   get weight(): IHistoricalValue {
     if (!this.measurements || !this.measurements.weigth || this.measurements.weigth.length == 0)
       return null;
