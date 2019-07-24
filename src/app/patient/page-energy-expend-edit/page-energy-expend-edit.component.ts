@@ -4,7 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 
-import { ActiviFactorHeB, EnergyExpendProtocol, InjuryFactorList, ActiviFactorFaoOms, ActiviFactorForEER_Mens_3to18, ActiviFactorForEER_Womans_3to18, ActiviFactorForEER_Mens_19orMore, ActiviFactorForEER_Womans_19orMore, ActiviFactorForTEE_Womans_3to18, ActiviFactorForTEE_Mens_3to18 } from './common/constants';
+import { ActiviFactorHeB, EnergyExpendProtocol, InjuryFactorList, ActiviFactorFaoOms, ActiviFactorForEER_Mens_3to18, ActiviFactorForEER_Womans_3to18, ActiviFactorForEER_Mens_19orMore, ActiviFactorForEER_Womans_19orMore, ActiviFactorForTEE_Womans_3to18, ActiviFactorForTEE_Mens_3to18, WomanSituation } from './common/constants';
 import { EnergyExpendCalculator, IActivityFactor, IEnergyExpendProtocol } from './common/types';
 
 import { Patient, FileSystemCommands, EnergyExpend, GenderEnum } from '../../core/common/types';
@@ -32,11 +32,12 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
   private _result: number;
 
   private isNew: boolean;
-  private energyExpend: EnergyExpend;  
-
+  private energyExpend: EnergyExpend;
+  
   //** Constants */
   private protocolsAvail = EnergyExpendProtocol;
   private injuries = InjuryFactorList;
+  private womanSituation = WomanSituation;
   
   //** Controls */
   private descriptionFormControl: FormControl;
@@ -48,7 +49,9 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
   private injurySelectFormControl: FormControl;
   private injuryFactorFormControl: FormControl;
   private resultFactorFormControl: FormControl;
-  private leanMassFormControl: FormControl;
+  // private leanMassFormControl: FormControl;
+  private womanSituationFormControl: FormControl;
+  private womanSituationTimeFormControl: FormControl;
   
   constructor(private _detector: ChangeDetectorRef, private _route: ActivatedRoute, private _patientService: PatientService,
     private _dialog: DialogService, private _location: Location) {
@@ -184,7 +187,8 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     
     switch (this.energyExpend.selectedProtocol) {
       case 3:
-        return EnergyExpendCalculator.eer_iom_2005(this._patient.gender, this._patient.age, this.energyExpend.weight, this.energyExpend.height / 100, this.energyExpend.activityFactor, this._patient.ageInMonths, this.energyExpend.injuryFactor);
+        return EnergyExpendCalculator.eer_iom_2005(this._patient.gender, this._patient.age, this.energyExpend.weight, this.energyExpend.height / 100, this.energyExpend.activityFactor,
+          this._patient.ageInMonths, this.energyExpend.injuryFactor, this.energyExpend.womanSituation, this.energyExpend.womanSituationTime);
     }
   }
 
@@ -225,6 +229,10 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     return injury.min;
   }
 
+  get canBePregOrLact(): boolean {
+    return this._patient && this._patient.gender == GenderEnum.Female && this._patient.age >= 14;
+  }
+
   get result(): number {
     return this._result;
   }
@@ -234,6 +242,25 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
       return;
     
     this._result = Math.round(value * 100) / 100;
+  }
+
+  get maxTime(): number {
+    if (this.energyExpend.womanSituation === 2)
+      return 36;
+    if (this.energyExpend.womanSituation === 3)
+      return 12;
+    
+    return 0;
+  }
+
+  get weightLossRange(): string {
+    if (this.energyExpend && this.energyExpend.weight)
+      return `${this.energyExpend.weight * 0.2} kcal - ${this.energyExpend.weight * 0.25} kcal`;
+  }
+
+  get weightGainRange(): string {
+    if (this.energyExpend && this.energyExpend.weight)
+      return `${this.energyExpend.weight * 0.3} kcal - ${this.energyExpend.weight * 0.35} kcal`;
   }
 
   private async loadGet(patientId: string, getId: string): Promise<void> {
@@ -265,14 +292,16 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
 
     this.descriptionFormControl = new FormControl(desc, Validators.required);
     this.dateFormControl = new FormControl(moment(timestamp), Validators.required);
-    this.heightFormControl = new FormControl(this.energyExpend.height, Validators.required);
-    this.weightFormControl = new FormControl(this.energyExpend.weight, Validators.required);
+    this.heightFormControl = new FormControl(this.energyExpend.height, [Validators.required, Validators.min(10), Validators.max(300)]);
+    this.weightFormControl = new FormControl(this.energyExpend.weight, [Validators.required, Validators.min(0.1), Validators.max(500)]);
     this.protocolFormControl = new FormControl(this.energyExpend.selectedProtocol);
     this.activityFormControl = new FormControl(this.energyExpend.activityFactor, Validators.required);
     this.injurySelectFormControl = new FormControl(this.energyExpend.injuryId);
     this.injuryFactorFormControl = new FormControl(this.energyExpend.injuryFactor);
     this.resultFactorFormControl = new FormControl(this.energyExpend.result, Validators.required);
-    this.leanMassFormControl = new FormControl(this.energyExpend.leanMass);
+    this.womanSituationFormControl = new FormControl(this.energyExpend.womanSituation);
+    this.womanSituationTimeFormControl = new FormControl(this.energyExpend.womanSituationTime);
+    // this.leanMassFormControl = new FormControl(this.energyExpend.leanMass);
 
     // if (this.energyExpend.selectedProtocol == 3)
     //   this.leanMassFormControl.setValidators(Validators.required);

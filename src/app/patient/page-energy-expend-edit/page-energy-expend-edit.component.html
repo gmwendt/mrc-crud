@@ -27,43 +27,69 @@
     <div class="page-energy-expend-edit-columns">
       <mat-form-field floatLabel="always">
         <mat-label>Altura (cm)</mat-label>
-        <input matInput type="number" [formControl]="heightFormControl" [(ngModel)]="energyExpend.height">
+        <input matInput type="number" [formControl]="heightFormControl" [(ngModel)]="energyExpend.height"> 
         <mat-error>Campo <strong>obrigatório</strong></mat-error>
+        <mat-error *ngIf="dateFormControl.hasError('min')">Altura deve ser maior ou igual a 10 cm</mat-error>
+        <mat-error *ngIf="dateFormControl.hasError('max')">Altura deve ser menor ou igual a 300 cm</mat-error>
       </mat-form-field>
       <div class="page-energy-expend-edit-columns-separator"></div>
       <mat-form-field floatLabel="always">
         <mat-label>Peso (kg)</mat-label>
-        <input matInput type="number" [formControl]="weightFormControl" [ngModel]="energyExpend.weight" (ngModelChange)="on_weight_changed($event)">
+        <input matInput type="number" [formControl]="weightFormControl" [ngModel]="energyExpend.weight" (ngModelChange)="on_weight_changed($event)" step="0.1" min="0.1" max="500">
         <mat-error>Campo <strong>obrigatório</strong></mat-error>
+        <mat-error *ngIf="dateFormControl.hasError('min')">Peso deve ser maior ou igual a 0.1 kg</mat-error>
+        <mat-error *ngIf="dateFormControl.hasError('max')">Peso ser menor ou igual a 500 kg</mat-error>
       </mat-form-field>
     </div>
 
     <mat-form-field floatLabel="always" class="page-energy-expend-edit-content-field">
       <mat-label>Protocolo</mat-label>
-      <mat-select [ngModel]="energyExpend.selectedProtocol" (ngModelChange)="on_protocol_changed($event)" [formControl]="protocolFormControl"  [disableOptionCentering]="true">
+      <mat-select [ngModel]="energyExpend.selectedProtocol" (ngModelChange)="on_protocol_changed($event)" [formControl]="protocolFormControl" [disableOptionCentering]="true">
         <mat-option *ngFor="let item of protocols" [value]="item.id">{{ item.name }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field floatLabel="always" class="page-energy-expend-edit-content-field">
-      <mat-label>Nível de atividade</mat-label>
-      <mat-select [ngModel]="energyExpend.activityFactor" (ngModelChange)="on_activity_factor_changed($event)" [formControl]="activityFormControl"  [disableOptionCentering]="true">
-        <mat-option *ngFor="let activity of activityFactorList" [value]="activity.value">{{ activity.name }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <div class="page-energy-expend-edit-columns">
-      <mat-form-field floatLabel="always">
-        <mat-label>Fator injúria</mat-label>
-        <mat-select [ngModel]="energyExpend.injuryId" (ngModelChange)="on_injury_factor_change($event)" [formControl]="injurySelectFormControl"  [disableOptionCentering]="true">
-          <mat-option *ngFor="let injury of injuries" [value]="injury.id">{{ injury.description }}</mat-option>
+
+    <ng-container *ngIf="energyExpend.selectedProtocol == 3 && canBePregOrLact">
+      <div class="page-energy-expend-edit-columns">
+        <mat-form-field floatLabel="always" class="page-energy-expend-edit-content-field">
+          <mat-label>Situação</mat-label>
+          <mat-select [(ngModel)]="energyExpend.womanSituation" [formControl]="womanSituationFormControl" [disableOptionCentering]="true">
+            <mat-option *ngFor="let situation of womanSituation" [value]="situation.id">{{ situation.description }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="page-energy-expend-edit-columns-separator"></div>
+        <mat-form-field *ngIf="energyExpend.womanSituation != 1" floatLabel="always" class="page-energy-expend-edit-content-field">
+          <mat-label>Tempo</mat-label>
+          <input matInput type="number" [(ngModel)]="energyExpend.womanSituationTime" [formControl]="womanSituationTimeFormControl" [max]="maxTime" min="0">
+        </mat-form-field>
+        <div class="page-energy-expend-edit-columns-separator"></div>
+        <div *ngIf="energyExpend.womanSituation == 2">semanas</div>
+        <div *ngIf="energyExpend.womanSituation == 3">meses</div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="energyExpend.selectedProtocol != 7">
+      <mat-form-field floatLabel="always" class="page-energy-expend-edit-content-field">
+        <mat-label>Nível de atividade</mat-label>
+        <mat-select [ngModel]="energyExpend.activityFactor" (ngModelChange)="on_activity_factor_changed($event)" [formControl]="activityFormControl" [disableOptionCentering]="true">
+          <mat-option *ngFor="let activity of activityFactorList" [value]="activity.value">{{ activity.name }}</mat-option>
         </mat-select>
       </mat-form-field>
-      <div class="page-energy-expend-edit-columns-separator"></div>
-      <mat-form-field floatLabel="always" *ngIf="energyExpend.injuryId && energyExpend.injuryId > 0">
-        <mat-label>Valor ({{ injuryRange }})</mat-label>
-        <input matInput type="number" [formControl]="injuryFactorFormControl" [(ngModel)]="energyExpend.injuryFactor" [max]="injuryMax" [min]="injuryMin">
-        <mat-error>Informe um valor entre {{ injuryMin }} e {{ injuryMax }}</mat-error>
-      </mat-form-field>
-    </div>
+      <div class="page-energy-expend-edit-columns">
+        <mat-form-field floatLabel="always">
+          <mat-label>Fator injúria</mat-label>
+          <mat-select [ngModel]="energyExpend.injuryId" (ngModelChange)="on_injury_factor_change($event)" [formControl]="injurySelectFormControl" [disableOptionCentering]="true">
+            <mat-option *ngFor="let injury of injuries" [value]="injury.id">{{ injury.description }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="page-energy-expend-edit-columns-separator"></div>
+        <mat-form-field floatLabel="always" *ngIf="energyExpend.injuryId && energyExpend.injuryId > 0">
+          <mat-label>Valor ({{ injuryRange }})</mat-label>
+          <input matInput type="number" [formControl]="injuryFactorFormControl" [(ngModel)]="energyExpend.injuryFactor" [max]="injuryMax" [min]="injuryMin">
+          <mat-error>Informe um valor entre {{ injuryMin }} e {{ injuryMax }}</mat-error>
+        </mat-form-field>
+      </div>
+    </ng-container>
     <!-- <ng-container *ngIf="energyExpend.selectedProtocol == 3">
       <mat-form-field floatLabel="always">
         <mat-label>Massa magra (kg)</mat-label>
@@ -73,12 +99,17 @@
 
     <div *ngIf="energyExpend.height && energyExpend.height">
       <label>Resultado</label>
-      <ng-container *ngIf="!canShowEER; else showEERBlock">
-        <div>TMB: {{ tmb | unitFormater: 'kcal':'0' }}</div>
-        <div>GET: {{ get | unitFormater: 'kcal':'0' }}</div>
+      <ng-container *ngIf="energyExpend.selectedProtocol != 7; else regraDeBolsoResult">
+        <ng-container *ngIf="!canShowEER; else showEERBlock">
+          <div>TMB: {{ tmb | unitFormater: 'kcal':'0' }}</div>
+          <div>GET: {{ get | unitFormater: 'kcal':'0' }}</div>
+        </ng-container>
+        <ng-template #showEERBlock>
+          <div>EER: {{ eer | unitFormater: 'kcal':'0' }}</div>
+        </ng-template>
       </ng-container>
-      <ng-template #showEERBlock>
-        <div>EER: {{ eer | unitFormater: 'kcal':'0' }}</div>
+      <ng-template #regraDeBolsoResult>
+        <!-- TODO -->
       </ng-template>
     </div>
     <div>
