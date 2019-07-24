@@ -7,38 +7,36 @@
 </div>
 <progress-spinner [progress]="loading">
   <div *ngIf="energyExpend" class="page-energy-expend-edit-content">
-     <mat-form-field floatLabel="always" class="page-energy-expend-edit-content-description-field">
+     <mat-form-field floatLabel="always" class="page-energy-expend-edit-content-description-field" [style.margin-bottom]="descriptionBottom">
       <mat-label>Descrição</mat-label>
       <textarea matInput [formControl]="descriptionFormControl" [(ngModel)]="energyExpend.description"></textarea>
       <mat-error>Campo <strong>obrigatório</strong></mat-error>
     </mat-form-field>
 
-    <mat-form-field floatLabel="always" class="page-energy-expend-edit-content-date-field">
+    <mat-form-field floatLabel="always" class="page-energy-expend-edit-content-date-field" [style.margin-bottom]="dateBottom">
       <mat-label>Data</mat-label>
       <input matInput [matDatepicker]="myDatepicker" [formControl]="dateFormControl" [value]="energyExpend.date"
         (ngModelChange)="energyExpend.date = $event ? $event.toISOString() : energyExpend.date">
       <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
       <mat-datepicker #myDatepicker></mat-datepicker>
-      <mat-error *ngIf="dateFormControl.hasError('required')">
-        Informe uma data válida
-      </mat-error>
+      <mat-error *ngIf="dateFormControl.hasError('required')">Informe uma data válida</mat-error>
     </mat-form-field>
 
     <div class="page-energy-expend-edit-columns">
-      <mat-form-field floatLabel="always">
+      <mat-form-field floatLabel="always" [style.margin-bottom]="heightCtrlBottom">
         <mat-label>Altura (cm)</mat-label>
         <input matInput type="number" [formControl]="heightFormControl" [(ngModel)]="energyExpend.height"> 
-        <mat-error>Campo <strong>obrigatório</strong></mat-error>
-        <mat-error *ngIf="dateFormControl.hasError('min')">Altura deve ser maior ou igual a 10 cm</mat-error>
-        <mat-error *ngIf="dateFormControl.hasError('max')">Altura deve ser menor ou igual a 300 cm</mat-error>
+        <mat-error *ngIf="heightFormControl.hasError('required')">Informe a altura do paciente</mat-error>
+        <mat-error *ngIf="heightFormControl.hasError('min')">Altura deve ser maior ou igual a 10 cm</mat-error>
+        <mat-error *ngIf="heightFormControl.hasError('max')">Altura deve ser menor que 300 cm</mat-error>
       </mat-form-field>
       <div class="page-energy-expend-edit-columns-separator"></div>
-      <mat-form-field floatLabel="always">
+      <mat-form-field floatLabel="always" [style.margin-bottom]="weightCtrlBottom">
         <mat-label>Peso (kg)</mat-label>
         <input matInput type="number" [formControl]="weightFormControl" [ngModel]="energyExpend.weight" (ngModelChange)="on_weight_changed($event)" step="0.1" min="0.1" max="500">
-        <mat-error>Campo <strong>obrigatório</strong></mat-error>
-        <mat-error *ngIf="dateFormControl.hasError('min')">Peso deve ser maior ou igual a 0.1 kg</mat-error>
-        <mat-error *ngIf="dateFormControl.hasError('max')">Peso ser menor ou igual a 500 kg</mat-error>
+        <mat-error *ngIf="weightFormControl.hasError('required')">Informe o peso do paciente</mat-error>
+        <mat-error *ngIf="weightFormControl.hasError('min')">Peso deve ser maior ou igual a 0.1 kg</mat-error>
+        <mat-error *ngIf="weightFormControl.hasError('max')">Peso deve ser menor que 500 kg</mat-error>
       </mat-form-field>
     </div>
 

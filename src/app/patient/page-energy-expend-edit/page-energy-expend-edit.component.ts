@@ -263,6 +263,34 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
       return `${this.energyExpend.weight * 0.3} kcal - ${this.energyExpend.weight * 0.35} kcal`;
   }
 
+  get descriptionBottom(): string {
+    if (this.descriptionFormControl.hasError('required'))
+      return '8px';
+
+    return '';
+  }
+
+  get dateBottom(): string {
+    if (this.dateFormControl.hasError('required'))
+      return '8px';
+
+    return '';
+  }
+
+  get heightCtrlBottom(): string {
+    if (this.heightFormControl.hasError('required') || this.heightFormControl.hasError('min') || this.heightFormControl.hasError('max'))
+      return '16px';
+    
+    return '';
+  }
+
+  get weightCtrlBottom(): string {
+    if (this.weightFormControl.hasError('required') || this.weightFormControl.hasError('min') || this.weightFormControl.hasError('max'))
+      return '16px';
+
+    return '';
+  }
+
   private async loadGet(patientId: string, getId: string): Promise<void> {
     this.isNew = parseInt(getId) == FileSystemCommands.Add;
     this._patient = await this._patientService.getPatientById(patientId);
@@ -292,8 +320,8 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
 
     this.descriptionFormControl = new FormControl(desc, Validators.required);
     this.dateFormControl = new FormControl(moment(timestamp), Validators.required);
-    this.heightFormControl = new FormControl(this.energyExpend.height, [Validators.required, Validators.min(10), Validators.max(300)]);
-    this.weightFormControl = new FormControl(this.energyExpend.weight, [Validators.required, Validators.min(0.1), Validators.max(500)]);
+    this.heightFormControl = new FormControl(this.energyExpend.height, [Validators.required, Validators.min(10), Validators.max(299)]);
+    this.weightFormControl = new FormControl(this.energyExpend.weight, [Validators.required, Validators.min(0.1), Validators.max(499)]);
     this.protocolFormControl = new FormControl(this.energyExpend.selectedProtocol);
     this.activityFormControl = new FormControl(this.energyExpend.activityFactor, Validators.required);
     this.injurySelectFormControl = new FormControl(this.energyExpend.injuryId);
