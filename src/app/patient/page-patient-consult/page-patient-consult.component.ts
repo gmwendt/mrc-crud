@@ -45,7 +45,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private anamnesesDisplayedColumns = ['clinicCase', 'commands'];
   private examsRequestedDisplayedColumns = ['description', 'timeElapsed', 'commands'];
   private foodPlansDisplayedColumns = ['description', 'timeElapsed', 'commands'];
-  private energyExpendsDisplayedColumns = ['description', 'commands']; //TODO: 'timeElapsed', 
+  private energyExpendsDisplayedColumns = ['description', 'timeElapsed', 'commands']; 
 
   private loading = true;
   private patient: Patient;
@@ -210,6 +210,26 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     this.patient.foodPlans.splice(index, 1);
     await this.updatePatient();
     this.createFoodRecallTable();
+  }
+
+  private async on_remove_energy_expend_click(event: MouseEvent, energyExpend: EnergyExpend): Promise<void> {
+    event.stopPropagation();
+
+    var dialogData: DialogAlertData = {
+      text: 'Deseja remover este registro de Gasto Energético?',
+      button: DialogAlertButton.YesNo,
+      textAlign: 'center',
+    }
+
+    var dialogResult = await this._dialog.openAlert(dialogData);
+    if (dialogResult == DialogAlertResult.No)
+      return;
+    
+    var index = this.patient.energyExpend.indexOf(energyExpend);
+
+    this.patient.energyExpend.splice(index, 1);
+    await this.updatePatient();
+    this.createEnergyExpendsTable();
   }
 
   private async on_measurement_edited(histValue?: IHistoricalValue): Promise<void> {

@@ -194,18 +194,23 @@
           <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
           <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
         </ng-container>
+
+        <ng-container matColumnDef="timeElapsed">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ getTimeElapsed(element.date) }}</mat-cell>
+        </ng-container>
         
         <ng-container matColumnDef="commands">
           <mat-header-cell *matHeaderCellDef> </mat-header-cell>
           <mat-cell *matCellDef="let element"> 
             <span>
-              <span title="Remover" class="icon-delete"></span> <!-- TODO:  (click)="on_remove_anamneses_click($event, element)" -->
+              <span title="Remover" class="icon-delete" (click)="on_remove_energy_expend_click($event, element)"></span>
             </span>  
           </mat-cell>
         </ng-container>
         
         <mat-header-row *matHeaderRowDef="energyExpendsDisplayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: energyExpendsDisplayedColumns;"></mat-row> <!-- TODO: (click)="on_anamneses_edit(row.id)" -->
+        <mat-row *matRowDef="let row; columns: energyExpendsDisplayedColumns;" (click)="on_energy_expend_edit(row.id)"></mat-row>
       </mat-table>
     </mat-tab>
 

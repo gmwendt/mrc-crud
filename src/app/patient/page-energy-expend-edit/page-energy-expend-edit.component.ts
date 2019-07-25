@@ -1,10 +1,28 @@
-import { Component, ViewEncapsulation, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit, OnDestroy } from "@angular/core";
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  ViewEncapsulation,
+} from "@angular/core";
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 
-import { ActiviFactorHeB, EnergyExpendProtocol, InjuryFactorList, ActiviFactorFaoOms, ActiviFactorForEER_Mens_3to18, ActiviFactorForEER_Womans_3to18, ActiviFactorForEER_Mens_19orMore, ActiviFactorForEER_Womans_19orMore, ActiviFactorForTEE_Womans_3to18, ActiviFactorForTEE_Mens_3to18, WomanSituation } from './common/constants';
+import {
+  ActiviFactorForEER_Mens_3to18,
+  ActiviFactorForEER_Mens_19orMore,
+  ActiviFactorForEER_Womans_3to18,
+  ActiviFactorForEER_Womans_19orMore,
+  ActiviFactorForTEE_Mens_3to18, WomanSituation,
+  ActiviFactorForTEE_Womans_3to18,
+  ActiviFactorFaoOms,
+  ActiviFactorHeB,
+  EnergyExpendProtocol,
+  InjuryFactorList,
+} from './common/constants';
 import { EnergyExpendCalculator, IActivityFactor, IEnergyExpendProtocol } from './common/types';
 
 import { Patient, FileSystemCommands, EnergyExpend, GenderEnum } from '../../core/common/types';
@@ -26,12 +44,11 @@ import * as moment from 'moment';
 export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
   private _paramsDisposable: Subscription;
   private _queryParamsDisposable: Subscription;
-  private _dirty: boolean;
   private _patient: Patient;
   private _loading: boolean;
-  private _result: number;
 
   private isNew: boolean;
+  private errorList: string[];
   private energyExpend: EnergyExpend;
   
   //** Constants */
@@ -48,8 +65,7 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
   private activityFormControl: FormControl;
   private injurySelectFormControl: FormControl;
   private injuryFactorFormControl: FormControl;
-  private resultFormControl: FormControl;
-  // private leanMassFormControl: FormControl;
+  private totalEnergyExpendFormControl: FormControl;
   private womanSituationFormControl: FormControl;
   private womanSituationTimeFormControl: FormControl;
   
@@ -87,6 +103,17 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     
     this._loading = value;
     this._detector.detectChanges();
+  }
+
+  get dirty(): boolean {
+    if (!this.descriptionFormControl || !this.dateFormControl || !this.heightFormControl || !this.weightFormControl || !this.protocolFormControl ||
+      !this.womanSituationFormControl || !this.womanSituationTimeFormControl || !this.activityFormControl || !this.injurySelectFormControl ||
+      !this.injuryFactorFormControl || !this.totalEnergyExpendFormControl)
+      return;
+
+    return this.descriptionFormControl.dirty || this.dateFormControl.dirty || this.heightFormControl.dirty || this.weightFormControl.dirty ||
+      this.protocolFormControl.dirty || this.womanSituationFormControl.dirty || this.womanSituationTimeFormControl.dirty || this.activityFormControl.dirty ||
+      this.injurySelectFormControl.dirty || this.injuryFactorFormControl.dirty || this.totalEnergyExpendFormControl.dirty;
   }
 
   get patientWeight(): number {
@@ -233,17 +260,6 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     return this._patient && this._patient.gender == GenderEnum.Female && this._patient.age >= 14;
   }
 
-  get result(): number {
-    return this._result;
-  }
-
-  set result(value: number) {
-    if (value == this._result)
-      return;
-    
-    this._result = Math.round(value * 100) / 100;
-  }
-
   get maxTime(): number {
     if (this.energyExpend.womanSituation === 2)
       return 36;
@@ -257,8 +273,8 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     if (!this.energyExpend || !this.energyExpend.weight)
       return;
     
-    let weight1 = Math.round(this.energyExpend.weight * 0.2 * 100) / 100;
-    let weight2 = Math.round(this.energyExpend.weight * 0.25 * 100) / 100;
+    let weight1 = Math.round(this.energyExpend.weight * 20 * 100) / 100;
+    let weight2 = Math.round(this.energyExpend.weight * 25 * 100) / 100;
     return `${weight1} kcal - ${weight2} kcal`;
   }
 
@@ -266,8 +282,8 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     if (!this.energyExpend || !this.energyExpend.weight)
       return;
     
-    let weight1 = Math.round(this.energyExpend.weight * 0.3 * 100) / 100;
-    let weight2 = Math.round(this.energyExpend.weight * 0.35 * 100) / 100;
+    let weight1 = Math.round(this.energyExpend.weight * 30 * 100) / 100;
+    let weight2 = Math.round(this.energyExpend.weight * 35 * 100) / 100;
     return `${weight1} kcal - ${weight2} kcal`;
   }
 
@@ -299,6 +315,31 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     return '';
   }
 
+  get resultCalcErrors(): string[] {
+    let errors = [];
+
+    if (this.heightFormControl.hasError('required'))
+      errors.push('Informe a altura do paciente');
+    else if (this.heightFormControl.hasError('min') || this.heightFormControl.hasError('max'))
+      errors.push("Altura inválido");
+    
+    if (this.weightFormControl.hasError('required'))
+      errors.push('Informe o peso do paciente');
+    else if (this.weightFormControl.hasError('min') || this.weightFormControl.hasError('max'))
+      errors.push("Peso inválida");
+    
+    if (this.protocolFormControl.value != 7 && this.activityFormControl.value == -1)
+      errors.push('Selecione um nível de atividade');
+    
+    if (this.protocolFormControl.value == 3 && this.womanSituationFormControl.value == 2 && this.womanSituationTimeFormControl.hasError('required'))
+      errors.push('Informe o tempo de gestação');
+    
+    if (this.protocolFormControl.value == 3 && this.womanSituationFormControl.value == 3 && this.womanSituationTimeFormControl.hasError('required'))
+      errors.push('Informe o tempo de amamentação');
+    
+    return errors;
+  }
+
   private async loadGet(patientId: string, getId: string): Promise<void> {
     this.isNew = parseInt(getId) == FileSystemCommands.Add;
     this._patient = await this._patientService.getPatientById(patientId);
@@ -306,7 +347,7 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     if (this.isNew) {
       let weight = this._patient.weight ? this._patient.weight.value : null;
       let height = this._patient.height ? this._patient.height.value : null;
-
+      
       this.energyExpend = new EnergyExpend(this.guid(), this.newName(), new Date().toISOString(), weight, height);
       
       if (!this._patient.energyExpend)
@@ -334,25 +375,23 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     this.activityFormControl = new FormControl(this.energyExpend.activityFactor, Validators.required);
     this.injurySelectFormControl = new FormControl(this.energyExpend.injuryId);
     this.injuryFactorFormControl = new FormControl(this.energyExpend.injuryFactor);
-    this.resultFormControl = new FormControl(this.energyExpend.result, Validators.required);
+    this.totalEnergyExpendFormControl = new FormControl(this.energyExpend.totalEnergyExpend, [Validators.required, Validators.min(1), Validators.max(100000)]);
     this.womanSituationFormControl = new FormControl(this.energyExpend.womanSituation);
     this.womanSituationTimeFormControl = new FormControl(this.energyExpend.womanSituationTime);
-    // this.leanMassFormControl = new FormControl(this.energyExpend.leanMass);
-
-    // if (this.energyExpend.selectedProtocol == 3)
-    //   this.leanMassFormControl.setValidators(Validators.required);
   }
 
-  private updateResult(): void {
-    if (this.resultFormControl && this.resultFormControl.dirty)
+  private updateTotalEnergyExpend(): void {
+    if (this.resultCalcErrors && this.resultCalcErrors.length > 0)
       return;
 
     if (this.energyExpend.selectedProtocol == 3)
-      this.result = this.eer;
+      this.energyExpend.totalEnergyExpend = this.eer;
     else if (this.energyExpend.selectedProtocol != 7)
-      this.result = this.get;
+      this.energyExpend.totalEnergyExpend = this.get;
     else
-      this.result = null;
+      this.energyExpend.totalEnergyExpend = null;
+    
+    this._detector.detectChanges();
   }
 
   private newName(): string {
@@ -361,15 +400,38 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     
     let name = 'Cálculo de gasto energético';
 
-    if (!this._patient.energyExpend || !this._patient.energyExpend.every(e => e.description != name))
+    if (!this._patient.energyExpend || this._patient.energyExpend.every(e => e.description != name))
       return name;
     
-    //Testar
     for (let i = 0; i < this._patient.energyExpend.length; i++) {
       let incName = name + ' ' + (i + 1);
       if (this._patient.energyExpend.every(e => e.description != incName)) 
         return incName;
     }
+  }
+
+  private checkErrors(): boolean {
+    this.errorList = [];
+
+    if (this.descriptionFormControl.hasError('required'))
+      this.errorList.push("O campo 'descrição' deve ser preenchido.");
+    if (this.dateFormControl.hasError('required'))
+      this.errorList.push("O campo 'data' deve ser preenchido.");
+    
+    this.errorList.push(...this.resultCalcErrors);
+
+    if (this.totalEnergyExpendFormControl.hasError('required') || this.totalEnergyExpendFormControl.hasError('min'))
+      this.errorList.push("Informe o gasto energético total");
+    else if (this.totalEnergyExpendFormControl.hasError('max'))
+      this.errorList.push("Gasto energético total inválido");
+    
+    if (this.errorList.length > 0) {
+      this.descriptionFormControl.markAsTouched();
+      this.totalEnergyExpendFormControl.markAsTouched();
+      return false;
+    }
+
+    return true;
   }
 
   private guid(): string {
@@ -405,7 +467,7 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
       return;
     
     this.energyExpend.weight = value;
-    this.updateResult();
+    this.updateTotalEnergyExpend();
   }
 
   private on_injury_factor_change(value: number): void {
@@ -424,7 +486,7 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     this.injuryFactorFormControl.clearValidators();
     this.injuryFactorFormControl.setValidators([Validators.min(injury.min), Validators.max(injury.max)]);
 
-    this.updateResult();
+    this.updateTotalEnergyExpend();
   }
 
   private on_protocol_changed(value: number): void {
@@ -434,16 +496,25 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     this.energyExpend.selectedProtocol = value;
     this.energyExpend.activityFactor = -1;
 
-    // if (value == 3)
-    //   this.leanMassFormControl.setValidators(Validators.required);
-    // else
-    //   this.leanMassFormControl.clearValidators();      
-
-    this.updateResult();
+    this.updateTotalEnergyExpend();
   }
 
-  private on_cancel_clicked(): void {
-    this._location.back();
+  private on_woman_situation_changed(value: number): void {
+    if (value == this.energyExpend.womanSituation)
+      return;
+    
+    this.energyExpend.womanSituation = value;
+    this.energyExpend.womanSituationTime = 0;
+
+    this.updateTotalEnergyExpend();
+  }
+
+  private on_woman_situation_time_changed(value: number): void {
+    if (value == this.energyExpend.womanSituationTime)
+      return;
+
+    this.energyExpend.womanSituationTime = value;
+    this.updateTotalEnergyExpend();
   }
 
   private on_activity_factor_changed(value: number): void {
@@ -451,7 +522,30 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
       return;
 
     this.energyExpend.activityFactor = value;
-    this.updateResult();
+    this.updateTotalEnergyExpend();
+  }
+
+  private on_cancel_clicked(): void {
+    this._location.back();
+  }
+
+  private async on_save_clicked(): Promise<void> {
+    if (!this.checkErrors())
+      return;
+
+    this.loading = true;
+    this._detector.detectChanges();
+
+    try {
+      await this._patientService.updatePatient(this._patient);
+      this._location.back();
+    }
+    catch (error) {
+      this.on_error(error);
+    }
+    finally {
+      this.loading = false;
+    }
   }
 
   ngOnDestroy() {

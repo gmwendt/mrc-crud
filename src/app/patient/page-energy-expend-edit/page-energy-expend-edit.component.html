@@ -25,7 +25,7 @@
     <div class="page-energy-expend-edit-columns">
       <mat-form-field floatLabel="always" [style.margin-bottom]="heightCtrlBottom">
         <mat-label>Altura (cm)</mat-label>
-        <input matInput type="number" [formControl]="heightFormControl" [(ngModel)]="energyExpend.height"> 
+        <input matInput type="number" [formControl]="heightFormControl" [(ngModel)]="energyExpend.height" min="10" max="300"> 
         <mat-error *ngIf="heightFormControl.hasError('required')">Informe a altura do paciente</mat-error>
         <mat-error *ngIf="heightFormControl.hasError('min')">Altura deve ser maior ou igual a 10 cm</mat-error>
         <mat-error *ngIf="heightFormControl.hasError('max')">Altura deve ser menor que 300 cm</mat-error>
@@ -48,21 +48,21 @@
     </mat-form-field>
 
     <ng-container *ngIf="energyExpend.selectedProtocol == 3 && canBePregOrLact">
-      <div class="page-energy-expend-edit-columns">
+      <div class="page-energy-expend-edit-columns" style="align-items: baseline;">
         <mat-form-field floatLabel="always" class="page-energy-expend-edit-content-field">
           <mat-label>Situação</mat-label>
-          <mat-select [(ngModel)]="energyExpend.womanSituation" [formControl]="womanSituationFormControl" [disableOptionCentering]="true">
+          <mat-select [ngModel]="energyExpend.womanSituation" [formControl]="womanSituationFormControl" (ngModelChange)="on_woman_situation_changed($event)" [disableOptionCentering]="true">
             <mat-option *ngFor="let situation of womanSituation" [value]="situation.id">{{ situation.description }}</mat-option>
           </mat-select>
         </mat-form-field>
         <div class="page-energy-expend-edit-columns-separator"></div>
-        <mat-form-field *ngIf="energyExpend.womanSituation != 1" floatLabel="always" class="page-energy-expend-edit-content-field">
+        <mat-form-field *ngIf="energyExpend.womanSituation != 1" floatLabel="always" class="page-energy-expend-edit-content-field" style="width: 60px">
           <mat-label>Tempo</mat-label>
-          <input matInput type="number" [(ngModel)]="energyExpend.womanSituationTime" [formControl]="womanSituationTimeFormControl" [max]="maxTime" min="0">
+          <input matInput type="number" [formControl]="womanSituationTimeFormControl" [ngModel]="energyExpend.womanSituationTime" (ngModelChange)="on_woman_situation_time_changed($event)" [max]="maxTime" min="0">
         </mat-form-field>
         <div class="page-energy-expend-edit-columns-separator"></div>
-        <div *ngIf="energyExpend.womanSituation == 2">semanas</div>
-        <div *ngIf="energyExpend.womanSituation == 3">meses</div>
+        <div *ngIf="energyExpend.womanSituation == 2" style="font-size: 9pt">semanas</div>
+        <div *ngIf="energyExpend.womanSituation == 3" style="font-size: 9pt">meses</div>
       </div>
     </ng-container>
 
@@ -95,44 +95,50 @@
       </mat-form-field>
     </ng-container> -->
 
-    <div *ngIf="energyExpend.height && energyExpend.height" style="font-size: 9pt;">
+    <div style="font-size: 9pt; margin-bottom: 16px; background-color: #f7f7f7; max-width: 500px; padding: 8px;">
       <label>Resultado</label>
-      <ng-container *ngIf="energyExpend.selectedProtocol != 7; else regraDeBolsoResult">
-        <ng-container *ngIf="!canShowEER; else showEERBlock">
-          <div>TMB: {{ tmb | unitFormater: 'kcal':'0' }}</div>
-          <div>GET: {{ get | unitFormater: 'kcal':'0' }}</div>
+      <ng-container *ngIf="resultCalcErrors.length == 0; else hasCalcError">
+        <ng-container *ngIf="energyExpend.selectedProtocol != 7; else regraDeBolsoResult">
+          <ng-container *ngIf="!canShowEER; else showEERBlock">
+            <div>TMB: {{ tmb | unitFormater: 'kcal':'0' }}</div>
+            <div>GET: {{ get | unitFormater: 'kcal':'0' }}</div>
+          </ng-container>
+          <ng-template #showEERBlock>
+            <div>EER: {{ eer | unitFormater: 'kcal':'0' }}</div>
+          </ng-template>
         </ng-container>
-        <ng-template #showEERBlock>
-          <div>EER: {{ eer | unitFormater: 'kcal':'0' }}</div>
+        <ng-template #regraDeBolsoResult>
+          <div class="page-energy-expend-edit-columns">
+            <div style="text-align: center">
+              <div>Perda de peso</div>
+              <div>{{ weightLossRange }}</div>
+            </div>
+            <div class="page-energy-expend-edit-columns-separator"></div>
+            <div style="text-align: center">
+              <div>Ganho de peso</div>
+              <div>{{ weightGainRange }}</div>
+            </div>
+          </div>
         </ng-template>
       </ng-container>
-      <ng-template #regraDeBolsoResult>
-        <div class="page-energy-expend-edit-columns">
-          <div style="text-align: center">
-            <div>Perda de peso</div>
-            <div>{{ weightLossRange }}</div>
-          </div>
-          <div class="page-energy-expend-edit-columns-separator"></div>
-          <div style="text-align: center">
-            <div>Ganho de peso</div>
-            <div>{{ weightGainRange }}</div>
-          </div>
-        </div>
+      <ng-template #hasCalcError>
+        <div style="font-style: italic; color: #6c757d" *ngFor="let error of resultCalcErrors">{{ error }}</div>
       </ng-template>
     </div>
     <div>
       <mat-form-field floatLabel="always">
-        <mat-label>Gasto energético total</mat-label>
-        <input matInput [formControl]="resultFormControl" [(ngModel)]="result">
+        <mat-label>Gasto energético total (kcal)</mat-label>
+        <input matInput type="number" [formControl]="totalEnergyExpendFormControl" [ngModel]="energyExpend.totalEnergyExpend | decimalCases: 2" 
+          (ngModelChange)="energyExpend.totalEnergyExpend = $event" min="1" max="100000">
       </mat-form-field>
     </div>
   </div>
-  <div id="mrc-edit-page-footer">
-    <div class="mrc-dialog-separator"></div>
-    <!-- <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div>  TODO-->
-    <div id="mrc-edit-page-footer-buttons">
-      <button mat-button>Salvar</button> <!-- TODO: [disabled]="!dirty && !isNew" (click)="on_save_clicked()" -->
-      <button mat-button (click)="on_cancel_clicked()">Cancelar</button>
-    </div>
-  </div>
 </progress-spinner>
+<div id="mrc-edit-page-footer">
+  <div class="mrc-dialog-separator"></div>
+  <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div>
+  <div id="mrc-edit-page-footer-buttons">
+    <button mat-button [disabled]="(!dirty && !isNew) || loading" (click)="on_save_clicked()">Salvar</button>
+    <button mat-button (click)="on_cancel_clicked()">Cancelar</button>
+  </div>
+</div>

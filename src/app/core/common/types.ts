@@ -478,7 +478,7 @@ export interface ILabExamResult {
 export class EnergyExpend {
   constructor(public id: string, public description: string, public date: string, public weight?: number, public height?: number,
     public selectedProtocol: number = 0, public activityFactor: number = -1, public injuryId: number = 0, public injuryFactor: number = 1,
-    public result?: number, public womanSituation: number = 1, public womanSituationTime: number = 0) {
+    public totalEnergyExpend?: number, public womanSituation: number = 1, public womanSituationTime: number = 0) {
   }
 
   toJSON(): string {

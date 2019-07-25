@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { AddressInfo, Patient, Anamneses, Measurements, LaboratoryExam, FoodPlan } from './common/types';
+import { AddressInfo, Patient, Anamneses, Measurements, LaboratoryExam, FoodPlan, EnergyExpend } from './common/types';
 
 @Injectable()
 export class PatientService {
@@ -32,6 +32,7 @@ export class PatientService {
             res.anamneses = res.anamneses ? JSON.parse(<any>res.anamneses).map(a => Anamneses.fromJSON(a)) : undefined;
             res.exams = res.exams ? JSON.parse(<any>res.exams).map(a => LaboratoryExam.fromJSON(a)) : undefined;
             res.foodPlans = res.foodPlans ? JSON.parse(<any>res.foodPlans).map(e => FoodPlan.fromJSON(e)) : undefined;
+            res.energyExpend = res.energyExpend ? JSON.parse(<any>res.energyExpend).map(e => EnergyExpend.fromJSON(e)) : undefined;
           });
         resolve(res);
       }, (err) => {
@@ -85,6 +86,7 @@ export class PatientService {
     (<any>obj).measurements = patient.measurements ? patient.measurements.toJSON() : undefined;
     (<any>obj).exams = patient.exams ? JSON.stringify(patient.exams.map(e => e.toJSON())) : undefined;
     (<any>obj).foodPlans = patient.foodPlans ? JSON.stringify(patient.foodPlans.map(e => e.toJSON())) : undefined;
+    (<any>obj).energyExpend = patient.energyExpend ? JSON.stringify(patient.energyExpend.map(e => e.toJSON())) : undefined;
     
     return obj;
   }
@@ -95,6 +97,7 @@ export class PatientService {
     patient.measurements = patient.measurements ? Measurements.fromJSON(patient.measurements) : null;
     patient.exams = patient.exams ? JSON.parse(<any>patient.exams).map(e => LaboratoryExam.fromJSON(e)) : undefined;
     patient.foodPlans = patient.foodPlans ? JSON.parse(<any>patient.foodPlans).map(e => FoodPlan.fromJSON(e)) : undefined;
+    patient.energyExpend = patient.energyExpend ? JSON.parse(<any>patient.energyExpend).map(e => EnergyExpend.fromJSON(e)) : undefined;
 
     return patient;
   }
