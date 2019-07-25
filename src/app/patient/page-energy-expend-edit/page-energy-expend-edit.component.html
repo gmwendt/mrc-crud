@@ -95,7 +95,7 @@
       </mat-form-field>
     </ng-container> -->
 
-    <div *ngIf="energyExpend.height && energyExpend.height">
+    <div *ngIf="energyExpend.height && energyExpend.height" style="font-size: 9pt;">
       <label>Resultado</label>
       <ng-container *ngIf="energyExpend.selectedProtocol != 7; else regraDeBolsoResult">
         <ng-container *ngIf="!canShowEER; else showEERBlock">
@@ -107,13 +107,23 @@
         </ng-template>
       </ng-container>
       <ng-template #regraDeBolsoResult>
-        <!-- TODO -->
+        <div class="page-energy-expend-edit-columns">
+          <div style="text-align: center">
+            <div>Perda de peso</div>
+            <div>{{ weightLossRange }}</div>
+          </div>
+          <div class="page-energy-expend-edit-columns-separator"></div>
+          <div style="text-align: center">
+            <div>Ganho de peso</div>
+            <div>{{ weightGainRange }}</div>
+          </div>
+        </div>
       </ng-template>
     </div>
     <div>
       <mat-form-field floatLabel="always">
         <mat-label>Gasto energético total</mat-label>
-        <input matInput [formControl]="resultFactorFormControl" [(ngModel)]="result">
+        <input matInput [formControl]="resultFormControl" [(ngModel)]="result">
       </mat-form-field>
     </div>
   </div>

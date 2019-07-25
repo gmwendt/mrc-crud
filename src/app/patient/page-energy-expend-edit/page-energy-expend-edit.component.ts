@@ -48,7 +48,7 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
   private activityFormControl: FormControl;
   private injurySelectFormControl: FormControl;
   private injuryFactorFormControl: FormControl;
-  private resultFactorFormControl: FormControl;
+  private resultFormControl: FormControl;
   // private leanMassFormControl: FormControl;
   private womanSituationFormControl: FormControl;
   private womanSituationTimeFormControl: FormControl;
@@ -165,7 +165,7 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
 
   get get(): number {
     if (this.energyExpend.activityFactor == -1)
-      return;
+      return null;
     
     switch (this.energyExpend.selectedProtocol) {
       case 0:
@@ -183,7 +183,7 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
 
   get eer(): number {
     if (this.energyExpend.activityFactor == -1)
-      return;
+      return null;
     
     switch (this.energyExpend.selectedProtocol) {
       case 3:
@@ -254,13 +254,21 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
   }
 
   get weightLossRange(): string {
-    if (this.energyExpend && this.energyExpend.weight)
-      return `${this.energyExpend.weight * 0.2} kcal - ${this.energyExpend.weight * 0.25} kcal`;
+    if (!this.energyExpend || !this.energyExpend.weight)
+      return;
+    
+    let weight1 = Math.round(this.energyExpend.weight * 0.2 * 100) / 100;
+    let weight2 = Math.round(this.energyExpend.weight * 0.25 * 100) / 100;
+    return `${weight1} kcal - ${weight2} kcal`;
   }
 
   get weightGainRange(): string {
-    if (this.energyExpend && this.energyExpend.weight)
-      return `${this.energyExpend.weight * 0.3} kcal - ${this.energyExpend.weight * 0.35} kcal`;
+    if (!this.energyExpend || !this.energyExpend.weight)
+      return;
+    
+    let weight1 = Math.round(this.energyExpend.weight * 0.3 * 100) / 100;
+    let weight2 = Math.round(this.energyExpend.weight * 0.35 * 100) / 100;
+    return `${weight1} kcal - ${weight2} kcal`;
   }
 
   get descriptionBottom(): string {
@@ -299,7 +307,7 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
       let weight = this._patient.weight ? this._patient.weight.value : null;
       let height = this._patient.height ? this._patient.height.value : null;
 
-      this.energyExpend = new EnergyExpend(this.guid(), '', new Date().toISOString(), weight, height);
+      this.energyExpend = new EnergyExpend(this.guid(), this.newName(), new Date().toISOString(), weight, height);
       
       if (!this._patient.energyExpend)
         this._patient.energyExpend = [];
@@ -326,7 +334,7 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
     this.activityFormControl = new FormControl(this.energyExpend.activityFactor, Validators.required);
     this.injurySelectFormControl = new FormControl(this.energyExpend.injuryId);
     this.injuryFactorFormControl = new FormControl(this.energyExpend.injuryFactor);
-    this.resultFactorFormControl = new FormControl(this.energyExpend.result, Validators.required);
+    this.resultFormControl = new FormControl(this.energyExpend.result, Validators.required);
     this.womanSituationFormControl = new FormControl(this.energyExpend.womanSituation);
     this.womanSituationTimeFormControl = new FormControl(this.energyExpend.womanSituationTime);
     // this.leanMassFormControl = new FormControl(this.energyExpend.leanMass);
@@ -336,10 +344,32 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private updateResult(): void {
+    if (this.resultFormControl && this.resultFormControl.dirty)
+      return;
+
     if (this.energyExpend.selectedProtocol == 3)
       this.result = this.eer;
-    else
+    else if (this.energyExpend.selectedProtocol != 7)
       this.result = this.get;
+    else
+      this.result = null;
+  }
+
+  private newName(): string {
+    if (!this._patient)
+      return '';
+    
+    let name = 'Cálculo de gasto energético';
+
+    if (!this._patient.energyExpend || !this._patient.energyExpend.every(e => e.description != name))
+      return name;
+    
+    //Testar
+    for (let i = 0; i < this._patient.energyExpend.length; i++) {
+      let incName = name + ' ' + (i + 1);
+      if (this._patient.energyExpend.every(e => e.description != incName)) 
+        return incName;
+    }
   }
 
   private guid(): string {
