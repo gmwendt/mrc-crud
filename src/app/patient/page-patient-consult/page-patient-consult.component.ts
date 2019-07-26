@@ -41,6 +41,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private examsReq: MatTableDataSource<LaboratoryExam>;
   private examsRes: MatTableDataSource<LaboratoryExam>;
   private foodRecalls: MatTableDataSource<FoodPlan>;
+  private foodPlans: MatTableDataSource<FoodPlan>;
   private energyExpends: MatTableDataSource<EnergyExpend>;
   private anamnesesDisplayedColumns = ['clinicCase', 'commands'];
   private examsRequestedDisplayedColumns = ['description', 'timeElapsed', 'commands'];
@@ -72,6 +73,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
         this.createAnamnasesTable();
         this.createExamsTables();
         this.createFoodRecallTable();
+        this.createFoodPlansTable();
         this.createEnergyExpendsTable();
       }
       catch (error) {
@@ -196,7 +198,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     event.stopPropagation();
 
     var dialogData: DialogAlertData = {
-			text: 'Deseja remover este Recordatório Alimentar?',
+			text: `Deseja remover ${foodPlan.description}?`,
 			button: DialogAlertButton.YesNo,
 			textAlign: 'center',
     }
@@ -271,6 +273,17 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     });
     
     this.foodRecalls = new MatTableDataSource(this.patient.foodPlans.filter(plan => plan.isRecall));
+  }
+
+  private createFoodPlansTable(): void {
+    if (!this.patient || !this.patient.foodPlans)
+      return;
+
+    this.patient.foodPlans.sort((a, b) => {
+      return (a.date > b.date) ? -1 : ((a.date < b.date) ? 1 : 0);
+    });
+
+    this.foodPlans = new MatTableDataSource(this.patient.foodPlans.filter(plan => !plan.isRecall));
   }
 
   private createEnergyExpendsTable(): void {

@@ -399,12 +399,16 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
       return '';
     
     let name = 'Cálculo de gasto energético';
+    let inc = 1;
+    let incName = name + ' ' + inc;
 
-    if (!this._patient.energyExpend || this._patient.energyExpend.every(e => e.description != name))
-      return name;
+    if (!this._patient.energyExpend || this._patient.energyExpend.every(e => e.description != incName))
+      return incName;
     
     for (let i = 0; i < this._patient.energyExpend.length; i++) {
-      let incName = name + ' ' + (i + 1);
+      inc++;
+      incName = name + ' ' + inc;
+      
       if (this._patient.energyExpend.every(e => e.description != incName)) 
         return incName;
     }

@@ -19,9 +19,6 @@ import { IPieChartData } from '../../widgets/pie-chart/pie-chart.component';
 
 import { Subscription } from "rxjs/internal/Subscription";
 
-import * as moment from 'moment';
-import * as Chart from 'chart.js';
-
 @Component({
   selector: 'page-food-plan-edit',
   templateUrl: './page-food-plan-edit.component.html',
@@ -33,13 +30,13 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   private _paramsDisposable: Subscription;
   private _queryParamsDisposable: Subscription;
   private _dirty: boolean;
+  private _loading: boolean;
   private _patient: Patient;
 
   private _dialogAddMealHeight = 630;
 
   private descriptionFormControl: FormControl;
 
-  private loading: boolean;
   private isNew: boolean;
   private foodPlan: FoodPlan;
   
@@ -88,8 +85,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
 
     if (this.isNew) {
       let isRecall = parseInt(foodPlanId) == FileSystemCommands.AddType1;
-      let description = parseInt(foodPlanId) == FileSystemCommands.AddType1 ? 'Novo recordatório alimentar' : 'Novo plano alimentar';
-      this.foodPlan = new FoodPlan(this.guid(), description, new Date().toISOString(), isRecall);
+      this.foodPlan = new FoodPlan(this.guid(), this.newName(isRecall), new Date().toISOString(), isRecall);
 
       if (!this._patient.foodPlans)
         this._patient.foodPlans = [];
@@ -109,6 +105,26 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     let timestamp = this.foodPlan ? this.foodPlan.date : new Date(Date.now());
 
     this.descriptionFormControl = new FormControl(desc, Validators.required);
+  }
+
+  private newName(isRecall: boolean): string {
+    if (!this._patient)
+      return '';
+
+    let name = isRecall ? 'Recordatório alimentar' : 'Plano alimentar';
+    let inc = 1;
+    let incName = name + ' ' + inc;
+
+    if (!this._patient.foodPlans || this._patient.foodPlans.every(e => e.description != incName))
+      return incName;
+
+    for (let i = 0; i < this._patient.foodPlans.length; i++) {
+      inc++;
+      incName = name + ' ' + inc;
+
+      if (this._patient.foodPlans.every(e => e.description != incName))
+        return incName;
+    }
   }
 
   private checkErrors(): boolean {
@@ -320,6 +336,18 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     if (this.foodPlan.isRecall)
       return 'Tipo do recordatório';
     return 'Tipo do plano alimentar';
+  }
+
+  get loading(): boolean {
+    return this._loading;
+  }
+
+  set loading(value: boolean) {
+    if (value == this._loading)
+      return;
+
+    this._loading = value;
+    this._detector.detectChanges();
   }
 
   get dirty(): boolean {

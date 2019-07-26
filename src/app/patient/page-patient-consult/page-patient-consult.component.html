@@ -241,6 +241,34 @@
       </mat-table>
     </mat-tab>
 
+    <mat-tab label="Plano alimentar">
+      <button mat-button class="page-patient-consult-content-add-button" (click)="on_food_plan_edit()">Adicionar plano alimentar</button>
+      <mat-table #table [dataSource]="foodPlans" class="page-patient-consult-content-table">
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="timeElapsed">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ getTimeElapsed(element.date) }}</mat-cell>
+        </ng-container>
+    
+        <ng-container matColumnDef="commands">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span>
+              <span title="Remover" class="icon-delete" (click)="on_remove_foodplan_click($event, element)"></span>
+            </span>
+          </mat-cell>
+        </ng-container>
+    
+        <mat-header-row *matHeaderRowDef="foodPlansDisplayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: foodPlansDisplayedColumns;" (click)="on_food_plan_edit(false, row.id)">
+        </mat-row>
+      </mat-table>
+    </mat-tab>
+
     <mat-tab label="Exames laboratoriais">
       <mat-accordion displayMode="flat" multi="true" *ngIf="patient">
         <mat-expansion-panel [expanded]="true" [style.height]="accordionReq.expanded ? '50%' : ''" #accordionReq>

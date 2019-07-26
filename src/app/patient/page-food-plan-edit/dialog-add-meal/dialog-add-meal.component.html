@@ -1,7 +1,7 @@
-<div class="mrc-dialog-title">Adicionar refeição</div>
-<!-- <ng-template #editModeTitle>
-  <div class="mrc-dialog-title">Editar usuário</div>
-</ng-template> -->
+<div class="mrc-dialog-title" *ngIf="isNew; else editModeTitle">Adicionar refeição</div>
+<ng-template #editModeTitle>
+  <div class="mrc-dialog-title">Editar refeição</div>
+</ng-template>
 <div class="mrc-dialog-separator"></div>
 <div>
   <div class="dialog-add-meal-details">
