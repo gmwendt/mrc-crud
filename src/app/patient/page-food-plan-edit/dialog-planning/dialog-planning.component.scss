@@ -1,0 +1,29 @@
+dialog-planning {
+  .mat-form-field {
+    margin-right: 8px;
+  }
+
+  .mrc-dialog-separator {
+    margin: 8px 0 !important;
+    width: 100% !important;
+  }
+
+  #mrc-edit-page-footer {
+
+    .mrc-edit-page-error {
+      color: #ef1508;
+      font-size: 9pt;
+      margin: 0 0 4px 8px;
+    }
+
+    &-buttons {
+      display: flex;
+      justify-content: flex-end;  
+
+      > button {
+        margin-left: 8px;
+        width: 85px;
+      }
+    }
+  }
+}

@@ -196,10 +196,11 @@ dialog-add-meal {
     }
 
     &-buttons {
-      margin: 8px 0 0 8px;
-      
+      display: flex;
+      justify-content: flex-end;  
+
       > button {
-        margin: 0 8px 0 0;
+        margin-left: 8px;
         width: 85px;
       }
     }

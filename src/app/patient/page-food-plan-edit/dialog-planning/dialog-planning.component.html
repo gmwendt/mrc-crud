@@ -1,23 +1,47 @@
-<div class="mrc-dialog-title">Planejamento Alimentar</div>
+<div class="mrc-dialog-title">Valores de referência</div>
 <div class="mrc-dialog-separator"></div>
 <div>
   <mat-form-field floatLabel="always">
     <mat-label>Peso (kg)</mat-label>
-    <input matInput [formControl]="weightFormControl" [(ngModel)]="planning.weight">
+    <input matInput type="number" [formControl]="weightFormControl" [(ngModel)]="planning.weight" (blur)="on_blur($event.target, 'weight')">
+    <mat-error>Valor inválido</mat-error>
   </mat-form-field>
 
   <mat-form-field floatLabel="always">
     <mat-label>Energia (kcal)</mat-label>
-    <input matInput [formControl]="energyFormControl" [(ngModel)]="planning.energy">
+    <input matInput type="number" [formControl]="energyFormControl" [(ngModel)]="planning.energy" (blur)="on_blur($event.target, 'energy')">
+    <mat-error>Valor inválido</mat-error>
   </mat-form-field>
 
   <div>
-    <!-- TODO: prot, carbs e lips -->
+    <mat-form-field floatLabel="always">
+      <mat-label>Proteínas (%)</mat-label>
+      <input matInput type="number" [formControl]="proteinFormControl" [(ngModel)]="planning.protein" (blur)="on_blur($event.target, 'protein')" min="0" max="100">
+      <mat-error>Valor inválido</mat-error>
+    </mat-form-field>
+    <mat-form-field floatLabel="always">
+      <mat-label>Carboidratos (%)</mat-label>
+      <input matInput type="number" [formControl]="carbohydrateFormControl" [(ngModel)]="planning.carbohydrate" (blur)="on_blur($event.target, 'carbohydrate')" min="0" max="100">
+      <mat-error>Valor inválido</mat-error>
+    </mat-form-field>
+    <mat-form-field floatLabel="always">
+      <mat-label>Lipídios (%)</mat-label>
+      <input matInput type="number" [formControl]="lipidFormControl" [(ngModel)]="planning.lipid" (blur)="on_blur($event.target, 'lipid')" min="0" max="100">
+      <mat-error>Valor inválido</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <label>Total:</label>
+    <span style="margin-left: 4px; font-size: 9pt"></span>
+    <label>{{ total }}</label>
+    <span style="margin-left: 4px; font-size: 9pt">%</span>
   </div>
 </div>
 <div id="mrc-edit-page-footer">
   <div class="mrc-dialog-separator"></div>
   <div id="mrc-edit-page-footer-buttons">
-    <button mat-button>Fechar</button>
+    <button mat-button (click)="on_save_click()">Salvar</button>
+    <button mat-button (click)="on_close_click()">Cancelar</button>
   </div>
 </div>
