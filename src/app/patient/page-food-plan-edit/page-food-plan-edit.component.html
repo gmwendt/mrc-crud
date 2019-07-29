@@ -19,6 +19,9 @@
           <!-- TODO: Helper -->
         </mat-radio-group>
       </div>
+      <div *ngIf="!foodPlan.isRecall">
+        <mat-checkbox style="margin-right: 8px" *ngFor="let day of daysWeek; let i = index" [value]="i" [checked]="isDaySelected(i)" (change)="on_selected_days_changed($event)">{{ day }}</mat-checkbox>
+      </div>
       <div class="page-food-plan-edit-content-meals">
         <label>Refeições</label>
         <button mat-button (click)="on_add_meal_click()" style="max-width: 80px">Adicionar</button>
@@ -92,7 +95,14 @@
           </tr>
         </table>
 
-        <button mat-button class="page-food-plan-edit-macros-content-button-detail" (click)="show_meal_details()">Detalhar nutrientes</button>
+        <div>
+          <button mat-button class="page-food-plan-edit-macros-content-button-detail" (click)="show_meal_details()">
+            Detalhar nutrientes
+          </button>
+          <button class="page-food-plan-edit-macros-content-button-detail" (click)="open_planning_dialog()">
+            Definir valores de referência
+          </button>
+        </div>
       </div>
     </div>
   </div>

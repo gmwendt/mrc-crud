@@ -48,7 +48,7 @@
     </mat-form-field>
 
     <ng-container *ngIf="energyExpend.selectedProtocol == 3 && canBePregOrLact">
-      <div class="page-energy-expend-edit-columns" style="align-items: baseline;">
+      <div class="page-energy-expend-edit-columns page-energy-expend-edit-woman-situation">
         <mat-form-field floatLabel="always" class="page-energy-expend-edit-content-field">
           <mat-label>Situação</mat-label>
           <mat-select [ngModel]="energyExpend.womanSituation" [formControl]="womanSituationFormControl" (ngModelChange)="on_woman_situation_changed($event)" [disableOptionCentering]="true">
@@ -56,13 +56,13 @@
           </mat-select>
         </mat-form-field>
         <div class="page-energy-expend-edit-columns-separator"></div>
-        <mat-form-field *ngIf="energyExpend.womanSituation != 1" floatLabel="always" class="page-energy-expend-edit-content-field" style="width: 60px">
+        <mat-form-field *ngIf="energyExpend.womanSituation != 1" floatLabel="always" class="page-energy-expend-edit-content-field-reduced">
           <mat-label>Tempo</mat-label>
           <input matInput type="number" [formControl]="womanSituationTimeFormControl" [ngModel]="energyExpend.womanSituationTime" (ngModelChange)="on_woman_situation_time_changed($event)" [max]="maxTime" min="0">
         </mat-form-field>
         <div class="page-energy-expend-edit-columns-separator"></div>
-        <div *ngIf="energyExpend.womanSituation == 2" style="font-size: 9pt">semanas</div>
-        <div *ngIf="energyExpend.womanSituation == 3" style="font-size: 9pt">meses</div>
+        <div class="page-energy-expend-edit-woman-situation-time-unit" *ngIf="energyExpend.womanSituation == 2">semanas</div>
+        <div class="page-energy-expend-edit-woman-situation-time-unit" *ngIf="energyExpend.womanSituation == 3">meses</div>
       </div>
     </ng-container>
 
@@ -95,7 +95,7 @@
       </mat-form-field>
     </ng-container> -->
 
-    <div style="font-size: 9pt; margin-bottom: 16px; background-color: #f7f7f7; max-width: 500px; padding: 8px;">
+    <div class="page-energy-expend-edit-content-result">
       <label>Resultado</label>
       <ng-container *ngIf="resultCalcErrors.length == 0; else hasCalcError">
         <ng-container *ngIf="energyExpend.selectedProtocol != 7; else regraDeBolsoResult">
@@ -109,12 +109,12 @@
         </ng-container>
         <ng-template #regraDeBolsoResult>
           <div class="page-energy-expend-edit-columns">
-            <div style="text-align: center">
+            <div class="page-energy-expend-edit-columns-aligned">
               <div>Perda de peso</div>
               <div>{{ weightLossRange }}</div>
             </div>
             <div class="page-energy-expend-edit-columns-separator"></div>
-            <div style="text-align: center">
+            <div class="page-energy-expend-edit-columns-aligned">
               <div>Ganho de peso</div>
               <div>{{ weightGainRange }}</div>
             </div>
@@ -122,7 +122,7 @@
         </ng-template>
       </ng-container>
       <ng-template #hasCalcError>
-        <div style="font-style: italic; color: #6c757d" *ngFor="let error of resultCalcErrors">{{ error }}</div>
+        <div class="page-energy-expend-edit-content-result-error" *ngFor="let error of resultCalcErrors">{{ error }}</div>
       </ng-template>
     </div>
     <div>

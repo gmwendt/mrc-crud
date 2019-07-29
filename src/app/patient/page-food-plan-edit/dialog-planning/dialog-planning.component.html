@@ -1,0 +1,23 @@
+<div class="mrc-dialog-title">Planejamento Alimentar</div>
+<div class="mrc-dialog-separator"></div>
+<div>
+  <mat-form-field floatLabel="always">
+    <mat-label>Peso (kg)</mat-label>
+    <input matInput [formControl]="weightFormControl" [(ngModel)]="planning.weight">
+  </mat-form-field>
+
+  <mat-form-field floatLabel="always">
+    <mat-label>Energia (kcal)</mat-label>
+    <input matInput [formControl]="energyFormControl" [(ngModel)]="planning.energy">
+  </mat-form-field>
+
+  <div>
+    <!-- TODO: prot, carbs e lips -->
+  </div>
+</div>
+<div id="mrc-edit-page-footer">
+  <div class="mrc-dialog-separator"></div>
+  <div id="mrc-edit-page-footer-buttons">
+    <button mat-button>Fechar</button>
+  </div>
+</div>

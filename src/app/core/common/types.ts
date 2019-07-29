@@ -499,8 +499,8 @@ export class EnergyExpend {
 }
 
 export class FoodPlan {
-  constructor(public id: string, public description: string, public date: string, public isRecall?: boolean, public useFoodDb: boolean = true, public weightRef?: number,
-    public meals: IMeal[] = []) {
+  constructor(public id: string, public description: string, public date: string, public isRecall?: boolean, public useFoodDb: boolean = true,
+    public meals: IMeal[] = [], public selectedDays: number[] = [], public foodPlanning?: FoodPlanning) {
   }
 
   toJSON(): string {
@@ -517,6 +517,11 @@ export class FoodPlan {
 
   private static reviver(key: string, value: any): any {
     return key === "" ? FoodPlan.fromJSON(value) : value;
+  }
+}
+
+export class FoodPlanning {
+  constructor(public weight: number, public energy: number, public protein?: number, public carbohydrate?: number, public lipid?: number) {
   }
 }
 

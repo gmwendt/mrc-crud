@@ -4,6 +4,8 @@ export class LocalStorageConstants {
   public static MRC_USER = '_MRC_USER';
 }
 
+export const DaysWeek: string[] = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'];
+
 export enum DaysNameEnum {
   Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Length
 }

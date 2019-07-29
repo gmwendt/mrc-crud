@@ -33,12 +33,41 @@ page-energy-expend-edit .page-energy-expend-edit-content-field {
   max-width: 180px;
 }
 
+page-energy-expend-edit .page-energy-expend-edit-content-field-reduced {
+  max-width: 60px;
+}
+
+page-energy-expend-edit .page-energy-expend-edit-content-result {
+  background-color: #f7f7f7; 
+  font-size: 9pt; 
+  margin-bottom: 16px; 
+  max-width: 500px; 
+  padding: 8px;
+}
+
+page-energy-expend-edit .page-energy-expend-edit-content-result-error {
+  color: #6c757d;
+  font-style: italic; 
+}
+
 page-energy-expend-edit .page-energy-expend-edit-columns {
   display: flex;
 }
 
 page-energy-expend-edit .page-energy-expend-edit-columns-separator {
   width: 8px;
+}
+
+page-energy-expend-edit .page-energy-expend-edit-columns-aligned {
+  text-align: center;
+}
+
+page-energy-expend-edit .page-energy-expend-edit-woman-situation {
+  align-items: baseline;
+}
+
+page-energy-expend-edit .page-energy-expend-edit-woman-situation-time-unit {
+  font-size: 9pt;
 }
 
 page-energy-expend-edit #mrc-edit-page-footer .mrc-edit-page-error {

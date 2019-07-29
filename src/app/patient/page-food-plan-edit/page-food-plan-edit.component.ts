@@ -7,8 +7,9 @@ import { ActivatedRoute } from "@angular/router";
 
 import { DialogAddMeal, IDialogAddMealData } from "./dialog-add-meal/dialog-add-meal.component";
 import { DialogNutrients } from './dialog-nutrients/dialog-nutrients.component';
+import { DialogPlanning } from './dialog-planning/dialog-planning.component';
 
-import { FoodPlan, Patient, FileSystemCommands, IMeal, IFoodDetail } from "../../core/common/types";
+import { FoodPlan, Patient, FileSystemCommands, IMeal, IFoodDetail, FoodPlanning } from "../../core/common/types";
 import { PatientService } from "../../core/patient.service";
 
 import { DialogAlertButton, DialogAlertData, DialogAlertResult } from "../../shared/dialog-alert/dialog-alert.component";
@@ -39,7 +40,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
 
   private isNew: boolean;
   private foodPlan: FoodPlan;
-  
+
   private ptnSum: number = 0;
   private choSum: number = 0;
   private lipSum: number = 0;
@@ -49,14 +50,14 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   private pieChartUnit: string = '%';
   private seriesColors: string[] = SeriesColors;
 
-  @ViewChild('radioBtnCalc', { static: false }) matRadioBtnCalc: MatRadioButton; 
-  @ViewChild('radioBtnFree', { static: false }) matRadioBtnFree: MatRadioButton; 
+  @ViewChild('radioBtnCalc', { static: false }) matRadioBtnCalc: MatRadioButton;
+  @ViewChild('radioBtnFree', { static: false }) matRadioBtnFree: MatRadioButton;
 
-  constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _patientService: PatientService, 
+  constructor(private _route: ActivatedRoute, private _detector: ChangeDetectorRef, private _patientService: PatientService,
     private _dialog: DialogService, private _location: Location) {
 
   }
-  
+
   ngAfterViewInit() {
     this._paramsDisposable = this._route.params.subscribe(async (params) => {
       let patientId = params['id'];
@@ -74,13 +75,12 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
         this.updateChartData();
 
         this.loading = false;
-        this._detector.detectChanges();
       }
     });
   }
 
   private async loadFoodPlan(patientId: string, foodPlanId: string): Promise<void> {
-    this.isNew = parseInt(foodPlanId) == FileSystemCommands.AddType1 || parseInt(foodPlanId) == FileSystemCommands.AddType2; 
+    this.isNew = parseInt(foodPlanId) == FileSystemCommands.AddType1 || parseInt(foodPlanId) == FileSystemCommands.AddType2;
     this._patient = await this._patientService.getPatientById(patientId);
 
     if (this.isNew) {
@@ -99,7 +99,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
         throw Error("Cound not find LabAnalyse content on server.");
     }
   }
-  
+
   private initializeFields(): void {
     let desc = this.foodPlan ? this.foodPlan.description : '';
     let timestamp = this.foodPlan ? this.foodPlan.date : new Date(Date.now());
@@ -128,7 +128,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private checkErrors(): boolean {
-    if (!this.descriptionFormControl.valid)
+    if (this.descriptionFormControl.hasError('required'))
       return false;
 
     return true;
@@ -141,10 +141,10 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
         button: DialogAlertButton.YesNo,
         textAlign: 'center',
       };
-      
+
       let dialogResult = await this._dialog.openAlert(dialogData);
       if (dialogResult == DialogAlertResult.No) {
-        if (event.value) 
+        if (event.value)
           this.matRadioBtnFree.checked = true;
         else
           this.matRadioBtnCalc.checked = true;
@@ -152,24 +152,24 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
         this._detector.detectChanges();
         return;
       }
-      
+
       this.foodPlan.meals = [];
       this._detector.detectChanges();
     }
-    
+
     this.foodPlan.useFoodDb = event.value;
     this.markAsDirty();
   }
 
   private on_add_meal_click(meal?: IMeal, index?: number): void {
-    let editing = meal ? true : false;    
+    let editing = meal ? true : false;
     let selectedFoodsCloned: IFoodDetail[] = [];
 
     if (editing)
       meal.selectedFoods.map(food => selectedFoodsCloned.push(Object.assign({}, food)));
 
     let dialogData: IDialogAddMealData = {
-      editing : editing,
+      editing: editing,
       useFoodDb: this.foodPlan.useFoodDb,
       dialogHeight: this._dialogAddMealHeight,
       mealName: editing ? meal.mealName : undefined,
@@ -179,16 +179,16 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       mealAsText: editing ? meal.mealAsText : undefined
     };
     let dialogRef = this._dialog.open(DialogAddMeal, { data: dialogData, width: '800px', height: this._dialogAddMealHeight + 'px' });
-    
+
     dialogRef.afterClosed().subscribe((result: IMeal) => {
       if (!result)
         return;
 
       if (editing)
         this.foodPlan.meals[index] = result;
-      else 
+      else
         this.foodPlan.meals.push(result);
-        
+
       this.updateChartData();
       this.markAsDirty();
       this._detector.detectChanges();
@@ -197,9 +197,9 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
 
   private async on_remove_meal_click(meal: IMeal, index: number): Promise<void> {
     let dialogData: DialogAlertData = {
-			text: `Deseja remover a refeição ${meal.mealName}?`,
-			button: DialogAlertButton.YesNo,
-			textAlign: 'center',
+      text: `Deseja remover a refeição ${meal.mealName}?`,
+      button: DialogAlertButton.YesNo,
+      textAlign: 'center',
     };
 
     let dialogResult = await this._dialog.openAlert(dialogData);
@@ -224,6 +224,12 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     this._dialog.open(DialogNutrients, { data: foods })
   }
 
+  private open_planning_dialog(): void {
+    let planning = this.foodPlan.foodPlanning ? this.foodPlan.foodPlanning : new FoodPlanning(this.patientWeight, this.patientGet); 
+
+    this._dialog.open(DialogPlanning, { data: planning });
+  }
+
   private async on_save_clicked(): Promise<void> {
     if (!this.checkErrors())
       return;
@@ -231,7 +237,6 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     this.foodPlan.date = new Date().toISOString();
 
     this.loading = true;
-    this._detector.detectChanges();
 
     try {
       await this._patientService.updatePatient(this._patient);
@@ -275,7 +280,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       data: this.getMacroPercent(this.lipSum),
       label: 'Lipídios'
     }];
-    
+
     this.pieChartData = data;
   }
 
@@ -308,6 +313,23 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       return null;
 
     return this._patient.weight.value;
+  }
+
+  private get patientGet(): number {
+    //TODO: testar
+    if (!this._patient || !this._patient.energyExpend || this._patient.energyExpend.length == 0)
+      return null;
+    
+    let mostRecentDate = new Date(Math.max.apply(null, this._patient.energyExpend.map(e => {
+      return new Date(e.date);
+    })));
+    
+    let mostRecentObject = this._patient.energyExpend.filter(e => {
+      var d = new Date(e.date);
+      return d.getTime() == mostRecentDate.getTime();
+    })[0];
+
+    return mostRecentObject.totalEnergyExpend;
   }
 
   private get pageTitle(): string {
@@ -347,9 +369,9 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       return;
 
     this._loading = value;
-    this._detector.detectChanges();
+    this._detector.markForCheck();
   }
-
+  
   get dirty(): boolean {
     if (this.descriptionFormControl && this.descriptionFormControl.dirty)
       return true;
@@ -371,14 +393,14 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     var dialogData: DialogAlertData = {
       text: msg,
       caption: 'Erro',
-			button: DialogAlertButton.OK,
+      button: DialogAlertButton.OK,
     };
     this._dialog.openAlert(dialogData).then(result => { });
-	}
+  }
 
-	private on_error(error: any): void {
+  private on_error(error: any): void {
     console.log(error);
-		this.show_error_dialog(error);
+    this.show_error_dialog(error);
   }
 
   private guid(): string {
