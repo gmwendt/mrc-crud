@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation, AfterViewInit, OnDestroy, ChangeDetection
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from "@angular/common/http";
 import { FormControl, Validators } from "@angular/forms";
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatRadioChange, MatRadioButton } from "@angular/material/radio";
 import { ActivatedRoute } from "@angular/router";
 
@@ -9,6 +10,7 @@ import { DialogAddMeal, IDialogAddMealData } from "./dialog-add-meal/dialog-add-
 import { DialogNutrients } from './dialog-nutrients/dialog-nutrients.component';
 import { DialogPlanning } from './dialog-planning/dialog-planning.component';
 
+import { DaysWeek } from '../../core/common/constants';
 import { FoodPlan, Patient, FileSystemCommands, IMeal, IFoodDetail, FoodPlanning } from "../../core/common/types";
 import { PatientService } from "../../core/patient.service";
 
@@ -50,6 +52,8 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   private pieChartUnit: string = '%';
   private seriesColors: string[] = SeriesColors;
 
+  private daysWeek = DaysWeek;
+
   @ViewChild('radioBtnCalc', { static: false }) matRadioBtnCalc: MatRadioButton;
   @ViewChild('radioBtnFree', { static: false }) matRadioBtnFree: MatRadioButton;
 
@@ -72,7 +76,11 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       }
       finally {
         this.initializeFields();
-        this.updateChartData();
+
+        setTimeout(() => {
+          this.updateChartData();
+          this._detector.detectChanges();
+        });
 
         this.loading = false;
       }
@@ -132,6 +140,13 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       return false;
 
     return true;
+  }
+
+  private isDaySelected(value: number): boolean {
+    if (!this.foodPlan)
+      return;
+    
+    return this.foodPlan.selectedDays.some(d => d === value);
   }
 
   private async on_food_source_change(event: MatRadioChange): Promise<void> {
@@ -227,7 +242,35 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   private open_planning_dialog(): void {
     let planning = this.foodPlan.foodPlanning ? this.foodPlan.foodPlanning : new FoodPlanning(this.patientWeight, this.patientGet); 
 
-    this._dialog.open(DialogPlanning, { data: planning });
+    var dialogRef = this._dialog.open(DialogPlanning, { data: planning });
+    dialogRef.afterClosed().subscribe((result: FoodPlanning) => {
+      if (!result)
+        return;
+      
+      this.foodPlan.foodPlanning = result;
+      this._detector.detectChanges();
+
+      this.markAsDirty();
+    })
+  }
+
+  private on_selected_days_changed(event: MatCheckboxChange): void {
+    let index = this.foodPlan.selectedDays.indexOf(parseInt(event.source.value));
+
+    if (event.checked && index == -1)
+      this.foodPlan.selectedDays.push(parseInt(event.source.value));
+    else if (!event.checked && index > -1)
+      this.foodPlan.selectedDays.splice(index, 1);
+
+    this.markAsDirty();
+  }
+
+  private on_use_ref_change(value: boolean): void {
+    if (value && !this.foodPlan.foodPlanning) 
+      this.open_planning_dialog();
+    
+    this.foodPlan.useReference = value;
+    this.markAsDirty();
   }
 
   private async on_save_clicked(): Promise<void> {
@@ -302,13 +345,24 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private getGramsPerKg(value: number): number {
-    if (!this._patient.weight)
+    if (!this.patientWeight)
       return null;
 
-    return value / this._patient.weight.value;
+    return value / this.patientWeight;
+  }
+
+  private getSubstituteMealName(meal: IMeal): string {
+    if (!meal)
+      return;
+    
+    let count = meal.substituteMeals ? meal.substituteMeals.length : 2;
+    return `Adicionar ${count}ª opção`;
   }
 
   private get patientWeight(): number {
+    if (this.foodPlan.useReference && this.foodPlan.foodPlanning && this.foodPlan.foodPlanning.weight)
+      return this.foodPlan.foodPlanning.weight;
+    
     if (!this._patient.weight)
       return null;
 
@@ -360,6 +414,22 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     return 'Tipo do plano alimentar';
   }
 
+  private get canShowMacroRef(): boolean {
+    if (!this.foodPlan.useReference)
+      return false;
+    
+    if (this.foodPlan.foodPlanning && this.foodPlan.foodPlanning.carbohydrate && this.foodPlan.foodPlanning.lipid && this.foodPlan.foodPlanning.protein)
+      return true;
+  }
+
+  private get canShowEnergyRef(): boolean {
+    if (!this.foodPlan.useReference)
+      return false;
+    
+    if (this.foodPlan.foodPlanning && this.foodPlan.foodPlanning.energy)
+      return true;
+  }
+
   get loading(): boolean {
     return this._loading;
   }
@@ -369,7 +439,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       return;
 
     this._loading = value;
-    this._detector.markForCheck();
+    this._detector.detectChanges();
   }
   
   get dirty(): boolean {

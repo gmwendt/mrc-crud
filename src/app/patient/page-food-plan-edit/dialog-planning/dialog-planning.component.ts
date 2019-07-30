@@ -12,7 +12,9 @@ import { FoodPlanning } from '../../../core/common/types';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DialogPlanning  {
+  private errorList: string[];
   private planning: FoodPlanning;
+  private saveTouched: boolean;
 
   //**Controls */
   private weightFormControl: FormControl;
@@ -53,15 +55,15 @@ export class DialogPlanning  {
     this.lipidFormControl = new FormControl(this.planning.lipid, [Validators.min(0), Validators.max(100)]);
   }
 
-  private checkErrors(): boolean {
+  private updateErrors(): void {
+    this.errorList = [];
+
     if (this.proteinFormControl.invalid || this.carbohydrateFormControl.invalid || this.lipidFormControl.invalid ||
       this.weightFormControl.invalid || this.energyFormControl.invalid)
-      return false;
-    
-    if (this.total > 0 && this.total < 100)
-      return false;
-    
-    return true;
+      this.errorList.push('Verifique todos os campos do formulário');
+
+    if (this.total != 100)
+      this.errorList.push('A soma dos percentuais de proteína, carboidrato e lipídeo devem totalizar 100%');
   }
 
   private roundValue(value: string): number {
@@ -73,13 +75,19 @@ export class DialogPlanning  {
 
     this.planning[path] = roundedValue;
     target.value = roundedValue.toString();
+
+    this.updateErrors();
   }
 
   private on_save_click(): void {
-    if (!this.checkErrors())
+    this.updateErrors();
+    
+    this.saveTouched = true;
+
+    if (this.errorList.length > 0)
       return;
     
-    //TODO
+    this._dialogRef.close(this.planning);
   }
 
   private on_close_click(): void {

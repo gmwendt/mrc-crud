@@ -1,3 +1,8 @@
+dialog-planning .dialog-planning-separator {
+  font-size: 9pt;
+  margin-left: 4px;
+}
+
 dialog-planning .mat-form-field {
   margin-right: 8px;
 }

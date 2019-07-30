@@ -108,6 +108,11 @@ page-food-plan-edit {
       display: flex; 
       flex-direction: column;
 
+      .mrc-col-plan {
+        background: #d4e8f4;
+        text-align: center;
+      }
+
       .mrc-col-desc {
         width: 100px;
       }
@@ -116,7 +121,6 @@ page-food-plan-edit {
       }
 
       .mrc-col-gpkg {
-        width: 100px;
         text-align: right;
       }
 
@@ -129,6 +133,17 @@ page-food-plan-edit {
       
       &-button-detail {
         margin-top: 8px;
+      }
+
+      &-table {
+        width: 100%;
+
+        tbody {
+          tr:hover {
+            background-color: #f3f3f3;
+            cursor: pointer;
+          }
+        }
       }
 
       > table {

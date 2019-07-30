@@ -47,7 +47,7 @@
               <span title="Editar" class="icon-edit" (click)="on_add_meal_click(meal, i)"></span> 
               <span title="Detalhes" class="icon-list-detail" (click)="show_meal_details(meal)"></span>
               <span title="Remover" class="icon-delete" (click)="on_remove_meal_click(meal, i)"></span>
-              <button mat-button *ngIf="!foodPlan.isRecall">Adicionar substituição</button> <!-- TODO:  (click)=""-->
+              <button mat-button *ngIf="!foodPlan.isRecall">{{ getSubstituteMealName(meal) }}</button> <!-- TODO:  (click)=""-->
             </div>
           </mat-card>
         </ng-container>
@@ -57,52 +57,81 @@
       <label>Macronutrientes</label>
       <div class="page-food-plan-edit-macros-content">
         <mrc-pie-chart [data]="pieChartData" [unit]="pieChartUnit" [hideLegend]="true"></mrc-pie-chart>
-        <table>
+        <table *ngIf="!foodPlan.isRecall" style="align-self: end; margin-top: 16px">
           <tr>
-            <td><div class="mrc-legend-item" [style.background-color]="seriesColors[0]"></div></td>
-            <td class="mrc-col-desc">Proteínas</td>
-            <td class="mrc-col-value">{{ ptnSum | unitFormater: 'g':'2' }}</td>
-            <td>{{ getMacroPercent(ptnSum) | unitFormater: '%':'2' }}</td>
-            <td class="mrc-col-gpkg">{{ getGramsPerKg(ptnSum) | unitFormater: 'g/kg':'2' }}*</td>
-          </tr>
-          <tr>
-            <td><div class="mrc-legend-item" [style.background-color]="seriesColors[1]"></div></td>
-            <td class="mrc-col-desc">Carboidratos</td>
-            <td class="mrc-col-value">{{ choSum | unitFormater: 'g':'2' }}</td>
-            <td>{{ getMacroPercent(choSum) | unitFormater: '%':'2' }}</td>
-            <td class="mrc-col-gpkg">{{ getGramsPerKg(choSum) | unitFormater: 'g/kg':'2' }}*</td>
-          </tr>
-          <tr>
-            <td><div class="mrc-legend-item" [style.background-color]="seriesColors[2]"></div></td>
-            <td class="mrc-col-desc">Lipídios</td>
-            <td class="mrc-col-value">{{ lipSum | unitFormater: 'g':'2' }}</td>
-            <td>{{ getMacroPercent(lipSum) | unitFormater: '%':'2' }}</td>
-            <td class="mrc-col-gpkg">{{ getGramsPerKg(lipSum) | unitFormater: 'g/kg':'2' }}*</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="mrc-col-desc">Energia</td>
-            <td class="mrc-col-value">{{ energySum | unitFormater: 'kcal':'2' }}</td>
+            <td>
+              <mat-checkbox [ngModel]="foodPlan.useReference" (ngModelChange)="on_use_ref_change($event)">Utilizar valores de referência</mat-checkbox>
+            </td>
+            <td><span title="Editar valores de referência" class="icon-edit" style="font-size: 12pt; margin-left: 8px; cursor: pointer;" (click)="open_planning_dialog()"></span></td>
           </tr>
         </table>
-        <table style="width: 348px; font-size: 8pt;">
+        <table style="width: 100%" class="page-food-plan-edit-macros-content-table">
+          <thead>
+            <tr>
+              <th></th> <!-- Legend -->
+              <th></th> <!-- Title -->
+              <th></th> <!-- Value g -->
+              <th></th> <!-- Value % -->
+              <th *ngIf="canShowMacroRef || canShowEnergyRef" class="mrc-col-plan">Planejado</th> <!-- Planning -->
+              <th></th> <!-- g/kg -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="mrc-legend-item" [style.background-color]="seriesColors[0]"></div></td>
+              <td class="mrc-col-desc">Proteínas</td>
+              <td class="mrc-col-value">{{ ptnSum | unitFormater: 'g':'2' }}</td>
+              <td>{{ getMacroPercent(ptnSum) | unitFormater: '%':'2' }}</td>
+              <td [ngClass]="{'mrc-col-plan': canShowMacroRef}">
+                <ng-container *ngIf="canShowMacroRef">{{ foodPlan.foodPlanning.protein| unitFormater: '%':'2' }}</ng-container>
+              </td>
+              <td class="mrc-col-gpkg">{{ getGramsPerKg(ptnSum) | unitFormater: 'g/kg':'2' }}*</td>
+            </tr>
+            <tr>
+              <td><div class="mrc-legend-item" [style.background-color]="seriesColors[1]"></div></td>
+              <td class="mrc-col-desc">Carboidratos</td>
+              <td class="mrc-col-value">{{ choSum | unitFormater: 'g':'2' }}</td>
+              <td>{{ getMacroPercent(choSum) | unitFormater: '%':'2' }}</td>
+              <td [ngClass]="{'mrc-col-plan': canShowMacroRef}">
+                <ng-container *ngIf="canShowMacroRef">{{ foodPlan.foodPlanning.carbohydrate| unitFormater: '%':'2' }}</ng-container>
+              </td>
+              <td class="mrc-col-gpkg">{{ getGramsPerKg(choSum) | unitFormater: 'g/kg':'2' }}*</td>
+            </tr>
+            <tr>
+              <td><div class="mrc-legend-item" [style.background-color]="seriesColors[2]"></div></td>
+              <td class="mrc-col-desc">Lipídios</td>
+              <td class="mrc-col-value">{{ lipSum | unitFormater: 'g':'2' }}</td>
+              <td>{{ getMacroPercent(lipSum) | unitFormater: '%':'2' }}</td>
+              <td [ngClass]="{'mrc-col-plan': canShowMacroRef}">
+                <ng-container *ngIf="canShowMacroRef">{{ foodPlan.foodPlanning.lipid| unitFormater: '%':'2' }}</ng-container>
+              </td>
+              <td class="mrc-col-gpkg">{{ getGramsPerKg(lipSum) | unitFormater: 'g/kg':'2' }}*</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="mrc-col-desc">Energia</td>
+              <td class="mrc-col-value">{{ energySum | unitFormater: 'kcal':'2' }}</td>
+              <td></td>
+              <td [ngClass]="{'mrc-col-plan': canShowEnergyRef}">
+                <ng-container *ngIf="canShowEnergyRef">{{ foodPlan.foodPlanning.energy| unitFormater: 'kcal':'2' }}</ng-container>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table style="width: 348px; font-size: 8pt; align-self: end;">
           <tr>
             <td>*</td>
-            <td *ngIf="patientWeight; else elseCol">Valor baseado no peso atual do paciente ({{ patientWeight | unitFormater: 'kg':'2' }})</td>
+            <td *ngIf="patientWeight; else elseCol">Valor baseado no peso de {{ patientWeight | unitFormater: 'kg':'2' }}</td>
             <ng-template #elseCol>
               <td>Informe o peso do paciente na aba Medidas</td>
             </ng-template>
           </tr>
         </table>
 
-        <div>
-          <button mat-button class="page-food-plan-edit-macros-content-button-detail" (click)="show_meal_details()">
-            Detalhar nutrientes
-          </button>
-          <button class="page-food-plan-edit-macros-content-button-detail" (click)="open_planning_dialog()">
-            Definir valores de referência
-          </button>
-        </div>
+        <button mat-button class="page-food-plan-edit-macros-content-button-detail" (click)="show_meal_details()">
+          Detalhar nutrientes
+        </button>
       </div>
     </div>
   </div>

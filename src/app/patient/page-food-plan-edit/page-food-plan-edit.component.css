@@ -111,12 +111,16 @@ page-food-plan-edit .page-food-plan-edit-macros-content {
   flex-direction: column;
 }
 
+page-food-plan-edit .page-food-plan-edit-macros-content .mrc-col-plan {
+  background: #d4e8f4;
+  text-align: center;
+}
+
 page-food-plan-edit .page-food-plan-edit-macros-content .mrc-col-desc {
   width: 100px;
 }
 
 page-food-plan-edit .page-food-plan-edit-macros-content .mrc-col-gpkg {
-  width: 100px;
   text-align: right;
 }
 
@@ -129,6 +133,15 @@ page-food-plan-edit .page-food-plan-edit-macros-content .mrc-legend-item {
 
 page-food-plan-edit .page-food-plan-edit-macros-content-button-detail {
   margin-top: 8px;
+}
+
+page-food-plan-edit .page-food-plan-edit-macros-content-table {
+  width: 100%;
+}
+
+page-food-plan-edit .page-food-plan-edit-macros-content-table tbody tr:hover {
+  background-color: #f3f3f3;
+  cursor: pointer;
 }
 
 page-food-plan-edit .page-food-plan-edit-macros-content > table {
