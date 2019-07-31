@@ -47,18 +47,25 @@ page-food-plan-edit {
       margin-top: 8px;
 
       .mat-card {
-        margin-top: 8px; 
+        background-color: #f7f7f7;
+        margin: 8px 8px 0 0;
         max-width: 250px; 
+        min-width: 250px; 
         padding-bottom: 4px;
 
         h1 {
           color: grey;
           font-weight: 500;
         }
+
+        .mat-button {
+          margin: 4px 0 0 8px;
+        }
       }
 
       &-container {
         display: flex;
+        height: calc(100% - 69px);
 
         &-time {
           color: #a6a3a3;
@@ -105,11 +112,13 @@ page-food-plan-edit {
 
     &-content {
       align-items: center;
+      background-color: #f7f7f7;
       display: flex; 
       flex-direction: column;
+      padding: 8px;
 
       .mrc-col-plan {
-        background: #d4e8f4;
+        background: #e5e5e5;
         text-align: center;
       }
 

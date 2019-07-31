@@ -1,14 +1,11 @@
-<div class="mrc-dialog-title" *ngIf="isNew; else editModeTitle">Adicionar refeição</div>
-<ng-template #editModeTitle>
-  <div class="mrc-dialog-title">Editar refeição</div>
-</ng-template>
+<div class="mrc-dialog-title">{{ dialogTitle }}</div>
 <div class="mrc-dialog-separator"></div>
 <div>
   <div class="dialog-add-meal-details">
     <div class="dialog-add-meal-details-description">
       <mat-form-field floatLabel="always" class="dialog-add-meal-meal-select-field">
         <mat-label>Refeição</mat-label>
-        <mat-select [formControl]="mealSelectCtrl">
+        <mat-select [formControl]="mealSelectCtrl" [disabled]="isSubstitute">
           <mat-option *ngFor="let meal of mealGroups" [value]="meal.id">{{ meal.description }}</mat-option>
           <mat-option value="0">Outra</mat-option>
         </mat-select>
@@ -16,14 +13,14 @@
       </mat-form-field>
       <ng-container *ngIf="mealSelectCtrl.value == '0'">
         <mat-form-field floatLabel="always">
-          <input matInput placeholder="Nome da refeição" [formControl]="mealNameCtrl">
+          <input matInput placeholder="Nome da refeição" [formControl]="mealNameCtrl" [disabled]="isSubstitute">
           <!-- <mat-error *ngIf="mealNameCtrl.hasError('required')">Informe um nome para esta refeição</mat-error> -->
         </mat-form-field>
       </ng-container>
     </div>
     <div class="dialog-add-meal-details-time">
       <label>Horário da refeição</label>
-      <input aria-label="24hr format" [ngxTimepicker]="fullTime" [format]="24" readonly style="background-color: #fff;" [formControl]="pickerInputCtrl"> 
+      <input aria-label="24hr format" [ngxTimepicker]="fullTime" [format]="24" [style.color]="isSubstitute ? 'rgba(0,0,0,.38)' : ''" readonly style="background-color: #fff;" [formControl]="pickerInputCtrl" [disabled]="isSubstitute"> 
       <ngx-material-timepicker #fullTime></ngx-material-timepicker>
     </div>
   </div>

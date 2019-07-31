@@ -11,7 +11,7 @@ import { DialogNutrients } from './dialog-nutrients/dialog-nutrients.component';
 import { DialogPlanning } from './dialog-planning/dialog-planning.component';
 
 import { DaysWeek } from '../../core/common/constants';
-import { FoodPlan, Patient, FileSystemCommands, IMeal, IFoodDetail, FoodPlanning } from "../../core/common/types";
+import { FoodPlan, Patient, FileSystemCommands, IMeal, IFoodDetail, FoodPlanning, ISubstituteMeal } from "../../core/common/types";
 import { PatientService } from "../../core/patient.service";
 
 import { DialogAlertButton, DialogAlertData, DialogAlertResult } from "../../shared/dialog-alert/dialog-alert.component";
@@ -211,8 +211,11 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private async on_remove_meal_click(meal: IMeal, index: number): Promise<void> {
+    let text = `Deseja remover a refeição ${meal.mealName}?`;
+    text += meal.selectedFoods && meal.selectedFoods.length > 0 ? ` Esta ação também removerá todas as refeições substitutas de ${meal.mealName}` : '';
+
     let dialogData: DialogAlertData = {
-      text: `Deseja remover a refeição ${meal.mealName}?`,
+      text: text,
       button: DialogAlertButton.YesNo,
       textAlign: 'center',
     };
@@ -228,7 +231,23 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     this._detector.detectChanges();
   }
 
-  private show_meal_details(meal?: IMeal): void {
+  private async on_remove_substitute_click(meal: IMeal, subsIndex: number): Promise<void> {
+    let dialogData: DialogAlertData = {
+      text: `Deseja remover a ${subsIndex + 2}ª opção de ${meal.mealName}?`,
+      button: DialogAlertButton.YesNo,
+      textAlign: 'center',
+    };
+
+    let dialogResult = await this._dialog.openAlert(dialogData);
+    if (dialogResult == DialogAlertResult.No)
+      return;
+    
+    meal.substituteMeals.splice(subsIndex, 1)
+    this.markAsDirty();
+    this._detector.detectChanges();
+  }
+
+  private show_meal_details(meal?: IMeal | ISubstituteMeal): void {
     let foods = [];
 
     if (meal)
@@ -271,6 +290,45 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     
     this.foodPlan.useReference = value;
     this.markAsDirty();
+  }
+
+  private on_add_substitute_click(meal: IMeal, index?: number): void {
+    let editing = (index === undefined || index === null) ? false : true;
+    let selectedFoodsCloned: IFoodDetail[] = [];
+
+    if (editing) {
+      if (!meal.substituteMeals || meal.substituteMeals.length == 0)
+        throw "Error: missing susbtitute meal";
+      
+      meal.substituteMeals[index].selectedFoods.map(food => selectedFoodsCloned.push(Object.assign({}, food)));
+    }
+    
+    let dialogData: IDialogAddMealData = {
+      isSubstitute: true,
+      editing: editing,
+      useFoodDb: this.foodPlan.useFoodDb,
+      dialogHeight: this._dialogAddMealHeight,
+      mealName: meal.mealName,
+      mealTime: meal.mealTime,
+      selectedFoods: editing ? selectedFoodsCloned : undefined
+    };
+    let dialogRef = this._dialog.open(DialogAddMeal, { data: dialogData, width: '800px', height: this._dialogAddMealHeight + 'px' });
+
+    dialogRef.afterClosed().subscribe((result: ISubstituteMeal) => {
+      if (!result)
+        return;
+
+      if (editing) 
+        meal.substituteMeals[index] = result;
+      else {
+        if (!meal.substituteMeals)
+          meal.substituteMeals = [];
+        meal.substituteMeals.push(result);
+      }
+
+      this.markAsDirty();
+      this._detector.detectChanges();
+    });
   }
 
   private async on_save_clicked(): Promise<void> {
@@ -355,7 +413,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     if (!meal)
       return;
     
-    let count = meal.substituteMeals ? meal.substituteMeals.length : 2;
+    let count = meal.substituteMeals ? meal.substituteMeals.length + 2 : 2;
     return `Adicionar ${count}ª opção`;
   }
 

@@ -50,8 +50,10 @@ page-food-plan-edit .page-food-plan-edit-content-meals {
 }
 
 page-food-plan-edit .page-food-plan-edit-content-meals .mat-card {
-  margin-top: 8px;
-  max-width: 250px;
+  background-color: #f7f7f7;
+  margin: 8px 8px 0 0;
+  max-width: 250px; 
+  min-width: 250px;
   padding-bottom: 4px;
 }
 
@@ -60,8 +62,13 @@ page-food-plan-edit .page-food-plan-edit-content-meals .mat-card h1 {
   font-weight: 500;
 }
 
+page-food-plan-edit .page-food-plan-edit-content-meals .mat-card h1 {
+  margin: 4px 0 0 8px;
+}
+
 page-food-plan-edit .page-food-plan-edit-content-meals-container {
   display: flex;
+  height: calc(100% - 69px);
 }
 
 page-food-plan-edit .page-food-plan-edit-content-meals-container-time {
@@ -107,12 +114,14 @@ page-food-plan-edit .page-food-plan-edit-macros {
 
 page-food-plan-edit .page-food-plan-edit-macros-content {
   align-items: center;
+  background-color: #f7f7f7;
   display: flex;
   flex-direction: column;
+  padding: 8px;
 }
 
 page-food-plan-edit .page-food-plan-edit-macros-content .mrc-col-plan {
-  background: #d4e8f4;
+  background: #e5e5e5;
   text-align: center;
 }
 

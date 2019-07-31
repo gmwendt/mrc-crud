@@ -63,7 +63,7 @@ export class DialogNutrients {
 
       let energy = food.attributes[this.energy.id]
       if (energy && energy.kcal && typeof(energy.kcal) === 'number')
-        this.energy.kcal += energy.kcal;
+        this.energy.kcal += energy.kcal * food.quantity / 100;
 
       this.addOrCreateCategory(food);
     });

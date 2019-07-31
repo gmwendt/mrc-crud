@@ -26,30 +26,56 @@
         <label>Refeições</label>
         <button mat-button (click)="on_add_meal_click()" style="max-width: 80px">Adicionar</button>
         <ng-container *ngFor="let meal of foodPlan.meals; let i = index">
-          <mat-card>
-            <h1>{{ meal.mealName }}</h1>
-            <div class="page-food-plan-edit-content-meals-container">
-              <div class="page-food-plan-edit-content-meals-container-time">{{ meal.mealTime }}</div>
-              <ul class="page-food-plan-edit-content-meals-container-food-list" *ngIf="foodPlan.useFoodDb; else elseBlock">
-                <li *ngFor="let food of meal.selectedFoods">
-                  {{ formatFoodDetail(food) }}
-                </li>
-              </ul>
-              <ng-template #elseBlock>
-                <ul class="page-food-plan-edit-content-meals-container-food-list">
-                  <li *ngFor="let food of freeTextFoodsList(meal)">
-                    {{ food }}
+          <div style="display: flex; max-width: 600px; overflow: auto;">
+            <mat-card>
+              <h1>{{ meal.mealName }}</h1>
+              <div class="page-food-plan-edit-content-meals-container">
+                <div class="page-food-plan-edit-content-meals-container-time">{{ meal.mealTime }}</div>
+                <ul class="page-food-plan-edit-content-meals-container-food-list" *ngIf="foodPlan.useFoodDb; else elseBlock">
+                  <li *ngFor="let food of meal.selectedFoods">
+                    {{ formatFoodDetail(food) }}
                   </li>
                 </ul>
-              </ng-template>
-            </div>
-            <div class="page-food-plan-edit-content-meals-footer">
-              <span title="Editar" class="icon-edit" (click)="on_add_meal_click(meal, i)"></span> 
-              <span title="Detalhes" class="icon-list-detail" (click)="show_meal_details(meal)"></span>
-              <span title="Remover" class="icon-delete" (click)="on_remove_meal_click(meal, i)"></span>
-              <button mat-button *ngIf="!foodPlan.isRecall">{{ getSubstituteMealName(meal) }}</button> <!-- TODO:  (click)=""-->
-            </div>
-          </mat-card>
+                <ng-template #elseBlock>
+                  <ul class="page-food-plan-edit-content-meals-container-food-list">
+                    <li *ngFor="let food of freeTextFoodsList(meal)">
+                      {{ food }}
+                    </li>
+                  </ul>
+                </ng-template>
+              </div>
+              <div class="page-food-plan-edit-content-meals-footer">
+                <span title="Editar" class="icon-edit" (click)="on_add_meal_click(meal, i)"></span> 
+                <span title="Detalhes" class="icon-list-detail" (click)="show_meal_details(meal)"></span>
+                <span title="Remover" class="icon-delete" (click)="on_remove_meal_click(meal, i)"></span>
+                <button mat-button *ngIf="!foodPlan.isRecall" (click)="on_add_substitute_click(meal)">{{ getSubstituteMealName(meal) }}</button>
+              </div>
+            </mat-card>
+            <ng-container *ngFor="let sub of meal.substituteMeals; let j = index">
+              <mat-card>
+                <h1>Opção {{ j + 2 }}</h1>
+                <div class="page-food-plan-edit-content-meals-container">
+                  <ul class="page-food-plan-edit-content-meals-container-food-list" *ngIf="foodPlan.useFoodDb; else elseSubsBlock">
+                    <li *ngFor="let food of sub.selectedFoods">
+                      {{ formatFoodDetail(food) }}
+                    </li>
+                  </ul>
+                  <ng-template #elseSubsBlock>
+                    <ul class="page-food-plan-edit-content-meals-container-food-list">
+                      <li *ngFor="let food of freeTextFoodsList(sub)">
+                        {{ food }}
+                      </li>
+                    </ul>
+                  </ng-template>
+                </div>
+                <div class="page-food-plan-edit-content-meals-footer">
+                  <span title="Editar" class="icon-edit" (click)="on_add_substitute_click(meal, j)"></span>
+                  <span title="Detalhes" class="icon-list-detail" (click)="show_meal_details(sub)"></span> 
+                  <span title="Remover" class="icon-delete" (click)="on_remove_substitute_click(meal, j)"></span>
+                </div>
+              </mat-card>
+            </ng-container>
+          </div>
         </ng-container>
       </div>
     </div>

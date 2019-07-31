@@ -19,7 +19,7 @@ import { MatSelect, MatSelectChange } from "@angular/material/select";
 import { MatTableDataSource } from "@angular/material/table";
 
 import { MealGroups } from "../../../core/common/constants";
-import { IFoodDetail, IMeal } from "../../../core/common/types";
+import { IFoodDetail, IMeal, ISubstituteMeal } from "../../../core/common/types";
 import { FoodService } from "../../../core/food.service";
 
 import { DialogAlertData, DialogAlertButton } from "../../../shared/dialog-alert/dialog-alert.component";
@@ -37,6 +37,7 @@ export interface IDialogAddMealData {
   selectedFoods?: IFoodDetail[];
   notes?: string;
   mealAsText?: string;
+  isSubstitute?: boolean;
 }
 
 export enum FoodSourceEnum {
@@ -64,6 +65,7 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
   private useFoodDb: boolean;
   private foods: IFoodDetail[] = [];
   private isNew: boolean;
+  private isSubstitute: boolean;
   
   /** list of foods filtered by search keyword */
   private filteredFoods: ReplaySubject<IFoodDetail[]> = new ReplaySubject<IFoodDetail[]>(1);
@@ -106,6 +108,7 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
     private _food: FoodService) {
     this.useFoodDb = data.useFoodDb;
     this.isNew = !data.editing;
+    this.isSubstitute = data.isSubstitute;
     this._dialogHeight = data.dialogHeight;
     this.initializeControls(data);
   }
@@ -293,7 +296,9 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
       return;
 
     let mealName = this.mealGroups.some(meal => meal.id === this.mealSelectCtrl.value) ? this.mealGroups.find(meal => meal.id === this.mealSelectCtrl.value).description : this.mealNameCtrl.value;
-    let result: IMeal = {
+    let result: IMeal | ISubstituteMeal;
+      
+    result = !this.isSubstitute ? {
       mealName: mealName,
       mealTime: this.pickerInputCtrl.value,
       notes: this.notesFormControl.value,
@@ -305,7 +310,7 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
         lipid: this.lipidSum,
         protein: this.proteinSum
       }
-    };
+    } : { selectedFoods: this._selectedFoods, notes: this.notesFormControl.value };
 
     this._dialogRef.close(result);
   }
@@ -378,6 +383,13 @@ export class DialogAddMeal implements OnInit, AfterViewInit, OnDestroy {
 
     this._dirty = true;
     this._detector.markForCheck();
+  }
+
+  get dialogTitle(): string {
+    if (this.isNew)
+      return this.isSubstitute ? 'Adicionar substituição' : 'Adicionar refeição';
+    else 
+      return this.isSubstitute ? 'Editar substituição' : 'Editar refeição';
   }
 
   private get foodsTableContainerHeight(): string {
