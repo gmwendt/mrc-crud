@@ -16,6 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -43,6 +44,7 @@ import { MatPaginatorIntlBr } from './core/common/types';
 		MatPaginatorModule,
 		MatRadioModule,
 		MatSelectModule,
+		MatSlideToggleModule,
 		MatTableModule,
 		MatTabsModule,
 		MatTooltipModule
@@ -65,6 +67,7 @@ import { MatPaginatorIntlBr } from './core/common/types';
 		MatRadioModule,
 		MatPaginatorModule,
 		MatSelectModule,
+		MatSlideToggleModule,
 		MatTableModule,
 		MatTabsModule,
 		MatTooltipModule

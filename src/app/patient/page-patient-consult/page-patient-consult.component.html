@@ -236,8 +236,8 @@
           </mat-cell>
         </ng-container>
         
-        <mat-header-row *matHeaderRowDef="foodPlansDisplayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: foodPlansDisplayedColumns;" (click)="on_food_plan_edit(true, row.id)"></mat-row>
+        <mat-header-row *matHeaderRowDef="foodRecordDisplayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: foodRecordDisplayedColumns;" (click)="on_food_plan_edit(true, row.id)"></mat-row>
       </mat-table>
     </mat-tab>
 
@@ -249,6 +249,18 @@
           <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
         </ng-container>
     
+        <ng-container matColumnDef="selDays">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ getDaysRange(element.selectedDays) }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="active">
+          <mat-header-cell *matHeaderCellDef>Ativo</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <mat-slide-toggle [checked]="element.active" disableRipple="true" (click)="on_switch_toggle_click($event)" (change)="on_switch_toggle_change(element, $event.checked)"></mat-slide-toggle>
+          </mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="timeElapsed">
           <mat-header-cell *matHeaderCellDef> </mat-header-cell>
           <mat-cell *matCellDef="let element">{{ getTimeElapsed(element.date) }}</mat-cell>

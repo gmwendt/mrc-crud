@@ -21,8 +21,8 @@ page-food-plan-edit .page-food-plan-edit-content {
 }
 
 page-food-plan-edit .page-food-plan-edit-content-description-field {
-  width: 100%;
   padding-right: 8px;
+  width: 100%;
 }
 
 page-food-plan-edit .page-food-plan-edit-content-description-field textarea {
@@ -106,6 +106,10 @@ page-food-plan-edit .page-food-plan-edit-content .mat-button {
   line-height: 22px;
   margin: 8px 0 0 8px;
   padding: 0 8px;
+}
+
+page-food-plan-edit .page-food-plan-edit-content .mat-slide-toggle {
+  margin-bottom: 16px;
 }
 
 page-food-plan-edit .page-food-plan-edit-macros {

@@ -5,6 +5,13 @@
 <progress-spinner [progress]="loading">
   <div *ngIf="foodPlan" class="page-food-plan-edit-column">
     <div class="page-food-plan-edit-content"> 
+      <mat-slide-toggle *ngIf="!foodPlan.isRecall" [checked]="foodPlan.active" (change)="foodPlan.active = $event.checked; markAsDirty()" disableRipple="true">
+        <span *ngIf="foodPlan.active; else inactiveBlock">Ativo</span>
+        <ng-template #inactiveBlock>
+          <span>Inativo</span>
+        </ng-template>
+      </mat-slide-toggle>
+
       <mat-form-field floatLabel="always" class="page-food-plan-edit-content-description-field">
         <mat-label>Descrição</mat-label>
         <textarea matInput [formControl]="descriptionFormControl" [(ngModel)]="foodPlan.description"></textarea>
@@ -20,7 +27,7 @@
         </mat-radio-group>
       </div>
       <div *ngIf="!foodPlan.isRecall">
-        <mat-checkbox style="margin-right: 8px" *ngFor="let day of daysWeek; let i = index" [value]="i" [checked]="isDaySelected(i)" (change)="on_selected_days_changed($event)">{{ day }}</mat-checkbox>
+        <mat-checkbox style="margin-right: 8px" *ngFor="let day of daysWeek; let i = index" [value]="i" [checked]="isDaySelected(i)" (change)="on_selected_days_changed($event)" disableRipple="true">{{ day }}</mat-checkbox>
       </div>
       <div class="page-food-plan-edit-content-meals">
         <label>Refeições</label>
@@ -86,7 +93,7 @@
         <table *ngIf="!foodPlan.isRecall" style="align-self: end; margin-top: 16px">
           <tr>
             <td>
-              <mat-checkbox [ngModel]="foodPlan.useReference" (ngModelChange)="on_use_ref_change($event)">Utilizar valores de referência</mat-checkbox>
+              <mat-checkbox [ngModel]="foodPlan.useReference" (ngModelChange)="on_use_ref_change($event)" disableRipple="true">Utilizar valores de referência</mat-checkbox>
             </td>
             <td><span title="Editar valores de referência" class="icon-edit" style="font-size: 12pt; margin-left: 8px; cursor: pointer;" (click)="open_planning_dialog()"></span></td>
           </tr>

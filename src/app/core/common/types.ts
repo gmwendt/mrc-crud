@@ -499,7 +499,7 @@ export class EnergyExpend {
 }
 
 export class FoodPlan {
-  constructor(public id: string, public description: string, public date: string, public isRecall?: boolean, public useFoodDb: boolean = true,
+  constructor(public id: string, public description: string, public date: string, public isRecall?: boolean, public active: boolean = true, public useFoodDb: boolean = true,
     public meals: IMeal[] = [], public selectedDays: number[] = [], public foodPlanning?: FoodPlanning, public useReference?: boolean) {
   }
 

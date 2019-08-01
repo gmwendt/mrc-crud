@@ -5,6 +5,7 @@ export class LocalStorageConstants {
 }
 
 export const DaysWeek: string[] = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'];
+export const DaysWeekAbv: string[] = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
 
 export enum DaysNameEnum {
   Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, Length

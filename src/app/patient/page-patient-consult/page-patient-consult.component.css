@@ -66,6 +66,15 @@ page-patient-consult #page-patient-consult-content .page-patient-consult-content
   width: 120px;
 }
 
+page-patient-consult #page-patient-consult-content .page-patient-consult-content-table .cdk-column-active {
+  flex: none;
+  width: 100px;
+}
+
+page-patient-consult #page-patient-consult-content .page-patient-consult-content-table .cdk-column-selDays {
+  font-weight: bold;
+}
+
 page-patient-consult #page-patient-consult-content .page-patient-consult-content-table-empty {
   font-size: 8pt;
   margin: 8px 0 0 16px;

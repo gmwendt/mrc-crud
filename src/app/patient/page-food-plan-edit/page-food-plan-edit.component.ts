@@ -334,6 +334,10 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   private async on_save_clicked(): Promise<void> {
     if (!this.checkErrors())
       return;
+    
+    let conflictsOk = await this.checkDaysConflict();
+    if (!conflictsOk)
+      return;
 
     this.foodPlan.date = new Date().toISOString();
 
@@ -383,6 +387,49 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
     }];
 
     this.pieChartData = data;
+  }
+
+  private async checkDaysConflict(): Promise<boolean> {
+    let conflictPlans: FoodPlan[] = [];
+    
+    if (!this.foodPlan.selectedDays)
+      return Promise.resolve(true);
+
+    this._patient.foodPlans.forEach(plan => {
+      if (plan.isRecall || !plan.active || plan.id === this.foodPlan.id || !plan.selectedDays)
+        return;
+      
+      if (plan.selectedDays.some(a => this.foodPlan.selectedDays.some(b => b === a)))
+        conflictPlans.push(plan);
+    });
+
+    if (conflictPlans.length == 0)
+      return Promise.resolve(true);
+
+    let allEqual = conflictPlans.length == 1 && conflictPlans[0].selectedDays.every(a => this.foodPlan.selectedDays.some(b => b === a));
+    let dialogData: DialogAlertData = {
+      text: `Já existem refeições ativas para estes dias. ` + (allEqual ? 'Deseja desativar os planos ativos?' : 'Deseja sobrescrever os dias das refeições ativas?'), //TODO: review text
+      button: DialogAlertButton.YesNo,
+      textAlign: 'center',
+    };
+
+    let dialogResult = await this._dialog.openAlert(dialogData);
+    if (dialogResult == DialogAlertResult.No)
+      return Promise.resolve(false);
+    
+    if (allEqual) 
+      conflictPlans[0].active = false;
+    else {
+      conflictPlans.forEach(activePlan => {
+        this.foodPlan.selectedDays.forEach(d => {
+          let i = activePlan.selectedDays.indexOf(d);
+          if (i > -1)
+            activePlan.selectedDays.splice(i, 1);
+        });
+      });
+    }
+
+    return Promise.resolve(true);
   }
 
   private formatFoodDetail(food: IFoodDetail): string {

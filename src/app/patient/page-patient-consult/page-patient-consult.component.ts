@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { CorporalDensityProtocols } from "../../core/common/constants";
+import { CorporalDensityProtocols, DaysWeekAbv } from "../../core/common/constants";
 import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue, LaboratoryExamItem, LaboratoryExam, FoodPlan, EnergyExpend } from "../../core/common/types";
 import { Equations } from "../../core/common/worker";
 import { PatientService } from "../../core/patient.service";
@@ -45,7 +45,8 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private energyExpends: MatTableDataSource<EnergyExpend>;
   private anamnesesDisplayedColumns = ['clinicCase', 'commands'];
   private examsRequestedDisplayedColumns = ['description', 'timeElapsed', 'commands'];
-  private foodPlansDisplayedColumns = ['description', 'timeElapsed', 'commands'];
+  private foodRecordDisplayedColumns = ['description', 'timeElapsed', 'commands'];
+  private foodPlansDisplayedColumns = ['description', 'selDays', 'active', 'timeElapsed', 'commands'];
   private energyExpendsDisplayedColumns = ['description', 'timeElapsed', 'commands']; 
 
   private loading = true;
@@ -164,7 +165,6 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     if (dialogResult == DialogAlertResult.No)
       return;
 
-    this.loading = true;
     var index = this.patient.anamneses.indexOf(anamnese);
 
     this.patient.anamneses.splice(index, 1);
@@ -186,7 +186,6 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     if (dialogResult == DialogAlertResult.No)
       return;
 
-    this.loading = true;
     var index = this.patient.exams.indexOf(exam);
 
     this.patient.exams.splice(index, 1);
@@ -238,8 +237,20 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     await this.updatePatient();
   }
 
+  private on_switch_toggle_click(event: MouseEvent): void {
+    event.stopPropagation();
+  }
+
+  private on_switch_toggle_change(foodPlan: FoodPlan, checked: boolean): void {
+    //TODO: check day conflicts
+
+    foodPlan.active = checked;
+    this.updatePatient();
+  }
+
   private async updatePatient(): Promise<void> {
     this.loading = true;
+    this._detector.detectChanges();
 
     try {
       await this._patient.updatePatient(this.patient);
@@ -249,6 +260,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     }
     finally {
       this.loading = false;
+      this._detector.detectChanges();
     }
   }
 
@@ -329,6 +341,40 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
       return `há ${Math.round(elapsed.asMonths())} meses.`;
     else// if (elapsed.asYears() < 60)
       return `há ${Math.round(elapsed.asYears())} anos.`;
+  }
+
+  private getDaysRange(selectedDays: number[]): string {
+    if (!selectedDays || selectedDays.length == 0)
+      return 'Nenhum dia selecionado';
+    
+    if (selectedDays.length == 2 && this.isSelected(selectedDays, [5, 6]))
+      return 'Final de semana';
+    
+    if (selectedDays.length == 7 && this.isSelected(selectedDays, [0, 1, 2, 3, 4, 5, 6]))
+      return 'Todos os dias';
+    
+    let sorted = selectedDays.sort((a, b) => { return a - b; });
+    let isSeq: boolean = true;
+    let strDays: string = '';
+
+    for (let i = 0; i < sorted.length; i++) {
+      strDays += DaysWeekAbv[sorted[i]] + (i == sorted.length - 1 ? '' : ', ');
+
+      if (i != sorted[i])
+        isSeq = false;
+    }
+    
+    return isSeq ? DaysWeekAbv[sorted[0]] + ' à ' + DaysWeekAbv[sorted[sorted.length - 1]] : strDays;
+  }
+
+  private isSelected(data: number[], items: number[]): boolean {
+    let ok = true;
+    items.forEach(i => {
+      if (data.every(d => d != i))
+        ok = false;
+    });
+
+    return ok;
   }
 
   private show_error_dialog(error: any): void {

@@ -19,8 +19,9 @@ page-food-plan-edit {
     min-width: 400px;
 
     &-description-field {
-      width: 100%;
+      margin-top: 16px;
       padding-right: 8px;
+      width: 100%;
 
       textarea {
         height: 80px;
@@ -104,6 +105,10 @@ page-food-plan-edit {
       line-height: 22px;
       margin: 8px 0 0 8px;
       padding: 0 8px;
+    }
+
+    .mat-slide-toggle {
+      margin-bottom: 16px;
     }
   }
 

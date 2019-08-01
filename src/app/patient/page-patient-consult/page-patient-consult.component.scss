@@ -62,6 +62,15 @@ page-patient-consult {
         font-style: italic;
         width: 120px;
       }
+
+      .cdk-column-active {
+        flex: none;
+        width: 100px;
+      }
+
+      .cdk-column-selDays {
+        font-weight: bold;
+      }
     }
 
     .page-patient-consult-content-table-empty {
