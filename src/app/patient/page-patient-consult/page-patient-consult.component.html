@@ -257,7 +257,7 @@
         <ng-container matColumnDef="active">
           <mat-header-cell *matHeaderCellDef>Ativo</mat-header-cell>
           <mat-cell *matCellDef="let element">
-            <mat-slide-toggle [checked]="element.active" disableRipple="true" (click)="on_switch_toggle_click($event)" (change)="on_switch_toggle_change(element, $event.checked)"></mat-slide-toggle>
+            <mat-slide-toggle [checked]="element.active" disableRipple="true" (click)="on_switch_toggle_click($event)" (change)="on_switch_toggle_change(element, $event)"></mat-slide-toggle>
           </mat-cell>
         </ng-container>
 

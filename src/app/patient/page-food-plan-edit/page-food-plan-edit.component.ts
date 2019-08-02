@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, AfterViewInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, ElementRef } from "@angular/core";
+import { Component, ViewEncapsulation, AfterViewInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild } from "@angular/core";
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from "@angular/common/http";
 import { FormControl, Validators } from "@angular/forms";
@@ -392,7 +392,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   private async checkDaysConflict(): Promise<boolean> {
     let conflictPlans: FoodPlan[] = [];
     
-    if (!this.foodPlan.selectedDays)
+    if (!this.foodPlan.selectedDays || !this.foodPlan.active)
       return Promise.resolve(true);
 
     this._patient.foodPlans.forEach(plan => {
@@ -475,7 +475,6 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private get patientGet(): number {
-    //TODO: testar
     if (!this._patient || !this._patient.energyExpend || this._patient.energyExpend.length == 0)
       return null;
     

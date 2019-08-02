@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ChangeDetectorRef, OnDestroy, ViewEncapsulation, ElementRef, HostListener } from "@angular/core";
 import { Location } from '@angular/common';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 
@@ -9,7 +10,7 @@ import { Equations } from "../../core/common/worker";
 import { PatientService } from "../../core/patient.service";
 
 import { DialogAlertData, DialogAlertButton, DialogAlertResult } from "../../shared/dialog-alert/dialog-alert.component";
-import { DialogSelector, DialogSelectorColumn, DialogSelectorData } from "../../shared/dialog-selector/dialog-selector.component";
+import { DialogSelector, DialogSelectorData } from "../../shared/dialog-selector/dialog-selector.component";
 import { DialogService } from "../../shared/dialog.service";
 
 import { Subscription } from "rxjs";
@@ -241,11 +242,60 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     event.stopPropagation();
   }
 
-  private on_switch_toggle_change(foodPlan: FoodPlan, checked: boolean): void {
-    //TODO: check day conflicts
+  private async on_switch_toggle_change(foodPlan: FoodPlan, event: MatSlideToggleChange): Promise<void> {
+    if (event.checked) {
+      let ok = await this.checkDaysConflict(foodPlan);
+      if (!ok) {
+        event.source.checked = false;
+        return;
+      }
+    }
 
-    foodPlan.active = checked;
+    foodPlan.active = event.checked;
     this.updatePatient();
+  }
+
+  private async checkDaysConflict(foodPlan: FoodPlan): Promise<boolean> {
+    let conflictPlans: FoodPlan[] = [];
+
+    if (!foodPlan.selectedDays)
+      return Promise.resolve(true);
+
+    this.patient.foodPlans.forEach(plan => {
+      if (plan.isRecall || !plan.active || plan.id === foodPlan.id || !plan.selectedDays)
+        return;
+
+      if (plan.selectedDays.some(a => foodPlan.selectedDays.some(b => b === a)))
+        conflictPlans.push(plan);
+    });
+
+    if (conflictPlans.length == 0)
+      return Promise.resolve(true);
+
+    let allEqual = conflictPlans.length == 1 && conflictPlans[0].selectedDays.every(a => foodPlan.selectedDays.some(b => b === a));
+    let dialogData: DialogAlertData = {
+      text: `Já existem refeições ativas para estes dias. ` + (allEqual ? 'Deseja desativar os planos ativos?' : 'Deseja sobrescrever os dias das refeições ativas?'), //TODO: review text
+      button: DialogAlertButton.YesNo,
+      textAlign: 'center',
+    };
+
+    let dialogResult = await this._dialog.openAlert(dialogData);
+    if (dialogResult == DialogAlertResult.No)
+      return Promise.resolve(false);
+
+    if (allEqual)
+      conflictPlans[0].active = false;
+    else {
+      conflictPlans.forEach(activePlan => {
+        foodPlan.selectedDays.forEach(d => {
+          let i = activePlan.selectedDays.indexOf(d);
+          if (i > -1)
+            activePlan.selectedDays.splice(i, 1);
+        });
+      });
+    }
+
+    return Promise.resolve(true);
   }
 
   private async updatePatient(): Promise<void> {
