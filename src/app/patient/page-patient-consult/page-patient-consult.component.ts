@@ -4,14 +4,16 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
 
-import { CorporalDensityProtocols, DaysWeekAbv } from "../../core/common/constants";
-import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue, LaboratoryExamItem, LaboratoryExam, FoodPlan, EnergyExpend } from "../../core/common/types";
+import { CorporalDensityProtocols, DaysWeekAbv, DaysWeek } from "../../core/common/constants";
+import { Anamneses, FileSystemCommands, Patient, Measurements, IHistoricalValue, LaboratoryExamItem, LaboratoryExam, FoodPlan, EnergyExpend, IActivePlanDetail } from "../../core/common/types";
 import { Equations } from "../../core/common/worker";
 import { PatientService } from "../../core/patient.service";
 
 import { DialogAlertData, DialogAlertButton, DialogAlertResult } from "../../shared/dialog-alert/dialog-alert.component";
 import { DialogSelector, DialogSelectorData } from "../../shared/dialog-selector/dialog-selector.component";
 import { DialogService } from "../../shared/dialog.service";
+
+import { IPieChartData } from '../../widgets/pie-chart/pie-chart.component';
 
 import { Subscription } from "rxjs";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -54,6 +56,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private patient: Patient;
   private selectedTabIndex: number = 2;
   private bodyCompositionTypeValue: BodyCompositionTypeEnum;
+  private activePlans: IActivePlanDetail[];
 
   private bodyCompositionType = BodyCompositionTypeEnum;
   private equations = Equations;
@@ -84,6 +87,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
       finally {
         this.normalizeMeasurements();
         this.definyBodyCompositionType();
+        this.setPlanMacros();
           
         this.selectedTabIndex = 0;
         this.loading = false;
@@ -252,6 +256,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     }
 
     foodPlan.active = event.checked;
+    this.setPlanMacros();
     this.updatePatient();
   }
 
@@ -353,6 +358,41 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
       return;
 
     this.energyExpends = new MatTableDataSource(this.patient.energyExpend);
+  }
+
+  private setPlanMacros(): void {
+    if (!this.patient || !this.patient.foodPlans)
+      return;
+    
+    this.activePlans = [];
+    DaysWeek.forEach((day) => this.activePlans.push({
+      day: day
+    }));
+    
+    this.patient.foodPlans.forEach(plan => {
+      let macros = plan.macros;
+      if (!plan.active || !macros)
+        return;
+      
+      let data: IPieChartData[] = [{
+        data: macros.protein,
+        label: 'Proteínas'
+      }, {
+        data: macros.carbohydrate,
+        label: 'Carboidratos'
+      }, {
+        data: macros.lipid,
+        label: 'Lipídios'
+        }];
+      
+      plan.selectedDays.forEach((dayIndex) => {
+        if (this.activePlans[dayIndex].data != null)
+          console.log("Error: more than one plan active for " + this.activePlans[dayIndex].day);
+        
+        this.activePlans[dayIndex].data = data;
+        this.activePlans[dayIndex].energy = macros.energy;
+      });
+    })
   }
 
   private navigate(route: string, id: string | FileSystemCommands, queryParams?: Object): void {

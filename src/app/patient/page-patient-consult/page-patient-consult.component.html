@@ -242,6 +242,20 @@
     </mat-tab>
 
     <mat-tab label="Plano alimentar">
+      <div *ngIf="activePlans" style="display: flex; margin-bottom: 16px; overflow: auto">
+        <ng-container *ngFor="let detail of activePlans">
+          <div style="width: 160px;">
+            <label>{{ detail.day }}</label>
+            <ng-container *ngIf="detail.data; else noPlanBlock">
+              <mrc-pie-chart [data]="detail.data" unit="%" [hideLegend]="true"></mrc-pie-chart>
+            </ng-container>
+            <ng-template #noPlanBlock>
+              <div style="font-size: 9pt; text-align: center; font-style: italic; margin-top: 8px;">Nenhum plano ativo para este dia</div>
+            </ng-template>
+            <div *ngIf="detail.energy" style="text-align: center; font-size: 9pt; margin-top: 8px;">{{ detail.energy | unitFormater: 'kcal':'2' }}</div>
+          </div>
+        </ng-container>
+      </div>
       <button mat-button class="page-patient-consult-content-add-button" (click)="on_food_plan_edit()">Adicionar plano alimentar</button>
       <mat-table #table [dataSource]="foodPlans" class="page-patient-consult-content-table">
         <ng-container matColumnDef="description">

@@ -507,6 +507,27 @@ export class FoodPlan {
     return JSON.stringify(Object.assign({}, this));
   }
 
+  get macros(): IMacroNutrients {
+    if (!this.meals)
+      return;
+    
+    let macros: IMacroNutrients = {
+      carbohydrate: 0, protein: 0, lipid: 0, energy: 0
+    };
+
+    this.meals.forEach(meal => {
+      if (!meal.macros)
+        return;
+      
+      macros.carbohydrate += meal.macros.carbohydrate;
+      macros.lipid += meal.macros.lipid;
+      macros.protein += meal.macros.protein;
+      macros.energy += meal.macros.energy;
+    });
+
+    return macros;
+  }
+
   static fromJSON(json: FoodPlan | string): FoodPlan {
     if (typeof json === 'string')
       return JSON.parse(json, FoodPlan.reviver);
@@ -581,6 +602,12 @@ export interface IMeal {
 export interface ISubstituteMeal {
   selectedFoods: IFoodDetail[];
   notes: string;
+}
+
+export interface IActivePlanDetail {
+  day: string;
+  data?: any;
+  energy?: number;
 }
 
 export interface IUnit {
