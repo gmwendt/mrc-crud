@@ -605,6 +605,7 @@ export interface ISubstituteMeal {
 }
 
 export interface IActivePlanDetail {
+  id: string;
   day: string;
   data?: any;
   energy?: number;

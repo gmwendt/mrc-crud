@@ -83,6 +83,35 @@ page-patient-consult #page-patient-consult-content .page-patient-consult-content
   text-align: center;
 }
 
+page-patient-consult #page-patient-consult-content .page-patient-consult-content-food-plan-pies {
+  display: flex;
+  margin-bottom: 16px;
+  overflow: auto;
+}
+
+page-patient-consult #page-patient-consult-content .page-patient-consult-content-food-plan-pies-item {
+  margin-left: 4px;
+  min-width: 160px;
+  width: 160px;
+} 
+
+page-patient-consult #page-patient-consult-content .page-patient-consult-content-food-plan-pies-item > label {
+  margin-left: 8px;
+}
+
+page-patient-consult #page-patient-consult-content .page-patient-consult-content-food-plan-pies-empty {
+  font-size: 9pt;
+  font-style: italic;
+  margin-top: 8px;
+  text-align: center;
+}
+
+page-patient-consult #page-patient-consult-content .page-patient-consult-content-food-plan-pies-energy {
+  font-size: 9pt;
+  margin-top: 8px;
+  text-align: center;
+}
+
 page-patient-consult #page-patient-consult-content .mat-accordion > .mat-expansion-panel > .mat-expansion-panel-content {
   margin-left: 8px;
 }

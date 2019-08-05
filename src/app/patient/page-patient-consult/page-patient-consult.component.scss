@@ -81,6 +81,35 @@ page-patient-consult {
       text-align: center;
     }
 
+    .page-patient-consult-content-food-plan-pies {
+      display: flex; 
+      margin-bottom: 16px; 
+      overflow: auto;
+
+      &-item {
+        margin-left: 4px;
+        min-width: 160px;
+        width: 160px;
+
+        > label {
+          margin-left: 8px;
+        }
+      }
+
+      &-empty {
+        font-size: 9pt; 
+        font-style: italic; 
+        margin-top: 8px;
+        text-align: center; 
+      }
+
+      &-energy {
+        font-size: 9pt; 
+        margin-top: 8px;
+        text-align: center; 
+      }
+    }
+
     .mat-accordion {
       > .mat-expansion-panel {
         > .mat-expansion-panel-content {

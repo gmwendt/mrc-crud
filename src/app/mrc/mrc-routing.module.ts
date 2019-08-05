@@ -36,6 +36,11 @@ const mrcRoutes: Routes = [
     loadChildren: () => import('app/users/users.module').then(m => m.UsersModule)
   },
   {
+    path: 'area-admin',
+    canActivate: [AuthGuardService],
+    loadChildren: () => import('app/administrative-area/administrative-area.module').then(m => m.AdministrativeAreaModule)
+  },
+  {
     path: 'reset-pass/:accNum/:userName64/:token',
     component: PageResetPasswordComponent
   },

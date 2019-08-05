@@ -242,17 +242,17 @@
     </mat-tab>
 
     <mat-tab label="Plano alimentar">
-      <div *ngIf="activePlans" style="display: flex; margin-bottom: 16px; overflow: auto">
+      <div *ngIf="activePlans" class="page-patient-consult-content-food-plan-pies">
         <ng-container *ngFor="let detail of activePlans">
-          <div style="width: 160px;">
+          <div class="page-patient-consult-content-food-plan-pies-item" [style.background-color]="foodPlanOverId === detail.id ? '#d4e8f4' : ''">
             <label>{{ detail.day }}</label>
             <ng-container *ngIf="detail.data; else noPlanBlock">
               <mrc-pie-chart [data]="detail.data" unit="%" [hideLegend]="true"></mrc-pie-chart>
             </ng-container>
             <ng-template #noPlanBlock>
-              <div style="font-size: 9pt; text-align: center; font-style: italic; margin-top: 8px;">Nenhum plano ativo para este dia</div>
+              <div class="page-patient-consult-content-food-plan-pies-empty">Nenhum plano ativo para este dia</div>
             </ng-template>
-            <div *ngIf="detail.energy" style="text-align: center; font-size: 9pt; margin-top: 8px;">{{ detail.energy | unitFormater: 'kcal':'2' }}</div>
+            <div *ngIf="detail.energy" class="page-patient-consult-content-food-plan-pies-energy">{{ detail.energy | unitFormater: 'kcal':'2' }}</div>
           </div>
         </ng-container>
       </div>
@@ -290,7 +290,8 @@
         </ng-container>
     
         <mat-header-row *matHeaderRowDef="foodPlansDisplayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: foodPlansDisplayedColumns;" (click)="on_food_plan_edit(false, row.id)">
+        <mat-row *matRowDef="let row; columns: foodPlansDisplayedColumns;" (click)="on_food_plan_edit(false, row.id)" (mouseenter)="on_food_plan_item_mouseenter(row.id)" 
+                 (mouseleave)="on_food_plan_item_mouseleave()">
         </mat-row>
       </mat-table>
     </mat-tab>

@@ -57,6 +57,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
   private selectedTabIndex: number = 2;
   private bodyCompositionTypeValue: BodyCompositionTypeEnum;
   private activePlans: IActivePlanDetail[];
+  private foodPlanOverId: string;
 
   private bodyCompositionType = BodyCompositionTypeEnum;
   private equations = Equations;
@@ -214,8 +215,18 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     var index = this.patient.foodPlans.indexOf(foodPlan);
 
     this.patient.foodPlans.splice(index, 1);
+
+    if (foodPlan.isRecall)
+      this.createFoodRecallTable();
+    else
+      this.createFoodPlansTable();
+
+    if (!foodPlan.isRecall && foodPlan.active)
+      this.setPlanMacros();
+    if (this.foodPlanOverId === foodPlan.id)
+      this.foodPlanOverId = null;
+
     await this.updatePatient();
-    this.createFoodRecallTable();
   }
 
   private async on_remove_energy_expend_click(event: MouseEvent, energyExpend: EnergyExpend): Promise<void> {
@@ -258,6 +269,16 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     foodPlan.active = event.checked;
     this.setPlanMacros();
     this.updatePatient();
+  }
+
+  private on_food_plan_item_mouseenter(id: string): void {
+    this.foodPlanOverId = id;
+    this._detector.detectChanges();
+  }
+
+  private on_food_plan_item_mouseleave(): void {
+    this.foodPlanOverId = null;
+    this._detector.detectChanges();
   }
 
   private async checkDaysConflict(foodPlan: FoodPlan): Promise<boolean> {
@@ -366,6 +387,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     
     this.activePlans = [];
     DaysWeek.forEach((day) => this.activePlans.push({
+      id: '__unset',
       day: day
     }));
     
@@ -391,6 +413,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
         
         this.activePlans[dayIndex].data = data;
         this.activePlans[dayIndex].energy = macros.energy;
+        this.activePlans[dayIndex].id = plan.id;
       });
     })
   }
@@ -420,7 +443,7 @@ export class PagePatientConsultComponent implements AfterViewInit, OnDestroy {
     let elapsed = moment.duration(moment().diff(time));
     
     if (elapsed.asSeconds() < 60)
-      return `há ${Math.round(elapsed.asSeconds())} segundos.`;
+      return `há menos de 1 minuto.`;
     else if (elapsed.asMinutes() < 60)
       return `há ${Math.round(elapsed.asMinutes())} minutos.`;
     else if (elapsed.asHours() < 24)
