@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AdministrativeAreaComponent } from './administrative-area.component';
+import { UserConfigurationsComponent } from './user-configurations.component';
 
 const routes: Routes = [
-  { path: '', component: AdministrativeAreaComponent,  },
+  { path: '', component: UserConfigurationsComponent,  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
 })
-export class AdministrativeAreaRoutingModule { }
+export class UserConfigurationsRoutingModule { }

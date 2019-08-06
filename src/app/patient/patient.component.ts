@@ -33,6 +33,9 @@ export class PatientComponent implements OnInit {
     try {
       await this.loadPatients();
     }
+    catch (error) {
+      this.on_error(error);
+    }
     finally {
       this.loading = false;
     }

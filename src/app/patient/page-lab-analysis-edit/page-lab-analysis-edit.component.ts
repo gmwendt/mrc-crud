@@ -82,7 +82,7 @@ export class PageLabAnalysisEditComponent implements AfterViewInit, OnDestroy {
     else {
       this.labExam = this._patient.exams.find(a => a.id == labAnalyseId);
       if (!this.labExam) 
-        throw Error("Cound not find LabAnalyse content on server.");
+        throw Error("Could not find LabAnalyse content on server.");
       //TODO: verify if need normalize
       // else
       //   this.normalizeAnamnase();

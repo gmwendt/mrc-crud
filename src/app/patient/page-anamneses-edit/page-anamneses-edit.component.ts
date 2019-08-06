@@ -128,7 +128,7 @@ export class PageAnamnesesEditComponent implements AfterViewInit, OnDestroy {
     else {
       this.anamnese = this._patient.anamneses.find(a => a.id == anamnesesId);
       if (!this.anamnese) 
-        throw Error("Cound not find Anamneses content on server.");
+        throw Error("Could not find Anamneses content on server.");
       else
         this.normalizeAnamnase();
     }

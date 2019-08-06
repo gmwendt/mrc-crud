@@ -33,7 +33,7 @@
     <span class="icon-menu-library mrc-menu-icon"></span>
     <span>Documentos</span>
   </button>
-  <button mat-menu-item routerLink="/area-admin">
+  <button mat-menu-item [routerLink]="['/configuracoes-usuario', { selectedIndex: 2 }]">
     <span class="icon-menu-library mrc-menu-icon"></span>
     <span>Serviços</span>
   </button>

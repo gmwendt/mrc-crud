@@ -359,7 +359,7 @@ export class PageEnergyExpendEditComponent implements AfterViewInit, OnDestroy {
       this.energyExpend = this._patient.energyExpend.find(get => get.id == getId);
 
       if (!this.energyExpend)
-        throw Error("Cound not find EnergyExpend content on server.");
+        throw Error("Could not find EnergyExpend content on server.");
     }
   }
 

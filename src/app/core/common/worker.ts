@@ -220,4 +220,16 @@ export class Util {
     // If nothing failed, return true
     return true;
   };
+
+  static guid(): string {
+    return this.guidS4() + this.guidS4() + '-' +
+      this.guidS4() + '-' + this.guidS4() + '-' +
+      this.guidS4() + '-' + this.guidS4() + this.guidS4() + this.guidS4();
+  }
+
+  private static guidS4(): string {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
 }

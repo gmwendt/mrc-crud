@@ -104,7 +104,7 @@ export class PageFoodPlanEditComponent implements AfterViewInit, OnDestroy {
       this.foodPlan = this._patient.foodPlans.find(fp => fp.id == foodPlanId);
 
       if (!this.foodPlan)
-        throw Error("Cound not find LabAnalyse content on server.");
+        throw Error("Could not find LabAnalyse content on server.");
     }
   }
 

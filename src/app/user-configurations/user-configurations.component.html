@@ -1,0 +1,43 @@
+<div class="mrc-page-title">Minhas configurações</div>
+<progress-spinner [progress]="loading">
+  <mat-tab-group [(selectedIndex)]="selectedTabIndex">
+    <mat-tab label="Meus alimentos">
+
+    </mat-tab>
+
+    <mat-tab label="Meus suplementos">
+    
+    </mat-tab>
+
+    <mat-tab label="Meus serviços">
+      <mat-table [dataSource]="services"> <!-- class="page-patient-consult-content-table" -->
+      
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.price }}</mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="commands">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span *ngIf="canRemove(element.id)">
+              <span title="Remover" class="icon-delete"></span> <!-- (click)="on_remove_anamneses_click($event, element)" -->
+            </span>
+          </mat-cell>
+        </ng-container>
+      
+        <mat-header-row *matHeaderRowDef="servicesDisplayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: servicesDisplayedColumns;"></mat-row> <!-- (click)="on_anamneses_edit(row.id)" -->
+      </mat-table>
+    </mat-tab>
+
+    <mat-tab label="Meus locais de atendimento">
+    
+    </mat-tab>
+  </mat-tab-group>
+</progress-spinner>

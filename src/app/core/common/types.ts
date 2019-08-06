@@ -611,6 +611,32 @@ export interface IActivePlanDetail {
   energy?: number;
 }
 
+export class UserConfigurations {
+  constructor(public id?: string, public services: ProfessionalService[] = []) {
+  }
+}
+
+export class ProfessionalService {
+  constructor(public id: string, public name: string, public price?: number) {
+  }
+
+  toJSON(): string {
+    return JSON.stringify(Object.assign({}, this));
+  }
+
+  static fromJSON(json: ProfessionalService | string): ProfessionalService {
+    if (typeof json === 'string')
+      return JSON.parse(json, ProfessionalService.reviver);
+
+    var data = Object.create(ProfessionalService.prototype);
+    return Object.assign(data, json);
+  }
+
+  private static reviver(key: string, value: any): any {
+    return key === "" ? ProfessionalService.fromJSON(value) : value;
+  }
+}
+
 export interface IUnit {
   desciption: string;
   converterFactor: number;
