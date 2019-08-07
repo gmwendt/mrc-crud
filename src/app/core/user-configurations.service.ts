@@ -38,7 +38,7 @@ export class UserConfigurationsService {
   updateUserConfigs(data: UserConfigurations): Promise<UserConfigurations> {
     return new Promise((resolve, reject) => {
       let obj = this.normalizeToJSON(data);
-      this._http.put<UserConfigurations>('/userConfigurations/' + data.id, obj)
+      this._http.put<UserConfigurations>('/userConfigurations/' + data._id, obj)
         .subscribe(res => {
           let normalized = this.normalizeFromJSON(res);
           resolve(normalized);
@@ -47,6 +47,17 @@ export class UserConfigurationsService {
         });
     });
   }
+
+  // deleteUserConfigs(id: string): Promise<UserConfigurations> {
+  //   return new Promise((resolve, reject) => {
+  //     this._http.delete<UserConfigurations>('/userConfigurations/' + id)
+  //       .subscribe(res => {
+  //         resolve(res);
+  //       }, (err) => {
+  //         reject(err);
+  //       });
+  //   });
+  // }
 
   private normalizeToJSON(userConfig: UserConfigurations): UserConfigurations {
     let obj: UserConfigurations = this.clone(userConfig);

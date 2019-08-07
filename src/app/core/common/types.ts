@@ -612,7 +612,7 @@ export interface IActivePlanDetail {
 }
 
 export class UserConfigurations {
-  constructor(public id?: string, public services: ProfessionalService[] = []) {
+  constructor(public _id?: string, public services: ProfessionalService[] = []) {
   }
 }
 

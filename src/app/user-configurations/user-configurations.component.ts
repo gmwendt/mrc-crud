@@ -8,7 +8,7 @@ import { Util } from '../core/common/worker';
 import { UserService } from '../core/user.service';
 import { UserConfigurationsService } from '../core/user-configurations.service';
 
-import { DialogAlertData, DialogAlertButton } from '../shared/dialog-alert/dialog-alert.component';
+import { DialogAlertData, DialogAlertButton, DialogAlertResult } from '../shared/dialog-alert/dialog-alert.component';
 import { DialogService } from '../shared/dialog.service';
 
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
 @Component({
   selector: 'user-configurations',
   templateUrl: './user-configurations.component.html',
-  // styleUrls: ['./user-configurations.component.css'],
+  styleUrls: ['./user-configurations.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
@@ -37,23 +37,22 @@ export class UserConfigurationsComponent implements AfterViewInit, OnDestroy {
 
     this._paramsDisposable = this._route.params.subscribe(async (params) => {
       let index = params['selectedIndex'];
-      this.selectedTabIndex = index ? parseInt(index) : 0;
-      this._detector.detectChanges();
+      
+      this.loading = true;
+      
+      try {
+        await this.loadConfigs();
+      }
+      catch (error) {
+        this.on_error(error);
+      }
+      finally {
+        this.createServicesTable();
+        this.selectedTabIndex = index ? parseInt(index) : 0;
+
+        this.loading = false;
+      }
     });
-
-    this.loading = true;
-    
-    try {
-      await this.loadConfigs();
-    }
-    catch (error) {
-      this.on_error(error);
-    }
-    finally {
-      this.createServicesTable();
-
-      this.loading = false;
-    }
   }
 
   ngOnDestroy() {
@@ -81,19 +80,17 @@ export class UserConfigurationsComponent implements AfterViewInit, OnDestroy {
     
     let configs = await this._configService.getUserConfigs();
     if (!configs || configs.length == 0)
-      this.generateInitalConfigs();
+      await this.generateInitalConfigs();
     else
       this.userConfig = configs[0];
   }
 
   private async generateInitalConfigs(): Promise<void> {
-    //TODO
     let services: ProfessionalService[] = [];
     services.push(new ProfessionalService('__fixed__' + Util.guid(), 'Consulta'));
     services.push(new ProfessionalService(Util.guid(), 'Consulta retorno'));
 
     this.userConfig = await this._configService.addAdminItem(new UserConfigurations(undefined, services));
-    debugger;
   }
 
   private createServicesTable(): void {
@@ -104,6 +101,45 @@ export class UserConfigurationsComponent implements AfterViewInit, OnDestroy {
   private canRemove(id: string): boolean {
     if (id.indexOf('__fixed__') == -1)
       return true;
+  }
+
+  private async updateUserConfigs(): Promise<void> {
+    this.loading = true;
+    this._detector.detectChanges();
+
+    try {
+      await this._configService.updateUserConfigs(this.userConfig);
+    }
+    catch (error) {
+      this.on_error(error);
+    }
+    finally {
+      this.loading = false;
+      this._detector.detectChanges();
+    }
+  }
+
+  private async on_remove_service_click(event: MouseEvent, service: ProfessionalService): Promise<void> {
+    event.stopPropagation();
+
+    var dialogData: DialogAlertData = {
+      text: `Deseja remover ${service.name}?`,
+      button: DialogAlertButton.YesNo,
+      textAlign: 'center',
+    }
+
+    var dialogResult = await this._dialog.openAlert(dialogData);
+    if (dialogResult == DialogAlertResult.No)
+      return;
+
+    var index = this.userConfig.services.indexOf(service);
+    if (index < 0)
+      throw Error(`Remove Professional Service error: index not found.`);
+
+    this.userConfig.services.splice(index, 1);
+    this.createServicesTable();
+
+    await this.updateUserConfigs();
   }
 
   private show_error_dialog(error: any): void {

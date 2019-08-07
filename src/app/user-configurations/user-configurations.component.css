@@ -1,0 +1,27 @@
+user-configurations .mat-tab-group {
+  margin: 16px 22px;
+}
+
+user-configurations .user-configurations-add-button {
+  margin: 8px 0 0 8px;
+}
+
+user-configurations .user-configurations-table {
+  margin-left: 8px;
+  max-width: 800px;
+}
+
+user-configurations .user-configurations-table .mat-column-commands {
+  flex: none;
+}
+
+user-configurations .user-configurations-table .mat-row:hover {
+  background-color: #efefef;
+  cursor: pointer;
+}
+
+user-configurations .user-configurations-table .icon-delete {
+  color: #4f4f4f;
+  cursor: pointer;
+  font-size: 12pt;
+}

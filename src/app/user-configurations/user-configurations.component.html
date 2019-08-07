@@ -10,7 +10,8 @@
     </mat-tab>
 
     <mat-tab label="Meus serviços">
-      <mat-table [dataSource]="services"> <!-- class="page-patient-consult-content-table" -->
+      <button mat-button class="user-configurations-add-button">Adicionar serviço</button> <!-- (click)="on_anamneses_edit()" -->
+      <mat-table [dataSource]="services" class="user-configurations-table">
       
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef> </mat-header-cell>
@@ -26,7 +27,7 @@
           <mat-header-cell *matHeaderCellDef> </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <span *ngIf="canRemove(element.id)">
-              <span title="Remover" class="icon-delete"></span> <!-- (click)="on_remove_anamneses_click($event, element)" -->
+              <span title="Remover" class="icon-delete" (click)="on_remove_service_click($event, element)"></span>
             </span>
           </mat-cell>
         </ng-container>
