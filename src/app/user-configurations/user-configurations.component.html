@@ -33,7 +33,7 @@
         </ng-container>
       
         <mat-header-row *matHeaderRowDef="servicesDisplayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: servicesDisplayedColumns;"></mat-row> <!-- (click)="on_anamneses_edit(row.id)" -->
+        <mat-row *matRowDef="let row; columns: servicesDisplayedColumns;" (click)="on_service_edit(row)"></mat-row>
       </mat-table>
     </mat-tab>
 

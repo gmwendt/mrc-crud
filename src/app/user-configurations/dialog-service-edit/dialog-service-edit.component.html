@@ -6,19 +6,23 @@
 
 <mat-form-field floatLabel="always">
   <mat-label>Nome do serviço</mat-label>
-  <input matInput [formControl]="serviceNameCtrl">
-  <mat-error *ngIf="serviceNameCtrl && serviceNameCtrl.hasError('required')">Informe um nome para o serviço</mat-error>
+  <input matInput [formControl]="serviceNameCtrl" [(ngModel)]="profService.name">
+  <mat-error *ngIf="serviceNameCtrl.hasError('required')">Informe um nome para o serviço</mat-error>
+  <mat-error *ngIf="serviceNameCtrl.hasError('maxLength')">Nome do serviço inválido</mat-error>
 </mat-form-field>
 <mat-form-field floatLabel="always">
   <mat-label>Valor (R$)</mat-label>
-  <input matInput type="number" [formControl]="servicePriceCtrl" unit="R$">
+  <input matInput type="number" [formControl]="servicePriceCtrl" [(ngModel)]="profService.price">
+  <mat-error>Valor inválido</mat-error>
 </mat-form-field>
 
 <div id="mrc-edit-page-footer">
   <div class="mrc-dialog-separator"></div>
-  <!-- <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div> -->
+  <ng-container *ngIf="saveTouched">
+    <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div>
+  </ng-container>
   <div id="mrc-edit-page-footer-buttons">
-    <button mat-button (click)="on_save_clicked()">Salvar</button> <!-- TODO: [disabled]="!dirty && !isNew"  -->
+    <button mat-button [disabled]="!dirty && !isNew" (click)="on_save_clicked()">Salvar</button>
     <button mat-button (click)="on_cancel_click()">Cancelar</button>
   </div>
 </div>

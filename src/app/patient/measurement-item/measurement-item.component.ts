@@ -1,8 +1,9 @@
 import { Component, Input, ViewEncapsulation, Output, ElementRef, EventEmitter, AfterViewInit, HostListener, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
 
+import { Util } from '../../core/common/helper';
 import { IHistoricalValue, Measurements } from "../../core/common/types";
-import { Equations, Util } from "../../core/common/worker";
+import { Equations } from "../../core/common/worker";
 
 import { DialogHistoricalValueEditComponent, DialogHistoricalValueEditData } from "../../shared/dialog-historical-value-edit/dialog-historical-value-edit.component";
 import { DialogService } from "../../shared/dialog.service";

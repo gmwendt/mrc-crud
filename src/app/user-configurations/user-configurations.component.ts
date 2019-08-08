@@ -5,8 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { DialogServiceEditComponent } from './dialog-service-edit/dialog-service-edit.component';
 
+import { Util } from '../core/common/helper';
 import { UserConfigurations, ProfessionalService } from '../core/common/types';
-import { Util } from '../core/common/worker';
 import { UserService } from '../core/user.service';
 import { UserConfigurationsService } from '../core/user-configurations.service';
 
@@ -144,8 +144,32 @@ export class UserConfigurationsComponent implements AfterViewInit, OnDestroy {
     await this.updateUserConfigs();
   }
 
-  private on_service_edit(service?: ProfessionalService): void{
-    this._dialog.open(DialogServiceEditComponent);
+  private on_service_edit(service?: ProfessionalService): void {
+    let isNew = !service;
+    let dialogRef = this._dialog.open(DialogServiceEditComponent, { data: service });
+
+    dialogRef.afterClosed().subscribe(async (result: ProfessionalService) => {
+      if (!result)
+      return;
+      
+      if (isNew) {
+        if (!this.userConfig.services)
+        this.userConfig.services = [];
+        
+        this.userConfig.services.push(result);
+      }
+      else {
+        let index = this.userConfig.services.indexOf(service);
+        if (index < 0)
+          throw Error('Update Professional Service error: index not found.');
+        
+        this.userConfig.services[index].name = result.name;
+        this.userConfig.services[index].price = result.price;
+      }
+      
+      this.createServicesTable();
+      await this.updateUserConfigs();
+    });
   }
 
   private show_error_dialog(error: any): void {
