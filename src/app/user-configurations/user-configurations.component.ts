@@ -3,6 +3,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
+import { DialogServiceEditComponent } from './dialog-service-edit/dialog-service-edit.component';
+
 import { UserConfigurations, ProfessionalService } from '../core/common/types';
 import { Util } from '../core/common/worker';
 import { UserService } from '../core/user.service';
@@ -140,6 +142,10 @@ export class UserConfigurationsComponent implements AfterViewInit, OnDestroy {
     this.createServicesTable();
 
     await this.updateUserConfigs();
+  }
+
+  private on_service_edit(service?: ProfessionalService): void{
+    this._dialog.open(DialogServiceEditComponent);
   }
 
   private show_error_dialog(error: any): void {

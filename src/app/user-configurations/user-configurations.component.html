@@ -10,7 +10,7 @@
     </mat-tab>
 
     <mat-tab label="Meus serviços">
-      <button mat-button class="user-configurations-add-button">Adicionar serviço</button> <!-- (click)="on_anamneses_edit()" -->
+      <button mat-button class="user-configurations-add-button" (click)="on_service_edit()">Adicionar serviço</button>
       <mat-table [dataSource]="services" class="user-configurations-table">
       
         <ng-container matColumnDef="name">
