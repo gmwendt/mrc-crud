@@ -9,12 +9,14 @@
   <input matInput [formControl]="serviceNameCtrl" [(ngModel)]="profService.name">
   <mat-error *ngIf="serviceNameCtrl.hasError('required')">Informe um nome para o serviço</mat-error>
   <mat-error *ngIf="serviceNameCtrl.hasError('maxLength')">Nome do serviço inválido</mat-error>
+  <mat-error *ngIf="serviceNameCtrl.errors && serviceNameCtrl.errors.nameExists">Já existe um serviço com este nome</mat-error>
 </mat-form-field>
 <mat-form-field floatLabel="always">
   <mat-label>Valor (R$)</mat-label>
   <input matInput type="number" [formControl]="servicePriceCtrl" [(ngModel)]="profService.price">
   <mat-error>Valor inválido</mat-error>
 </mat-form-field>
+<input readonly [style.background]="profService.color" [(colorPicker)]="profService.color" />
 
 <div id="mrc-edit-page-footer">
   <div class="mrc-dialog-separator"></div>

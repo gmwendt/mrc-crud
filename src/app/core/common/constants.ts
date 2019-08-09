@@ -40,6 +40,8 @@ export class DaysName {
   }
 }
 
+export const SeriesColors: string[] = ["#FF6384", "#4BC0C0", "#FFCE56", "#E7E9ED", "#36A2EB"];
+
 export class ImcClassification {
   public static UnderWeight: ValueClassification = { color: '#96d3e4', text: 'Abaixo do peso' };
   public static IdealWeight: ValueClassification = { color: '#42cb81', text: 'Peso ideal' };

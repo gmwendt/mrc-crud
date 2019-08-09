@@ -617,7 +617,7 @@ export class UserConfigurations {
 }
 
 export class ProfessionalService {
-  constructor(public id: string, public name: string, public price?: number) {
+  constructor(public id: string, public name: string, public color: string, public duration?: string, public price?: number) {
   }
 
   toJSON(): string {

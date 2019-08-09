@@ -40,6 +40,7 @@
     "ng-chartist": "^4.1.0",
     "ng2-charts": "^2.3.0",
     "ng2-date-picker": "^2.11.0",
+    "ngx-color-picker": "^8.1.0",
     "ngx-mat-select-search": "^1.7.6",
     "ngx-material-timepicker": "^4.0.0",
     "rxjs": "^6.5.2",

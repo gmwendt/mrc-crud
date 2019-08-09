@@ -2,8 +2,13 @@ import { Component, ViewEncapsulation, Inject, Optional } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
-import { Util } from '../../core/common/helper';
-import { ProfessionalService } from '../../core/common/types';
+export interface DialogServiceEditData {
+  name: string;
+  color: string;
+  duration: string;
+  price: number;
+  usageNames: string[];
+}
 
 @Component({
   selector: 'dialog-service-edit',
@@ -12,7 +17,7 @@ import { ProfessionalService } from '../../core/common/types';
   encapsulation: ViewEncapsulation.None,
 })
 export class DialogServiceEditComponent {
-  private profService: ProfessionalService;
+  private profService: DialogServiceEditData;
   private isNew: boolean;
   private errorList: string[];
   private saveTouched: boolean;
@@ -20,14 +25,13 @@ export class DialogServiceEditComponent {
   private serviceNameCtrl: FormControl;
   private servicePriceCtrl: FormControl;
 
-  constructor(private _dialogRef: MatDialogRef<DialogServiceEditComponent>, @Optional() @Inject(MAT_DIALOG_DATA) data: ProfessionalService) {
-    this.profService = data ? Util.cloneData(data) : new ProfessionalService(Util.guid(), undefined);
-    
+  constructor(private _dialogRef: MatDialogRef<DialogServiceEditComponent>, @Optional() @Inject(MAT_DIALOG_DATA) data: DialogServiceEditData) {
+    this.profService = data;
     this.initializeConstrols();
   }
 
   private initializeConstrols(): void{
-    this.serviceNameCtrl = new FormControl(this.profService.name, [Validators.required, Validators.maxLength(100)]);
+    this.serviceNameCtrl = new FormControl(this.profService.name, [Validators.required, Validators.maxLength(100), this.validateName.bind(this.serviceNameCtrl, this.profService.usageNames)]);
     this.servicePriceCtrl = new FormControl(this.profService.price, [Validators.min(0), Validators.max(999999)]);
   }
 
@@ -36,6 +40,17 @@ export class DialogServiceEditComponent {
 
     if (this.serviceNameCtrl.invalid || this.servicePriceCtrl.invalid)
       this.errorList.push('Verifique todos os campos do formulário'); 
+  }
+
+  private validateName(usageNames: string[], control: FormControl): any {
+    if (!usageNames || usageNames.length == 0)
+      return null;
+
+    let name = control.value;
+    if (usageNames.indexOf(name) >= 0)
+      return { nameExists: 'name already exists' };
+    
+    return null;
   }
 
   private on_save_clicked(): void {

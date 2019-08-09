@@ -3,8 +3,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 
-import { DialogServiceEditComponent } from './dialog-service-edit/dialog-service-edit.component';
+import { DialogServiceEditComponent, DialogServiceEditData } from './dialog-service-edit/dialog-service-edit.component';
 
+import { SeriesColors } from '../core/common/constants';
 import { Util } from '../core/common/helper';
 import { UserConfigurations, ProfessionalService } from '../core/common/types';
 import { UserService } from '../core/user.service';
@@ -89,8 +90,8 @@ export class UserConfigurationsComponent implements AfterViewInit, OnDestroy {
 
   private async generateInitalConfigs(): Promise<void> {
     let services: ProfessionalService[] = [];
-    services.push(new ProfessionalService('__fixed__' + Util.guid(), 'Consulta'));
-    services.push(new ProfessionalService(Util.guid(), 'Consulta retorno'));
+    services.push(new ProfessionalService('__fixed__' + Util.guid(), 'Consulta', this.getColor(services.length)));
+    services.push(new ProfessionalService(Util.guid(), 'Consulta retorno', this.getColor(services.length)));
 
     this.userConfig = await this._configService.addAdminItem(new UserConfigurations(undefined, services));
   }
@@ -146,17 +147,29 @@ export class UserConfigurationsComponent implements AfterViewInit, OnDestroy {
 
   private on_service_edit(service?: ProfessionalService): void {
     let isNew = !service;
-    let dialogRef = this._dialog.open(DialogServiceEditComponent, { data: service });
+    let data: DialogServiceEditData = {
+      color: service ? service.color : this.getColor(this.services.data.length),
+      name: service ? service.name : undefined,
+      duration: service ? service.duration : undefined,
+      price: service ? service.price : undefined,
+      usageNames: this.services.data.map(p => {
+        if (!service)
+          return p.name;
+        else if (service.name != p.name)
+          return p.name;
+      })
+    };
 
-    dialogRef.afterClosed().subscribe(async (result: ProfessionalService) => {
+    let dialogRef = this._dialog.open(DialogServiceEditComponent, { data: data });
+    dialogRef.afterClosed().subscribe(async (result: DialogServiceEditData) => {
       if (!result)
       return;
       
       if (isNew) {
         if (!this.userConfig.services)
-        this.userConfig.services = [];
+          this.userConfig.services = [];
         
-        this.userConfig.services.push(result);
+        this.userConfig.services.push(new ProfessionalService(Util.guid(), result.name, result.color, result.duration, result.price));
       }
       else {
         let index = this.userConfig.services.indexOf(service);
@@ -165,11 +178,20 @@ export class UserConfigurationsComponent implements AfterViewInit, OnDestroy {
         
         this.userConfig.services[index].name = result.name;
         this.userConfig.services[index].price = result.price;
+        this.userConfig.services[index].color = result.color;
+        this.userConfig.services[index].duration = result.duration;
       }
       
       this.createServicesTable();
       await this.updateUserConfigs();
     });
+  }
+
+  private getColor(index: number): string {
+    if (index < SeriesColors.length)
+      return SeriesColors[index];
+    
+    return Util.generateRandomColor();
   }
 
   private show_error_dialog(error: any): void {

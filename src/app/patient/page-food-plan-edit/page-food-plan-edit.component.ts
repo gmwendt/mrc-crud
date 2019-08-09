@@ -17,7 +17,7 @@ import { PatientService } from "../../core/patient.service";
 import { DialogAlertButton, DialogAlertData, DialogAlertResult } from "../../shared/dialog-alert/dialog-alert.component";
 import { DialogService } from "../../shared/dialog.service";
 
-import { seriesColors as SeriesColors } from '../../widgets/common/constants';
+import { SeriesColors } from '../../core/common/constants';
 import { IPieChartData } from '../../widgets/pie-chart/pie-chart.component';
 
 import { Subscription } from "rxjs/internal/Subscription";
