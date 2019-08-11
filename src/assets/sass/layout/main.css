@@ -402,6 +402,11 @@
   height: 100%;
 }
 
+.mrc-global ngx-material-timepicker-dial-control .timepicker-dial__control {
+  font-size: 30pt;
+  text-align: center;
+}
+
 /* Theme for the ripple elements.*/
 /* stylelint-disable material/no-prefixes */
 /* stylelint-enable */

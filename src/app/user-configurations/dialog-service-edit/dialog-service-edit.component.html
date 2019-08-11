@@ -4,19 +4,34 @@
 </ng-template>
 <div class="mrc-dialog-separator"></div>
 
-<mat-form-field floatLabel="always">
-  <mat-label>Nome do serviço</mat-label>
-  <input matInput [formControl]="serviceNameCtrl" [(ngModel)]="profService.name">
-  <mat-error *ngIf="serviceNameCtrl.hasError('required')">Informe um nome para o serviço</mat-error>
-  <mat-error *ngIf="serviceNameCtrl.hasError('maxLength')">Nome do serviço inválido</mat-error>
-  <mat-error *ngIf="serviceNameCtrl.errors && serviceNameCtrl.errors.nameExists">Já existe um serviço com este nome</mat-error>
-</mat-form-field>
-<mat-form-field floatLabel="always">
-  <mat-label>Valor (R$)</mat-label>
-  <input matInput type="number" [formControl]="servicePriceCtrl" [(ngModel)]="profService.price">
-  <mat-error>Valor inválido</mat-error>
-</mat-form-field>
-<input readonly [style.background]="profService.color" [(colorPicker)]="profService.color" />
+<div class="dialog-service-edit-content">
+  <div class="dialog-service-edit-content-row">
+    <mat-form-field floatLabel="always" [style.padding-bottom]="serviceNameCtrl.invalid ? '16px' : ''">
+      <mat-label>Nome do serviço</mat-label>
+      <input matInput [formControl]="serviceNameCtrl" [(ngModel)]="profService.name">
+      <mat-error *ngIf="serviceNameCtrl.hasError('required')">Informe um nome para o serviço</mat-error>
+      <mat-error *ngIf="serviceNameCtrl.hasError('maxlength')">Nome do serviço inválido</mat-error>
+      <mat-error *ngIf="serviceNameCtrl.errors && serviceNameCtrl.errors.nameExists">Já existe um serviço com este nome</mat-error>
+    </mat-form-field>
+    <mat-form-field floatLabel="always" [style.padding-bottom]="servicePriceCtrl.invalid ? '16px' : ''">
+      <mat-label>Valor (R$)</mat-label>
+      <input matInput type="number" [formControl]="servicePriceCtrl" [(ngModel)]="profService.price">
+      <mat-error>Valor inválido</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="dialog-service-edit-content-row">
+    <div class="dialog-service-edit-content-color-field">
+      <label>Cor</label>
+      <input readonly [style.background]="profService.color" [(colorPicker)]="profService.color" (colorPickerChange)="on_color_picker_changed($event)" />
+    </div>
+    <div class="dialog-service-edit-content-duration-field">
+      <label>Duração</label>
+      <input aria-label="24hr format" [(ngModel)]="profService.duration" [ngxTimepicker]="fullTime" [format]="24" [formControl]="pickerInputCtrl" readonly>
+      <ngx-material-timepicker #fullTime></ngx-material-timepicker>
+    </div>
+  </div>
+</div>
 
 <div id="mrc-edit-page-footer">
   <div class="mrc-dialog-separator"></div>

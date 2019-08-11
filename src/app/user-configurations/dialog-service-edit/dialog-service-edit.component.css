@@ -1,0 +1,53 @@
+dialog-service-edit .dialog-service-edit-content {
+  margin-left: 4px;
+}
+
+dialog-service-edit .dialog-service-edit-content-row {
+  display: flex;
+} 
+
+dialog-service-edit .dialog-service-edit-content-duration-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  max-width: 180px;
+}
+
+dialog-service-edit .dialog-service-edit-content-duration-field > input {
+  background-color: #fff !important;
+}
+
+dialog-service-edit .dialog-service-edit-content-color-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  max-width: 180px;
+  margin-right: 8px;
+}
+
+dialog-service-edit .dialog-service-edit-content .mat-form-field {
+  margin-right: 8px;
+  min-width: 150px;
+  max-width: 180px;
+}
+
+dialog-service-edit .mrc-dialog-separator {
+  margin: 8px 0 !important;
+  width: 100% !important;
+}
+
+dialog-service-edit #mrc-edit-page-footer .mrc-edit-page-error {
+  color: #ef1508;
+  font-size: 9pt;
+  margin: 0 0 4px 8px;
+}
+
+dialog-service-edit #mrc-edit-page-footer-buttons {
+  display: flex;
+  justify-content: flex-end;  
+}
+
+dialog-service-edit #mrc-edit-page-footer-buttons > button {
+  margin-left: 8px;
+  width: 85px;
+}

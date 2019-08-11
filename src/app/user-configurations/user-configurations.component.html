@@ -20,7 +20,7 @@
 
         <ng-container matColumnDef="price">
           <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.price }}</mat-cell>
+          <mat-cell *matCellDef="let element">{{ element.price | brlFormat }}</mat-cell>
         </ng-container>
       
         <ng-container matColumnDef="commands">
