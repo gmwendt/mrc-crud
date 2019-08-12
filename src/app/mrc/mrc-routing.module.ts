@@ -21,6 +21,11 @@ const mrcRoutes: Routes = [
     component: MrcHomeComponent
   },
   {
+    path: 'agenda',
+    canActivate: [AuthGuardService],
+    loadChildren: () => import('app/agenda/agenda.module').then(m => m.MrcAgendaModule)
+  },
+  {
     path: 'clinicas',
     canActivate: [AuthGuardService],
     loadChildren: () => import('app/clinic/clinic.module').then(m => m.ClinicModule)

@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { registerLocaleData } from '@angular/common';
+import localePtpt from '@angular/common/locales/pt-PT';
 
 import { DpDatePickerModule } from 'ng2-date-picker';
 import { ChartsModule } from 'ng2-charts';
@@ -10,6 +12,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 import { AddProfessionalComponent } from './add-professional/add-professional.component';
 import { CheckListComponent } from './check-list/check-list.component';
@@ -32,8 +37,14 @@ import { MatMomentDateModule } from '../mat-moment-date.module';
 
 import { COMMON_PIPES } from './common/pipes';
 
+registerLocaleData(localePtpt);
+
 @NgModule({
   imports: [ 
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
     ChartsModule,
     ColorPickerModule,
     CommonModule,
@@ -54,6 +65,7 @@ import { COMMON_PIPES } from './common/pipes';
     ZipcodeInputComponent ],
   exports: [ 
     AddProfessionalComponent,
+    CalendarModule,
     ChartsModule,
     CheckListComponent, 
     ColorPickerModule,
