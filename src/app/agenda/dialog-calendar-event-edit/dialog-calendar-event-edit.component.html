@@ -1,0 +1,20 @@
+<div class="mrc-dialog-title" *ngIf="isNew; else elseBlock">Nova consulta</div>
+<ng-template #elseBlock>
+  <div class="mrc-dialog-title">Editar consulta</div>
+</ng-template>
+<div class="mrc-dialog-separator"></div>
+
+<div>
+  TODO
+</div>
+
+<div id="mrc-edit-page-footer">
+  <div class="mrc-dialog-separator"></div>
+  <!-- <ng-container *ngIf="saveTouched">
+    <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div>
+  </ng-container> -->
+  <div id="mrc-edit-page-footer-buttons">
+    <button mat-button>Salvar</button> <!-- [disabled]="!dirty && !isNew" (click)="on_save_clicked()" -->
+    <button mat-button (click)="on_cancel_click()">Cancelar</button>
+  </div>
+</div>

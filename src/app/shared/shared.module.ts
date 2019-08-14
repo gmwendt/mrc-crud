@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
-import localePtpt from '@angular/common/locales/pt-PT';
+import localePtBr from '@angular/common/locales/pt';
 
 import { DpDatePickerModule } from 'ng2-date-picker';
 import { ChartsModule } from 'ng2-charts';
@@ -37,7 +37,7 @@ import { MatMomentDateModule } from '../mat-moment-date.module';
 
 import { COMMON_PIPES } from './common/pipes';
 
-registerLocaleData(localePtpt);
+registerLocaleData(localePtBr);
 
 @NgModule({
   imports: [ 
