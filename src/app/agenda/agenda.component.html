@@ -23,7 +23,7 @@
   </div>
   <br />
   
-  <div [ngSwitch]="view">
+  <div [ngSwitch]="view" (dblclick)="on_calendar_dblclick()">
     <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [locale]="locale"
       [weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays" (dayClicked)="on_day_clicked($event.day.date)">
     </mwl-calendar-month-view>

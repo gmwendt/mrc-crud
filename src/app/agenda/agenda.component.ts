@@ -31,6 +31,9 @@ import {
 })
 export class MrcAgendaComponent implements AfterViewInit, OnDestroy {
   private _loading: boolean;
+  private _isDayClicked: boolean;
+  private _isTimeSegClicked: boolean;
+  private _clickedDate: Date;
   
   view: CalendarView = CalendarView.Month;
   viewDate = new Date();
@@ -67,19 +70,35 @@ export class MrcAgendaComponent implements AfterViewInit, OnDestroy {
     this.view = view;
   }
 
+  private dayNavigate(date: Date): void {
+    this.setView(CalendarView.Day);
+    this.viewDate = date;
+    this._detector.detectChanges();
+  }
+
+  private on_calendar_dblclick(): void {
+    if (this._isDayClicked) 
+      this.dayNavigate(this._clickedDate);
+    if (this._isTimeSegClicked) {
+      let event: DialogCalendarEventData = {
+        title: '',
+        start: this._clickedDate
+      };
+
+      let dialogRef = this._dialog.open(DialogCalendarEventEdit, { data: event });
+      //TODO
+    }
+  }
+
   private on_day_clicked(date: Date): void {
-    //TODO: navigate to day clicked
+    this._isDayClicked = true;
+    this._clickedDate = date;
+    setTimeout(() => this._isDayClicked = false, 501);
   }
 
   private on_time_segmment_clicked(date: Date): void {
-    //Check if date is really type Date
-    debugger;
-    let event: DialogCalendarEventData = {
-      title: '',
-      start: date
-    };
-
-    let dialogRef = this._dialog.open(DialogCalendarEventEdit, { data: event });
+    this._isTimeSegClicked = true;
+    setTimeout(() => this._isTimeSegClicked = false, 501);
   }
 
   private on_error(error: any): void {
