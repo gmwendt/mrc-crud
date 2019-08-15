@@ -79,6 +79,10 @@ export class Util {
     return color;
   }
 
+  static isNullOrEmpty(content: string): boolean {
+    return content == null || content.length < 1;
+  }
+
   private static guidS4(): string {
     return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)

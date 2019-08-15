@@ -637,6 +637,34 @@ export class ProfessionalService {
   }
 }
 
+export class ConsultEvent {
+  private _id: string;
+
+  constructor(public title: string, public startTime: string, public endTime: string,
+    public price: number, public serviceId: string, public patientId: string) {
+  }
+
+  get id(): string {
+    return this._id;
+  }
+
+  toJSON(): string {
+    return JSON.stringify(Object.assign({}, this));
+  }
+
+  static fromJSON(json: ConsultEvent | string): ConsultEvent {
+    if (typeof json === 'string')
+      return JSON.parse(json, ConsultEvent.reviver);
+
+    var data = Object.create(ConsultEvent.prototype);
+    return Object.assign(data, json);
+  }
+
+  private static reviver(key: string, value: any): any {
+    return key === "" ? ConsultEvent.fromJSON(value) : value;
+  }
+}
+
 export interface IUnit {
   desciption: string;
   converterFactor: number;

@@ -81,7 +81,7 @@ export class MrcAgendaComponent implements AfterViewInit, OnDestroy {
       this.dayNavigate(this._clickedDate);
     if (this._isTimeSegClicked) {
       let event: DialogCalendarEventData = {
-        title: '',
+        eventId: null,
         start: this._clickedDate
       };
 
