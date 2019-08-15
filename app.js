@@ -18,6 +18,7 @@ var clinic = require('./routes/clinic');
 var patient = require('./routes/patient');
 var food = require('./routes/food');
 var userConfigs = require('./routes/userConfigurations');
+var consult = require('./routes/consult');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use('/clinic', clinic);
 app.use('/patient', patient);
 app.use('/food', food);
 app.use('/userConfigurations', userConfigs);
+app.use('/consult', consult);
 app.use('/', express.static('dist', { redirect: false }));
 app.get('*',  function(req, res, next) {
   res.sendFile(path.resolve('dist/index.html')); 
