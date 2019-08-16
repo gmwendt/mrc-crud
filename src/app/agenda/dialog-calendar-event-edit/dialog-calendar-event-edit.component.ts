@@ -1,21 +1,22 @@
 import { Component, ViewEncapsulation, Inject, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
+import { SeriesColors } from '../../core/common/constants';
 import { Util } from '../../core/common/helper';
 import { ConsultEvent, ProfessionalService, UserConfigurations } from '../../core/common/types';
+import { ConsultService } from '../../core/consult.service';
 import { UserConfigurationsService } from '../../core/user-configurations.service';
 
 import { DialogAlertButton, DialogAlertData } from '../../shared/dialog-alert/dialog-alert.component';
 import { DialogService } from '../../shared/dialog.service';
-import { SeriesColors } from '../../core/common/constants';
 
 import * as dateFns from 'date-fns';
 
 export interface DialogCalendarEventData {
   eventId: string;
-  start: Date;
+  start?: Date;
 }
 
 @Component({
@@ -32,13 +33,19 @@ export class DialogCalendarEventEdit implements AfterViewInit {
 
   //** Controls */
   private titleCtrl: FormControl;
-  
+  private startTimeCtrl: FormControl;
+  private endTimeCtrl: FormControl;
+  private serviceCtrl: FormControl;
+
   private isNew: boolean;
+  private errorList: string[];
+  private saveTouched: boolean;
   private servicesList: ProfessionalService[];
   private event: ConsultEvent;
 
   constructor(private _dialogRef: MatDialogRef<DialogCalendarEventEdit>, @Inject(MAT_DIALOG_DATA) data: DialogCalendarEventData,
-    private _detector: ChangeDetectorRef, private _dialog: DialogService, private _userConfigs: UserConfigurationsService) {
+    private _detector: ChangeDetectorRef, private _dialog: DialogService, private _userConfigs: UserConfigurationsService,
+    private _consultService: ConsultService) {
     this._data = data;
   }
 
@@ -70,6 +77,16 @@ export class DialogCalendarEventEdit implements AfterViewInit {
     this._detector.detectChanges();
   }
 
+  get dirty(): boolean {
+    if (!this.titleCtrl || !this.startTimeCtrl || !this.endTimeCtrl || !this.serviceCtrl)
+      return false;
+
+    if (this.titleCtrl.dirty || this.startTimeCtrl.dirty || this.endTimeCtrl.dirty || this.serviceCtrl.dirty)
+      return true;
+    
+    return false;
+  }
+
   private async load_event(eventId: string, start: Date): Promise<void> {
     this.isNew = Util.isNullOrEmpty(eventId);
     let configs = await this._userConfigs.getUserConfigs();
@@ -99,12 +116,46 @@ export class DialogCalendarEventEdit implements AfterViewInit {
   }
 
   private initializeControls(): void {
-    this.titleCtrl = new FormControl(this.event.title)
+    this.titleCtrl = new FormControl(this.event.title, [Validators.required, Validators.maxLength(50)]);
+    this.startTimeCtrl = new FormControl(this.event.startTime, Validators.required);
+    this.endTimeCtrl = new FormControl(this.event.endTime, Validators.required);
+    this.serviceCtrl = new FormControl(this.event.serviceId);
   }
 
   private calculateEndTime(start: Date, service: ProfessionalService): Date {
     let duration = service.duration && service.duration.indexOf(':') > 0 ? parseInt(service.duration.split[':'][1]) : 30;
     return dateFns.addMinutes(start, duration);
+  }
+
+  private updateErrors(): void {
+    this.errorList = [];
+
+    if (this.titleCtrl.invalid || this.startTimeCtrl.invalid || this.endTimeCtrl.invalid)
+      this.errorList.push('Verifique todos os campos do formulário');
+  }
+
+  private async on_save_clicked(): Promise<void> {
+    this.updateErrors();
+    this.saveTouched = true;
+
+    if (this.errorList.length > 0)
+      return;
+    
+    this.loading = true;
+
+    try {
+      if (this.isNew)
+        await this._consultService.addConsult(this.event);
+      else
+        await this._consultService.updateConsult(this.event);
+    }
+    catch (error) {
+      this.on_error(error);
+    }
+    finally {
+      this.loading = false;
+      this._dialogRef.close();
+    }
   }
 
   private on_cancel_click(): void {

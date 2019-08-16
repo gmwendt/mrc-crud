@@ -7,10 +7,12 @@ import { COMMON_PROVIDERS } from './common/providers';
 import { MrcAgendaRoutingModule } from './agenda-routing.module';
 import { MrcAgendaComponent } from './agenda.component';
 
+import { MaterialModule } from '../material.module';
+
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  imports: [CommonModule, SharedModule, MrcAgendaRoutingModule],
+  imports: [CommonModule, MaterialModule, SharedModule, MrcAgendaRoutingModule],
   declarations: [COMMON_COMPONENTS],
   exports: [COMMON_COMPONENTS],
   providers: [COMMON_PROVIDERS],

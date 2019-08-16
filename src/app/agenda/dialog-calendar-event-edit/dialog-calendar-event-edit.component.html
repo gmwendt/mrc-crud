@@ -5,10 +5,29 @@
 <div class="mrc-dialog-separator"></div>
 
 <progress-spinner [progress]="loading">
-  <div>
+  <div *ngIf="event">
     <mat-form-field floatLabel="always" [style.padding-bottom]="titleCtrl.invalid ? '16px' : ''">
       <mat-label>Descrição</mat-label>
       <input matInput [formControl]="titleCtrl" [(ngModel)]="event.title">
+      <!-- <mat-error>Valor inválido</mat-error> -->
+    </mat-form-field>
+
+    <mat-form-field floatLabel="always" [style.padding-bottom]="serviceCtrl.invalid ? '16px' : ''">
+      <mat-select [formcontrol]="serviceCtrl" [(ngModel)]="event.serviceId" [disableOptionCentering]="true">
+        <mar-option *ngFor="let service of servicesList" [value]="service.id">{{ service.name }}</mar-option>
+      </mat-select>
+      <!-- <mat-error>Valor inválido</mat-error> -->
+    </mat-form-field>
+
+    <mat-form-field floatLabel="always" [style.padding-bottom]="startTimeCtrl.invalid ? '16px' : ''">
+      <mat-label>Início</mat-label>
+      <input matInput [formControl]="startTimeCtrl" [(ngModel)]="event.startTime">
+      <!-- <mat-error>Valor inválido</mat-error> -->
+    </mat-form-field>
+
+    <mat-form-field floatLabel="always" [style.padding-bottom]="endTimeCtrl.invalid ? '16px' : ''">
+      <mat-label>Fim</mat-label>
+      <input matInput [formControl]="endTimeCtrl" [(ngModel)]="event.endTime">
       <!-- <mat-error>Valor inválido</mat-error> -->
     </mat-form-field>
   </div>
@@ -20,7 +39,7 @@
     <div *ngFor="let msg of errorList" class="mrc-edit-page-error">{{ msg }}</div>
   </ng-container> -->
   <div id="mrc-edit-page-footer-buttons">
-    <button mat-button>Salvar</button> <!-- [disabled]="!dirty && !isNew" (click)="on_save_clicked()" -->
+    <button mat-button [disabled]="!dirty && !isNew" (click)="on_save_clicked()">Salvar</button>
     <button mat-button (click)="on_cancel_click()">Cancelar</button>
   </div>
 </div>
