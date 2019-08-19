@@ -13,8 +13,8 @@
     </mat-form-field>
 
     <mat-form-field floatLabel="always" [style.padding-bottom]="serviceCtrl.invalid ? '16px' : ''">
-      <mat-select [formcontrol]="serviceCtrl" [(ngModel)]="event.serviceId" [disableOptionCentering]="true">
-        <mar-option *ngFor="let service of servicesList" [value]="service.id">{{ service.name }}</mar-option>
+      <mat-select [formControl]="serviceCtrl" [(ngModel)]="event.serviceId" [disableOptionCentering]="true">
+        <mat-option *ngFor="let service of servicesList" [value]="service.id">{{ service.name }}</mat-option>
       </mat-select>
       <!-- <mat-error>Valor inválido</mat-error> -->
     </mat-form-field>

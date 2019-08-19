@@ -648,21 +648,21 @@ export class ConsultEvent {
     return this._id;
   }
 
-  toJSON(): string {
-    return JSON.stringify(Object.assign({}, this));
-  }
+  // toJSON(): string {
+  //   return JSON.stringify(Object.assign({}, this));
+  // }
 
-  static fromJSON(json: ConsultEvent | string): ConsultEvent {
-    if (typeof json === 'string')
-      return JSON.parse(json, ConsultEvent.reviver);
+  // static fromJSON(json: ConsultEvent | string): ConsultEvent {
+  //   if (typeof json === 'string')
+  //     return JSON.parse(json, ConsultEvent.reviver);
 
-    var data = Object.create(ConsultEvent.prototype);
-    return Object.assign(data, json);
-  }
+  //   var data = Object.create(ConsultEvent.prototype);
+  //   return Object.assign(data, json);
+  // }
 
-  private static reviver(key: string, value: any): any {
-    return key === "" ? ConsultEvent.fromJSON(value) : value;
-  }
+  // private static reviver(key: string, value: any): any {
+  //   return key === "" ? ConsultEvent.fromJSON(value) : value;
+  // }
 }
 
 export interface IUnit {

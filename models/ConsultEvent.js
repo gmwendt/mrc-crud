@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 
 var ConsultEventSchema = new mongoose.Schema({
   title: String,
-  start: String,
-  end: String,
+  startTime: String,
+  endTime: String,
   price: Number,
   serviceId: String,
   patientId:String
